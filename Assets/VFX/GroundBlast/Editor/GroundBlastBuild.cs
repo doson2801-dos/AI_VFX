@@ -37,16 +37,11 @@ namespace VfxEffects
             var mFire = Material(Root + "/Materials/M_GroundBlast_Fireball_Add.mat", VfxBlend.Additive, tFireGlow);
             var mSmoke = Material(Root + "/Materials/M_GroundBlast_Smoke_Alpha.mat", VfxBlend.Alpha, tErode, shaderName: "VFX/FX/Erode Sphere");
             mSmoke.SetTexture("_RampTex", tRamp);
-            mSmoke.SetFloat("_UseMeshUV", 1f); mSmoke.EnableKeyword("_MESH_UV");
-            mSmoke.SetVector("_MaskTiling", new Vector4(1f, 1f, 0f, 0f));
-            mSmoke.SetFloat("_RimIn", 0f);          // reference eats centre-out (strands), not rim-in
-            mSmoke.SetFloat("_Soft", 0.03f);        // crisp toon erosion edge
-            mSmoke.SetFloat("_EmisSoft", 0.1f);     // crisp glow veins
+            // shader v2 (7 properties): mask on mesh UV, centre-out erosion, crisp veins are now built in
             mSmoke.SetFloat("_EmisBoost", 1.1f);
             mSmoke.SetFloat("_HeatRange", 0.35f);   // v5c: thin veins reach bright orange fast (no wide dull-red areas)   // v5b: orange veins, yellow-white only deep inside
             mSmoke.SetFloat("_ShadowTone", 0.3f);   // reference: lit top, dark underside
             mSmoke.SetFloat("_Lumps", 0.22f);       // v5: break the round sphere outline into lumps
-            mSmoke.SetFloat("_LumpFreq", 5f);
             EditorUtility.SetDirty(mSmoke);
             var mRing = Material(Root + "/Materials/M_GroundBlast_Ring_Add.mat", VfxBlend.Additive, tRing);
             var mSpark = Material(Root + "/Materials/M_GroundBlast_Spark_Add.mat", VfxBlend.Additive, tSpark);
@@ -100,18 +95,18 @@ namespace VfxEffects
             SizeOverLifetime(smoke, 0f, 0.45f, 0.15f, 0.95f, 1f, 1.15f);
             var cd = smoke.customData; cd.enabled = true;
             cd.SetMode(ParticleSystemCustomData.Custom1, ParticleSystemCustomDataMode.Vector);
-            cd.SetVectorComponentCount(ParticleSystemCustomData.Custom1, 4);
+            // Custom1 (shader v4): x = when the smoke dissolves, y = when the fire cools, z = edge softness
+            cd.SetVectorComponentCount(ParticleSystemCustomData.Custom1, 3);
+            cd.SetVector(ParticleSystemCustomData.Custom1, 2, Lin(0f, 0.03f, 1f, 0.03f));                             // z: crisp toon edge (was material _Soft)
             cd.SetVector(ParticleSystemCustomData.Custom1, 0, Lin(0f, 0f, 0.5f, 0f, 1f, 1.02f));                       // alpha: holds, then eats centre-out
             cd.SetVector(ParticleSystemCustomData.Custom1, 1, Lin(0f, 0.9f, 0.06f, 0.7f, 0.14f, 0.3f, 0.22f, 0.1f, 0.3f, -0.1f)); // v5c: cold by ~0.4 s like the reference // mostly hot with dark holes (ref frame 1) -> veins -> cold
-            cd.SetVector(ParticleSystemCustomData.Custom1, 2, Lin(0f, 0f, 0.3f, 1f, 1f, 1f));                          // bulge early
-            cd.SetVector(ParticleSystemCustomData.Custom1, 3, Lin(0f, 1f, 0.6f, 0.8f, 1f, 0.4f));                      // light flattens a bit at the end
             var smr = Rend(smoke);
             smr.renderMode = ParticleSystemRenderMode.Mesh;
             smr.mesh = sphere;
             smr.sortMode = ParticleSystemSortMode.Distance;
             smr.SetActiveVertexStreams(new System.Collections.Generic.List<ParticleSystemVertexStream> {
                 ParticleSystemVertexStream.Position, ParticleSystemVertexStream.Normal, ParticleSystemVertexStream.Color,
-                ParticleSystemVertexStream.UV, ParticleSystemVertexStream.Custom1XYZW, ParticleSystemVertexStream.StableRandomX,
+                ParticleSystemVertexStream.UV, ParticleSystemVertexStream.Custom1XYZ,ParticleSystemVertexStream.StableRandomX,
                 ParticleSystemVertexStream.Center });
             Sorting(smoke, -2);
 
