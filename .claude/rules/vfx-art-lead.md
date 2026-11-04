@@ -19,6 +19,10 @@
 - Hình hình học (vòng phép, rune, vòng tròn): vẽ bằng script là tốt.
 - Hình hữu cơ (lửa, khói, thân vụ nổ): không tin preset script. Đưa 2–3 phương án ảnh trước, ưu tiên nguồn của art lead.
 - Khói mặc định: `Assets/VFX/fx_t_smoke_02.png` + shader mobile mặc định của Unity, tô màu bằng Start Color.
+- **Khói vụ nổ** (art lead 2026-11-04) làm theo GroundBlast v5c, không dùng billboard: một khối mesh cầu ăn mòn, shader `VFX/FX/Erode Sphere`.
+  - Thiết lập: `_MESH_UV`, `SM_VFX_SphereUV`, ~30 cầu, Cone lên, mép sần `_Lumps`.
+  - Custom1: cháy → gân → than xám → tan thành sợi.
+  - Lấy số từ `GroundBlastBuild.cs` mục 3b. Mask `_TEMP` lấy từ video, không ship.
 - Flipbook chỉ cho khói / lửa / điện. Frame over Time **tuyến tính** (`ComponentKit.LinearFrames`, không dùng `VfxBuildKit.Curve`).
 
 ## Slash

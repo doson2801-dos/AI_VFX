@@ -1,6 +1,8 @@
 // SH_VFX_ErodeSphere — eroding lit smoke sphere (vfx-shader skill). Mobile: Built-in + URP, one unlit pass, UnityCG only.
 // Look: technique of Beyond-FX's "Zelda-inspired explosion" smoke (art lead reference 2026-11-04):
-//   a sphere mesh per particle, an erosion mask read in VIEW space (its centre always faces the camera),
+//   a sphere mesh per particle, an erosion mask read in VIEW space (its centre always faces the camera) or wrapped
+//   on the sphere's own UVs (_MESH_UV: erosion leaves vertical strands), lumpy outline (_Lumps), ramp colour by
+//   depth below the emissive threshold (_HeatRange),
 //   alpha threshold eats it from the dark swirl outwards, a second threshold on the same mask drives the hot
 //   emissive through a heat ramp, the mesh bulges out along its normals and the mask grows from the centre.
 // Cost: 2 texture samples (mask + ramp), no expensive functions in the fragment (sin/cos for the per-particle
@@ -27,7 +29,10 @@ Shader "VFX/FX/Erode Sphere"
         _RimIn ("Erode Rim First (0 = mask only, centre out; 1 = silhouette in)", Range(0, 1)) = 0.8
         _EmisSoft ("Emissive Band Width", Range(0.02, 0.6)) = 0.25
         _EmisBoost ("Emissive Brightness", Range(0.5, 3)) = 1.4
+        _HeatRange ("Heat Depth Range (mask units below the threshold to reach the hottest colour)", Range(0.05, 1)) = 0.5
         _BulgeAmount ("Vertex Bulge (object units at Custom1.z = 1)", Range(0, 0.5)) = 0.12
+        _Lumps ("Lumpy Silhouette (fraction of the radius)", Range(0, 0.4)) = 0
+        _LumpFreq ("Lump Frequency", Range(1, 12)) = 5
         _UVBulge ("Mask Grows From Centre (at Custom1.z = 1)", Range(0, 1)) = 0.35
         _LightDir ("Light Direction (world)", Vector) = (-0.4, 0.8, -0.45, 0)
         _ShadowTone ("Shadow Tone", Range(0, 1)) = 0.45
@@ -54,7 +59,7 @@ Shader "VFX/FX/Erode Sphere"
 
             sampler2D _MainTex, _RampTex;
             float4 _MaskTiling;
-            half _MaskScale, _Soft, _RimIn, _EmisSoft, _EmisBoost, _BulgeAmount, _UVBulge, _ShadowTone;
+            half _MaskScale, _Soft, _RimIn, _EmisSoft, _EmisBoost, _BulgeAmount, _UVBulge, _ShadowTone, _Lumps, _LumpFreq, _HeatRange;
             float4 _LightDir;
 
             struct appdata
@@ -80,7 +85,13 @@ Shader "VFX/FX/Erode Sphere"
                 v2f o;
                 half bulge = v.uv1.x, normalAmt = v.uv1.y;
                 float3 centre = float3(v.uv1.w, v.uv2.xy);
-                float3 n = normalize(v.vertex.xyz - centre + 1e-5);             // smooth radial direction (particle verts are world space)
+                float3 rv = v.vertex.xyz - centre;
+                float3 n = normalize(rv + 1e-5);                                // smooth radial direction (particle verts are world space)
+                // lumps (v5, art lead: "khói của họ đâu có tròn"): a cheap 3-sine bump field on the sphere direction,
+                // offset per particle, so no sphere keeps a perfect round outline (cauliflower look)
+                float3 ph = n * _LumpFreq + v.uv1.z * float3(17.0, 29.0, 41.0);
+                half lump = sin(ph.x) * sin(ph.y + 1.7) * sin(ph.z + 0.6) * 0.5 + sin(ph.x * 2.1 + ph.z * 1.3) * 0.25;
+                v.vertex.xyz += n * (length(rv) * _Lumps * lump);
                 v.vertex.xyz += n * (bulge * _BulgeAmount);                     // push out radially: expanding
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.color = v.color;
@@ -119,7 +130,10 @@ Shader "VFX/FX/Erode Sphere"
                 half e = lerp(m, 0.6h * i.b.y + 0.4h * m, _RimIn);
                 half alpha = smoothstep(i.a.z, i.a.z + _Soft, e);
                 half heat = smoothstep(i.a.w, i.a.w - _EmisSoft, m);             // 1 below the emissive threshold
-                half3 hot = tex2D(_RampTex, float2(heat, 0.5)).rgb * _EmisBoost;
+                // ramp u = how deep below the threshold (v5): vein edges dark red -> orange -> hottest only deep inside;
+                // v4 used u = heat (always ~1) and the whole mass read pale yellow
+                half depth = saturate((i.a.w - m) / _HeatRange);
+                half3 hot = tex2D(_RampTex, float2(depth, 0.5)).rgb * _EmisBoost;
                 half3 smoke = i.color.rgb * i.b.x;
                 half3 col = lerp(smoke, hot, heat);
                 return half4(col, alpha * i.color.a);
