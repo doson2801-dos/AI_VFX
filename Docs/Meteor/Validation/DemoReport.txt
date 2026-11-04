@@ -1,0 +1,16 @@
+frame 12 t=0.20s particles=1 playing=True
+frame 30 t=0.50s particles=1 playing=True
+frame 45 t=0.75s particles=1 playing=True
+frame 49 t=0.82s particles=0 playing=True
+frame 51 t=0.85s particles=52 playing=True
+frame 54 t=0.90s particles=60 playing=True
+frame 60 t=1.00s particles=58 playing=True
+frame 72 t=1.20s particles=33 playing=True
+frame 96 t=1.60s particles=18 playing=True
+frame 120 t=2.00s particles=14 playing=True
+frame 150 t=2.50s particles=8 playing=True
+frame 180 t=3.00s particles=3 playing=True
+peak particles 60; last frame with particles 193 (t=3.22s); effect.IsPlaying at end False
+after Stop: particles 0, playing False
+after disable/enable: particles 0, playing False
+errors: 0

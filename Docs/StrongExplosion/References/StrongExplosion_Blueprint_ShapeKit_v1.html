@@ -1,0 +1,38 @@
+<div id="strong-blueprint-v1">
+<style>
+#strong-blueprint-v1 .smoke{fill:var(--foreground);opacity:.65}#strong-blueprint-v1 .hot{fill:var(--orange)}#strong-blueprint-v1 .light{fill:var(--yellow)}#strong-blueprint-v1 .rock{fill:var(--foreground)}#strong-blueprint-v1 .crack{fill:none;stroke:var(--foreground);stroke-width:3;stroke-linejoin:round}#strong-blueprint-v1 .force{fill:none;stroke:var(--foreground);stroke-width:1.5;opacity:.5}#strong-blueprint-v1 .mono .hot,#strong-blueprint-v1 .mono .light{fill:var(--foreground)}#strong-blueprint-v1 .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px}#strong-blueprint-v1 .kit svg{display:block;width:100%;height:100px;fill:var(--foreground)}#strong-blueprint-v1 .kit p{margin:4px 0}#strong-blueprint-v1 .diagram{width:100%;display:block}
+</style>
+<div class="viz-row"><strong>BP-01 v1 · Cấu trúc đề xuất</strong><button class="btn" type="button" aria-pressed="false">Xem đơn sắc</button></div>
+<svg class="diagram" viewBox="0 0 680 370" role="img" aria-label="Vòm khói bao quanh tâm thấp sáng, impact và đá bung ra ngoài; khói trước che một phần gốc, vết nứt lan trên nền">
+<defs>
+<path id="bp-puff" d="M-62 25C-81 14-77-11-59-18C-68-42-42-59-22-48C-12-77 27-76 39-49C66-55 85-30 69-10C88 12 65 38 40 31C11 48-34 43-62 25Z"/>
+<path id="bp-spike" d="M-14 0C-30-24-35-56-20-73C-7-88-4-113 0-150L15-67C-12-80-7-43 18-20L25 0Z"/>
+<marker id="bp-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path fill="var(--foreground)" d="M0 0L8 4L0 8Z"/></marker>
+</defs>
+<ellipse cx="340" cy="280" rx="272" ry="61" fill="var(--muted)"/>
+<g class="crack"><path d="M340 265L287 301L247 308L211 343M287 301L272 327M340 265L389 295L405 328L445 345M389 295L441 297L477 318M340 265L491 275L546 290L609 293M491 275L535 257M340 265L201 276L163 297L76 303M201 276L165 259"/></g>
+<g class="smoke"><use href="#bp-puff" transform="translate(340 135) scale(1.2)"/><use href="#bp-puff" transform="translate(244 171) scale(1.03)"/><use href="#bp-puff" transform="translate(442 180) scale(1.12)"/><use href="#bp-puff" transform="translate(158 224) scale(.87)"/><use href="#bp-puff" transform="translate(529 235) scale(.87)"/></g>
+<path class="hot" d="M185 259Q183 185 252 196Q267 140 320 167Q367 137 391 188Q459 167 478 236L508 273Q413 298 330 282Q237 303 185 259Z"/>
+<g class="hot"><use href="#bp-spike" transform="translate(330 260) rotate(-54) scale(.85 1.05)"/><use href="#bp-spike" transform="translate(351 264) rotate(45) scale(.67 1.3)"/><use href="#bp-spike" transform="translate(300 269) rotate(-78) scale(.6 .95)"/><use href="#bp-spike" transform="translate(383 270) rotate(74) scale(.6 1.05)"/><use href="#bp-spike" transform="translate(339 258) rotate(-8) scale(.55 1.13)"/></g>
+<path class="light" d="M288 270Q279 245 305 237L315 217L333 237L347 211L361 239Q390 235 399 269Q343 286 288 270Z"/>
+<g class="smoke"><use href="#bp-puff" transform="translate(197 272) scale(.73 .53)"/><use href="#bp-puff" transform="translate(478 276) scale(.83 .57)"/><use href="#bp-puff" transform="translate(120 270) scale(.47 .42)"/><use href="#bp-puff" transform="translate(560 275) scale(.46 .43)"/></g>
+<g class="rock"><path d="M118 156L136 139L153 147L147 174L131 180Z"/><path d="M490 116L504 97L521 113L518 131L501 135Z"/><path d="M236 90L246 78L258 89L252 105Z"/><path d="M578 199L592 188L603 203L595 216Z"/><path d="M412 82L422 72L434 83L426 96Z"/></g>
+<g class="force" marker-end="url(#bp-arrow)"><path d="M266 219L199 152"/><path d="M414 218L478 153"/><path d="M343 184L343 65"/><path d="M183 253L76 224"/><path d="M499 254L606 230"/></g>
+</svg>
+<div class="viz-row text-small"><span>Khói sau · tâm nóng · impact hướng tâm ra ngoài · khói trước · đá · nứt nền</span></div>
+<p class="text-small">Sơ đồ cấu trúc — không phải production asset. Tỷ lệ đề xuất: vòm rộng 2R, cao R; tâm sáng rộng khoảng 0,5R.</p>
+<hr>
+<p>Shape kit v1 · preview đơn sắc của từng phần tử</p>
+<div class="kit">
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S01 khói mảng lớn bất đối xứng"><path d="M20 85C3 76 8 52 25 48C15 24 38 12 55 25C63 0 95 3 104 26C128 15 148 38 131 58C148 83 124 101 105 91C77 109 42 98 20 85Z"/></svg><p>S01 · Khói</p></div>
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S02A impact vai cong chóp thẳng"><path d="M49 103C25 80 29 53 50 49C65 46 68 20 78 3L95 59C68 43 70 76 105 100Z"/></svg><p>S02A · Impact dày</p></div>
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S02B impact hẹp có eo và chóp dài"><path d="M64 104L53 73Q74 63 78 3L89 62Q77 80 98 103Z"/></svg><p>S02B · Impact mảnh</p></div>
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S03 vùng sáng tâm bất đối xứng không dạng ngôi sao đều"><path d="M19 78Q13 57 36 48L42 25L64 40L82 13L91 40Q122 31 127 55Q145 79 119 88Q76 104 36 91Z"/></svg><p>S03 · Sáng tâm</p></div>
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S04 mảnh đá góc cạnh thân đặc"><path d="M38 66L50 27L82 16L110 42L101 81L64 94Z"/></svg><p>S04 · Đá</p></div>
+<div><svg viewBox="0 0 150 110" role="img" aria-label="S05 một nhánh nứt phân nhánh và thu mảnh về cuối"><path d="M12 99L36 70L51 63L75 38L69 14L79 37L104 15L137 5L107 20L85 45L111 52L134 74L107 56L78 50L58 72L40 79L20 104Z"/></svg><p>S05 · Nhánh nứt</p></div>
+</div>
+<p class="text-small">Các shape là đề xuất thiết kế; không phải texture cuối. Ghép tổng thể được minh họa phía trên.</p>
+<script>
+(()=>{const root=document.getElementById('strong-blueprint-v1');const button=root.querySelector('button');const svg=root.querySelector('.diagram');button.addEventListener('click',()=>{const active=button.getAttribute('aria-pressed')!=='true';button.setAttribute('aria-pressed',String(active));svg.classList.toggle('mono',active);button.textContent=active?'Xem phân lớp màu':'Xem đơn sắc';});})();
+</script>
+</div>

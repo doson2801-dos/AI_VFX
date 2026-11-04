@@ -1,0 +1,52 @@
+# Chỉ đẩy tài liệu + code. Mặc định bỏ qua mọi file, rồi cho phép từng loại.
+*
+!*/
+
+# --- Tài liệu ---
+!*.md
+!*.txt
+
+# --- Code ---
+!*.cs
+!*.py
+!*.js
+!*.html
+!*.shader
+!*.cginc
+!*.hlsl
+!*.compute
+!*.shadergraph
+!*.shadersubgraph
+!*.asmdef
+!*.json
+
+# .meta của code (giữ GUID cho Unity)
+!*.cs.meta
+!*.shader.meta
+!*.cginc.meta
+!*.hlsl.meta
+!*.compute.meta
+!*.shadergraph.meta
+!*.shadersubgraph.meta
+!*.asmdef.meta
+
+# File cấu hình gốc
+!/.gitignore
+!/.vsconfig
+!/.mcp.json
+
+# --- Luôn bỏ qua (thư mục sinh tự động, cấu hình cá nhân) ---
+Library/
+Temp/
+Logs/
+obj/
+Build/
+Builds/
+.vs/
+UserSettings/
+__pycache__/
+*.csproj
+*.sln
+.claude/settings.local.json
+# Trang Review Lab sinh ra (1 file lớn tự chứa ảnh)
+/Docs/VFX/_Review/

@@ -1,0 +1,68 @@
+# VFX_LIb
+
+Unity project – thư viện VFX.
+
+## Skill: VFX_Maker (`/vfx-maker`)
+
+Skill quy trình VFX chính của dự án (texture + particle → prefab), ở cấp project (chuyển từ user-level ngày 2026-11-03): `.claude\skills\vfx-maker\` trong project (`D:\Game_prj\VFX_LIb\.claude\skills\vfx-maker\`, version `2.3.0`). Gọi bằng `/vfx-maker`.
+
+- Quy trình: mô tả / ảnh / JSON Shape Lab → **định hướng không gian** (bắt buộc; thiếu thông tin thì **hỏi**, không tự đoán) → kế hoạch (duyệt 1 lần) → asset → build script → build + preview → Review Lab → bàn giao.
+- Định hướng không gian (`references/direction.md`):
+  - ngữ cảnh: air / ground / dir;
+  - mặt phẳng: Billboard / nằm đất = Billboard + Local / Stretched; **không dùng Horizontal / Vertical Billboard**;
+  - camera: mặc định 3/4, nhìn xuống 40°;
+  - neo, quy mô (m), di chuyển, nền.
+- Asset theo thứ tự: script → Shape Lab / thư viện (có nhóm PixelFX) → ChatGPT. VFX bằng code: dùng skill `/vfx-code`.
+- Chế độ B: chỉ xuất spec + prompt tiếng Anh để bàn giao, không dựng prefab.
+- 2.3.0 (2026-11-03): **bỏ chế độ C (codefx)** cùng thành phần Scorch / CodeFX khỏi skill. Bản lưu 2.2.0: `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.2.0_before_codefx_removal_2026-11-03/`.
+  - Prefab Scorch / CodeFX trong project vẫn giữ; `MixRecipeBuild.cs` và `CodeFxComponentsBuild.cs` của project trỏ vào codefx trong bản lưu đó.
+  - Cùng đợt: sửa mâu thuẫn tài liệu (Horizontal Billboard trong particles.md, bộ số thứ tự vẽ theo `ComponentKit` của project, texture comet quay đầu sang trái, luật lửa hạt đậu, Frame over Time thẳng).
+- Lịch sử skill:
+  - 2026-10-28: `unity-vfx-maker` đổi tên thành `vfx-maker`, gộp phần đáng giữ của `dynamic-vfx-prompt-builder` (bản Claude, đã xoá).
+  - 2026-11-02: skill `/vfx-shader` đã **xoá**. Bước định hướng của nó được gộp vào `vfx-maker` mục 1a. Bản lưu: `Docs/VFX/_ArtDirection/_archive/vfx-shader_skill_2026-11-02/`.
+  - Các bản sao lưu khác ở `Docs/VFX/_ArtDirection/_archive/`.
+  - Bản Codex ở `C:\Users\Manh\.agents\skills\dynamic-vfx-prompt-builder` là bản độc lập, không bị đụng tới.
+- Shader dùng chung của project, vẫn giữ:
+  - `Docs/VFX/SHADERS.md` (kiểm tra trước khi viết shader mới);
+  - `Assets/VFX/_Shared/Shaders/VfxShaderLib.cginc`;
+  - noise `Assets/VFX/_Shared/Textures/Noise/`;
+  - build kit `Assets/VFX/_Kit/`.
+- **Thành phần chuẩn + auto mix** (mục 9; 2.2.0, art lead chốt 2026-11-03): đòn trúng / nổ thì Claude **tự mix** từ Impact / Glow / Ring / Sparks / Dust theo brief.
+  - Luồng: `mix/auto_mix.py` → recipe → Unity `MixRecipeBuild` → Review Lab. Art lead yêu cầu đổi.
+  - Luật: một effect chỉ một ngữ cảnh và một chớp; thứ tự vẽ theo mặt phẳng trước (bảng ở `ComponentKit`).
+  - Mix Lab (web xem và tinh chỉnh): https://claude.ai/artifact/CMFUvsBJ6YeqapsMZoNwbt. Chi tiết: skill `references/mix.md`.
+
+## Skill: vfx-code (`/vfx-code`, 2026-11-03)
+
+VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn mở trên GitHub (danh mục + giấy phép: `references/sources.md`). Ở `.claude\skills\vfx-code\`, version `1.1.0`.
+
+- **Skill tách riêng hoàn toàn với `vfx-maker`** (art lead 2026-11-03): không dùng công cụ / asset / quy trình của nó. Điểm chung duy nhất: gọi **Review Lab** để review.
+- Tự chứa: `lib/core.py` (Canvas, xuất sheet, `--check`) + `fxlib` (noise có chu kỳ, SDF, polar, toon, dissolve/erosion, sét, lửa) + `stylize` (minerva) + `particles` (three.quarks / Godot / Effekseer) + `fluid` (stable fluids). Builder Unity riêng: `assets/VfxCodeBuild.cs` (menu `VFX/vfx-code/Build From Json...`).
+- Lệnh: `python -I D:/Game_prj/VFX_LIb/.claude/skills/vfx-code/lib/render.py <effect.py> --project . --effect <Tên> --gif --check --review` → sheet + json vào `Assets/VFX/<Tên>/Textures/`, preview + GIF + BuildReport vào `Docs/VFX/<Tên>/`, rồi dựng Review Lab.
+- Luật art lead vẫn áp dụng: không gian trước (thiếu thì hỏi), không Horizontal / Vertical Billboard, khói thuỳ, vệt chém = mesh + UV, Frame over Time tuyến tính.
+- 4 mẫu trong `examples/` (shockwave, spark burst, lightning loop, fluid plume), đều qua `--check`.
+
+## Skill: vfx-shader (`/vfx-shader`, tạo lại 2026-11-03)
+
+VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.0.0`. Gọi bằng `/vfx-shader`.
+
+- Thứ tự: dùng lại shader có sẵn → mở rộng → viết mới (nhẹ, một pass, Built-in + URP). Định hướng không gian bắt buộc (thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, Review Lab.
+- **Slash chỉ làm bằng bộ Coloso** (`VFXLib/ColosoShaderAdditive|Alpha|AlphaCutOut_Optimized`, art lead 2026-11-03), theo `references/coloso.md`: texture xám, màu từ ramp / Color over Lifetime, `MaskTex` = `T_VFX_Gradient_01`, stream `Custom1XYZW`.
+- Mesh nhập: `Assets/VFX/_Imported/Mesh/` (55 `SM_VFX_*`). Shader nhập: `Assets/VFX/_Imported/RpgGame/` (xem `README.md` trong đó).
+- Ví dụ làm xong: `Assets/VFX/Slash360/` (vệt chém 360°, hiện chỉ còn nguyên tố Đất; bản 5 nguyên tố lưu ở `_archive/Slash360_5elements_2026-11-03/`), ghi chú `Docs/VFX/Slash360/Plan.md`; `Assets/VFX/IceSpike/` (gai đâm lên: bản Băng pha lê và bản Đất đá, cùng hiệu ứng nhưng khác mesh, bố cục, timing).
+- **Có khác biệt giữa các effect / biến thể, không chỉ đổi màu** (art lead 2026-11-04): khi làm effect mới hoặc biến thể (ví dụ Băng → Đất), đổi ít nhất hai trong mesh / vị trí-bố cục / timing / lớp phụ so với bản đã có. **Nhưng đúng yêu cầu: biến thể vẫn là cùng hiệu ứng; không tự biến nó thành một effect khác.** Effect khác chỉ làm khi art lead yêu cầu.
+- Bản `/vfx-shader` cũ (quad + noise) đã gộp vào vfx-maker rồi xoá 2026-11-02, bản lưu ở `Docs/VFX/_ArtDirection/_archive/vfx-shader_skill_2026-11-02/`.
+
+## Scene chung VFX_Showcase (2026-11-03)
+
+Mọi VFX để chung một scene: `Assets/VFX/_Showcase/Scenes/VFX_Showcase.unity`. Khi chạy có giao diện (uGUI dựng bằng code, `Assets/VFX/_Showcase/Runtime/VfxShowcase.cs`) để đổi qua lại: danh sách theo nhóm bên trái, Prev / Replay / Next, Loop, Speed, ô 2 m tham chiếu, 3 góc camera (Top-down 60°, 3/4 40°, Side 8°). Phím: ← → đổi VFX, Space phát lại, 1/2/3 camera, R tham chiếu, L loop, con lăn chuột zoom.
+- Tạo / cập nhật scene: menu **VFX → Showcase → Build Scene** (`VfxShowcaseBuild.cs`): chỉ gom các effect trong danh sách `Included` của `VfxShowcaseBuild.cs` (hiện: `VFX_Slash360_*`, `VFX_IceSpikeFan_*`, `VFX_HealCircle`; các effect cũ khác chưa thử nên chưa đưa vào). Thêm effect mới thì thêm tiền tố tên prefab vào `Included`. **Mỗi lần thêm hoặc build lại một VFX thì chạy lại menu này.** Thiếu prefab IceSpike thì tự build.
+- VFX mới (kể cả của `/vfx-shader`, `/vfx-maker`, `/vfx-code`) cần prefab tên `VFX_<Tên>.prefab` trong `Prefabs/` và một dòng trong `Included` để vào danh sách.
+
+## Review Lab (web review, không cần mở Unity)
+
+- Lệnh: `python -I D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/review-lab/build_review.py --project . [--effect Tên]` → `Docs/VFX/_Review/index.html` (1 file tự chứa).
+- Gồm: timeline preview, flipbook, ảnh/GIF, so sánh A/B, ghim góp ý, nút "Xuất phản hồi" để dán vào chat.
+- Gắn vào `/vfx-maker` (mục 5b). Có cấu hình `review-lab` trong `.claude/launch.json` (cổng 8776).
+
+Trạng thái công việc VFX: đọc `Docs/VFX/_ArtDirection/PROGRESS.md` trước.

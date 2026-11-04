@@ -1,0 +1,26 @@
+{
+  "sourceFilesUnchanged": true,
+  "sourceFileCount": 37,
+  "prefabVisualDataUnchanged": true,
+  "pipelineSettingsUnchanged": true,
+  "identicalValidatedSourceBytes": true,
+  "checks": [
+    {
+      "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+      "equalToSourceExceptGuidRemaps": true
+    },
+    {
+      "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+      "equalToSourceExceptGuidRemaps": true
+    },
+    {
+      "settings": "GraphicsSettings.asset",
+      "unchanged": true
+    },
+    {
+      "settings": "QualitySettings.asset",
+      "unchanged": true
+    }
+  ],
+  "sceneCopiedFromValidatedProject": "Assets/CannonVFX_LibraryReuse_v1/Scenes/CannonLibraryReuse_Demo.unity"
+}

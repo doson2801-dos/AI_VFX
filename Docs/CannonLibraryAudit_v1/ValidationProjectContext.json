@@ -1,0 +1,7 @@
+{
+  "project": "D:\\Game_prj\\VFX_LIb\\Docs\\CannonLibraryAudit_v1\\UnityValidation",
+  "targetEditorOpen": true,
+  "reason": "Separate Unity editor process does not touch the scene open in the target project. Approved sources, script GUIDs and Built-in project settings mirrored for validation.",
+  "outputRoot": "Assets/CannonVFX_LibraryReuse_v1",
+  "target": "D:\\Game_prj\\VFX_LIb"
+}

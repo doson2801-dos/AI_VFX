@@ -1,0 +1,29 @@
+{
+    "unity": "2022.3.62f3",
+    "pipeline": "Built-in",
+    "method": "Actual Play Mode; camera render; captureFramerate=60",
+    "completed": true,
+    "naturalEnd": true,
+    "stopClears": true,
+    "lateStopClears": true,
+    "replayEmits": true,
+    "disableClears": true,
+    "poolReplay": true,
+    "worldSpace": true,
+    "pauseStable": true,
+    "peakParticles": 62,
+    "rendererCount": 50,
+    "materialCount": 8,
+    "samples": [
+        "0.050s: 60 particles; Smoke=14, Impact=18, Center=2, Debris=14, Cracks=12",
+        "0.100s: 60 particles; Smoke=14, Impact=18, Center=0, Debris=14, Cracks=14",
+        "0.300s: 60 particles; Smoke=14, Impact=18, Center=0, Debris=14, Cracks=14",
+        "0.450s: 42 particles; Smoke=14, Impact=0, Center=0, Debris=14, Cracks=14",
+        "0.800s: 35 particles; Smoke=14, Impact=0, Center=0, Debris=14, Cracks=7",
+        "1.600s: 21 particles; Smoke=14, Impact=0, Center=0, Debris=0, Cracks=7",
+        "2.400s: 14 particles; Smoke=14, Impact=0, Center=0, Debris=0, Cracks=0",
+        "3.000s: 0 particles; Smoke=0, Impact=0, Center=0, Debris=0, Cracks=0",
+        "3.200s: 0 particles; Smoke=0, Impact=0, Center=0, Debris=0, Cracks=0"
+    ],
+    "errors": []
+}

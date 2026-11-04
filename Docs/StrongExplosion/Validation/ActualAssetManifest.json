@@ -1,0 +1,97 @@
+[
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Demo\\StrongExplosionDemo.cs",
+    "bytes": 5861,
+    "sha256": "1B0DAC789DD6F85684726E511305D8683229EA375E6ECA0C5B794EB184FF5B6C"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Editor\\StrongExplosionBuild.cs",
+    "bytes": 18815,
+    "sha256": "BF298EF447427CA626391A8B124067CD6FEE69E29D0F59FB4949D213EC43EB28"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_CenterCore.mat",
+    "bytes": 897,
+    "sha256": "1EFDF480B88507A26F34031B2CA37244E7883AB7DB2AA4C205CF263E0F08419C"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_CenterHalo.mat",
+    "bytes": 897,
+    "sha256": "1349D0222E3C9EA1D0525639ADB624D64CF00C83EFFFB87BA2534C05E3C77AF2"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_CrackDark.mat",
+    "bytes": 1970,
+    "sha256": "7270068F5C2A37783741FB560602AFD0034CA68FDE897414BCBBC93045A1E4A5"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_CrackHot.mat",
+    "bytes": 895,
+    "sha256": "0D1DA5AA0DB6EB9FE1DBC2483DB5CBEC66AEC0D48E184033DC7CFD040352BC93"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_Debris.mat",
+    "bytes": 1912,
+    "sha256": "685A941C15E7F4F48FDFFFEDEC80B9016E05F2C9E0F4AC87F29DB5114EA8C7FC"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_ImpactBody.mat",
+    "bytes": 897,
+    "sha256": "B39A1D2CFCB9E98C2B784EB64F819D57F83ED533D064E763A489BBB04C09C5A1"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_ImpactTip.mat",
+    "bytes": 896,
+    "sha256": "14F3B9BFEF13335FE8EB434CF204371C8689C008A38704A94C4734D6AE7CA0E0"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Materials\\M_Smoke.mat",
+    "bytes": 1966,
+    "sha256": "1CA5223C1C0A62FB5617EC36BCB31FC29F009D6115D221FA2E67679E3F90EE38"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Meshes\\M_Debris_A.asset",
+    "bytes": 5022,
+    "sha256": "D5786CBC0F9FB676DE8D5B5D2586B43615E5817CEF88098DDD1C303975074A65"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Meshes\\M_Debris_B.asset",
+    "bytes": 5014,
+    "sha256": "36523B09720C2B79DDB976DEF37863B7C89455E1A0E7219DBA13929072FE69A3"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Prefabs\\VFX_StrongExplosion.prefab",
+    "bytes": 5989148,
+    "sha256": "7052486EBBBE2F095D2686FED65F0114307683EF2FF62F520BC580C6960F3884"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Scenes\\StrongExplosion_Demo.unity",
+    "bytes": 14178,
+    "sha256": "3CF62B4355E5E23B79EADC2118A673490E9D52CED6915097B1144D1032B56604"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Textures\\T_CenterFlash.png",
+    "bytes": 816387,
+    "sha256": "DC648336C8CCB8E77665EC2140F781A68AA3D457EA191DDB6C40F2BA15D532FE"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Textures\\T_CrackBranch.png",
+    "bytes": 314165,
+    "sha256": "994154AC50F3D7CC0D0DA2F8EA0F06F1F6C5E27674BEC6A31A5D3FD8A541C3DA"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Textures\\T_ImpactBody_2Variants.png",
+    "bytes": 297416,
+    "sha256": "4C565F035AEAA62550799802BDD480CC5DBD189627BCC46D1FF1874AE7FB28D4"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Textures\\T_ImpactTip_2Variants.png",
+    "bytes": 160486,
+    "sha256": "304F69B96951845FD76F73224AD9458A4388FB265F42156D88B351561C69D1DD"
+  },
+  {
+    "path": "D:\\Game_prj\\VFX_LIb\\Assets\\StrongExplosion_v1\\Textures\\T_SmokePuff.png",
+    "bytes": 1233149,
+    "sha256": "BE474C413FB3315E05828B01CC846DDAC96852B35724C146CD839AD6F2D46D4D"
+  }
+]

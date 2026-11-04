@@ -1,0 +1,1309 @@
+{
+  "target": "D:/Game_prj/VFX_LIb",
+  "targetPipeline": "Built-in selected by user",
+  "evidence": "Source analysis; stream enum names read by reflection from Unity 2022.3.62f3 ParticleSystemModule.dll; not loaded prefab/runtime validation",
+  "prefabs": [
+    {
+      "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+      "guid": "cbb041f394e578149af8ac2c397ee661",
+      "renderers": [
+        {
+          "object": {
+            "name": "smoke",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+              "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "impact2",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "4",
+          "useCustomStreams": "1",
+          "streamBytes": "000103040522",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "UV2",
+            "Custom1XYZW"
+          ],
+          "materials": [
+            {
+              "guid": "fa0c866a48770b64987a7aca4fc1eedf",
+              "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "smoke3",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "1",
+          "streamBytes": "000103042223",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "Custom1XYZW",
+            "Custom2X"
+          ],
+          "materials": [
+            {
+              "guid": "02dff015a09f31840a185f6d8d320780",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "1",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "1"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "VFX_Cannon_Shoot",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "34ece577e916c944c9fb4f68acf252ba",
+              "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "impact",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "1",
+          "streamBytes": "0001030422",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "Custom1XYZW"
+          ],
+          "materials": [
+            {
+              "guid": "83d3011c365ea854d91e6466a97ae80f",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "smoke3 (1)",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "1",
+          "streamBytes": "000103042223",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "Custom1XYZW",
+            "Custom2X"
+          ],
+          "materials": [
+            {
+              "guid": "02dff015a09f31840a185f6d8d320780",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "1",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "1"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "smoke2",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+              "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "1"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+      "guid": "6b14662d8c2f77743baf269dae218b6a",
+      "renderers": [
+        {
+          "object": {
+            "name": "ground",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "1",
+          "streamBytes": "000103042223",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "Custom1XYZW",
+            "Custom2X"
+          ],
+          "materials": [
+            {
+              "guid": "65e3e121dfb073c4eaeac6e921dd5ff1",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "1",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "1"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "VFX_Cannon_Impact_InUse",
+            "active": "1"
+          },
+          "rendererEnabled": "0",
+          "mode": "4",
+          "useCustomStreams": "0",
+          "streamBytes": "0001030405",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "UV2"
+          ],
+          "materials": [
+            {
+              "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+              "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "impact",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "1",
+          "streamBytes": "0001030422",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "Custom1XYZW"
+          ],
+          "materials": [
+            {
+              "guid": "83d3011c365ea854d91e6466a97ae80f",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat"
+            }
+          ],
+          "customDataEnabled": "1",
+          "customDataModes": {
+            "mode0": "1",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "impact_main",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "1cbee8a584db1294fad660637d33ab41",
+              "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "glow",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "6c86eb342b6ccc042805af51fa303ff0",
+              "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        },
+        {
+          "object": {
+            "name": "VFX_Cannon_Impact_InUse",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "4",
+          "useCustomStreams": "0",
+          "streamBytes": "0001030405",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV",
+            "UV2"
+          ],
+          "materials": [
+            {
+              "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+              "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat"
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "1"
+        },
+        {
+          "object": {
+            "name": "glow_black",
+            "active": "1"
+          },
+          "rendererEnabled": "1",
+          "mode": "0",
+          "useCustomStreams": "0",
+          "streamBytes": "00010304",
+          "streams": [
+            "Position",
+            "Normal",
+            "Color",
+            "UV"
+          ],
+          "materials": [
+            {
+              "guid": "0000000000000000f000000000000000",
+              "path": null
+            }
+          ],
+          "customDataEnabled": "0",
+          "customDataModes": {
+            "mode0": "0",
+            "mode1": "0",
+            "vectorComponentCount0": "4",
+            "vectorComponentCount1": "4"
+          },
+          "textureSheetEnabled": "0"
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat",
+      "guid": "02dff015a09f31840a185f6d8d320780",
+      "shader": {
+        "fileID": "-6465566751694194690",
+        "guid": "7f11fe28133f1a74594785107b98f2fe",
+        "path": "Assets/VFX_Library/Shaders/UberFXSG.shadergraph"
+      },
+      "properties": {
+        "_AddPrecomputedVelocity": "0",
+        "_AlphaClip": "0",
+        "_AlphaCutoff": "0.5",
+        "_AlphaCutoffEnable": "0",
+        "_AlphaDstBlend": "1",
+        "_AlphaSrcBlend": "1",
+        "_AlphaToMask": "0",
+        "_AlphaToMaskInspectorValue": "0",
+        "_Alpha_Clip_Threshold": "0.5",
+        "_BUILTIN_AlphaClip": "0",
+        "_BUILTIN_Blend": "2",
+        "_BUILTIN_CullMode": "0",
+        "_BUILTIN_DstBlend": "1",
+        "_BUILTIN_QueueControl": "1",
+        "_BUILTIN_QueueOffset": "0",
+        "_BUILTIN_SrcBlend": "5",
+        "_BUILTIN_Surface": "1",
+        "_BUILTIN_ZTest": "4",
+        "_BUILTIN_ZWrite": "0",
+        "_BUILTIN_ZWriteControl": "0",
+        "_Blend": "0",
+        "_BlendMode": "1",
+        "_CastShadows": "0",
+        "_ConservativeDepthOffsetEnable": "0",
+        "_Cull": "0",
+        "_CullMode": "0",
+        "_CullModeForward": "0",
+        "_Culling": "0",
+        "_DISABLEEROSION": "0",
+        "_DepthOffsetEnable": "0",
+        "_Desaturate": "1",
+        "_DisableErosion": "0",
+        "_DistortionEnable": "0",
+        "_DistortionIntensity": "0",
+        "_DistortionOnly": "0",
+        "_DoubleSidedEnable": "1",
+        "_DoubleSidedGIMode": "0",
+        "_DoubleSidedNormalMode": "2",
+        "_DstBlend": "10",
+        "_EnableBlendModePreserveSpecularLighting": "0",
+        "_EnableFogOnTransparent": "0",
+        "_FRESNEL": "0",
+        "_Fresnel": "0",
+        "_FresnelPower": "1",
+        "_FresnelScale": "1",
+        "_Invert_Fresnel": "0",
+        "_MiddlePointPos": "0.5",
+        "_MiddlePointPos1": "0.5",
+        "_MultiplyNoiseDesaturation": "1",
+        "_OpaqueCullMode": "2",
+        "_QueueControl": "1",
+        "_QueueOffset": "0",
+        "_ReceivesSSR": "0",
+        "_ReceivesSSRTransparent": "0",
+        "_RenderQueueType": "4",
+        "_RequireSplitLighting": "0",
+        "_SoftFadeFactor": "1",
+        "_SourceBlendRGB": "1",
+        "_SrcBlend": "5",
+        "_StencilRef": "0",
+        "_StencilRefDepth": "0",
+        "_StencilRefDistortionVec": "4",
+        "_StencilRefGBuffer": "2",
+        "_StencilRefMV": "32",
+        "_StencilWriteMask": "6",
+        "_StencilWriteMaskDepth": "8",
+        "_StencilWriteMaskDistortionVec": "4",
+        "_StencilWriteMaskGBuffer": "14",
+        "_StencilWriteMaskMV": "42",
+        "_Surface": "1",
+        "_SurfaceType": "1",
+        "_TransparentBackfaceEnable": "0",
+        "_TransparentCullMode": "2",
+        "_TransparentDepthPostpassEnable": "0",
+        "_TransparentDepthPrepassEnable": "0",
+        "_TransparentSortPriority": "0",
+        "_TransparentWritingMotionVec": "0",
+        "_TransparentZWrite": "0",
+        "_USEALPHAOVERRIDE": "0",
+        "_USEPIXELATION": "0",
+        "_USERAMP": "0",
+        "_USESOFTALPHA": "0",
+        "_USEUVOFFSET": "0",
+        "_UseAlphaDisolve": "0",
+        "_UseAlphaOverride": "0",
+        "_UsePixelation": "0",
+        "_UseRamp": "0",
+        "_UseShadowThreshold": "0",
+        "_UseSoftAlpha": "0",
+        "_UseUVOffset": "0",
+        "_ZTest": "4",
+        "_ZTestDepthEqualForOpaque": "4",
+        "_ZTestGBuffer": "4",
+        "_ZTestTransparent": "4",
+        "_ZWrite": "0",
+        "_ZWriteControl": "0",
+        "_AlphaOverrideChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_AlphaOverridePanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailAdditiveChannel": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailDisolveChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_DetailDistortionChannel": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailMultiplyChannel": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailNoisePanning": "{r: 0.25, g: 0.25, b: 0, a: 0}",
+        "_DetailVertexOffsetChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_Disolve_Fade_Range": "{r: -0.25, g: 1, b: 0, a: 0}",
+        "_DoubleSidedConstants": "{r: 1, g: 1, b: 1, a: 0}",
+        "_EmissionColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_FlipbooksColumsRows": "{r: 1, g: 1, b: 0, a: 0}",
+        "_FresnelColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_LastColor": "{r: 1, g: 1, b: 1, a: 0}",
+        "_MainAlphaChannel": "{r: 0, g: 0, b: 0, a: 1}",
+        "_MainAlphaPanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_MainTextureChannel": "{r: 5, g: 0, b: 0, a: 0}",
+        "_MainTexturePanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_MidColor": "{r: 1, g: 1, b: 1, a: 0}",
+        "_Resolution": "{r: 64, g: 64, b: 0, a: 0}",
+        "_UnlitColorMap_MipInfo": "{r: 0, g: 0, b: 0, a: 0}",
+        "_WhiteColor": "{r: 1, g: 1, b: 1, a: 0}"
+      },
+      "keywords": [
+        "m_ValidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT",
+        "m_InvalidKeywords:\n  - _DOUBLESIDED_ON"
+      ],
+      "textures": [
+        {
+          "property": "_DetailNoise",
+          "guid": "326e23a2ecc971941adcccbc30124228",
+          "path": "Assets/VFX_Library/Textures/Disolve_Twirly.png"
+        },
+        {
+          "property": "_MainTex",
+          "guid": "4e8b9e0b3f67f1345a16b6bd2b3d4c4e",
+          "path": "Assets/VFX_Library/Textures/SmokeHarsh.png"
+        },
+        {
+          "property": "_MainTexture",
+          "guid": "0000000000000000f000000000000000",
+          "path": null
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat",
+      "guid": "1cbee8a584db1294fad660637d33ab41",
+      "shader": {
+        "fileID": "203",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      },
+      "properties": {
+        "_DissolveAmount": "0",
+        "_DissolveSoftness": "0.3",
+        "_DstBlend": "10",
+        "_EdgeSoftness": "0.0001",
+        "_EnableScrollX": "0",
+        "_EnableScrollY": "0",
+        "_EnableSoftX": "1",
+        "_EnableSoftY": "0",
+        "_InvFade": "1",
+        "_Loop": "0",
+        "_ScrollDistanceX": "0",
+        "_ScrollDistanceY": "0",
+        "_ScrollSpeedX": "0",
+        "_ScrollSpeedY": "0",
+        "_SrcBlend": "5",
+        "_UseTime": "0",
+        "_Color": "{r: 1, g: 1, b: 1, a: 1}",
+        "_DissolveOffset": "{r: 0, g: 0, b: 0, a: 0}",
+        "_EdgeSoftnessXY": "{r: 0, g: 0, b: 0, a: 0}",
+        "_ScrollSpeed": "{r: 0, g: 0, b: 0, a: 0}",
+        "_TintColor": "{r: 1, g: 1, b: 1, a: 0.5}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords:\n  - _ENABLESOFTX_ON"
+      ],
+      "textures": [
+        {
+          "property": "_DissolveTex",
+          "guid": "302dcb9104989b54294391cf85f41ef3",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Tx_Impact_radial_01.png"
+        },
+        {
+          "property": "_MainTex",
+          "guid": "b7eebc70ebd407343a4bbac1abfe7ede",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Muzzle.png"
+        },
+        {
+          "property": "_MaskTex",
+          "guid": "c7c3776405c7983498eef4741e618244",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/cfxr sword trail mask lines.png"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat",
+      "guid": "34ece577e916c944c9fb4f68acf252ba",
+      "shader": {
+        "fileID": "200",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      },
+      "properties": {
+        "_AlphaClip": "0",
+        "_Blend": "2",
+        "_BlendOp": "0",
+        "_BumpScale": "1",
+        "_CameraFadingEnabled": "0",
+        "_CameraFarFadeDistance": "2",
+        "_CameraNearFadeDistance": "1",
+        "_ColorMode": "0",
+        "_Cull": "2",
+        "_Cutoff": "0.5",
+        "_DetailNormalMapScale": "1",
+        "_DistortionBlend": "0.5",
+        "_DistortionEnabled": "0",
+        "_DistortionStrength": "1",
+        "_DistortionStrengthScaled": "0.1",
+        "_DstBlend": "1",
+        "_FlipbookBlending": "0",
+        "_FlipbookMode": "0",
+        "_GlossMapScale": "1",
+        "_Glossiness": "0.5",
+        "_GlossyReflections": "1",
+        "_InvFade": "3",
+        "_Metallic": "0",
+        "_Mode": "0",
+        "_OcclusionStrength": "1",
+        "_Parallax": "0.02",
+        "_QueueOffset": "0",
+        "_SmoothnessTextureChannel": "0",
+        "_SoftParticlesEnabled": "1",
+        "_SoftParticlesFarFadeDistance": "6.58",
+        "_SoftParticlesNearFadeDistance": "194.1",
+        "_SpecularHighlights": "1",
+        "_SrcBlend": "5",
+        "_Surface": "1",
+        "_UVSec": "0",
+        "_ZWrite": "0",
+        "_BaseColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_BaseColorAddSubDiff": "{r: 1, g: 0, b: 0, a: 0}",
+        "_CameraFadeParams": "{r: 0, g: Infinity, b: 0, a: 0}",
+        "_Color": "{r: 1, g: 1, b: 1, a: 1}",
+        "_EmissionColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_SoftParticleFadeParams": "{r: 194.1, g: -0.0053327642, b: 0, a: 0}",
+        "_TintColor": "{r: 1, g: 1, b: 1, a: 1}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords:\n  - _FADING_ON\n  - _SOFTPARTICLES_ON"
+      ],
+      "textures": [
+        {
+          "property": "_MainTex",
+          "guid": "a608c9714a8c6f44db24cfbc558bdb62",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Rectangle 1.png"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat",
+      "guid": "65e3e121dfb073c4eaeac6e921dd5ff1",
+      "shader": {
+        "fileID": "-6465566751694194690",
+        "guid": "7f11fe28133f1a74594785107b98f2fe",
+        "path": "Assets/VFX_Library/Shaders/UberFXSG.shadergraph"
+      },
+      "properties": {
+        "_AddPrecomputedVelocity": "0",
+        "_AlphaClip": "0",
+        "_AlphaCutoff": "0.5",
+        "_AlphaCutoffEnable": "0",
+        "_AlphaDstBlend": "10",
+        "_AlphaSrcBlend": "1",
+        "_AlphaToMask": "0",
+        "_AlphaToMaskInspectorValue": "0",
+        "_Alpha_Clip_Threshold": "0.5",
+        "_BUILTIN_AlphaClip": "0",
+        "_BUILTIN_Blend": "0",
+        "_BUILTIN_CullMode": "2",
+        "_BUILTIN_DstBlend": "10",
+        "_BUILTIN_QueueControl": "1",
+        "_BUILTIN_QueueOffset": "0",
+        "_BUILTIN_SrcBlend": "5",
+        "_BUILTIN_Surface": "1",
+        "_BUILTIN_ZTest": "4",
+        "_BUILTIN_ZWrite": "0",
+        "_BUILTIN_ZWriteControl": "0",
+        "_Blend": "2",
+        "_BlendMode": "0",
+        "_CastShadows": "0",
+        "_ConservativeDepthOffsetEnable": "0",
+        "_Cull": "2",
+        "_CullMode": "2",
+        "_CullModeForward": "2",
+        "_Culling": "0",
+        "_DISABLEEROSION": "0",
+        "_DepthOffsetEnable": "0",
+        "_Desaturate": "0",
+        "_DisableErosion": "0",
+        "_DistortionEnable": "0",
+        "_DistortionIntensity": "0",
+        "_DistortionOnly": "0",
+        "_DoubleSidedEnable": "0",
+        "_DoubleSidedGIMode": "0",
+        "_DoubleSidedNormalMode": "2",
+        "_DstBlend": "1",
+        "_EnableBlendModePreserveSpecularLighting": "0",
+        "_EnableFogOnTransparent": "0",
+        "_FRESNEL": "0",
+        "_Fresnel": "0",
+        "_FresnelPower": "1",
+        "_FresnelScale": "1",
+        "_Invert_Fresnel": "0",
+        "_MiddlePointPos": "0.5",
+        "_MiddlePointPos1": "0.5",
+        "_MultiplyNoiseDesaturation": "1",
+        "_OpaqueCullMode": "2",
+        "_QueueControl": "1",
+        "_QueueOffset": "0",
+        "_ReceivesSSR": "0",
+        "_ReceivesSSRTransparent": "0",
+        "_RenderQueueType": "4",
+        "_RequireSplitLighting": "0",
+        "_SoftFadeFactor": "1",
+        "_SourceBlendRGB": "10",
+        "_SrcBlend": "5",
+        "_StencilRef": "0",
+        "_StencilRefDepth": "0",
+        "_StencilRefDistortionVec": "4",
+        "_StencilRefGBuffer": "2",
+        "_StencilRefMV": "32",
+        "_StencilWriteMask": "6",
+        "_StencilWriteMaskDepth": "8",
+        "_StencilWriteMaskDistortionVec": "4",
+        "_StencilWriteMaskGBuffer": "14",
+        "_StencilWriteMaskMV": "42",
+        "_Surface": "1",
+        "_SurfaceType": "1",
+        "_TransparentBackfaceEnable": "0",
+        "_TransparentCullMode": "2",
+        "_TransparentDepthPostpassEnable": "0",
+        "_TransparentDepthPrepassEnable": "0",
+        "_TransparentSortPriority": "0",
+        "_TransparentWritingMotionVec": "0",
+        "_TransparentZWrite": "0",
+        "_USEALPHAOVERRIDE": "0",
+        "_USEPIXELATION": "0",
+        "_USERAMP": "0",
+        "_USESOFTALPHA": "0",
+        "_USEUVOFFSET": "0",
+        "_UseAlphaOverride": "0",
+        "_UsePixelation": "0",
+        "_UseRamp": "0",
+        "_UseShadowThreshold": "0",
+        "_UseSoftAlpha": "0",
+        "_UseUVOffset": "0",
+        "_ZTest": "4",
+        "_ZTestDepthEqualForOpaque": "4",
+        "_ZTestGBuffer": "4",
+        "_ZTestTransparent": "4",
+        "_ZWrite": "0",
+        "_ZWriteControl": "0",
+        "_AlphaOverrideChannel": "{r: 0, g: 0, b: 0, a: 1}",
+        "_AlphaOverridePanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailAdditiveChannel": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailDisolveChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_DetailDistortionChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_DetailMultiplyChannel": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailNoisePanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DetailVertexOffsetChannel": "{r: 1, g: 0, b: 0, a: 0}",
+        "_Disolve_Fade_Range": "{r: -0.25, g: 1, b: 0, a: 0}",
+        "_DoubleSidedConstants": "{r: 1, g: 1, b: -1, a: 0}",
+        "_EmissionColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_FlipbooksColumsRows": "{r: 1, g: 1, b: 0, a: 0}",
+        "_FresnelColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_LastColor": "{r: 1, g: 0, b: 0, a: 0}",
+        "_MainAlphaChannel": "{r: 0, g: 0, b: 0, a: 1}",
+        "_MainAlphaPanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_MainTextureChannel": "{r: 1, g: 1, b: 1, a: 0}",
+        "_MainTexturePanning": "{r: 0, g: 0, b: 0, a: 0}",
+        "_MidColor": "{r: 1, g: 0.44479147, b: 0, a: 0}",
+        "_Resolution": "{r: 64, g: 64, b: 0, a: 0}",
+        "_UnlitColorMap_MipInfo": "{r: 0, g: 0, b: 0, a: 0}",
+        "_WhiteColor": "{r: 1, g: 0.8950032, b: 0, a: 0}"
+      },
+      "keywords": [
+        "m_ValidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT",
+        "m_InvalidKeywords: []"
+      ],
+      "textures": [
+        {
+          "property": "_AlphaOverride",
+          "guid": "8a2b684ecc255824bae028282ba50df5",
+          "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/texture/GroundCracks_Radial.png"
+        },
+        {
+          "property": "_DetailNoise",
+          "guid": "326e23a2ecc971941adcccbc30124228",
+          "path": "Assets/VFX_Library/Textures/Disolve_Twirly.png"
+        },
+        {
+          "property": "_MainTex",
+          "guid": "8a2b684ecc255824bae028282ba50df5",
+          "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/texture/GroundCracks_Radial.png"
+        },
+        {
+          "property": "_MainTexture",
+          "guid": "0000000000000000f000000000000000",
+          "path": null
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat",
+      "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+      "shader": {
+        "fileID": "211",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      },
+      "properties": {
+        "_BlendOp": "0",
+        "_BumpScale": "1",
+        "_CameraFadingEnabled": "0",
+        "_CameraFarFadeDistance": "2",
+        "_CameraNearFadeDistance": "1",
+        "_ColorMode": "0",
+        "_Cull": "2",
+        "_Cutoff": "0.5",
+        "_DetailNormalMapScale": "1",
+        "_DistortionBlend": "0.5",
+        "_DistortionEnabled": "0",
+        "_DistortionStrength": "1",
+        "_DistortionStrengthScaled": "0",
+        "_DstBlend": "0",
+        "_EmissionEnabled": "0",
+        "_FlipbookMode": "0",
+        "_GlossMapScale": "1",
+        "_Glossiness": "0.5",
+        "_GlossyReflections": "1",
+        "_LightingEnabled": "0",
+        "_Metallic": "0",
+        "_Mode": "0",
+        "_OcclusionStrength": "1",
+        "_Parallax": "0.02",
+        "_SmoothnessTextureChannel": "0",
+        "_SoftParticlesEnabled": "0",
+        "_SoftParticlesFarFadeDistance": "1",
+        "_SoftParticlesNearFadeDistance": "0",
+        "_SpecularHighlights": "1",
+        "_SrcBlend": "1",
+        "_UVSec": "0",
+        "_ZWrite": "1",
+        "_CameraFadeParams": "{r: 0, g: Infinity, b: 0, a: 0}",
+        "_Color": "{r: 0.8113208, g: 0.42525995, b: 0, a: 1}",
+        "_ColorAddSubDiff": "{r: 0, g: 0, b: 0, a: 0}",
+        "_EmissionColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_SoftParticleFadeParams": "{r: 0, g: 0, b: 0, a: 0}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords: []"
+      ],
+      "textures": []
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat",
+      "guid": "6c86eb342b6ccc042805af51fa303ff0",
+      "shader": {
+        "fileID": "10720",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      },
+      "properties": {
+        "_AlphaClip": "0",
+        "_Blend": "2",
+        "_BlendOp": "0",
+        "_BumpScale": "1",
+        "_CameraFadingEnabled": "0",
+        "_CameraFarFadeDistance": "2",
+        "_CameraNearFadeDistance": "1",
+        "_ColorMode": "0",
+        "_Cull": "2",
+        "_Cutoff": "0.5",
+        "_DetailNormalMapScale": "1",
+        "_DistortionBlend": "0.5",
+        "_DistortionEnabled": "0",
+        "_DistortionStrength": "1",
+        "_DistortionStrengthScaled": "0.1",
+        "_DstBlend": "1",
+        "_FlipbookBlending": "0",
+        "_FlipbookMode": "0",
+        "_GlossMapScale": "1",
+        "_Glossiness": "0.5",
+        "_GlossyReflections": "1",
+        "_InvFade": "3",
+        "_Metallic": "0",
+        "_Mode": "0",
+        "_OcclusionStrength": "1",
+        "_Parallax": "0.02",
+        "_QueueOffset": "0",
+        "_SmoothnessTextureChannel": "0",
+        "_SoftParticlesEnabled": "1",
+        "_SoftParticlesFarFadeDistance": "6.58",
+        "_SoftParticlesNearFadeDistance": "194.1",
+        "_SpecularHighlights": "1",
+        "_SrcBlend": "5",
+        "_Surface": "1",
+        "_UVSec": "0",
+        "_ZWrite": "0",
+        "_BaseColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_BaseColorAddSubDiff": "{r: 1, g: 0, b: 0, a: 0}",
+        "_CameraFadeParams": "{r: 0, g: Infinity, b: 0, a: 0}",
+        "_Color": "{r: 1, g: 1, b: 1, a: 1}",
+        "_EmissionColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_SoftParticleFadeParams": "{r: 194.1, g: -0.0053327642, b: 0, a: 0}",
+        "_TintColor": "{r: 0.5, g: 0.5, b: 0.5, a: 0.5}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords:\n  - _FADING_ON\n  - _SOFTPARTICLES_ON"
+      ],
+      "textures": [
+        {
+          "property": "_MainTex",
+          "guid": "a608c9714a8c6f44db24cfbc558bdb62",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Rectangle 1.png"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat",
+      "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+      "shader": {
+        "fileID": "-6465566751694194690",
+        "guid": "1a29b4d27eb8b04479ef89c00dea533d",
+        "path": "Assets/VFX_Library/Shaders/CFXR Particle Ubershader.cfxrshader"
+      },
+      "properties": {
+        "_BacklightTransmittance": "1",
+        "_BlendingType": "0",
+        "_BumpScale": "1",
+        "_CFXR_DITHERED_SHADOWS": "1",
+        "_CFXR_OVERLAYBLEND": "0",
+        "_CFXR_OVERLAYTEX": "0",
+        "_Cutoff": "0.1",
+        "_DebugDissolveTime": "0",
+        "_DirLightScreenAtten": "1",
+        "_DirectLightingRamp": "1",
+        "_DissolveSmooth": "0.15",
+        "_Distort": "0.1",
+        "_DoubleDissolve": "0",
+        "_DstBlend": "10",
+        "_EdgeFadePow": "1",
+        "_FadeAlongU": "0",
+        "_HdrBoost": "0",
+        "_HdrMultiply": "0",
+        "_IndirectLightingMix": "0.5",
+        "_InvertDissolveTex": "0",
+        "_LightingWorldPosStrength": "0.2",
+        "_OVERLAYBLEND": "0",
+        "_OVERLAYTEX": "0",
+        "_ReceivedShadowsStrength": "0.5",
+        "_SecondColorSmooth": "0.2",
+        "_ShadowStrength": "0.5",
+        "_SingleChannel": "0",
+        "_SoftParticlesFadeDistanceFar": "1",
+        "_SoftParticlesFadeDistanceNear": "0",
+        "_SrcBlend": "5",
+        "_UVDistortionAdd": "0",
+        "_UseAlphaClip": "0",
+        "_UseBackLighting": "0",
+        "_UseDissolve": "1",
+        "_UseDissolveOffsetUV": "0",
+        "_UseEF": "0",
+        "_UseEmission": "0",
+        "_UseFB": "0",
+        "_UseFontColor": "0",
+        "_UseGradientMap": "0",
+        "_UseLighting": "0",
+        "_UseLightingWorldPosOffset": "0",
+        "_UseNormalMap": "0",
+        "_UseSP": "1",
+        "_UseSecondColor": "0",
+        "_UseUV2Distortion": "0",
+        "_UseUVDistortion": "0",
+        "_ZWrite": "0",
+        "_Color": "{r: 2, g: 2, b: 2, a: 1}",
+        "_DissolveScroll": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DistortScrolling": "{r: 0, g: 0, b: 1, a: 1}",
+        "_OverlayTex_Scroll": "{r: 0.1, g: 0.1, b: 1, a: 1}",
+        "_ShadowColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_SoftParticlesFadeDistance": "{r: 0, g: 1, b: 0, a: 0}"
+      },
+      "keywords": [
+        "m_ValidKeywords:\n  - _ALPHABLEND_ON\n  - _CFXR_DISSOLVE\n  - _CFXR_DITHERED_SHADOWS_ON\n  - _FADING_ON",
+        "m_InvalidKeywords:\n  - _\n  - _CFXR_OVERLAYBLEND_RGBA\n  - _CFXR_OVERLAYTEX_OFF"
+      ],
+      "textures": [
+        {
+          "property": "_DissolveTex",
+          "guid": "c1819aef53deedf40af80257ccb5b1a8",
+          "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4 dissolve.png"
+        },
+        {
+          "property": "_MainTex",
+          "guid": "4a4bd2804b2d1ff46ab18baabfc526da",
+          "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4.png"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+      "guid": "83d3011c365ea854d91e6466a97ae80f",
+      "shader": {
+        "fileID": "203",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      },
+      "properties": {
+        "_AlphaClip": "0",
+        "_AlphaToMask": "0",
+        "_Blend": "0",
+        "_BlendModePreserveSpecular": "1",
+        "_BumpScale": "1",
+        "_ClearCoatMask": "0",
+        "_ClearCoatSmoothness": "0",
+        "_Cull": "2",
+        "_Cutoff": "0.5",
+        "_DetailAlbedoMapScale": "1",
+        "_DetailNormalMapScale": "1",
+        "_DstBlend": "0",
+        "_DstBlendAlpha": "0",
+        "_EnvironmentReflections": "1",
+        "_GlossMapScale": "0",
+        "_Glossiness": "0",
+        "_GlossyReflections": "0",
+        "_InvFade": "1",
+        "_Metallic": "0",
+        "_OcclusionStrength": "1",
+        "_Parallax": "0.005",
+        "_QueueOffset": "0",
+        "_ReceiveShadows": "1",
+        "_Smoothness": "0.5",
+        "_SmoothnessTextureChannel": "0",
+        "_SpecularHighlights": "1",
+        "_SrcBlend": "1",
+        "_SrcBlendAlpha": "1",
+        "_Surface": "0",
+        "_WorkflowMode": "1",
+        "_ZWrite": "1",
+        "_BaseColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_Color": "{r: 1, g: 1, b: 1, a: 1}",
+        "_EmissionColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_SpecColor": "{r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}",
+        "_TintColor": "{r: 1, g: 1, b: 1, a: 0.5}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords: []"
+      ],
+      "textures": [
+        {
+          "property": "_MainTex",
+          "guid": "39dcb1e0e9a530d429a4cfa800460d63",
+          "path": "Assets/VFX_Library/Textures/Tx_Burst_directional_03.png"
+        }
+      ]
+    },
+    {
+      "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat",
+      "guid": "fa0c866a48770b64987a7aca4fc1eedf",
+      "shader": {
+        "fileID": "4800000",
+        "guid": "40a204680032ebb4db2ede7f5a6cfd07",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Shaders/scroll_XY_Base.shader"
+      },
+      "properties": {
+        "_AlphaClip": "0",
+        "_AlphaToMask": "0",
+        "_BacklightTransmittance": "1",
+        "_Blend": "0",
+        "_BlendModePreserveSpecular": "1",
+        "_BlendingType": "0",
+        "_BumpScale": "1",
+        "_CFXR_DITHERED_SHADOWS": "0",
+        "_CFXR_OVERLAYBLEND": "0",
+        "_CFXR_OVERLAYTEX": "0",
+        "_ClearCoatMask": "0",
+        "_ClearCoatSmoothness": "0",
+        "_ColorIntensity": "1",
+        "_ColorMask": "15",
+        "_Cull": "2",
+        "_CustomOffsetCenter": "0",
+        "_CustomOffsetXStrength": "0",
+        "_CustomOffsetYStrength": "2",
+        "_CustomOpacityStrength": "1",
+        "_Cutoff": "0.5",
+        "_DepthFade_Distance": "1",
+        "_DetailAlbedoMapScale": "1",
+        "_DetailNormalMapScale": "1",
+        "_DirLightScreenAtten": "1",
+        "_DirectLightingRamp": "1",
+        "_DissTex_UV_invert": "0",
+        "_DissolveSmooth": "0.1",
+        "_DissolveSmoothness": "0.5",
+        "_DissolveSoftness": "0.1",
+        "_DissolveThreshold": "0.5",
+        "_Distort": "0.1",
+        "_Distort_intensity": "0",
+        "_DoubleDissolve": "0",
+        "_DstBlend": "1",
+        "_DstBlendAlpha": "0",
+        "_EdgeFadePow": "1",
+        "_EdgeFalloffU": "2",
+        "_EdgeFalloffV": "0.98",
+        "_EdgeSoftnessU": "0.2",
+        "_EdgeSoftnessV": "0.968",
+        "_EnvironmentReflections": "1",
+        "_FadeAlongU": "0",
+        "_FadeEndY": "1",
+        "_FadeStartY": "1",
+        "_Fresnel_pow": "5",
+        "_GlossMapScale": "0",
+        "_Glossiness": "0",
+        "_GlossyReflections": "0",
+        "_HdrMultiply": "1",
+        "_IndirectLightingMix": "0.5",
+        "_InvFade": "1",
+        "_InvertDissolveTex": "0",
+        "_InvertFresnel": "0",
+        "_LightingWorldPosStrength": "0.2",
+        "_MainTex_UV_invert": "0",
+        "_MaskMult": "1",
+        "_MaskTex_UV_invert": "0",
+        "_Metallic": "0",
+        "_OcclusionStrength": "1",
+        "_Opacity": "1",
+        "_Parallax": "0.005",
+        "_QueueOffset": "0",
+        "_ReceiveShadows": "1",
+        "_SecondColorSmooth": "0.2",
+        "_ShadowStrength": "1",
+        "_SideFadeEnd": "1",
+        "_SideFadeStart": "1",
+        "_SingleChannel": "0",
+        "_Smoothness": "0.5",
+        "_SmoothnessTextureChannel": "0",
+        "_SoftParticlesFadeDistanceFar": "1",
+        "_SoftParticlesFadeDistanceNear": "0",
+        "_SpecularHighlights": "1",
+        "_SrcBlend": "3",
+        "_SrcBlendAlpha": "1",
+        "_Stencil": "0",
+        "_StencilComp": "8",
+        "_StencilOp": "0",
+        "_StencilReadMask": "255",
+        "_StencilWriteMask": "255",
+        "_SubDissolveTex_add": "0",
+        "_SubDissolveTex_multi": "1",
+        "_Surface": "0",
+        "_UVDistortionAdd": "0",
+        "_UseAlphaClip": "0",
+        "_UseBackLighting": "0",
+        "_UseColor": "1",
+        "_UseDepthFade": "0",
+        "_UseDissolve": "0",
+        "_UseDissolveColor": "0",
+        "_UseDissolveOffsetUV": "0",
+        "_UseEF": "0",
+        "_UseEmission": "0",
+        "_UseFB": "0",
+        "_UseFontColor": "0",
+        "_UseFresnel": "0",
+        "_UseLighting": "0",
+        "_UseLightingWorldPosOffset": "0",
+        "_UseNormalMap": "0",
+        "_UsePosXScroll": "0",
+        "_UseSP": "0",
+        "_UseSecondColor": "0",
+        "_UseSubDissTex": "0",
+        "_UseUV2Distortion": "0",
+        "_UseUVDistortion": "0",
+        "_VOintensity": "0",
+        "_WorkflowMode": "1",
+        "_ZWrite": "1",
+        "_BaseColor": "{r: 1, g: 1, b: 1, a: 1}",
+        "_Color": "{r: 1, g: 1, b: 1, a: 1}",
+        "_DissolveColor_step": "{r: 0, g: 1, b: 0, a: 0}",
+        "_DissolveScroll": "{r: 0, g: 0, b: 0, a: 0}",
+        "_DissolveTex_speed": "{r: 0, g: -1, b: 0, a: 0}",
+        "_DissolveTex_uv": "{r: 0, g: 0, b: 1, a: 1}",
+        "_DistTex_uv_speed": "{r: 1, g: 1, b: 0, a: 0}",
+        "_DistortScrolling": "{r: 0, g: 0, b: 1, a: 1}",
+        "_EmissionColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_MainTex_speed": "{r: 0, g: 0, b: 0, a: 0}",
+        "_MainTex_uv": "{r: 0, g: 0, b: 1, a: 1}",
+        "_MaskTex_tile": "{r: 1, g: 1, b: 0, a: 0}",
+        "_Mask_udrl": "{r: 0, g: 0, b: 0, a: 0}",
+        "_OverlayTex_Scroll": "{r: 0.1, g: 0.1, b: 1, a: 1}",
+        "_ShadowColor": "{r: 0, g: 0, b: 0, a: 1}",
+        "_Smoothstep": "{r: 0, g: 1, b: 0, a: 0}",
+        "_SpecColor": "{r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}",
+        "_TintColor": "{r: 0.5, g: 0.5, b: 0.5, a: 0.5}",
+        "_UVSpeed": "{r: 0.5, g: 0.2, b: 0, a: 0}",
+        "_VOTex_speed": "{r: 0, g: 0, b: 0, a: 0}",
+        "_VOTex_uv": "{r: 0, g: 0, b: 1, a: 1}",
+        "_color1": "{r: 35.92608, g: 0, b: 0, a: 1}",
+        "_color2": "{r: 294.06674, g: 0, b: 0, a: 1}"
+      },
+      "keywords": [
+        "m_ValidKeywords: []",
+        "m_InvalidKeywords:\n  - _BLENDINGTYPE_ALPHABLEND\n  - _CFXR_DITHERED_SHADOWS_OFF\n  - _CFXR_OVERLAYTEX_OFF\n  - _USECOLOR_ON"
+      ],
+      "textures": [
+        {
+          "property": "_DissolveTex",
+          "guid": "3584f2bf4afb5284d91edb6a29126e62",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Noise69.png"
+        },
+        {
+          "property": "_DistortTex",
+          "guid": "c7c3776405c7983498eef4741e618244",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/cfxr sword trail mask lines.png"
+        },
+        {
+          "property": "_MainTex",
+          "guid": "302dcb9104989b54294391cf85f41ef3",
+          "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Tx_Impact_radial_01.png"
+        }
+      ]
+    }
+  ],
+  "graph": {
+    "path": "Assets/VFX_Library/Shaders/UberFXSG.shadergraph",
+    "activeTargetTypes": [
+      "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInTarget",
+      "UnityEditor.Rendering.HighDefinition.ShaderGraph.HDTarget",
+      "UnityEditor.Rendering.Universal.ShaderGraph.UniversalTarget"
+    ],
+    "graphObjectCount": 708
+  },
+  "limitations": [
+    "Built-in shader fileIDs still require Unity resolution.",
+    "Graph-to-UberFX.shader is a proposed variant, not proven equivalent.",
+    "Target Unity lockfile exists; no second batch editor started."
+  ]
+}

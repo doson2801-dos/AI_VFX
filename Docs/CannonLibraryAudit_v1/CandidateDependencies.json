@@ -1,0 +1,1641 @@
+[
+  {
+    "guid": "c5e3927e90df9dc4f97bc39785b69bfb",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Circle_01_add.mat",
+    "sourceSha256": "cb05695938141bbc8d6ebb6a444e1bd72d52828232797d46a8e8cc110f2584ad",
+    "references": [
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "cd43f7fd2b1b1c846b6e71ef68374346",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT\n  - _USESOFTPARTICLES_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "cd43f7fd2b1b1c846b6e71ef68374346",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Circle_01.tga"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "cd43f7fd2b1b1c846b6e71ef68374346",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Circle_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "da692e001514ec24dbc4cca1949ff7e8",
+    "path": null,
+    "status": "unresolved"
+  },
+  {
+    "guid": "d0353a89b1f911e48b9e16bdc9f2e058",
+    "path": null,
+    "status": "unresolved"
+  },
+  {
+    "guid": "cd43f7fd2b1b1c846b6e71ef68374346",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Circle_01.tga",
+    "sourceSha256": "bfc5584f57d040a70ab5c72cd0adf9723742cc2a27fc29190553d07f56852ccc",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        128
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "69342502f4b59c94fb2a1a7c51535d9f",
+    "path": "Assets/VFX_Library/Shaders/HCFX_Particle2ndColor_BuiltIn.shader",
+    "sourceSha256": "8fa81a95bc7e69c6e97ed949b3004e0d90966200ae8159be8b303c9187defdc4",
+    "references": [],
+    "sourceChannelLines": [
+      {
+        "line": 9,
+        "text": "[HideInInspector] _BUILTIN_SrcBlend (\"Src Blend\", Float) = 5"
+      },
+      {
+        "line": 10,
+        "text": "[HideInInspector] _BUILTIN_DstBlend (\"Dst Blend\", Float) = 10"
+      },
+      {
+        "line": 31,
+        "text": "Blend [_BUILTIN_SrcBlend] [_BUILTIN_DstBlend]"
+      },
+      {
+        "line": 80,
+        "text": "return o;"
+      },
+      {
+        "line": 85,
+        "text": "fixed4 tex = tex2D(Texture2D_F593E37E, i.uv);"
+      },
+      {
+        "line": 133,
+        "text": "return col;"
+      }
+    ]
+  },
+  {
+    "guid": "639247ca83abc874e893eb93af2b5e44",
+    "path": null,
+    "status": "unresolved"
+  },
+  {
+    "guid": "c58141a8fcd06b2458302af1bd31fb8c",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Dust_02.mat",
+    "sourceSha256": "397d28b17a1dc5f20de790233c6605dab6562feca6400338283be9ab91aa2ab6",
+    "references": [
+      "44fd7a5931db5d647a8414cb0b4cd803",
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "44fd7a5931db5d647a8414cb0b4cd803",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Dust_02.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "44fd7a5931db5d647a8414cb0b4cd803",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Dust_02.tga",
+    "sourceSha256": "efd0a4c3fdc89eb77d1590e477bf587adfd22cc191f100bdd131b6bd97f8605a",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          12,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "ab468ff35623af646b06a8186fc09275",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Twinkle_01.mat",
+    "sourceSha256": "296db12751f1b6baafe118326aedfd085eb4773801ecf9679f111190120327ba",
+    "references": [
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "ad58d32bfa2b530408bdd5f19c6145b0",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "ad58d32bfa2b530408bdd5f19c6145b0",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Twinkle_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "ad58d32bfa2b530408bdd5f19c6145b0",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Twinkle_01.tga",
+    "sourceSha256": "9da368f05452bc6ce8fa7238b198906bf97d0fc21541d9380050eeb7b084be93",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        128
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          223
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "a38ecdd71fa71d94b837bb16b6749017",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Glow_Long_01_add.mat",
+    "sourceSha256": "9a73a27592b0d02f4693581709cc1999803839e88104f9696dfee5e85dd4aa0e",
+    "references": [
+      "361fafc9da0efc44dbcbe8b224058a74",
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "361fafc9da0efc44dbcbe8b224058a74",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Glow_Long_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "361fafc9da0efc44dbcbe8b224058a74",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Glow_Long_01.tga",
+    "sourceSha256": "67b5706c09a00187c7d351341409803c29567c0615f53db4650b679429b8252a",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          255,
+          255
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "460f3168467028c4e8de87165b0eb3d0",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Sharp_01.mat",
+    "sourceSha256": "87c3fd6d5e31f15121414cf7fa5466fd38ea35e720cc1822686d557d284af304",
+    "references": [
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "ca9e4b20d19440a47b760f8fc530332d",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT\n  - _USESOFTPARTICLES_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "ca9e4b20d19440a47b760f8fc530332d",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Sharp_01.tga"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "ca9e4b20d19440a47b760f8fc530332d",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Sharp_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "ca9e4b20d19440a47b760f8fc530332d",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Sharp_01.tga",
+    "sourceSha256": "01418121c568bac707131f720da1e893beea1c01f2f4fa04d0e06c7deefa2366",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "2cdb00f7ebdd085439d241895abdc664",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Dust_01.mat",
+    "sourceSha256": "2c92983aa1b79144caa35a6434df506dd243fea0ff1a9edc4762475588cb37db",
+    "references": [
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "958c00493106a964f9ee73c908edb8f8",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "958c00493106a964f9ee73c908edb8f8",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Dust_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "958c00493106a964f9ee73c908edb8f8",
+    "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Dust_01.tga",
+    "sourceSha256": "92ea0b431dde4904982da2fd5d9c9ac445c317607f7fc53c0c4fa92fbabcc691",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          14,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "2c4b78292ccda14428a658c407f904c3",
+    "path": "Assets/VFX_Library/Meshes/Fbx_fx_Round_01.FBX",
+    "sourceSha256": "487924ccec15d4eeccccc1849e473a1c47b11dbd77ea2d4dbb2d4d0da6be0105"
+  },
+  {
+    "guid": "263fd841b12e6624494ce37527c6ced6",
+    "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Circle_01.mat",
+    "sourceSha256": "3b4737034cd915860305b447f98dbe8f024f24f0ff6858f6f2b1c3cf8375280b",
+    "references": [
+      "639247ca83abc874e893eb93af2b5e44",
+      "69342502f4b59c94fb2a1a7c51535d9f",
+      "cd43f7fd2b1b1c846b6e71ef68374346",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 69342502f4b59c94fb2a1a7c51535d9f, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT"
+    ],
+    "textureProperties": [
+      {
+        "property": "Texture2D_F593E37E",
+        "guid": "cd43f7fd2b1b1c846b6e71ef68374346",
+        "path": "Assets/VFX_Library/Textures/Tex_fx_HCFX_Circle_01.tga"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "db93691bf2c10e74896bfa9cbd15f64e",
+    "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/smoke.mat",
+    "sourceSha256": "79c6d7c77d71d0c9fc46a051d3bcdd3010a2199d92549cbd60a9173ead8c2bc0",
+    "references": [
+      "0000000000000000f000000000000000",
+      "ee35daac3b9aee7488abc94258c3956d"
+    ],
+    "shaderReference": "{fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "ee35daac3b9aee7488abc94258c3956d",
+        "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/cfxr smoke cloud x4.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "ee35daac3b9aee7488abc94258c3956d",
+    "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/cfxr smoke cloud x4.png",
+    "sourceSha256": "8ff676114122e30573501a98e530b6b9bc46bb657ede70197416345f97db90dd",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          210,
+          255
+        ],
+        [
+          210,
+          255
+        ],
+        [
+          210,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "c698485299575d841994ae931ab2c11a",
+    "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/Fire_m.mat",
+    "sourceSha256": "b37ed25144322b287e1acc376c0ec33a02f1aec0bc7a408029de27efc5b28745",
+    "references": [
+      "0000000000000000f000000000000000",
+      "778e7568b4c79af48bcd711a582ef92c"
+    ],
+    "shaderReference": "{fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "778e7568b4c79af48bcd711a582ef92c",
+        "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/FX_TX_Fire_Fireloop_01_4x4.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "778e7568b4c79af48bcd711a582ef92c",
+    "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/FX_TX_Fire_Fireloop_01_4x4.png",
+    "sourceSha256": "d249ac811875bd8001686b24a0596b8d6fc54757c787ea34f03e39fc1cb61768",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        2048,
+        2048
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "ded1ece344341344bace03c1e55ec8d3",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/bomb.fbx",
+    "sourceSha256": "354ad31136092275b68da4a08b1915008b7e8b64f97919646b2d4f253071bc11"
+  },
+  {
+    "guid": "ab076f63886e85c45a99252185a370fc",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/ray.mat",
+    "sourceSha256": "c8044e07cd509bdb7caf0e96a688fce3fa938cdb3d951f8ace0768b9ba77b952",
+    "references": [
+      "0000000000000000f000000000000000",
+      "c395d84a9804b5e419acdbca89d4922d",
+      "d0353a89b1f911e48b9e16bdc9f2e058"
+    ],
+    "shaderReference": "{fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "c395d84a9804b5e419acdbca89d4922d",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/cfxr stretch ray blur.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "c395d84a9804b5e419acdbca89d4922d",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/cfxr stretch ray blur.png",
+    "sourceSha256": "1cc1b342e8f7ffeccbc6b3e18df0e5ead7544da0e2257b6e35ce57999929b8be",
+    "pixels": {
+      "mode": "RGB",
+      "size": [
+        256,
+        128
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "82df9d20d7c36fb4a85e6889cf42f9bd",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/WaveImpact.mat",
+    "sourceSha256": "6c8a11b87cf2321bfd6b051658683d095212d0498f3c158efce112dce76274dc",
+    "references": [
+      "0000000000000000f000000000000000",
+      "b3b9656e457725c48a6df6f95702b775"
+    ],
+    "shaderReference": "{fileID: 200, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "b3b9656e457725c48a6df6f95702b775",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/T_Crom_Flash_7.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "b3b9656e457725c48a6df6f95702b775",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/T_Crom_Flash_7.png",
+    "sourceSha256": "44b4b118a8d6577649725425ec34282e0408fea4aca829cb30fbb29b839f709c",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        2048,
+        2048
+      ],
+      "extrema": [
+        [
+          0,
+          223
+        ],
+        [
+          0,
+          229
+        ],
+        [
+          0,
+          234
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "7dfcbffe3e4452049a2776e8a016833b",
+    "path": "Assets/VFX_Library/Dependencies/Tycoon/Anim & VFX/Materials/light 1 - Copy.mat",
+    "sourceSha256": "fa837fb9973427a8b8059230b68c237db0df37e180c1caae4e844fc70c21b5c2",
+    "references": [
+      "0000000000000000f000000000000000",
+      "c9db4120f98f9aa4295fff87b634a8f2"
+    ],
+    "shaderReference": "{fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "c9db4120f98f9aa4295fff87b634a8f2",
+        "path": "Assets/VFX_Library/Dependencies/Tycoon/Anim & VFX/Texture/maintex_thrust.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "c9db4120f98f9aa4295fff87b634a8f2",
+    "path": "Assets/VFX_Library/Dependencies/Tycoon/Anim & VFX/Texture/maintex_thrust.png",
+    "sourceSha256": "9bcb555b10421e952f6dab03794cca7a6dd804c85b039eae1485d6cae2ad0060",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "47cc09429e642a3499ceb016d763d52b",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/WaveImpact 1.mat",
+    "sourceSha256": "4018653c1a52e7a75c284a9f103383ad127f172466b41bf34ecbb1282002a9fe",
+    "references": [
+      "0000000000000000f000000000000000",
+      "4c8dc0fbcf47e434487142ad7794aa6e"
+    ],
+    "shaderReference": "{fileID: 200, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "4c8dc0fbcf47e434487142ad7794aa6e",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/TX_VFX_Radials02.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "4c8dc0fbcf47e434487142ad7794aa6e",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/TX_VFX_Radials02.png",
+    "sourceSha256": "2f0074eed1202e3d9ffffc1988e4c56a0625be6bf816cc482a7c9a4e4dc2ce63",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          254,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "3115921f07a71924884759308791a58f",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/smoke.mat",
+    "sourceSha256": "c81fed4bf89ea82ca0c6a435d7f95c927cb22b55f0a6e0063e5602dbeefd7a39",
+    "references": [
+      "0000000000000000f000000000000000",
+      "73040e1a0c858984487766d94cd25071"
+    ],
+    "shaderReference": "{fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "73040e1a0c858984487766d94cd25071",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/TX_VFX_Smoke08.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "73040e1a0c858984487766d94cd25071",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/TX_VFX_Smoke08.png",
+    "sourceSha256": "7b07346f021d28f76b07542b9868b3ff48385f9a923bafd75c243793484e4b60",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          239
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "2963902b27ea08041b1d31c51ad1bd3b",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/M_Bomb.mat",
+    "sourceSha256": "5fd075da2fcd58ce9f8c970533469332fb4fad8a3c574410b669bfec9b41e6fb",
+    "references": [
+      "0000000000000000f000000000000000",
+      "d0353a89b1f911e48b9e16bdc9f2e058"
+    ],
+    "shaderReference": "{fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "28218af675db9b545a69740992788686",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass_M_3.fbx",
+    "sourceSha256": "74adf2bd2b2cacb7b279fd35d0dd6396cf978d96d31262a26731a4aba3bf6321"
+  },
+  {
+    "guid": "1ad415732edbd494590fe37ea13656da",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass_M_2.fbx",
+    "sourceSha256": "7e23e498821b093a97941f5aa14751ea4cff51006b0f0afe02fa71b1610626bf"
+  },
+  {
+    "guid": "1622fbac279b40c4ebde75c391bf50be",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/smokealpha.mat",
+    "sourceSha256": "a1f13bc601132196d425dc76ff5ce5c99061ce15cbe0ada0e67991f936555d6c",
+    "references": [
+      "0000000000000000f000000000000000",
+      "73040e1a0c858984487766d94cd25071"
+    ],
+    "shaderReference": "{fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "73040e1a0c858984487766d94cd25071",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/TX_VFX_Smoke08.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "07b2a778592691d4eabcbfcdbb170018",
+    "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass.mat",
+    "sourceSha256": "31c595804a32927b2ff2475aa0cc73e2abc0a19b2aa274b3e2728f08d2f16325",
+    "references": [
+      "933532a4fcc9baf4fa0491de14d08ed7",
+      "d0353a89b1f911e48b9e16bdc9f2e058"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords:\n  - _ALPHAPREMULTIPLY_ON\n  - _SPECULAR_SETUP\n  - _SURFACE_TYPE_TRANSPARENT",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "933532a4fcc9baf4fa0491de14d08ed7",
+    "path": null,
+    "status": "unresolved"
+  },
+  {
+    "guid": "8584b8d69758c1847b30727945746ead",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Models/Tornado_vertical.fbx",
+    "sourceSha256": "61876f3203bc298b63108d2d78065fd06928b286fde74c59aef2d1c95b22cfa4"
+  },
+  {
+    "guid": "83d3011c365ea854d91e6466a97ae80f",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+    "sourceSha256": "5da877ac2b7461942b97f9ed7bcf8cffda87112d8a9f7aef607a1a3eb5bcc42d",
+    "references": [
+      "0000000000000000f000000000000000",
+      "39dcb1e0e9a530d429a4cfa800460d63",
+      "d0353a89b1f911e48b9e16bdc9f2e058"
+    ],
+    "shaderReference": "{fileID: 203, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "39dcb1e0e9a530d429a4cfa800460d63",
+        "path": "Assets/VFX_Library/Textures/Tx_Burst_directional_03.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "39dcb1e0e9a530d429a4cfa800460d63",
+    "path": "Assets/VFX_Library/Textures/Tx_Burst_directional_03.png",
+    "sourceSha256": "e0c3ee52304103be1c63a58fedff596f4a045357b11fddc6b9fe78b1a98f0dc5",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        3630,
+        4096
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "6c86eb342b6ccc042805af51fa303ff0",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat",
+    "sourceSha256": "134cc1e32fc581ee1f3de4cadd095bfeb5a8fb01ff1c3910981b0e0a1ffee835",
+    "references": [
+      "0000000000000000f000000000000000",
+      "a608c9714a8c6f44db24cfbc558bdb62"
+    ],
+    "shaderReference": "{fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _FADING_ON\n  - _SOFTPARTICLES_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "a608c9714a8c6f44db24cfbc558bdb62",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Rectangle 1.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "a608c9714a8c6f44db24cfbc558bdb62",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Rectangle 1.png",
+    "sourceSha256": "0a80e6caf9168e4cd838a63dfd8d1d18ef02a6939c70c7c0b46bf660b87f4430",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        108,
+        108
+      ],
+      "extrema": [
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          0,
+          251
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat",
+    "sourceSha256": "82e4e8b0b84a30bacf23793ce15460a8e065021f6f0dbecab666f4495f719e34",
+    "references": [
+      "0000000000000000f000000000000000"
+    ],
+    "shaderReference": "{fileID: 211, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "65e3e121dfb073c4eaeac6e921dd5ff1",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat",
+    "sourceSha256": "db61cfee2074600acb9ef36c271d2aa233422275b131e3093d764b979d648ed1",
+    "references": [
+      "0000000000000000f000000000000000",
+      "326e23a2ecc971941adcccbc30124228",
+      "639247ca83abc874e893eb93af2b5e44",
+      "7f11fe28133f1a74594785107b98f2fe",
+      "8a2b684ecc255824bae028282ba50df5",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: -6465566751694194690, guid: 7f11fe28133f1a74594785107b98f2fe, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_AlphaOverride",
+        "guid": "8a2b684ecc255824bae028282ba50df5",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/texture/GroundCracks_Radial.png"
+      },
+      {
+        "property": "_DetailNoise",
+        "guid": "326e23a2ecc971941adcccbc30124228",
+        "path": "Assets/VFX_Library/Textures/Disolve_Twirly.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "8a2b684ecc255824bae028282ba50df5",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/texture/GroundCracks_Radial.png"
+      },
+      {
+        "property": "_MainTexture",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "8a2b684ecc255824bae028282ba50df5",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/texture/GroundCracks_Radial.png",
+    "sourceSha256": "690a070825143b7a58bd1639964383ffcc11ad25a1fa63de19e7be76321220ff",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "7f11fe28133f1a74594785107b98f2fe",
+    "path": "Assets/VFX_Library/Shaders/UberFXSG.shadergraph",
+    "sourceSha256": "565d27ba12825c72be98337b4ad663e7d0dcb25f43fb06fda9e6cabce2d9446d",
+    "references": [],
+    "warning": "Graph source identified; graph wiring and compiled channel behavior not verified."
+  },
+  {
+    "guid": "326e23a2ecc971941adcccbc30124228",
+    "path": "Assets/VFX_Library/Textures/Disolve_Twirly.png",
+    "sourceSha256": "a556b233e8ec15bd12047330731189cd8ff26e1bf391b4f731c936cfcb05535d",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          29,
+          214
+        ],
+        [
+          33,
+          220
+        ],
+        [
+          29,
+          215
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "49b94373a2fef9343ae01d218b624da3",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Wind01.png",
+    "sourceSha256": "369455599a55f22340899b37c6e126e8f153aadf250da46fdd07341f0daeca63",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          0,
+          173
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "1cbee8a584db1294fad660637d33ab41",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat",
+    "sourceSha256": "2060c90a98b7603ce09b3a85858885e22a791eaed9d423d1cdb248ac435706b8",
+    "references": [
+      "0000000000000000f000000000000000",
+      "302dcb9104989b54294391cf85f41ef3",
+      "b7eebc70ebd407343a4bbac1abfe7ede",
+      "c7c3776405c7983498eef4741e618244"
+    ],
+    "shaderReference": "{fileID: 203, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _ENABLESOFTX_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_DissolveTex",
+        "guid": "302dcb9104989b54294391cf85f41ef3",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Tx_Impact_radial_01.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "b7eebc70ebd407343a4bbac1abfe7ede",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Muzzle.png"
+      },
+      {
+        "property": "_MaskTex",
+        "guid": "c7c3776405c7983498eef4741e618244",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/cfxr sword trail mask lines.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "c7c3776405c7983498eef4741e618244",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/cfxr sword trail mask lines.png",
+    "sourceSha256": "2869b9dc4b0ab6631630aa3e6e1d397a619ca54b12eb95c4936433fa2a59a803",
+    "pixels": {
+      "mode": "RGB",
+      "size": [
+        1024,
+        1024
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "b7eebc70ebd407343a4bbac1abfe7ede",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Muzzle.png",
+    "sourceSha256": "9e874911cd8f7cb47b70bc49515eab01b411809ad9951bef8acc197ba567b3bc",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          255,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "302dcb9104989b54294391cf85f41ef3",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Tx_Impact_radial_01.png",
+    "sourceSha256": "ea80f7ce4705652bee4063714ae5b0f240d8df45c4ba6ba2aec1de10b083a5f7",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        2048,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          241,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "b5d6bd1177a459842b4ee53a5e4f7994",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cfxr smoke cloud x4.mat",
+    "sourceSha256": "4b864a93409f187044bee03e686750f79f55009212d8299fc21b48d7414b1e07",
+    "references": [
+      "0000000000000000f000000000000000",
+      "4a4bd2804b2d1ff46ab18baabfc526da",
+      "c1819aef53deedf40af80257ccb5b1a8"
+    ],
+    "shaderReference": "{fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords: []"
+    ],
+    "textureProperties": [
+      {
+        "property": "_DissolveTex",
+        "guid": "c1819aef53deedf40af80257ccb5b1a8",
+        "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4 dissolve.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "4a4bd2804b2d1ff46ab18baabfc526da",
+        "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "c1819aef53deedf40af80257ccb5b1a8",
+    "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4 dissolve.png",
+    "sourceSha256": "b3695e72ba064cf0892fa957595b3e68accaadb76dc8b03214fc8de4fdbde7d4",
+    "pixels": {
+      "mode": "RGB",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "4a4bd2804b2d1ff46ab18baabfc526da",
+    "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4.png",
+    "sourceSha256": "8ff676114122e30573501a98e530b6b9bc46bb657ede70197416345f97db90dd",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          210,
+          255
+        ],
+        [
+          210,
+          255
+        ],
+        [
+          210,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "4a08609cf0016a84ebe7e601d549d894",
+    "path": "Assets/VFX_Library/Materials/M_RockPickbook_01.mat",
+    "sourceSha256": "ae0081e51ad3f311736032ae9e8ee890e3aa628fb8b5dde6eca4a02de171b433",
+    "references": [
+      "08d341206cc4889458728701e3d1c834",
+      "639247ca83abc874e893eb93af2b5e44",
+      "7f11fe28133f1a74594785107b98f2fe",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "d1d952ce60053cd4aae8bab9176e3e48",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: -6465566751694194690, guid: 7f11fe28133f1a74594785107b98f2fe, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT\n  - _USERAMP",
+      "  m_InvalidKeywords:\n  - _DOUBLESIDED_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "08d341206cc4889458728701e3d1c834",
+        "path": "Assets/VFX_Library/Textures/RockPlain_Pickbook.png"
+      },
+      {
+        "property": "_MainTexture",
+        "guid": "d1d952ce60053cd4aae8bab9176e3e48",
+        "path": "Assets/VFX_Library/Textures/Flare_FatDot.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "d1d952ce60053cd4aae8bab9176e3e48",
+    "path": "Assets/VFX_Library/Textures/Flare_FatDot.png",
+    "sourceSha256": "174c406903abd50527712ef1694565e54983517c5a54f895fa26d357a5b603f2",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "08d341206cc4889458728701e3d1c834",
+    "path": "Assets/VFX_Library/Textures/RockPlain_Pickbook.png",
+    "sourceSha256": "ce6483865a068c65fe3d4201e7c4579dc614d10294b98fcf8e699adbc864d4f7",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "fa0c866a48770b64987a7aca4fc1eedf",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat",
+    "sourceSha256": "70fa1832bbeb878dacdfa56172b14f013530d14fdb382af27886676e3bc43189",
+    "references": [
+      "302dcb9104989b54294391cf85f41ef3",
+      "3584f2bf4afb5284d91edb6a29126e62",
+      "40a204680032ebb4db2ede7f5a6cfd07",
+      "c7c3776405c7983498eef4741e618244",
+      "d0353a89b1f911e48b9e16bdc9f2e058"
+    ],
+    "shaderReference": "{fileID: 4800000, guid: 40a204680032ebb4db2ede7f5a6cfd07, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _BLENDINGTYPE_ALPHABLEND\n  - _CFXR_DITHERED_SHADOWS_OFF\n  - _CFXR_OVERLAYTEX_OFF\n  - _USECOLOR_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_DissolveTex",
+        "guid": "3584f2bf4afb5284d91edb6a29126e62",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Noise69.png"
+      },
+      {
+        "property": "_DistortTex",
+        "guid": "c7c3776405c7983498eef4741e618244",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/cfxr sword trail mask lines.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "302dcb9104989b54294391cf85f41ef3",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Tx_Impact_radial_01.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "40a204680032ebb4db2ede7f5a6cfd07",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Shaders/scroll_XY_Base.shader",
+    "sourceSha256": "4b3a6dc8b3c1f987836d291976eafbc623ee40d850d31449ce8c8fde48500b59",
+    "references": [],
+    "sourceChannelLines": [
+      {
+        "line": 9,
+        "text": "[Header(Blend Mode)] // <--- TÍNH NĂNG MỚI: Tùy chỉnh Blend Mode"
+      },
+      {
+        "line": 10,
+        "text": "[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend (\"Source Blend\", Float) = 5 // Mặc định là 5 (SrcAlpha)"
+      },
+      {
+        "line": 11,
+        "text": "[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend (\"Destination Blend\", Float) = 10 // Mặc định là 10 (OneMinusSrcAlpha)"
+      },
+      {
+        "line": 35,
+        "text": "Blend [_SrcBlend] [_DstBlend]"
+      },
+      {
+        "line": 91,
+        "text": "return o;"
+      },
+      {
+        "line": 96,
+        "text": "fixed4 tex = tex2D(_MainTex, i.uv);"
+      },
+      {
+        "line": 115,
+        "text": "return col;"
+      }
+    ]
+  },
+  {
+    "guid": "3584f2bf4afb5284d91edb6a29126e62",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Noise69.png",
+    "sourceSha256": "2e5137adaef0421bdf59a8111c54d5399f68696a418e220284de47b4be86a654",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        512,
+        512
+      ],
+      "extrema": [
+        [
+          1,
+          252
+        ],
+        [
+          1,
+          252
+        ],
+        [
+          1,
+          253
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    }
+  },
+  {
+    "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+    "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat",
+    "sourceSha256": "03cf171f9b55f16113bf993a05486e9dc94d8ec72116f67f1d140cb276cc1954",
+    "references": [
+      "1a29b4d27eb8b04479ef89c00dea533d",
+      "4a4bd2804b2d1ff46ab18baabfc526da",
+      "c1819aef53deedf40af80257ccb5b1a8"
+    ],
+    "shaderReference": "{fileID: -6465566751694194690, guid: 1a29b4d27eb8b04479ef89c00dea533d,",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords:\n  - _ALPHABLEND_ON\n  - _CFXR_DISSOLVE\n  - _CFXR_DITHERED_SHADOWS_ON\n  - _FADING_ON",
+      "  m_InvalidKeywords:\n  - _\n  - _CFXR_OVERLAYBLEND_RGBA\n  - _CFXR_OVERLAYTEX_OFF"
+    ],
+    "textureProperties": [
+      {
+        "property": "_DissolveTex",
+        "guid": "c1819aef53deedf40af80257ccb5b1a8",
+        "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4 dissolve.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "4a4bd2804b2d1ff46ab18baabfc526da",
+        "path": "Assets/VFX_Library/Textures/cfxr smoke cloud x4.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "1a29b4d27eb8b04479ef89c00dea533d",
+    "path": "Assets/VFX_Library/Shaders/CFXR Particle Ubershader.cfxrshader",
+    "sourceSha256": "818b941ff03b9ebb28470fb21eff65504dd3f693abe724914b4233091f735159"
+  },
+  {
+    "guid": "515b18ab37172894ca9f19c1319e48aa",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/mesh/Ant_M_1.fbx",
+    "sourceSha256": "f9b8202d61d0a13cf9025a78d9200498e90ba72012fe476068de2660d389ee8d"
+  },
+  {
+    "guid": "34ece577e916c944c9fb4f68acf252ba",
+    "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat",
+    "sourceSha256": "497f9ce5d2640413863bad28cbc64c6efc517a60d7737a54a50103f028623a68",
+    "references": [
+      "0000000000000000f000000000000000",
+      "a608c9714a8c6f44db24cfbc558bdb62"
+    ],
+    "shaderReference": "{fileID: 200, guid: 0000000000000000f000000000000000, type: 0}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords: []",
+      "  m_InvalidKeywords:\n  - _FADING_ON\n  - _SOFTPARTICLES_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_MainTex",
+        "guid": "a608c9714a8c6f44db24cfbc558bdb62",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Rectangle 1.png"
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "02dff015a09f31840a185f6d8d320780",
+    "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat",
+    "sourceSha256": "723bd0cbc254617eda2ef5af0515cb62cfe7a17ce974f907e20d388cdd6b4b8e",
+    "references": [
+      "0000000000000000f000000000000000",
+      "326e23a2ecc971941adcccbc30124228",
+      "4e8b9e0b3f67f1345a16b6bd2b3d4c4e",
+      "639247ca83abc874e893eb93af2b5e44",
+      "7f11fe28133f1a74594785107b98f2fe",
+      "d0353a89b1f911e48b9e16bdc9f2e058",
+      "da692e001514ec24dbc4cca1949ff7e8"
+    ],
+    "shaderReference": "{fileID: -6465566751694194690, guid: 7f11fe28133f1a74594785107b98f2fe, type: 3}",
+    "savedKeywordBlocks": [
+      "  m_ValidKeywords:\n  - _BUILTIN_SURFACE_TYPE_TRANSPARENT\n  - _SURFACE_TYPE_TRANSPARENT",
+      "  m_InvalidKeywords:\n  - _DOUBLESIDED_ON"
+    ],
+    "textureProperties": [
+      {
+        "property": "_DetailNoise",
+        "guid": "326e23a2ecc971941adcccbc30124228",
+        "path": "Assets/VFX_Library/Textures/Disolve_Twirly.png"
+      },
+      {
+        "property": "_MainTex",
+        "guid": "4e8b9e0b3f67f1345a16b6bd2b3d4c4e",
+        "path": "Assets/VFX_Library/Textures/SmokeHarsh.png"
+      },
+      {
+        "property": "_MainTexture",
+        "guid": "0000000000000000f000000000000000",
+        "path": null
+      }
+    ],
+    "warning": "Saved properties/keywords are not proof of active shader branches; built-in IDs require Unity resolution."
+  },
+  {
+    "guid": "4e8b9e0b3f67f1345a16b6bd2b3d4c4e",
+    "path": "Assets/VFX_Library/Textures/SmokeHarsh.png",
+    "sourceSha256": "16942ff471c55db953e62b49ecdb10a52a880fa477b5024f443297a8ec73eebe",
+    "pixels": {
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "extrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          233
+        ]
+      ]
+    }
+  }
+]

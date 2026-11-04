@@ -1,0 +1,60 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "shape-lab",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "Docs/VFX/_ArtDirection/tools"
+      ],
+      "port": 8765
+    },
+    {
+      "name": "review-lab",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8776",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "Docs/VFX/_Review"
+      ],
+      "port": 8776,
+      "autoPort": false
+    },
+    {
+      "name": "review-lab-linked",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8778",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 8778
+    },
+    {
+      "name": "review-lab-2",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8777",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "Docs/VFX/_Review"
+      ],
+      "port": 8777
+    }
+  ]
+}

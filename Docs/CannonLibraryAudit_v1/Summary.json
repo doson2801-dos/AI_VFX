@@ -1,0 +1,42 @@
+{
+  "generatedUtc": "2026-10-17T03:31:18.494290+00:00",
+  "sourceProject": "D:\\Projects\\animlibrary",
+  "roots": [
+    "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX"
+  ],
+  "mode": "filesystem YAML inventory, not Unity runtime validation",
+  "filesystemComplete": true,
+  "unityComplete": false,
+  "fileCountIncludingMeta": 78129,
+  "extensionCounts": {
+    ".prefab": 827,
+    ".meta": 39512,
+    ".jpg": 36961,
+    ".unitypackage": 828,
+    ".json": 1
+  },
+  "prefabsByPack": {
+    "AAA Projectiles Vol 1": 78,
+    "BusDash": 19,
+    "Cartoon FX": 121,
+    "Elemental Mesh FX": 19,
+    "FairShot": 17,
+    "Fireworks": 42,
+    "Human": 3,
+    "Hun0FX": 14,
+    "Hyper Casual FX Vol.2": 100,
+    "JellyCat": 19,
+    "Magic_Rock": 19,
+    "Piloto Studio": 79,
+    "RPG": 155,
+    "SheepOut": 16,
+    "Sword Trails": 86,
+    "Texts": 22,
+    "Tycoon": 12,
+    "VFX Epic Trio": 6
+  },
+  "errors": [],
+  "duplicateGuids": [],
+  "dependencyHashNote": "sha256 is source file only, not Unity dependency hash",
+  "previewNote": "JPEG preview frames are not source textures; packages are not imported or internally audited"
+}

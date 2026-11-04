@@ -1,0 +1,3009 @@
+[
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+    "guid": "cbb041f394e578149af8ac2c397ee661",
+    "sha256": "de8246c7483b75169a058e71865cc5cb5d6b475054c905be7cf289d2d93745f9",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "3828024995060924911",
+        "name": "smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "6350327283141850326",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 3828024995060924911}"
+      },
+      {
+        "classId": "199",
+        "fileId": "499983686859107095",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7840d900dc0a4ed4dbcd26e23f064dd8"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "4392588597650638566",
+        "name": "impact2",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "6442591282197627294",
+        "particleFacts": {
+          "lengthInSec": "0.5",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1.5",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 4392588597650638566}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6055308205321714793",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103040522"
+        },
+        "refs": [
+          "515b18ab37172894ca9f19c1319e48aa",
+          "fa0c866a48770b64987a7aca4fc1eedf"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5356744188552373595",
+        "name": "smoke3",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "4373039659294647574",
+        "particleFacts": {
+          "lengthInSec": "2",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 5356744188552373595}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5714361185058988062",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "02dff015a09f31840a185f6d8d320780"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6227361920911795126",
+        "name": "VFX_Cannon_Shoot",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "7034800437142249064",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": true,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 6227361920911795126}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8142398685557048281",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "34ece577e916c944c9fb4f68acf252ba"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "7761049655554818707",
+        "name": "impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "4076732382406065371",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 7761049655554818707}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5994844873870254934",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "0001030422"
+        },
+        "refs": [
+          "83d3011c365ea854d91e6466a97ae80f"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8391985493355184794",
+        "name": "smoke3 (1)",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2106596174464523552",
+        "particleFacts": {
+          "lengthInSec": "2",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8391985493355184794}"
+      },
+      {
+        "classId": "199",
+        "fileId": "4154305517510788625",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "02dff015a09f31840a185f6d8d320780"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "9218290924683127662",
+        "name": "smoke2",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "295505889326921852",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 9218290924683127662}"
+      },
+      {
+        "classId": "199",
+        "fileId": "462946826120442607",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7840d900dc0a4ed4dbcd26e23f064dd8"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "02dff015a09f31840a185f6d8d320780",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "34ece577e916c944c9fb4f68acf252ba",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "515b18ab37172894ca9f19c1319e48aa",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/mesh/Ant_M_1.fbx",
+        "status": "resolved"
+      },
+      {
+        "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+        "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "83d3011c365ea854d91e6466a97ae80f",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "fa0c866a48770b64987a7aca4fc1eedf",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 7,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "cannon"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Shoot_Scrab.prefab",
+    "guid": "76b908a0a985964489379e02d64a1643",
+    "sha256": "05d4b23844e57a9b39dedd305336ead08b4ae7a4ab0bdaf35840fcc961664bb7",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "2782459649757265753",
+        "name": "smoke2",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "7225713954057868840",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 2782459649757265753}"
+      },
+      {
+        "classId": "199",
+        "fileId": "1669034157152141297",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7840d900dc0a4ed4dbcd26e23f064dd8"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "4952282880281544483",
+        "name": "smoke3",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "1557000027043187145",
+        "particleFacts": {
+          "lengthInSec": "2",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 4952282880281544483}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3728842205795439261",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "02dff015a09f31840a185f6d8d320780"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5609553065853226206",
+        "name": "VFX_Cannon_Shoot_Scrab",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "3308844406183140715",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": true,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 5609553065853226206}"
+      },
+      {
+        "classId": "199",
+        "fileId": "701387749427751478",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "34ece577e916c944c9fb4f68acf252ba"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5831464754226935807",
+        "name": "impact2",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8889367179454117633",
+        "particleFacts": {
+          "lengthInSec": "0.5",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1.5",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 5831464754226935807}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6211987312716688420",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103040522"
+        },
+        "refs": [
+          "515b18ab37172894ca9f19c1319e48aa",
+          "fa0c866a48770b64987a7aca4fc1eedf"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6660808152624919145",
+        "name": "smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5702746492712596111",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 6660808152624919145}"
+      },
+      {
+        "classId": "199",
+        "fileId": "846966581326663965",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7840d900dc0a4ed4dbcd26e23f064dd8"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8320910179578672681",
+        "name": "impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8615193419990689443",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8320910179578672681}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3005249269757876777",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "0001030422"
+        },
+        "refs": [
+          "83d3011c365ea854d91e6466a97ae80f"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "02dff015a09f31840a185f6d8d320780",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "34ece577e916c944c9fb4f68acf252ba",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "515b18ab37172894ca9f19c1319e48aa",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/mesh/Ant_M_1.fbx",
+        "status": "resolved"
+      },
+      {
+        "guid": "7840d900dc0a4ed4dbcd26e23f064dd8",
+        "path": "Assets/VFX_Library/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "83d3011c365ea854d91e6466a97ae80f",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "fa0c866a48770b64987a7aca4fc1eedf",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 6,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "cannon"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Impact.prefab",
+    "guid": "8bf2ceb38b8f7884d9144cb396c81fe7",
+    "sha256": "4f47f186e6f8a84e4aa6c304a7f523218c9ee98060ecbc86568102cf4e679cff",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "2524043857302948602",
+        "name": "glow_black",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5508148953791068260",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 2524043857302948602}"
+      },
+      {
+        "classId": "199",
+        "fileId": "818373855761794797",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "0000000000000000f000000000000000"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "2706123147387048491",
+        "name": "impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "6405403869601904412",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 2706123147387048491}"
+      },
+      {
+        "classId": "199",
+        "fileId": "87254491233000571",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "0001030422"
+        },
+        "refs": [
+          "83d3011c365ea854d91e6466a97ae80f"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "2819231800373055434",
+        "name": "dust",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2149605644932932702",
+        "particleFacts": {
+          "lengthInSec": "6",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 2819231800373055434}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3884177311278784700",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103040522"
+        },
+        "refs": [
+          "4a08609cf0016a84ebe7e601d549d894"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5331887332824248882",
+        "name": "impact_main",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "7839369172878262899",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 5331887332824248882}"
+      },
+      {
+        "classId": "199",
+        "fileId": "721630205662347896",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "1cbee8a584db1294fad660637d33ab41"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5853687221908291178",
+        "name": "VFX_Cannon_Impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "1582516402194129906",
+        "particleFacts": {
+          "lengthInSec": "1.5",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 5853687221908291178}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6168236965303284214",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "0001030405"
+        },
+        "refs": [
+          "6c39e9872d916f541a4bd95ab6fc9e00",
+          "8584b8d69758c1847b30727945746ead"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6710318174249972172",
+        "name": "ground",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8621910460153510088",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 6710318174249972172}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5843663362202330127",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "65e3e121dfb073c4eaeac6e921dd5ff1"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8310747898213664133",
+        "name": "glow",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "6812856667178758899",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 8310747898213664133}"
+      },
+      {
+        "classId": "199",
+        "fileId": "7792667954436166255",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "6c86eb342b6ccc042805af51fa303ff0"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8613165541273470452",
+        "name": "smoke2",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "3383104336074768759",
+        "particleFacts": {
+          "lengthInSec": "2",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8613165541273470452}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3301223791856030244",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "b5d6bd1177a459842b4ee53a5e4f7994"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "0000000000000000f000000000000000",
+        "path": null,
+        "status": "unresolved-or-built-in"
+      },
+      {
+        "guid": "1cbee8a584db1294fad660637d33ab41",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "49b94373a2fef9343ae01d218b624da3",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Wind01.png",
+        "status": "resolved"
+      },
+      {
+        "guid": "4a08609cf0016a84ebe7e601d549d894",
+        "path": "Assets/VFX_Library/Materials/M_RockPickbook_01.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "65e3e121dfb073c4eaeac6e921dd5ff1",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "6c86eb342b6ccc042805af51fa303ff0",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "83d3011c365ea854d91e6466a97ae80f",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "8584b8d69758c1847b30727945746ead",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Models/Tornado_vertical.fbx",
+        "status": "resolved"
+      },
+      {
+        "guid": "b5d6bd1177a459842b4ee53a5e4f7994",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/cfxr smoke cloud x4.mat",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 8,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "cannon",
+      "impact"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+    "guid": "6b14662d8c2f77743baf269dae218b6a",
+    "sha256": "a0b289d8e03aeb8e0652426eec76949a763d89663f5fb9409ba8811c8c895be2",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "558189350493547331",
+        "name": "root",
+        "active": "1"
+      },
+      {
+        "classId": "1",
+        "fileId": "873144957797644912",
+        "name": "ground",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "3071031770014380038",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 873144957797644912}"
+      },
+      {
+        "classId": "199",
+        "fileId": "434090466029575114",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "000103042223"
+        },
+        "refs": [
+          "65e3e121dfb073c4eaeac6e921dd5ff1"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "3777501111562086914",
+        "name": "VFX_Cannon_Impact_InUse",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8853274774325694179",
+        "particleFacts": {
+          "lengthInSec": "1.5",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": false,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 3777501111562086914}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5117575182038715263",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "0",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "0001030405"
+        },
+        "refs": [
+          "6c39e9872d916f541a4bd95ab6fc9e00",
+          "8584b8d69758c1847b30727945746ead"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "4984475231269884979",
+        "name": "impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5637629288993343104",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 4984475231269884979}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5357507589224855750",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "0001030422"
+        },
+        "refs": [
+          "83d3011c365ea854d91e6466a97ae80f"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5201347752341034234",
+        "name": "impact_main",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8456644110879728854",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 5201347752341034234}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3472503375926216392",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "1cbee8a584db1294fad660637d33ab41"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6656792788752651854",
+        "name": "glow",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5251686659629145029",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 6656792788752651854}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6494091402658588472",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "6c86eb342b6ccc042805af51fa303ff0"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "7570618021263055464",
+        "name": "VFX_Cannon_Impact_InUse",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5218806319745524365",
+        "particleFacts": {
+          "lengthInSec": "1.5",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 7570618021263055464}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5518741780658898531",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "0001030405"
+        },
+        "refs": [
+          "6c39e9872d916f541a4bd95ab6fc9e00",
+          "8584b8d69758c1847b30727945746ead"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "9164576136141956387",
+        "name": "glow_black",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2082290663961091217",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "0",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 9164576136141956387}"
+      },
+      {
+        "classId": "199",
+        "fileId": "1230618348804110436",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "0000000000000000f000000000000000"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "0000000000000000f000000000000000",
+        "path": null,
+        "status": "unresolved-or-built-in"
+      },
+      {
+        "guid": "1cbee8a584db1294fad660637d33ab41",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "49b94373a2fef9343ae01d218b624da3",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Textures/Wind01.png",
+        "status": "resolved"
+      },
+      {
+        "guid": "65e3e121dfb073c4eaeac6e921dd5ff1",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "6c39e9872d916f541a4bd95ab6fc9e00",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "6c86eb342b6ccc042805af51fa303ff0",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "83d3011c365ea854d91e6466a97ae80f",
+        "path": "Assets/VFX_Library/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "8584b8d69758c1847b30727945746ead",
+        "path": "Assets/VFX_Library/Dependencies/RPG/_Game/Resources_moved/Models/Tornado_vertical.fbx",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 7,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "cannon",
+      "impact"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/FairShot/VFX_Impact_Bomb.prefab",
+    "guid": "5ed6958b0995c404da9d8ceeb646759a",
+    "sha256": "620473af5a7783d876d0a2640b14b3dfd96c400ddf11a4cc7571e87c941ce255",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "1082104554124985155",
+        "name": "Smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8731726358210473825",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 1082104554124985155}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8860778307343135867",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "1622fbac279b40c4ebde75c391bf50be"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "1970290185127852174",
+        "name": "Smoke (1)",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "1804862588669959377",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 1970290185127852174}"
+      },
+      {
+        "classId": "199",
+        "fileId": "5758283222619416161",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "3115921f07a71924884759308791a58f"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "2688213435456882936",
+        "name": "impact",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2897141584571722717",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 2688213435456882936}"
+      },
+      {
+        "classId": "199",
+        "fileId": "3798074529381444602",
+        "rendererFacts": {
+          "m_RenderMode": "1",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "ab076f63886e85c45a99252185a370fc"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "3720572397309377701",
+        "name": "wave",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "3309278973100109885",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 3720572397309377701}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6023766798986093855",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "82df9d20d7c36fb4a85e6889cf42f9bd"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "5557572949341600359",
+        "name": "wave (1)",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8078604414269893583",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 5557572949341600359}"
+      },
+      {
+        "classId": "199",
+        "fileId": "7892376489643558989",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "47cc09429e642a3499ceb016d763d52b"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6859840643920175744",
+        "name": "glow",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2090577890339764865",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 6859840643920175744}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8678718054494492861",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7dfcbffe3e4452049a2776e8a016833b"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "7473814473587087577",
+        "name": "smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2065751841285637894",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 7473814473587087577}"
+      },
+      {
+        "classId": "199",
+        "fileId": "4748609551691100254",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "7dfcbffe3e4452049a2776e8a016833b"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8900830062760526687",
+        "name": "bomb",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "2085448532485117918",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": false,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": true,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 8900830062760526687}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6991463261047349155",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "0003040508"
+        },
+        "refs": [
+          "1ad415732edbd494590fe37ea13656da",
+          "2963902b27ea08041b1d31c51ad1bd3b",
+          "ded1ece344341344bace03c1e55ec8d3"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8991266074791199453",
+        "name": "VFX_Impact_Bomb",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "5145468602675308532",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "1"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": false,
+          "SizeModule": false,
+          "RotationModule": true,
+          "ColorModule": false,
+          "UVModule": false,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": true,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 8991266074791199453}"
+      },
+      {
+        "classId": "199",
+        "fileId": "7179957987219559142",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "07b2a778592691d4eabcbfcdbb170018",
+          "1ad415732edbd494590fe37ea13656da",
+          "28218af675db9b545a69740992788686"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "07b2a778592691d4eabcbfcdbb170018",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "1622fbac279b40c4ebde75c391bf50be",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/smokealpha.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "1ad415732edbd494590fe37ea13656da",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass_M_2.fbx",
+        "status": "resolved"
+      },
+      {
+        "guid": "28218af675db9b545a69740992788686",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/glass_M_3.fbx",
+        "status": "resolved"
+      },
+      {
+        "guid": "2963902b27ea08041b1d31c51ad1bd3b",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/M_Bomb.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "3115921f07a71924884759308791a58f",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/smoke.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "47cc09429e642a3499ceb016d763d52b",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/WaveImpact 1.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "7dfcbffe3e4452049a2776e8a016833b",
+        "path": "Assets/VFX_Library/Dependencies/Tycoon/Anim & VFX/Materials/light 1 - Copy.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "82df9d20d7c36fb4a85e6889cf42f9bd",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/WaveImpact.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "ab076f63886e85c45a99252185a370fc",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/ray.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "ded1ece344341344bace03c1e55ec8d3",
+        "path": "Assets/VFX_Library/Dependencies/FairShot/Anim_VFX/VFX/Materials_Texture/bomb.fbx",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 9,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "impact"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/SheepOut/VFX_Trail_Missile.prefab",
+    "guid": "71d51c205eb4ee94e96a79b458bea5e8",
+    "sha256": "d2991a8c39b7441d98f75f0974601d826be1a7d480492e3dcf8a7663b4d95a18",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "2135117884363851693",
+        "name": "VFX_Trail_Missile",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "480322861336196687",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "1",
+          "playOnAwake": "1",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 2135117884363851693}"
+      },
+      {
+        "classId": "199",
+        "fileId": "568930198888871253",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "c698485299575d841994ae931ab2c11a"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "3721372035534500627",
+        "name": "smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "634178563454023594",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "1",
+          "playOnAwake": "1",
+          "moveWithTransform": "1",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": false,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": false
+        },
+        "gameObject": "{fileID: 3721372035534500627}"
+      },
+      {
+        "classId": "199",
+        "fileId": "4546167077338165870",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "0",
+          "m_VertexStreams": "00010304"
+        },
+        "refs": [
+          "db93691bf2c10e74896bfa9cbd15f64e"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "c698485299575d841994ae931ab2c11a",
+        "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/Fire_m.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "db93691bf2c10e74896bfa9cbd15f64e",
+        "path": "Assets/VFX_Library/Dependencies/SheepOut/Spine_2d/VFX/Texture/smoke.mat",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 2,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "trail"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  },
+  {
+    "path": "Assets/VFX_Library/VFX/Gameplay/Hyper Casual FX Vol.2/HCFX_Explosion_01.prefab",
+    "guid": "704ec766f0a17e2429815d38258d2c34",
+    "sha256": "07619be59c9f9cb841713a844ec739d527a26ce29b9d520298b7474d028759b0",
+    "components": [
+      {
+        "classId": "1",
+        "fileId": "506806755",
+        "name": "light_long",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "506806758",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 506806755}"
+      },
+      {
+        "classId": "199",
+        "fileId": "506806757",
+        "rendererFacts": {
+          "m_RenderMode": "1",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "a38ecdd71fa71d94b837bb16b6749017"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "4061151346681071961",
+        "name": "glow_view",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "4061151346681071940",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": false,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 4061151346681071961}"
+      },
+      {
+        "classId": "199",
+        "fileId": "4061151346681071963",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "c5e3927e90df9dc4f97bc39785b69bfb"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "6793043646473991155",
+        "name": "smoke",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "6793043646473991157",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 6793043646473991155}"
+      },
+      {
+        "classId": "199",
+        "fileId": "6793043646473991156",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "c58141a8fcd06b2458302af1bd31fb8c"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8236951029951302084",
+        "name": "trail_soft",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8236951029951302081",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "1",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": true,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8236951029951302084}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8236951029951302086",
+        "rendererFacts": {
+          "m_RenderMode": "1",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "2cdb00f7ebdd085439d241895abdc664"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8236951030570242485",
+        "name": "HCFX_Explosion_01",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8236951030570242487",
+        "particleFacts": {
+          "lengthInSec": "2",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": true,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": true,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8236951030570242485}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8236951030570242484",
+        "rendererFacts": {
+          "m_RenderMode": "1",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "263fd841b12e6624494ce37527c6ced6"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8236951031216982901",
+        "name": "particle",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8236951031216982902",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "1",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": false,
+          "ColorModule": false,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": true,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": true,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8236951031216982901}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8236951031216982903",
+        "rendererFacts": {
+          "m_RenderMode": "0",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "ab468ff35623af646b06a8186fc09275"
+        ]
+      },
+      {
+        "classId": "1",
+        "fileId": "8692525432642080881",
+        "name": "circle_ring",
+        "active": "1"
+      },
+      {
+        "classId": "198",
+        "fileId": "8692525432642080887",
+        "particleFacts": {
+          "lengthInSec": "1",
+          "looping": "0",
+          "playOnAwake": "1",
+          "moveWithTransform": "0",
+          "simulationSpeed": "1",
+          "stopAction": "0"
+        },
+        "modules": {
+          "InitialModule": true,
+          "ShapeModule": true,
+          "EmissionModule": true,
+          "SizeModule": true,
+          "RotationModule": true,
+          "ColorModule": true,
+          "UVModule": true,
+          "VelocityModule": false,
+          "InheritVelocityModule": false,
+          "LifetimeByEmitterSpeedModule": false,
+          "ForceModule": false,
+          "ExternalForcesModule": false,
+          "ClampVelocityModule": false,
+          "NoiseModule": false,
+          "SizeBySpeedModule": false,
+          "RotationBySpeedModule": false,
+          "ColorBySpeedModule": false,
+          "CollisionModule": false,
+          "TriggerModule": false,
+          "SubModule": false,
+          "LightsModule": false,
+          "TrailModule": false,
+          "CustomDataModule": true
+        },
+        "gameObject": "{fileID: 8692525432642080881}"
+      },
+      {
+        "classId": "199",
+        "fileId": "8692525432642080886",
+        "rendererFacts": {
+          "m_RenderMode": "4",
+          "m_Enabled": "1",
+          "m_UseCustomVertexStreams": "1",
+          "m_VertexStreams": "00010304052226"
+        },
+        "refs": [
+          "2c4b78292ccda14428a658c407f904c3",
+          "460f3168467028c4e8de87165b0eb3d0"
+        ]
+      }
+    ],
+    "directGuidReferences": [
+      {
+        "guid": "263fd841b12e6624494ce37527c6ced6",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Circle_01.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "2c4b78292ccda14428a658c407f904c3",
+        "path": "Assets/VFX_Library/Meshes/Fbx_fx_Round_01.FBX",
+        "status": "resolved"
+      },
+      {
+        "guid": "2cdb00f7ebdd085439d241895abdc664",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Dust_01.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "460f3168467028c4e8de87165b0eb3d0",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Sharp_01.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "a38ecdd71fa71d94b837bb16b6749017",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Glow_Long_01_add.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "ab468ff35623af646b06a8186fc09275",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Twinkle_01.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "c58141a8fcd06b2458302af1bd31fb8c",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Dust_02.mat",
+        "status": "resolved"
+      },
+      {
+        "guid": "c5e3927e90df9dc4f97bc39785b69bfb",
+        "path": "Assets/VFX_Library/Materials/Mat_fx_HCFX_Circle_01_add.mat",
+        "status": "resolved"
+      }
+    ],
+    "particleSystemsSerialized": 7,
+    "monoBehavioursSerialized": 0,
+    "nestedPrefabInstances": 0,
+    "candidateTags": [
+      "explosion"
+    ],
+    "visualStatus": "not viewed; filename tags are candidates only"
+  }
+]

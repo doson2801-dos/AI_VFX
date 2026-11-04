@@ -1,0 +1,44 @@
+[
+  {
+    "name": "VFX_Cannon_Shoot",
+    "frames": 60,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\RPG\\Preview\\VFX_Cannon_Shoot",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "VFX_Cannon_Shoot_Scrab",
+    "frames": 60,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\RPG\\Preview\\VFX_Cannon_Shoot_Scrab",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "VFX_Cannon_Impact",
+    "frames": 60,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\RPG\\Preview\\VFX_Cannon_Impact",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "VFX_Cannon_Impact_InUse",
+    "frames": 60,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\RPG\\Preview\\VFX_Cannon_Impact_InUse",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "VFX_Impact_Bomb",
+    "frames": 30,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\FairShot\\Preview\\VFX_Impact_Bomb",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "VFX_Trail_Missile",
+    "frames": 55,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\SheepOut\\Preview\\VFX_Trail_Missile",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  },
+  {
+    "name": "HCFX_Explosion_01",
+    "frames": 30,
+    "directory": "D:\\Projects\\animlibrary\\Assets\\VFX_Library\\VFX\\Gameplay\\Hyper Casual FX Vol.2\\Preview\\HCFX_Explosion_01",
+    "timing": "GIF uses arbitrary 50 ms/frame for review; original capture FPS unknown"
+  }
+]

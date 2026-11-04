@@ -1,0 +1,17 @@
+{
+    "unity": "2022.3.62f3",
+    "pipeline": "Built-in",
+    "validation": "Actual Play mode; fixed capture timestep 1/30s",
+    "completed": true,
+    "stopClears": true,
+    "muzzleEnds": true,
+    "impactEnds": true,
+    "replayEmits": true,
+    "loopRepeats": true,
+    "muzzlePeak": 52,
+    "impactPeak": 10,
+    "framesPerClip": 120,
+    "framesPerSecond": 30,
+    "demoHitDelay": 0.699999988079071,
+    "errors": []
+}

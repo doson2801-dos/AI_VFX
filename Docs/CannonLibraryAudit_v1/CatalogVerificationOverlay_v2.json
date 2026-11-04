@@ -1,0 +1,28 @@
+[
+  {
+    "sourcePath": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+    "sourceGuid": "6b14662d8c2f77743baf269dae218b6a",
+    "targetPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+    "targetGuid": "953c298528a043d0a36623920f57f2be",
+    "targetDependencyHash": "9bc5cac5a225bf4482ce94624da67657",
+    "unity": "2022.3.62f3",
+    "pipeline": "Built-in",
+    "actualPlayModeValidated": true,
+    "artApproved": false,
+    "validationProject": "D:\\Game_prj\\VFX_LIb\\Docs\\CannonLibraryAudit_v1\\UnityValidation",
+    "report": "RuntimeValidation/ValidationReport.md"
+  },
+  {
+    "sourcePath": "Assets/VFX_Library/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+    "sourceGuid": "cbb041f394e578149af8ac2c397ee661",
+    "targetPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+    "targetGuid": "9f1ee23fc4904ca1aff02394c846002c",
+    "targetDependencyHash": "3b1cc5bdadc65528b5a937a55355bbef",
+    "unity": "2022.3.62f3",
+    "pipeline": "Built-in",
+    "actualPlayModeValidated": true,
+    "artApproved": false,
+    "validationProject": "D:\\Game_prj\\VFX_LIb\\Docs\\CannonLibraryAudit_v1\\UnityValidation",
+    "report": "RuntimeValidation/ValidationReport.md"
+  }
+]

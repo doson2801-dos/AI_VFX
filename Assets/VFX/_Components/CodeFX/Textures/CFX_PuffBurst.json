@@ -1,0 +1,56 @@
+{
+ "source": "D:/Game_prj/VFX_LIb/Docs/VFX/_ArtDirection/_archive/vfx-maker_2.2.0_before_codefx_removal_2026-11-03/codefx/fx/smoke/puff_burst.py",
+ "name": "CFX_PuffBurst",
+ "blend": "alpha",
+ "duration": 1.2,
+ "loop": false,
+ "fps": 30,
+ "frames": 16,
+ "cols": 4,
+ "rows": 4,
+ "times": [
+  0.0,
+  0.075,
+  0.15,
+  0.225,
+  0.3,
+  0.375,
+  0.45,
+  0.525,
+  0.6,
+  0.675,
+  0.75,
+  0.825,
+  0.9,
+  0.975,
+  1.05,
+  1.125
+ ],
+ "size": [
+  176,
+  128
+ ],
+ "res": 1.4,
+ "space": {
+  "context": "ground",
+  "plane": "billboard",
+  "camera": "3/4 40",
+  "width_m": 4.4,
+  "anchor": "world point (ground)",
+  "background": "mixed"
+ },
+ "pivot": [
+  0.5,
+  0.875
+ ],
+ "options": {
+  "palette": null,
+  "smoke": null,
+  "seed": 5,
+  "scale": 1.0,
+  "hot": 1.0,
+  "side": null,
+  "style": "lobe",
+  "look": "smoke"
+ }
+}

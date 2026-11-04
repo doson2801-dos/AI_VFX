@@ -1,0 +1,46 @@
+{
+  "planVersion": "v2-delta1",
+  "approved": true,
+  "parentPlanApproved": true,
+  "reason": "Unity import reported missing Shader SubGraphs. Parent C01-C07 approval remains valid.",
+  "assets": [
+    {
+      "source": "Assets/VFX_Library/Shaders/Channel Picker Add.shadersubgraph",
+      "sourceGuid": "9f912318b83cca744a9998b6c38e5836",
+      "sha256": "3a0d7ea8d7f753209bf14e916ea2c289f469c58355f49e3de60676ce58eadeec",
+      "destination": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/Channel Picker Add.shadersubgraph",
+      "operation": "reuse-copy-with-guid-remap",
+      "reason": "ShaderGraph dependency serialized inside JSON string, missed by initial GUID-only scanner.",
+      "targetGuid": "08ea9278478a4010baaab1d7ec1e2d21"
+    },
+    {
+      "source": "Assets/VFX_Library/Shaders/Channel Picker Clamped.shadersubgraph",
+      "sourceGuid": "db634c633afe3eb478fcc401198693ed",
+      "sha256": "af40276877892a5940cecc101b9c64cf5abc07889c317230da05ff0136cd1826",
+      "destination": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/Channel Picker Clamped.shadersubgraph",
+      "operation": "reuse-copy-with-guid-remap",
+      "reason": "ShaderGraph dependency serialized inside JSON string, missed by initial GUID-only scanner.",
+      "targetGuid": "02fdc741f6a14d1eb27b024eacf88690"
+    },
+    {
+      "source": "Assets/VFX_Library/Shaders/Channel Picker.shadersubgraph",
+      "sourceGuid": "763409a3f98108848a0e1befe8dc39d0",
+      "sha256": "2e946017a86bbabfeb512840ea415af5dc316c5468d320a394ae27a7e7dd9d05",
+      "destination": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/Channel Picker.shadersubgraph",
+      "operation": "reuse-copy-with-guid-remap",
+      "reason": "ShaderGraph dependency serialized inside JSON string, missed by initial GUID-only scanner.",
+      "targetGuid": "4add7a215bdf494f91a41e66d94a01f7"
+    },
+    {
+      "source": "Assets/VFX_Library/Shaders/Soft Particle.shadersubgraph",
+      "sourceGuid": "18a1e76f4c37a2a49a324c434cb8c171",
+      "sha256": "823c16c5aba02e6ead0c36ca2402f2727c7d8e24bc363c1ef3fb73a81c7f6f80",
+      "destination": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/Soft Particle.shadersubgraph",
+      "operation": "reuse-copy-with-guid-remap",
+      "reason": "ShaderGraph dependency serialized inside JSON string, missed by initial GUID-only scanner.",
+      "targetGuid": "a338c577a2d54b19a4c42fee0b39ea77"
+    }
+  ],
+  "unresolved": [],
+  "approvalEvidence": "User explicitly selected D01-D04 approval in response to Delta1 question, 2026-10-17."
+}

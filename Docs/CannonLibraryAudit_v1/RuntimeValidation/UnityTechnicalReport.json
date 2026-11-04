@@ -1,0 +1,460 @@
+{
+    "unity": "2022.3.62f3",
+    "pipeline": "Built-in",
+    "completed": true,
+    "errors": [],
+    "materials": [
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Materials/Alpha_Blended.mat",
+            "shader": "Particles/Standard Unlit",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Materials/cannon_impact.mat",
+            "shader": "Custom/MinimalScrollTransparent_VertexColor_Advanced",
+            "shaderPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Shaders/scroll_XY_Base.shader",
+            "supported": true,
+            "keywords": [
+                "_BLENDINGTYPE_ALPHABLEND",
+                "_CFXR_DITHERED_SHADOWS_OFF",
+                "_CFXR_OVERLAYTEX_OFF",
+                "_USECOLOR_ON"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Materials/ember.mat",
+            "shader": "Legacy Shaders/Particles/Additive",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [
+                "_FADING_ON",
+                "_SOFTPARTICLES_ON"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Materials/sub_arrow.mat",
+            "shader": "Mobile/Particles/Additive",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [
+                "_FADING_ON",
+                "_SOFTPARTICLES_ON"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/_Game/Resources_moved/Models/Tornado_vertical.fbx",
+            "shader": "Standard",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/RPG_VFX/materials/cannon_impact2.mat",
+            "shader": "Legacy Shaders/Particles/Alpha Blended",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [
+                "_ENABLESOFTX_ON"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/RPG_VFX/materials/Davy_jone1.mat",
+            "shader": "Legacy Shaders/Particles/Alpha Blended",
+            "shaderPath": "Resources/unity_builtin_extra",
+            "supported": true,
+            "keywords": [],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/RPG_VFX/materials/GroundCracks_Radial.mat",
+            "shader": "Piloto Studio/UberFXSG",
+            "shaderPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/UberFXSG.shadergraph",
+            "supported": true,
+            "keywords": [
+                "_BUILTIN_SURFACE_TYPE_TRANSPARENT",
+                "_SURFACE_TYPE_TRANSPARENT"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Dependencies/RPG/RPG_VFX/materials/Smoke_Harsh_Disolve 1.mat",
+            "shader": "Piloto Studio/UberFXSG",
+            "shaderPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/UberFXSG.shadergraph",
+            "supported": true,
+            "keywords": [
+                "_BUILTIN_SURFACE_TYPE_TRANSPARENT",
+                "_DOUBLESIDED_ON",
+                "_SURFACE_TYPE_TRANSPARENT"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Materials/Instances/Textures/cfxr smoke cloud x4 ab.mat",
+            "shader": "Cartoon FX/Remaster/Particle Ubershader",
+            "shaderPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/CFXR Particle Ubershader.cfxrshader",
+            "supported": true,
+            "keywords": [
+                "_ALPHABLEND_ON",
+                "_CFXR_DISSOLVE",
+                "_CFXR_DITHERED_SHADOWS_ON",
+                "_FADING_ON",
+                "_",
+                "_CFXR_OVERLAYBLEND_RGBA",
+                "_CFXR_OVERLAYTEX_OFF"
+            ],
+            "errors": []
+        },
+        {
+            "path": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/UberFXSG.shadergraph",
+            "shader": "Piloto Studio/UberFXSG",
+            "shaderPath": "Assets/CannonVFX_LibraryReuse_v1/Sources/Shaders/UberFXSG.shadergraph",
+            "supported": true,
+            "keywords": [],
+            "errors": []
+        }
+    ],
+    "particles": [
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "ember / Legacy Shaders/Particles/Additive"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/impact2",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "UV2",
+                "Custom1XYZW"
+            ],
+            "materials": [
+                "cannon_impact / Custom/MinimalScrollTransparent_VertexColor_Advanced"
+            ],
+            "duration": 0.5,
+            "maxParticles": 1
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/impact",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "Custom1XYZW"
+            ],
+            "materials": [
+                "Davy_jone1 / Legacy Shaders/Particles/Alpha Blended"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/smoke",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "cfxr smoke cloud x4 ab / Cartoon FX/Remaster/Particle Ubershader"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/smoke2",
+            "simulationSpace": "World",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "cfxr smoke cloud x4 ab / Cartoon FX/Remaster/Particle Ubershader"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/smoke3",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "Custom1XYZW",
+                "Custom2X"
+            ],
+            "materials": [
+                "Smoke_Harsh_Disolve 1 / Piloto Studio/UberFXSG"
+            ],
+            "duration": 2.0,
+            "maxParticles": 20
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Shoot.prefab",
+            "hierarchy": "VFX_Cannon_Shoot/smoke3 (1)",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "Custom1XYZW",
+                "Custom2X"
+            ],
+            "materials": [
+                "Smoke_Harsh_Disolve 1 / Piloto Studio/UberFXSG"
+            ],
+            "duration": 2.0,
+            "maxParticles": 20
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": false,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": false,
+            "customData": false,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "UV2"
+            ],
+            "materials": [
+                "Alpha_Blended / Particles/Standard Unlit"
+            ],
+            "duration": 1.5,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/VFX_Cannon_Impact_InUse",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "UV2"
+            ],
+            "materials": [
+                "Alpha_Blended / Particles/Standard Unlit"
+            ],
+            "duration": 1.5,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/glow",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "sub_arrow / Mobile/Particles/Additive"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/glow_black",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "Default-Particle / Legacy Shaders/Particles/Alpha Blended Premultiply"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/ground",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "Custom1XYZW",
+                "Custom2X"
+            ],
+            "materials": [
+                "GroundCracks_Radial / Piloto Studio/UberFXSG"
+            ],
+            "duration": 1.0,
+            "maxParticles": 10
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/impact",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": true,
+            "textureSheet": true,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV",
+                "Custom1XYZW"
+            ],
+            "materials": [
+                "Davy_jone1 / Legacy Shaders/Particles/Alpha Blended"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        },
+        {
+            "prefab": "Assets/CannonVFX_LibraryReuse_v1/Sources/VFX/Gameplay/RPG/VFX_Cannon_Impact_InUse.prefab",
+            "hierarchy": "VFX_Cannon_Impact_InUse/root/impact_main",
+            "simulationSpace": "Local",
+            "active": true,
+            "rendererEnabled": true,
+            "loop": false,
+            "playOnAwake": false,
+            "emission": true,
+            "customData": false,
+            "textureSheet": false,
+            "streams": [
+                "Position",
+                "Normal",
+                "Color",
+                "UV"
+            ],
+            "materials": [
+                "cannon_impact2 / Legacy Shaders/Particles/Alpha Blended"
+            ],
+            "duration": 1.0,
+            "maxParticles": 1000
+        }
+    ]
+}
