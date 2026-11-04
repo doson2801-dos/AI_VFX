@@ -33,6 +33,7 @@
 | `Assets/VFX/_Imported/` | Asset nhập: `Mesh/` (55 `SM_VFX_*`), `RpgGame/` (shader Coloso…). |
 | `Assets/VFX/_VfxCode/` | Builder của skill `vfx-code`. |
 | `Assets/shader_water/` | Shader nước (riêng). |
+| `Assets/Library/` | Thư viện texture VFX đã phân loại (bản **sao chép** từ rpg-game + project, GUID mới): `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`. Tên file `<thư mục>_NNN` (đã soát bằng mắt). Bảng nguồn → đích + tên cũ: `Docs/VFX/_Library/classify.csv`. |
 | `Packages/`, `ProjectSettings/` | Cấu hình Unity. |
 
 ## Tài liệu
@@ -45,6 +46,7 @@
 | `Docs/VFX/_Recipes/` | Recipe mix (json). |
 | `Docs/VFX/_Components/` | Ảnh / dữ liệu chụp thành phần. |
 | `Docs/VFX/_Review/` | Review Lab sinh ra (`index.html`). Không commit. |
+| `Docs/VFX/_Library/` | Script phân loại texture (`classify.py`, chạy thử mặc định, `--apply` để chép) + bảng kết quả `classify.csv`. |
 | `Docs/VFX/SHADERS.md` | Danh mục shader: kiểm tra trước khi viết shader mới. |
 | `Docs/CannonLibraryAudit_v1/` | Kiểm kê thư viện Cannon VFX (có bản project Unity kiểm thử). |
 | `Docs/StrongExplosion/`, `Docs/Meteor/`, `Docs/Models/`, `Docs/blender-mcp/` | Tài liệu từng chủ đề riêng. |

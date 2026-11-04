@@ -1,5 +1,7 @@
 # Điện (lightning) – học từ rpg-game (2026-11-04)
 
+> **Công thức chính xác của line_impact (cột sáng vàng), wave, flare: xem `thunder-core.md`.** Chỗ nào dưới đây mô tả line_impact là "tia zig-zag" thì SAI: art lead xác nhận nó là cột sáng vàng ban đầu (Stretched, 3D size 35×50×5, pivot (0,1,0)).
+
 Nguồn đã đọc: `VFX_BossRaid_Knight_Thunder` (+`_InUse`), `..._Thunder Spear` (+`_InUse`), `..._Lightning_Trail`, `..._Landing`, `VFX_Aura_Gauntlet_Prismatic`. Bản InUse chỉ là prefab thường (gom lại dưới một `root` scale 0.07), nội dung giống bản gốc.
 
 ## Cách rpg-game dựng điện

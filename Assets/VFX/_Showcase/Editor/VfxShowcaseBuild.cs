@@ -20,8 +20,8 @@ namespace VfxEffects
 
         // Only the effects listed here go in the scene (art lead, 2026-11-03: the other effects are not tried yet).
         // To add an effect: add its prefab-name prefix to Included. Order of the list = order of the categories in the UI.
-        static readonly string[] Included = { "VFX_Slash360_", "VFX_IceSpikeFan_", "VFX_HealCircle", "VFX_LightningStrike" };
-        static readonly string[] CategoryOrder = { "Slash360", "IceSpike", "HealCircle", "LightningStrike" };
+        static readonly string[] Included = { "VFX_Slash360_", "VFX_IceSpikeFan_", "VFX_HealCircle", "VFX_LightningStrike", "VFX_BossRaid_Knight_Thunder" };
+        static readonly string[] CategoryOrder = { "Slash360", "IceSpike", "HealCircle", "LightningStrike", "_Imported" };
 
         [MenuItem("VFX/Showcase/Build Scene")]
         public static void BuildMenu()

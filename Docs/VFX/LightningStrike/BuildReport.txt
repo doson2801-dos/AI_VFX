@@ -1,17 +1,13 @@
 Effect: LightningStrike   Kit: 1.1.0   Unity: 2022.3.62f3   Pipeline: Built-in
-Built: 2026-11-04 10:17:42
-Preview times (s): 0.03, 0.08, 0.16, 0.3, 0.6, 1, 1.6, 2.2
+Built: 2026-11-04 10:56:51
+Preview times (s): 0.04, 0.1, 0.2, 0.4, 0.8, 1.1, 1.5, 2.2
 
 Layers:
-  VFX_LightningStrike/S0_Scorch  max=50  life=2.3  mode=Billboard  mat=M_LightningStrike_Scorch (Mobile/Particles/Alpha Blended)
-  VFX_LightningStrike/S0_GroundGlow  max=50  life=1  mode=Billboard  mat=M_LightningStrike_GroundGlow (Mobile/Particles/Additive)
-  VFX_LightningStrike/S2_GroundCracks  max=50  life=1.5  mode=Billboard  mat=M_LightningStrike_GroundCrack (Mobile/Particles/Additive)
-  VFX_LightningStrike/S1_Bolt_Main  max=24  life=0.16  mode=Stretch  mat=M_LightningStrike_Bolt (Mobile/Particles/Additive)
-  VFX_LightningStrike/S1_Bolt_Branch1  max=24  life=0.16  mode=Stretch  mat=M_LightningStrike_Bolt (Mobile/Particles/Additive)
-  VFX_LightningStrike/S1_Bolt_Branch2  max=24  life=0.16  mode=Stretch  mat=M_LightningStrike_Bolt (Mobile/Particles/Additive)
-  VFX_LightningStrike/S3_Arcs  max=60  life=0.5  mode=Stretch  mat=M_LightningStrike_Arcs (Mobile/Particles/Additive)
-  VFX_LightningStrike/S4_ImpactMix/00_IMP_Hit_Ground_01/Splash  max=2  life=0.4  mode=Stretch  mat=M_IMP_GroundSplash_Add (Mobile/Particles/Additive)
-  VFX_LightningStrike/S4_ImpactMix/00_IMP_Hit_Ground_01/Flat  max=2  life=0.22  mode=Billboard  mat=M_IMP_GroundRing_Add (Mobile/Particles/Additive)
-Total maxParticles: 286
+  VFX_LightningStrike  max=1  life=0.3  mode=Billboard  mat=M_LightningStrike_Flare (Mobile/Particles/Additive)
+  VFX_LightningStrike/Cracks  max=1000  life=1  mode=Billboard  mat=M_LightningStrike_GroundCrack (Mobile/Particles/Additive)
+  VFX_LightningStrike/line_impact  max=1000  life=0.15  mode=Stretch  mat=M_LightningStrike_LineImpact (Mobile/Particles/Additive)
+  VFX_LightningStrike/wave  max=1000  life=0.5  mode=Billboard  mat=M_LightningStrike_Wave (Mobile/Particles/Alpha Blended)
+  VFX_LightningStrike/electric_remain  max=1000  life=0.5  mode=Stretch  mat=M_LightningStrike_Arcs (Mobile/Particles/Additive)
+Total maxParticles: 4001
 
 Errors: none

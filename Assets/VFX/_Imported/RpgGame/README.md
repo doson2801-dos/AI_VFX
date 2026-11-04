@@ -12,3 +12,6 @@
 - Mất khả năng SRP Batcher của các shader này (không ảnh hưởng hiển thị).
 
 Chưa làm: 6 Shader Graph chỉ có target URP (Explosion, FireBall, GroundCrack, LightningParticles, ParticlePackAdditive, Smoke) vẫn cần URP; 9 graph còn lại có thêm target Built-in.
+
+## RpgThunder (2026-11-04)
+`Assets/VFX/_Imported/RpgThunder/` = bản sao nguyên vẹn của `VFX_BossRaid_Knight_Thunder.prefab` (rpg-game) cùng mọi vật liệu, texture, mesh nó dùng (giữ nguyên đường dẫn con và GUID gốc). Shader `VFX/Master`, `ERB/Particles/Add_CenterGlow`, `Thrust` dùng lại bản đã nhập ở đây (vật liệu đã nối lại GUID). Render thử trong project sạch: giống bản gốc.

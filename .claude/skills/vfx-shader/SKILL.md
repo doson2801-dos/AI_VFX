@@ -100,6 +100,9 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 - Phản hồi mơ hồ ("đang có lỗi visual") không kèm ảnh: tìm lỗi ở preview phóng to, sửa những gì thấy được, nói rõ phần chưa chắc và xin ảnh / mô tả.
 
 ## Mặc định của art lead (áp dụng nếu brief không nói khác)
+- **Mọi Particle System đều để Scaling Mode = Hierarchy** (art lead 2026-11-04). Nếu mẫu dùng Local mà dưới nhóm có scale ≠ 1 thì bù lại size cho giống kích thước thật. `VfxBuildKit.Validate` báo lỗi nếu có layer khác Hierarchy.
+- **Cấu trúc prefab chuẩn: `Tên VFX (các thành phần)`**, không có nhóm trung gian (không `Scale05`…) và không scale trên transform nào: nếu mẫu có scale ở root/nhóm thì nhân vào size của từng layer. Root cũng là Particle System:
+  **Root của prefab cũng phải là một Particle System** (art lead 2026-11-04): chọn một layer làm root (LightningStrike: flare), các layer khác là con. Dùng `VfxBuildKit.ParticleOn(rootGameObject, ...)`; `Validate` cảnh báo nếu root không có ParticleSystem. Các effect cũ (IceSpike, Slash360, HealCircle, Mixes) chưa theo luật này.
 
 - **Khói:** texture `Assets/VFX/fx_t_smoke_02.png` + shader mobile mặc định của Unity (`Mobile/Particles/Alpha Blended`; `VfxBuildKit.Material` tự chọn, URP đổi sang URP Particles Unlit). Tô màu bằng Start Color. Không dùng thành phần Dust chuẩn / khói toon cho effect mới (art lead 2026-11-03).
 - **Slash:** chỉ bộ Coloso ([references/coloso.md](references/coloso.md)).

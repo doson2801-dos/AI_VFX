@@ -1,5 +1,5 @@
 Mix: LightningStrike_Impact   Recipe: Docs/VFX/_Recipes/LightningStrike_Impact.json   Unity: 2022.3.62f3
-Built: 2026-11-04 10:17:41
+Built: 2026-11-04 10:36:59
 Preview times (s): 0.01, 0.056, 0.113, 0.169, 0.225, 0.281, 0.338, 0.394
 Palette: Core #FFFBE0 · Mid #FFD84A · Outer #E8801A · Dust #B89A70
 

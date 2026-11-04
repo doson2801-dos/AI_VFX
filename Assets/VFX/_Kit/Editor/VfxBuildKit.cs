@@ -134,6 +134,13 @@ namespace VfxKit
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
+            return ParticleOn(go, material, lifetime, size, color);
+        }
+
+        /// <summary>Same as Particle but on an existing GameObject (used for the prefab root, which must itself be a Particle System).</summary>
+        public static ParticleSystem ParticleOn(GameObject go, Material material, float lifetime = 1f, float size = 1f, Color? color = null)
+        {
+            string name = go.name;
             var ps = go.AddComponent<ParticleSystem>();
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             ps.useAutoRandomSeed = false;
@@ -298,6 +305,11 @@ namespace VfxKit
             }
             foreach (var r in prefab.GetComponentsInChildren<Renderer>(true))
                 if (r.sharedMaterials.Length == 0 || r.sharedMaterials.Any(x => x == null)) errors.Add("Missing material: " + PathOf(r.transform));
+            // art lead rule (2026-11-04): the prefab root is itself a Particle System (warning only: older effects do not follow it yet)
+            if (prefab.GetComponent<ParticleSystem>() == null) Debug.LogWarning("[VfxKit] Prefab root has no ParticleSystem (art lead rule): " + prefab.name);
+            // art lead rule (2026-11-04): every particle system uses Scaling Mode Hierarchy
+            foreach (var ps in prefab.GetComponentsInChildren<ParticleSystem>(true))
+                if (ps.main.scalingMode != ParticleSystemScalingMode.Hierarchy) errors.Add("Scaling Mode must be Hierarchy: " + PathOf(ps.transform));
             foreach (var r in prefab.GetComponentsInChildren<ParticleSystemRenderer>(true))
                 if (r.renderMode == ParticleSystemRenderMode.Mesh && r.mesh == null) errors.Add("Mesh render mode without mesh: " + PathOf(r.transform));
             return errors;
