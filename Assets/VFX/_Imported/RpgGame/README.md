@@ -15,3 +15,6 @@ Chưa làm: 6 Shader Graph chỉ có target URP (Explosion, FireBall, GroundCrac
 
 ## RpgThunder (2026-11-04)
 `Assets/VFX/_Imported/RpgThunder/` = bản sao nguyên vẹn của `VFX_BossRaid_Knight_Thunder.prefab` (rpg-game) cùng mọi vật liệu, texture, mesh nó dùng (giữ nguyên đường dẫn con và GUID gốc). Shader `VFX/Master`, `ERB/Particles/Add_CenterGlow`, `Thrust` dùng lại bản đã nhập ở đây (vật liệu đã nối lại GUID). Render thử trong project sạch: giống bản gốc.
+
+## RpgAura (2026-11-04)
+`Assets/VFX/_Imported/RpgAura/` = bản copy của `VFX_Aura_Gauntlet_Prismatic.prefab` (rpg-game) cùng vật liệu, texture, mesh (GUID gốc). **Hiện màu hồng**: khói dùng `UberFXSG` và bolt dùng `LightningParticles` là Shader Graph chỉ URP, project này là Built-in (không copy shader URP / OmniShade). Chỉ dùng để đọc thiết lập trong Inspector; xem đúng hình thì mở prefab ở project rpg-game.

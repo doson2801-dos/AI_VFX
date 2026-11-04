@@ -274,14 +274,14 @@ namespace VfxKit
         public static bool ConfirmSceneSwitch() => Application.isBatchMode || EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
 
         /// <summary>Validates, writes the preview sheet and demo scene, and reports to Docs/VFX/&lt;Effect&gt;/. Throws if validation fails.</summary>
-        public static void Finish(GameObject prefab, string root, string effect, float[] previewTimes, Vector3? cameraPos = null, Vector3? lookAt = null)
+        public static void Finish(GameObject prefab, string root, string effect, float[] previewTimes, Vector3? cameraPos = null, Vector3? lookAt = null, System.Func<float, Vector3> motion = null)
         {
             string docs = Path.Combine("Docs/VFX", effect);
             Directory.CreateDirectory(docs);
             string scenePath = root + "/Scenes/" + effect + "_Demo.unity";
 
             var errors = Validate(root, prefab);
-            CaptureSheet(prefab, previewTimes, Path.Combine(docs, "Preview_sheet.png"), 384, cameraPos, lookAt);
+            CaptureSheet(prefab, previewTimes, Path.Combine(docs, "Preview_sheet.png"), 384, cameraPos, lookAt, motion);
             DemoScene(prefab, scenePath, cameraPos, lookAt);
             AssetDatabase.SaveAssets();
             WriteReport(Path.Combine(docs, "BuildReport.txt"), effect, prefab, previewTimes, errors);
@@ -327,7 +327,7 @@ namespace VfxKit
                 || importer.alphaSource == TextureImporterAlphaSource.FromInput && importer.DoesSourceTextureHaveAlpha();
         }
 
-        public static void CaptureSheet(GameObject prefab, float[] times, string outPng, int size = 384, Vector3? cameraPos = null, Vector3? lookAt = null)
+        public static void CaptureSheet(GameObject prefab, float[] times, string outPng, int size = 384, Vector3? cameraPos = null, Vector3? lookAt = null, System.Func<float, Vector3> motion = null)
         {
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var cam = new GameObject("CaptureCamera").AddComponent<Camera>();
@@ -351,9 +351,22 @@ namespace VfxKit
             cam.targetTexture = rt;
             try
             {
+                float now = 0f;
                 for (int i = 0; i < times.Length; i++)
                 {
-                    foreach (var p in roots) p.Simulate(times[i], true, true, true);
+                    if (motion == null) foreach (var p in roots) p.Simulate(times[i], true, true, true);
+                    else
+                    {
+                        // moving emitter: step the simulation (Simulate(t) from zero would ignore the movement); the root follows motion(t)
+                        if (i == 0) { inst.transform.position = motion(0f); foreach (var p in roots) p.Simulate(0f, true, true, true); now = 0f; }
+                        while (now < times[i] - 1e-4f)
+                        {
+                            float dt = Mathf.Min(1f / 30f, times[i] - now);
+                            now += dt;
+                            inst.transform.position = motion(now);
+                            foreach (var p in roots) p.Simulate(dt, true, false, true);
+                        }
+                    }
                     cam.Render();
                     RenderTexture.active = rt;
                     frame.ReadPixels(new Rect(0, 0, size, size), 0, 0);

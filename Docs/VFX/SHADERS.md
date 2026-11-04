@@ -25,9 +25,14 @@ Chi phí ghi theo fragment: số texture sample · hàm đắt (atan2/pow/sin/co
 
 `VFX/FX/Blast` mở rộng (2026-10-28): thêm keyword `_NO_RING` (chỉ flash + cầu lửa) và `_RING_ONLY` (chỉ vòng xung kích, dùng trên quad nằm đất), mặc định tắt. Đang dùng thêm: FireballImpact (L2, L3). `VFX/FX/Meteor` đang dùng thêm: FireballImpact (L1).
 
-| `VFX/FX/Erode Sphere` | `Assets/VFX/_Shared/Shaders/SH_VFX_ErodeSphere.shader` | **Khói khối cầu ăn mòn** (kỹ thuật Beyond-FX Zelda explosion): mesh cầu mỗi hạt, mask đọc theo hướng nhìn (tâm luôn quay về camera), ngưỡng alpha ăn từ vùng tối ra, ngưỡng emissive + ramp nhiệt, phồng đỉnh + mask nở từ tâm, sáng/tối half-lambert | `_MainTex` mask (linear), `_RampTex`, `_Soft`, `_EmisSoft`, `_EmisBoost`, `_BulgeAmount`, `_UVBulge`, `_LightDir`, `_ShadowTone`; `_MESH_UV` (mask quấn theo UV của cầu, sợi dọc khi tan; mask phải Repeat) + `_MaskTiling`; `_RimIn` (0 = ăn từ tâm, 1 = ăn từ mép); `_HeatRange` (màu ramp theo độ sâu dưới ngưỡng); `_Lumps` / `_LumpFreq` (mép sần, phá hình tròn); stream `Position, Normal, Color, UV, Custom1XYZW, StableRandomX, Center` (hướng cầu = đỉnh − tâm hạt, không dùng normal của mesh; Custom1 = alpha thr / emissive thr / bulge / light) | 2 sample · 0 hàm đắt (sin/cos ở vertex) | GroundBlast (Smoke) | 2026-11-04, Alpha blend, Cull Back, Sort Mode Distance |
+| `VFX/FX/Erode Sphere` | `Assets/VFX/_Shared/Shaders/SH_VFX_ErodeSphere.shader` | **Khói vụ nổ: khối cầu ăn mòn** (kỹ thuật Beyond-FX Zelda explosion): mesh cầu mỗi hạt, mask quấn theo UV của cầu (tan thành sợi dọc), ngưỡng alpha ăn từ vùng tối ra, ngưỡng emissive + ramp nhiệt theo độ sâu, mép sần, phồng, sáng/tối half-lambert. **v2–v4 (2026-11-04, art lead): ít thuộc tính**, phần còn lại cố định trong shader | `_MainTex` mask (linear, Repeat; **Tiling của ô texture** chỉnh độ mịn vân, mesh to dùng > 1), `_RampTex`, `_EmisBoost` (độ sáng lửa), `_HeatRange` (màu gân), `_Lumps` (độ sần), `_ShadowTone`; keyword `_MESH_NORMAL` (một mesh cả khối, ví dụ nấm: sáng tối theo normal của mesh, 2 tông toon). Stream `Position, Normal, Color, UV, Custom1XYZ, StableRandomX, Center`. **Custom1 3 kênh:** x = lúc khói tan (ngưỡng alpha), y = lúc lửa tắt (ngưỡng emissive), z = **độ mờ viền** (v4, thay `_Soft`; 0.03 sắc, 0.15+ mờ); phồng + sáng tối cố định trong shader | 2 sample · 0 hàm đắt (sin ở vertex) | GroundBlast (Smoke), MushroomBlast (Stem/Cap/Skirt) | 2026-11-04, Alpha blend, Cull Back, Sort Mode Distance |
 
 ## Thư viện dùng chung
+
+### ThunderImpact (2026-11-04)
+
+- Reuse `Particles/Lightning_CustomBlend` (`Assets/VFX/_Imported/RpgGame/Particle_Basic/Lightning.shader`): L1 bolt, 2 texture samples, cutoff from Custom1.x / UV offset Custom1.y. No shader modifications.
+- Reuse Unity `Mobile/Particles/Additive`: L2 Flash, L3 Wave, L4 GroundElectric, one texture sample. Four materials total; mobile device performance not measured.
 
 - `Assets/VFX/_Shared/Shaders/VfxShaderLib.cginc`: hàm SDF, dissolve, ramp toon, ease (skill vfx-shader). Chỉ thêm hàm mới, không đổi hàm cũ.
 - Noise: `Assets/VFX/_Shared/Textures/Noise/T_Noise_Smooth|Cells|Streaks.png` (R + G = 2 noise, linear, Repeat).

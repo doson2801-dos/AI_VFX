@@ -29,11 +29,13 @@ VertexPositionInputs GetVertexPositionInputs(float3 positionOS)
 
 float ComputeFogFactor(float z)
 {
-    float unityFogFactor = 0;
+    // UNITY_CALC_FOG_FACTOR_RAW declares `float unityFogFactor` itself: declaring it here too fails to compile as soon as fog is on in the scene
     #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
         UNITY_CALC_FOG_FACTOR_RAW(z);
+        return unityFogFactor;
+    #else
+        return 0;
     #endif
-    return unityFogFactor;
 }
 float3 MixFog(float3 c, float f)
 {

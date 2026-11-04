@@ -20,8 +20,8 @@ namespace VfxEffects
 
         // Only the effects listed here go in the scene (art lead, 2026-11-03: the other effects are not tried yet).
         // To add an effect: add its prefab-name prefix to Included. Order of the list = order of the categories in the UI.
-        static readonly string[] Included = { "VFX_Slash360_", "VFX_IceSpikeFan_", "VFX_HealCircle", "VFX_LightningStrike", "VFX_BossRaid_Knight_Thunder" };
-        static readonly string[] CategoryOrder = { "Slash360", "IceSpike", "HealCircle", "LightningStrike", "_Imported" };
+        static readonly string[] Included = { "VFX_Slash360_", "VFX_IceSpikeFan_", "VFX_HealCircle", "VFX_LightningStrike", "VFX_BossRaid_Knight_Thunder", "VFX_ThunderSpear", "VFX_LightningTrail", "VFX_AuraGauntlet" };
+        static readonly string[] CategoryOrder = { "Slash360", "IceSpike", "HealCircle", "LightningStrike", "ThunderSpear", "LightningTrail", "AuraGauntlet", "_Imported" };
 
         [MenuItem("VFX/Showcase/Build Scene")]
         public static void BuildMenu()
@@ -42,21 +42,35 @@ namespace VfxEffects
             var camGo = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener));
             camGo.tag = "MainCamera";
             var cam = camGo.GetComponent<Camera>();
-            cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color(0.07f, 0.08f, 0.1f);
             cam.fieldOfView = 40f;
+            cam.allowHDR = true;
             cam.nearClipPlane = 0.1f; cam.farClipPlane = 200f;
             camGo.transform.position = new Vector3(0f, 8.8f, -3.6f);
             camGo.transform.LookAt(new Vector3(0f, 1.1f, 0f));
 
-            var light = new GameObject("Directional Light", typeof(Light));
-            light.GetComponent<Light>().type = LightType.Directional;
-            light.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
+            // realistic environment (sky, sun, fog, ground, arena, rocks, pillars): VfxShowcaseEnvironment
+            VfxShowcaseEnvironment.Build(cam);
 
             var go = new GameObject("VFX_Showcase");
             var show = go.AddComponent<VfxShowcase>();
             show.cam = cam;
+            show.referenceMaterial = VfxShowcaseEnvironment.ReferenceMaterial;
             show.entries = Collect();
+
+            // every effect is placed in the Hierarchy under VFX_Instances (one prefab instance each, in a row 16 m apart) so the positions can be
+            // arranged by hand; the runtime switcher plays the selected one and switches the others off
+            var holder = new GameObject("VFX_Instances");
+            float x = 0f;
+            foreach (var en in show.entries)
+            {
+                if (en.prefab == null) continue;
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(en.prefab, holder.transform);
+                inst.transform.position = new Vector3(x, 0f, 0f);
+                en.instance = inst;
+                var tag = inst.AddComponent<VfxShowcaseTag>(); tag.category = en.category; tag.displayName = en.name;   // keeps the group / name when the list is rebuilt from the Hierarchy
+                x += 16f;
+            }
 
             EditorSceneManager.SaveScene(scene, ScenePath);
 

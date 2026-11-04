@@ -15,10 +15,11 @@ namespace VfxKit
     public class VfxShowcase : MonoBehaviour
     {
         [Serializable]
-        public class Entry { public string name; public string category; public GameObject prefab; }
+        public class Entry { public string name; public string category; public GameObject prefab; public GameObject instance; }   // instance = the copy placed in the scene Hierarchy (move it to arrange the effects)
 
         public List<Entry> entries = new List<Entry>();
         public Camera cam;
+        public Material referenceMaterial;   // lit material for the 2 m reference figure (set by VfxShowcaseBuild)
         public bool loop = true;
         public float loopGap = 0.8f;
 
@@ -33,7 +34,8 @@ namespace VfxKit
         float age, endTime;
         bool loops;
         float camDistance = 9f, camAngle = 60f;
-        readonly Vector3 camTarget = new Vector3(0f, 1.1f, 0f);
+        Vector3 camTarget = new Vector3(0f, 1.1f, 0f);   // follows the placed instance of the selected effect
+        bool currentIsInstance;
 
         Text title, subtitle, loopLabel, refLabel, speedLabel;
         readonly List<Image> rows = new List<Image>();
@@ -53,38 +55,67 @@ namespace VfxKit
         {
             if (built) return;
             built = true;
+            RefreshEntriesFromScene();
             if (cam == null) cam = Camera.main;
             if (cam != null)
             {
-                cam.clearFlags = CameraClearFlags.SolidColor;
+                cam.clearFlags = RenderSettings.skybox != null ? CameraClearFlags.Skybox : CameraClearFlags.SolidColor;
                 cam.backgroundColor = new Color(0.07f, 0.08f, 0.1f);
                 cam.fieldOfView = 40f;
             }
+            foreach (var en in entries) if (en.instance != null && Application.isPlaying) en.instance.SetActive(false);   // only the selected one plays
             BuildStage();
             BuildUI();
             SetPreset(0, true);
         }
 
+        /// <summary>The list follows the Hierarchy: every active child of VFX_Instances that has a particle system is an effect (in Hierarchy order).
+        /// Delete one to remove it, drag in a prefab to add it, disable one to hide it, reorder to reorder. Without VFX_Instances the list saved in the scene is used.</summary>
+        void RefreshEntriesFromScene()
+        {
+            var holder = GameObject.Find("VFX_Instances");
+            if (holder == null) return;
+            var list = new List<Entry>();
+            foreach (Transform c in holder.transform)
+            {
+                if (!c.gameObject.activeSelf || c.GetComponentInChildren<ParticleSystem>(true) == null) continue;
+                var tag = c.GetComponent<VfxShowcaseTag>();
+                string n = c.name.StartsWith("VFX_") ? c.name.Substring(4) : c.name;
+                list.Add(new Entry
+                {
+                    name = tag != null && !string.IsNullOrEmpty(tag.displayName) ? tag.displayName : n.Replace('_', ' '),
+                    category = tag != null && !string.IsNullOrEmpty(tag.category) ? tag.category : "Scene",
+                    instance = c.gameObject
+                });
+            }
+            entries = list;
+        }
+
         void BuildStage()
         {
             var unlitColor = Shader.Find("Universal Render Pipeline/Unlit") != null && VfxKitPipeline.IsUrp ? Shader.Find("Universal Render Pipeline/Unlit") : Shader.Find("Unlit/Color");
-            ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            ground.name = "Ground";
-            ground.transform.SetParent(transform, false);
-            ground.transform.localScale = new Vector3(3f, 1f, 3f);
-            Destroy(ground.GetComponent<Collider>());
-            var gm = new Material(Shader.Find("Unlit/Texture") ?? unlitColor);
-            gm.mainTexture = GridTexture();
-            gm.mainTextureScale = new Vector2(30f, 30f);
-            ground.GetComponent<Renderer>().sharedMaterial = gm;
+            if (GameObject.Find("Environment") == null)   // no built environment: the old flat grid
+            {
+                ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                ground.name = "Ground";
+                ground.transform.SetParent(transform, false);
+                ground.transform.localScale = new Vector3(3f, 1f, 3f);
+                Destroy(ground.GetComponent<Collider>());
+                var gm = new Material(Shader.Find("Unlit/Texture") ?? unlitColor);
+                gm.mainTexture = GridTexture();
+                gm.mainTextureScale = new Vector2(30f, 30f);
+                ground.GetComponent<Renderer>().sharedMaterial = gm;
+            }
 
             reference = GameObject.CreatePrimitive(PrimitiveType.Capsule);   // 2 m tall, the scale reference for the whole library
             reference.name = "Reference_2m";
             reference.transform.SetParent(transform, false);
             reference.transform.localPosition = new Vector3(-2.2f, 1f, -1.2f);
             Destroy(reference.GetComponent<Collider>());
-            var rm = new Material(unlitColor); rm.color = new Color(0.35f, 0.38f, 0.44f);
+            var rm = referenceMaterial != null ? referenceMaterial : new Material(unlitColor);
+            if (referenceMaterial == null) rm.color = new Color(0.35f, 0.38f, 0.44f);
             reference.GetComponent<Renderer>().sharedMaterial = rm;
+            reference.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             reference.SetActive(true);
         }
 
@@ -113,11 +144,27 @@ namespace VfxKit
 
         void Spawn()
         {
-            if (current != null) Destroy(current);
+            if (current != null)
+            {
+                if (currentIsInstance) current.SetActive(false);   // placed instances stay in the scene, they are only switched off
+                else Destroy(current);
+            }
             var e = entries[index];
-            if (e.prefab == null) return;
-            current = Instantiate(e.prefab, Vector3.zero, Quaternion.identity, transform);
-            current.name = e.prefab.name;
+            Vector3 basePos = Vector3.zero;
+            if (e.instance != null)
+            {
+                current = e.instance; currentIsInstance = true;
+                current.SetActive(false); current.SetActive(true);   // off / on restarts every system and the path mover
+                basePos = current.transform.position;
+            }
+            else
+            {
+                if (e.prefab == null) return;
+                current = Instantiate(e.prefab, Vector3.zero, Quaternion.identity, transform);
+                current.name = e.prefab.name; currentIsInstance = false;
+            }
+            camTarget = basePos + new Vector3(0f, 1.1f, 0f);
+            if (reference != null) reference.transform.position = basePos + new Vector3(-2.2f, 1f, -1.2f);
             age = 0f;
             endTime = EstimateDuration(current, out loops);
             if (title != null) title.text = e.name;
