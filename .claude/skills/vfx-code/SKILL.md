@@ -3,7 +3,7 @@ name: vfx-code
 description: "Làm VFX hoàn toàn bằng code (Python/numpy → flipbook + prefab Unity, kèm công thức shader realtime), tổng hợp kỹ thuật từ ~50 thư viện VFX mã nguồn mở trên GitHub: pixelfx, minerva pixel-effect-generator, NovaShader, GDQuest, three.quarks, Effekseer, Godot, stable-fluids, WebGL-Fluid-Simulation, VFXToolbox, officina-vfx-tool... Gồm noise có chu kỳ (tile / loop liền), SDF 2D, toạ độ cực, toon band, dissolve / erosion, tia sét, hệ hạt (curl, vortex, sub-emitter, stretched billboard), mô phỏng khói chất lỏng, metaball nổ, vệt chém. Skill độc lập, tách khỏi vfx-maker; chỉ dùng chung Review Lab để review. Chạy khi người dùng gọi /vfx-code."
 disable-model-invocation: true
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # vfx-code — VFX bằng code
@@ -28,6 +28,12 @@ Brief → KHÔNG GIAN (thiếu → HỎI) → chọn kỹ thuật (references/te
 4. **Vệt chém** = mesh + UV cuộn texture; `slash_arc` chỉ vẽ texture vệt, giữ bố cục UV gốc.
 5. Flipbook: Frame over Time **tuyến tính** (tangent phẳng làm flipbook khựng ở đầu). Loop 8 frame 4×2, một lần 16 frame 4×4. Sheet ≤ 1024 px.
 6. Thời gian nằm ở particle (curve, Custom1.x); shader chỉ giữ thông số hình.
+7. **Texture có sẵn lấy từ `Assets/Library/`** (2026-11-04). Khi effect cần một ảnh không vẽ bằng code, lấy từ đây:
+   - ví dụ mask, noise, hình vệt chém cho mesh (`Assets/Library/Slash/`), khói, glow;
+   - thư mục `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`, tên `<thư mục>_NNN`; nguồn ở `Docs/VFX/_Library/classify.csv`;
+   - xem ảnh trước khi chọn; không đổi import setting của file trong Library (dùng chung), cần thì copy ảnh sang `Assets/VFX/<Effect>/Textures/`.
+
+   Texture vẽ bằng code (flipbook của skill này) vẫn làm như cũ.
 
 ## 1. Thư viện (`lib/`)
 

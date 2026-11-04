@@ -1,9 +1,9 @@
 ---
 name: vfx-maker
-description: "Quy trình VFX bằng texture + particle: từ mô tả/ảnh/JSON Shape Lab → ĐỊNH HƯỚNG KHÔNG GIAN (bắt buộc, thiếu thì hỏi) → effect kiểu đòn trúng/nổ thì AUTO MIX từ thành phần chuẩn (Impact/Glow/Ring/Sparks/Dust) ra recipe rồi Unity dựng → kế hoạch (duyệt 1 lần) → asset (texture từ script / Shape Lab / ChatGPT, mesh, shader nhẹ cho mobile, Built-in + URP) → prefab Unity dựng bằng build script, tự chụp preview kiểm tra → Review Lab. Chế độ B: chỉ xuất spec + prompt tiếng Anh để bàn giao. Chỉ chạy khi người dùng gọi /vfx-maker."
+description: "Quy trình VFX bằng texture + particle: từ mô tả/ảnh/JSON Shape Lab → ĐỊNH HƯỚNG KHÔNG GIAN (bắt buộc, thiếu thì hỏi) → effect kiểu đòn trúng/nổ thì AUTO MIX từ thành phần chuẩn (Impact/Glow/Ring/Sparks/Dust) ra recipe rồi Unity dựng → kế hoạch (duyệt 1 lần) → asset (texture lấy từ Assets/Library trước, rồi script / Shape Lab / ChatGPT, mesh, shader nhẹ cho mobile, Built-in + URP) → prefab Unity dựng bằng build script, tự chụp preview kiểm tra → Review Lab. Chế độ B: chỉ xuất spec + prompt tiếng Anh để bàn giao. Chỉ chạy khi người dùng gọi /vfx-maker."
 disable-model-invocation: true
 metadata:
-  version: "2.3.0"
+  version: "2.3.1"
 ---
 
 # VFX_Maker
@@ -23,6 +23,14 @@ Skill `/vfx-shader` (VFX chỉ bằng shader) đã bỏ ngày 2026-11-02. Bướ
 Chế độ C (**codefx**, VFX hoàn toàn bằng code) cùng thành phần Scorch và CodeFX đã bỏ khỏi skill ngày 2026-11-03 (bản 2.3.0). Bản lưu skill 2.2.0 có codefx: `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.2.0_before_codefx_removal_2026-11-03/`. Prefab đã dựng trong project vẫn giữ.
 
 **Người dùng là art lead.** Yêu cầu hình khối của họ thắng nghiên cứu web và số đo thư viện ([references/shape-language.md](references/shape-language.md), mục "Yêu cầu của art lead"). Quy tắc đang thử nghiệm nằm nháp ở `D:\Game_prj\VFX_LIb\Docs\VFX\_ArtDirection\`. Chỉ đưa vào skill khi art lead nói "chốt".
+
+**Texture lấy từ `Assets/Library/` trước** (art lead 2026-11-04). Đây là thư viện texture đã phân loại bằng mắt:
+- Thư mục: `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`.
+- Tên file `<thư mục>_NNN`; tên cũ và nguồn của từng file ở `Docs/VFX/_Library/classify.csv`.
+- Xem ảnh ứng viên (Read PNG) rồi chọn. Chỉ tạo texture mới (script / Shape Lab / ChatGPT) khi Library không có hình hợp, và nói lý do trong kế hoạch.
+- Texture trong Library dùng chung: build script chỉ `LoadAssetAtPath`, không `ImportTexture` lên nó. Cần import setting khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`.
+- Ghi đường dẫn Library của từng texture trong kế hoạch.
+- Luật đã chỉ định texture cụ thể vẫn giữ (khói mặc định `fx_t_smoke_02.png`, khói vụ nổ GroundBlast v5c).
 
 ## 0. Chuẩn bị project (chỉ lần đầu trong mỗi project)
 
@@ -71,7 +79,7 @@ Phần không hỏi thì tự chọn giá trị hợp lý và ghi là **giả đ
 
 ## 2. Kế hoạch — lần duyệt duy nhất
 
-Trước khi lập kế hoạch, tìm asset tái sử dụng ([references/library.md](references/library.md)): project hiện tại trước, rồi các thư viện. Xem trực tiếp ảnh texture ứng viên (Read file PNG) thay vì đoán theo tên.
+Trước khi lập kế hoạch, tìm asset tái sử dụng: texture trong `Assets/Library/` trước, rồi project hiện tại, rồi các thư viện ([references/library.md](references/library.md)). Xem trực tiếp ảnh texture ứng viên (Read file PNG) thay vì đoán theo tên.
 
 Đọc [references/particles.md](references/particles.md) để chọn layer và thông số; [references/shaders.md](references/shaders.md) nếu cân nhắc shader mới; [references/dissolve.md](references/dissolve.md) nếu có layer tan/kết thúc đặc biệt.
 
@@ -112,6 +120,8 @@ Sau khi duyệt, lưu kế hoạch vào `Docs/VFX/<Effect>/Plan.md` (kèm nguồ
 ## 3. Chuẩn bị asset
 
 **Texture: luôn thử theo thứ tự rẻ → đắt** và ghi nguồn từng texture trong kế hoạch.
+
+**Cách 0. `Assets/Library/`** (art lead 2026-11-04, luôn thử trước). Chọn trong thư mục đúng loại (glow, impact, smoke, Slash, trail, wave…), xem ảnh trước khi chọn. Chỉ sang cách 1–3 khi Library không có hình hợp.
 
 **Cách 1. Sinh bằng script** (~1 giây, gần như không tốn token). Các preset:
 - **Sáng và hạt:** glow, dot, ring (shockwave), flare, comet (spark cho stretched billboard), star (sao anime đặc), glint.

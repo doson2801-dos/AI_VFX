@@ -9,10 +9,11 @@ Unity project – thư viện VFX.
 - Tạo / di chuyển file thì cập nhật `MAP.md`. Học được điều lâu dài thì ghi vào `contexte/<chủ-đề>.md`.
 - Sở thích riêng máy: `CLAUDE.local.md` (không commit). Secret chỉ để trong `.env` (không commit).
 - Git: https://github.com/doson2801-dos/AI_VFX (private, nhánh `main`), chỉ chứa tài liệu + code (`.gitignore` whitelist). Asset Unity không có trong git.
+- **Texture cho mọi skill lấy từ `Assets/Library/`** (2026-11-04; thư viện đã phân loại, tên `<thư mục>_NNN`, nguồn ở `Docs/VFX/_Library/classify.csv`). Slash của `/vfx-shader` dùng `Assets/Library/Slash/` làm texture chạy UV.
 
 ## Skill: VFX_Maker (`/vfx-maker`)
 
-Skill quy trình VFX chính của dự án (texture + particle → prefab), ở cấp project (chuyển từ user-level ngày 2026-11-03): `.claude\skills\vfx-maker\` trong project (`D:\Game_prj\VFX_LIb\.claude\skills\vfx-maker\`, version `2.3.0`). Gọi bằng `/vfx-maker`.
+Skill quy trình VFX chính của dự án (texture + particle → prefab), ở cấp project (chuyển từ user-level ngày 2026-11-03): `.claude\skills\vfx-maker\` trong project (`D:\Game_prj\VFX_LIb\.claude\skills\vfx-maker\`, version `2.3.1`). Gọi bằng `/vfx-maker`.
 
 - Quy trình: mô tả / ảnh / JSON Shape Lab → **định hướng không gian** (bắt buộc; thiếu thông tin thì **hỏi**, không tự đoán) → kế hoạch (duyệt 1 lần) → asset → build script → build + preview → Review Lab → bàn giao.
 - Định hướng không gian (`references/direction.md`):
@@ -42,7 +43,7 @@ Skill quy trình VFX chính của dự án (texture + particle → prefab), ở 
 
 ## Skill: vfx-code (`/vfx-code`, 2026-11-03)
 
-VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn mở trên GitHub (danh mục + giấy phép: `references/sources.md`). Ở `.claude\skills\vfx-code\`, version `1.1.0`.
+VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn mở trên GitHub (danh mục + giấy phép: `references/sources.md`). Ở `.claude\skills\vfx-code\`, version `1.1.1`.
 
 - **Skill tách riêng hoàn toàn với `vfx-maker`** (art lead 2026-11-03): không dùng công cụ / asset / quy trình của nó. Điểm chung duy nhất: gọi **Review Lab** để review.
 - Tự chứa: `lib/core.py` (Canvas, xuất sheet, `--check`) + `fxlib` (noise có chu kỳ, SDF, polar, toon, dissolve/erosion, sét, lửa) + `stylize` (minerva) + `particles` (three.quarks / Godot / Effekseer) + `fluid` (stable fluids). Builder Unity riêng: `assets/VfxCodeBuild.cs` (menu `VFX/vfx-code/Build From Json...`).
@@ -52,7 +53,7 @@ VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn m
 
 ## Skill: vfx-shader (`/vfx-shader`, tạo lại 2026-11-03)
 
-VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.0.0`. Gọi bằng `/vfx-shader`.
+VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.1.0`. Gọi bằng `/vfx-shader`.
 
 - Thứ tự: dùng lại shader có sẵn → mở rộng → viết mới (nhẹ, một pass, Built-in + URP). Định hướng không gian bắt buộc (thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, Review Lab.
 - **Slash chỉ làm bằng bộ Coloso** (`VFXLib/ColosoShaderAdditive|Alpha|AlphaCutOut_Optimized`, art lead 2026-11-03), theo `references/coloso.md`: texture xám, màu từ ramp / Color over Lifetime, `MaskTex` = `T_VFX_Gradient_01`, stream `Custom1XYZW`.

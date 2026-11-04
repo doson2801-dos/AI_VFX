@@ -1,9 +1,9 @@
 ---
 name: vfx-shader
-description: "VFX_Shader — làm VFX cần tới shader (technical): chọn đúng shader có sẵn trong project trước (bộ Coloso VFXLib dùng cho slash / trail / vệt trên mesh + UV, shader nhập từ rpg-game, SH_VFX_* dùng chung), cấu hình material + Custom Vertex Streams, và chỉ viết hoặc mở rộng shader nhẹ cho mobile (Built-in + URP) khi chưa có cái nào đủ. Bắt đầu bằng định hướng không gian (bắt buộc, thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, tự chụp preview, Review Lab, đăng ký shader. Dùng cho effect mà hình khối / chuyển động / kết thúc do shader quyết định (slash, dissolve, vệt, lửa / khói toon, shockwave, beam, aura). Chỉ chạy khi người dùng gọi /vfx-shader."
+description: "VFX_Shader — làm VFX cần tới shader (technical): chọn đúng shader có sẵn trong project trước (bộ Coloso VFXLib dùng cho slash / trail / vệt trên mesh + UV, shader nhập từ rpg-game, SH_VFX_* dùng chung), cấu hình material + Custom Vertex Streams, texture lấy từ Assets/Library (slash chạy UV dùng Assets/Library/Slash), và chỉ viết hoặc mở rộng shader nhẹ cho mobile (Built-in + URP) khi chưa có cái nào đủ. Bắt đầu bằng định hướng không gian (bắt buộc, thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, tự chụp preview, Review Lab, đăng ký shader. Dùng cho effect mà hình khối / chuyển động / kết thúc do shader quyết định (slash, dissolve, vệt, lửa / khói toon, shockwave, beam, aura). Chỉ chạy khi người dùng gọi /vfx-shader."
 disable-model-invocation: true
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # VFX_Shader
@@ -18,6 +18,11 @@ Trao đổi bằng tiếng Việt; code và tên asset bằng tiếng Anh. Skill
 
 **Người dùng là art lead.** Yêu cầu hình khối / luật của họ thắng tài liệu. Luật hiện hành:
 - **Slash chỉ làm bằng bộ Coloso** (art lead 2026-11-03), theo [references/coloso.md](references/coloso.md); slash = mesh + UV.
+- **Texture lấy từ `Assets/Library/` trước** (art lead 2026-11-04). Thư viện đã phân loại bằng mắt:
+  - thư mục `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`, tên `<thư mục>_NNN`;
+  - tên cũ và nguồn ở `Docs/VFX/_Library/classify.csv`;
+  - xem ảnh rồi chọn; chỉ bake / tạo texture mới khi Library không có hình hợp, nói lý do trong kế hoạch.
+- **Texture chạy UV của slash (`_MainTex`) lấy trong `Assets/Library/Slash/`** (art lead 2026-11-04). Cách chọn ở [references/coloso.md](references/coloso.md) mục "Texture slash".
 - Không dùng Horizontal / Vertical Billboard (nằm đất = Billboard + Render Alignment Local; đứng bay = Stretched).
 - Frame over Time của flipbook phải là đường thẳng.
 - Chưa "chốt" thì không đổi `vfx-maker`.
@@ -65,7 +70,7 @@ Thêm: **khác với effect nào, ở điểm nào** (mesh / bố cục / timing
 
 ## 5. Asset và shader
 
-- **Texture hình:** bake bằng script (ví dụ `scripts/bake_slash_textures.py`: hình xám + ramp màu cho slash) hoặc lấy từ thư viện / Shape Lab. **Giữ nguyên khung UV, tỉ lệ gốc** với texture slash. Kiểm tra bằng cách đọc ảnh, không đoán. Noise dùng chung: `Assets/VFX/_Shared/Textures/Noise/` (tạo bằng `scripts/make_noise.py`).
+- **Texture hình:** lấy từ `Assets/Library/<loại>/` trước (slash: `Assets/Library/Slash/`; mask / dissolve: `noise/`; vòng: `wave/`; vệt: `trail/`). Chỉ bake bằng script (ví dụ `scripts/bake_slash_textures.py`) hoặc Shape Lab khi Library không có hình hợp. Ramp màu cho slash vẫn có thể bake bằng script. **Giữ nguyên khung UV, tỉ lệ gốc** với texture slash. Kiểm tra bằng cách đọc ảnh, không đoán. Noise dùng chung: `Assets/VFX/_Shared/Textures/Noise/` (tạo bằng `scripts/make_noise.py`).
 - **Shader mới:** copy `assets/SH_VFX_FX.template.shader` → `Assets/VFX/_Shared/Shaders/SH_VFX_<Name>.shader`, dựng hình theo [references/recipes.md](references/recipes.md), giữ đúng [references/mobile-rules.md](references/mobile-rules.md) (một pass unlit, không include URP, ≤ 3 sample, không vòng lặp, `// Cost:` ở header). Viết chung chung, tham số hoá, không hardcode timing của một effect.
 - **Mesh:** ưu tiên `_Imported/Mesh`; mesh tạo bằng code chỉ khi thư viện không có.
 
@@ -74,7 +79,7 @@ Thêm: **khác với effect nào, ở điểm nào** (mesh / bố cục / timing
 - Copy `assets/ShaderFxBuild.template.cs` (quad) hoặc `assets/ColosoMeshFxBuild.example.cs` (mesh + Coloso, ví dụ Slash360) → `Assets/VFX/<Effect>/Editor/<Effect>Build.cs`. Prefab dựng từ script, không chỉnh tay; sửa script rồi build lại. Dùng `VfxBuildKit` (`Assets/VFX/_Kit/`).
 - Mỗi thành phần = một layer đúng ID. Thuộc tính material đặt trong script. Mesh renderer thì `SetActiveVertexStreams` đúng với shader (Coloso: `Position, Color, UV, Custom1XYZW`).
 - **Dựng đúng không gian đã chốt:** size theo mét, renderer mode theo mặt phẳng, simulation space theo neo, `cameraPos`/`lookAt` của `Finish()` khớp camera game (ví dụ topdown 60°: `lookAt + d·(0, sin60°, −cos60°)`).
-- **Không `ImportTexture` lên texture dùng chung** (`_Shared/Textures/Noise/` …): chỉ `LoadAssetAtPath`. Import đổi wrap / sRGB của chúng sẽ hỏng các effect khác.
+- **Không `ImportTexture` lên texture dùng chung** (`Assets/Library/`, `_Shared/Textures/Noise/` …): chỉ `LoadAssetAtPath`. Cần setting khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`. Import đổi wrap / sRGB của chúng sẽ hỏng các effect khác.
 - Tên: `VFX_<Effect>`, `M_<Effect>_<Layer>`, `SH_VFX_<Name>`, `T_<Effect>_<Tên>`.
 
 ## 7. Build và tự kiểm tra
@@ -105,7 +110,7 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
   **Root của prefab cũng phải là một Particle System** (art lead 2026-11-04): chọn một layer làm root (LightningStrike: flare), các layer khác là con. Dùng `VfxBuildKit.ParticleOn(rootGameObject, ...)`; `Validate` cảnh báo nếu root không có ParticleSystem. Các effect cũ (IceSpike, Slash360, HealCircle, Mixes) chưa theo luật này.
 
 - **Khói:** texture `Assets/VFX/fx_t_smoke_02.png` + shader mobile mặc định của Unity (`Mobile/Particles/Alpha Blended`; `VfxBuildKit.Material` tự chọn, URP đổi sang URP Particles Unlit). Tô màu bằng Start Color. Không dùng thành phần Dust chuẩn / khói toon cho effect mới (art lead 2026-11-03).
-- **Slash:** chỉ bộ Coloso ([references/coloso.md](references/coloso.md)).
+- **Slash:** chỉ bộ Coloso ([references/coloso.md](references/coloso.md)); `_MainTex` chạy UV lấy từ `Assets/Library/Slash/`.
 - **Magic circle:** cách vfx-maker / HealCircle ([references/magic-circle.md](references/magic-circle.md)).
 - **Gai băng / đất đâm lên:** [references/ground-spike.md](references/ground-spike.md) (5–9 khối chính, sát nhau, nghiêng ngẫu nhiên, mỗi khối một tuổi thọ).
 - **Có khác biệt giữa các effect / biến thể, không chỉ đổi màu** (art lead 2026-11-04). Khi làm effect mới hoặc **biến thể** của effect đã có (ví dụ Băng → Đất), **đổi ít nhất hai trong bốn thứ**: **mesh** (mesh khác trong thư viện), **bố cục / vị trí** (cụm tròn ↔ cung ↔ quạt ↔ hàng ↔ rải; hướng, độ cao, số khối), **timing** (nhịp trồi / giữ / tan, thứ tự xuất hiện và biến mất, tuổi thọ), **lớp phụ** (khói, mảnh vỡ, vết nứt, impact ở đâu, lúc nào). **Nhưng biến thể vẫn là cùng hiệu ứng: đừng tự biến nó thành một effect khác** (art lead: "nếu cần fx khác tôi sẽ yêu cầu"). Đừng tái dùng nguyên builder và chỉ đổi bảng màu. Trong kế hoạch thêm dòng **"Khác với bản nào, ở điểm nào"** (mesh / bố cục / timing / lớp phụ).

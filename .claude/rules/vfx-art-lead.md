@@ -15,6 +15,12 @@
 - Một effect: **một ngữ cảnh, một chớp Impact**.
 - `sortingOrder` không trùng, theo mặt phẳng trước rồi tới độ sáng (bảng ở `ComponentKit`).
 
+## Texture (2026-11-04)
+- Mọi skill, khi cần texture: lấy từ **`Assets/Library/`** trước. Thư viện đã phân loại bằng mắt: `decals / glow / impact / Lightnings_Electrics / noise / Slash / smoke / trail / water / wave`, tên `<thư mục>_NNN`, nguồn ở `Docs/VFX/_Library/classify.csv`.
+- Xem ảnh rồi mới chọn. Chỉ tạo texture mới khi Library không có hình hợp, và nói lý do.
+- File trong Library dùng chung: chỉ `LoadAssetAtPath`, không đổi import setting. Cần setting khác thì copy ảnh sang `Assets/VFX/<Effect>/Textures/`.
+- Luật chỉ định texture cụ thể (khói mặc định, khói vụ nổ, `_MaskTex` của slash) vẫn giữ.
+
 ## Hình dáng
 - Hình hình học (vòng phép, rune, vòng tròn): vẽ bằng script là tốt.
 - Hình hữu cơ (lửa, khói, thân vụ nổ): không tin preset script. Đưa 2–3 phương án ảnh trước, ưu tiên nguồn của art lead.
@@ -29,6 +35,7 @@
 - Slash = **mesh + UV** (texture chạy theo UV trên mesh cung / vòng), không dùng billboard.
 - Chỉ dùng bộ shader Coloso (`VFXLib/ColosoShaderAdditive|Alpha|AlphaCutOut_Optimized`): texture xám, màu từ ramp / Color over Lifetime, `_MaskTex` = `T_VFX_Gradient_01`, stream `Custom1XYZW`. Không viết shader slash riêng.
 - Giữ texture slash ở bố cục UV gốc (nguyên khung, đúng tỉ lệ).
+- Texture chạy UV của slash (`_MainTex`) lấy trong **`Assets/Library/Slash/`** (ảnh xám; cách chọn ở `vfx-shader/references/coloso.md`).
 - Mesh: lấy từ `Assets/VFX/_Imported/Mesh/` trước.
 
 ## Khác biệt giữa các effect

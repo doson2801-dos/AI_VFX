@@ -41,10 +41,20 @@ Tên trong ô chọn Shader của material là tên menu (dưới mục **VFXLib
 | Méo (Alpha / Cutout) | `_NoiseTex`, `_UseNoise`, `_UseCustom1YDistortion`, `_MainTexDistortion`, `_NoiseFlowX/Y`, `_NoiseAffectsXAxis/YAxis` |
 | Fade | `_FD` (độ sâu), `_CDF` + `_CDFOffset` (khoảng cách camera), `_CameraOffset` |
 
+## Texture slash: lấy từ `Assets/Library/Slash/` (art lead 2026-11-04)
+
+Texture chạy UV (`_MainTex`) của mọi slash lấy trong `Assets/Library/Slash/` (`Slash_001` … ; tên cũ ở `Docs/VFX/_Library/classify.csv`).
+1. Xem ảnh các ứng viên (Read PNG) và chọn theo dáng vệt trong brief (lưỡi mảnh, vệt dày, mép rách, vệt kiếm…).
+2. Chỉ chọn ảnh **xám** (màu đến từ ramp / Color over Lifetime). Bỏ qua ảnh có màu sẵn.
+3. Giữ nguyên khung UV và tỉ lệ gốc. Hướng vệt không khớp trục u của mesh thì xoay bằng `_Main90degreeUVFlip` hoặc tiling âm; không sửa file trong Library.
+4. Build script chỉ `LoadAssetAtPath`, không `ImportTexture` lên file Library (dùng chung). Cần wrap / import khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`.
+5. Ghi đường dẫn texture đã chọn vào `Plan.md`. Chỉ bake bằng `scripts/bake_slash_textures.py` khi Slash không có dáng hợp, và nói lý do trong kế hoạch.
+6. `_MaskTex` vẫn là `T_VFX_Gradient_01`. Ramp màu (`_ColorTex`) có thể bake bằng script.
+
 ## Công thức lưỡi liềm quét quanh mesh vòng (ví dụ Slash360)
 
 Mesh có u chạy dọc đường quét (0→1) và v theo bề rộng. Muốn lưỡi liềm dài `W` (phần vòng) chạy hết vòng:
-- MainTex bake hình lưỡi liềm trong không gian (l, v): x = l (0 đầu … 1 mũi đuôi), y = v. Script: `scripts/bake_slash_textures.py` (đầu nhọn, đuôi mờ, ramp màu).
+- MainTex là hình lưỡi liềm trong không gian (l, v): x = l (0 đầu … 1 mũi đuôi), y = v. Lấy từ `Assets/Library/Slash/` (mục trên); Slash360 cũ bake bằng `scripts/bake_slash_textures.py` (đầu nhọn, đuôi mờ, ramp màu) trước khi có Library.
 - `_MainTex` tiling.x = **−1/W**. Offset từ particle: Custom1.z = `(1+W)/W × tiến độ` (đường thẳng từ 0 đến `(1+W)/W` trong 80% tuổi hạt rồi giữ).
 - Đầu ở l = 0, vị trí đầu theo u = Custom1.z × W.
 - Mảnh vụn bay theo đầu: Circle shape, Arc Mode = Loop, một vòng trong thời gian đầu đi hết vòng.
