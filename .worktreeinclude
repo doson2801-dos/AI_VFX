@@ -1,0 +1,5 @@
+# File không có trong git nhưng cần chép theo mỗi worktree (phiên song song).
+# Lưu ý: texture / prefab / mesh KHÔNG có trong git; worktree chỉ hợp cho việc code / tài liệu (xem AGENTS.md).
+.env
+CLAUDE.local.md
+.claude/settings.local.json

@@ -34,6 +34,9 @@
 !/.gitignore
 !/.vsconfig
 !/.mcp.json
+!/.worktreeinclude
+!/.env.example
+!.gitkeep
 
 # --- Luôn bỏ qua (thư mục sinh tự động, cấu hình cá nhân) ---
 Library/
@@ -48,5 +51,9 @@ __pycache__/
 *.csproj
 *.sln
 .claude/settings.local.json
+CLAUDE.local.md
+.env
+.env.*
+!/.env.example
 # Trang Review Lab sinh ra (1 file lớn tự chứa ảnh)
 /Docs/VFX/_Review/
