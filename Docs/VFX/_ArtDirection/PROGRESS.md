@@ -18,6 +18,7 @@
 > - 4 effect điện: `LightningStrike`, `ThunderSpear`, `LightningTrail`, `AuraGauntlet` (học từ rpg-game; số liệu: `vfx-shader/references/thunder-core.md`, `lightning-set.md`).
 > - `FireballThrow` (2026-11-05): cầu lửa ném vòng cung 8 m / 0,8 s rồi nổ tại chân mục tiêu; một prefab tự chạy (sub-emitter Death). Plan: `Docs/VFX/FireballThrow/Plan.md`.
 > - `VioletThunder` (2026-11-05): sét tím-hồng đánh xuống đất, tích điện 0,4 s → tia toon + chớp + impact đất + dòng điện bò ~1,4 s. Plan: `Docs/VFX/VioletThunder/Plan.md`.
+> - `ElectricBolt` (2026-11-09, art lead "ổn đó"): tia điện nối A→B, tay → ngực 8 m, một phát ~0,45 s, xanh-trắng toon, **hoàn toàn code + shader, không texture** (shader mới `VFX/FX/Electric Bolt` + `VFX/FX/Glow Star`, dùng lại `VFX/FX/Spark`). Đã vào `Included` (Showcase: cao 1,3 m, xoay Y 90°, focus z 4) và bảng đèn demo; cần bấm **VFX → Showcase → Build Scene**. Research: `Docs/VFX/ElectricBolt/Research.md`, Plan: `Docs/VFX/ElectricBolt/Plan.md`.
 >
 > - `WindTornado` v3 (2026-11-06): lốc xoáy gió 3,6 m làm lại từng lớp từ `Stupid_Tornado_Projectile` của rpg-game (vành gió + Shader Graph + ống + sương). Prefab trong project chính cần bấm **VFX → WindTornado → Build** (Unity đang mở lúc làm). Chờ art lead duyệt, chưa vào `Included`. Plan: `Docs/VFX/WindTornado/Plan.md`.
 >
@@ -292,3 +293,14 @@ File này là điểm bắt đầu cho phiên làm việc mới. Chi tiết từ
 - **Dọn prefab (2026-11-05, art lead):** xoá 27 prefab không dùng trong scene Showcase (chuyển vào Thùng rác Windows, kèm `.meta`): StrongExplosion_v1, BombBlast_Shader, CodeShockwaveGround, CodeSparkBurst, Explosion, FireStylized(3D), Fireball Impact/Loop/Projectile, Lightning_Impact, Lightning_Strike (2), Meteor, Mixes ArcaneHit_Air / BombBlast_Code / FireHit_Ground / IceHit_Ground / IceSlam_Ground, SmokeStylized3D, StylizedSlash, ThunderChainImpact (2), ThunderImpact, 3 cụm cầu cũ của MushroomBlast. **Giữ:** `_Components` (thành phần mix), GroundBlast (gốc khói vụ nổ), `_Imported` (tham chiếu). Build script / material / texture của các effect đã xoá vẫn còn: build lại được; scene demo riêng của chúng mất tham chiếu prefab.
   - **Cùng ngày, xoá luôn thư mục** của 16 effect đó (kể cả build script, material, texture, scene demo) + 5 Mix cũ + `Assets/Scenes`, `Assets/_Game`, `smoke.mat`, ảnh `tread_*.png`; `VFX_ArrowGlow.shader` dời vào `_Shared/Shaders`. Tất cả trong Thùng rác Windows; tài liệu `Docs/VFX/<Tên>/` vẫn giữ. Unity biên dịch lại không lỗi.
 - **MushroomBlast v2 (2026-11-04, `/vfx-shader`):** nổ tại đất ~3 m dạng nấm, 2 s: chớp gai (root) + sóng đất + glow lõi + khói Erode Sphere (thân 14 / đầu nấm 14 / vành 16 cầu) + đá văng + tia lửa + vết cháy; texture từ `Assets/Library/`. v2 sửa thân nấm bị mất và vành đất rời. Chưa vào `Included` của Showcase. GroundBlast chưa build lại với shader v3.
+
+## Review 16 biến thể (2026-11-09)
+Xem preview của 16 biến thể trong Showcase (Slash360 Fire/Water, IceSpikeFan Magma/Thorn, HealCircle Holy/Nature, LightningStrike Frost/Toxic, AuraGauntlet Fire/Poison, FireballThrow Frost/Poison, VioletThunder Azure/Crimson, FireTornado Frost/Sand), build lại 8 cái đã sửa:
+- **Slash360_Fire**: cả đĩa sáng ngay từ đầu (texture Library 005 sáng sát mép đầu + clamp) -> làm tối cột đầu của bản copy; Edge đứng yên ở mép, Trail chạy vượt đầu (đường cong đầu dùng chung dù window khác nhau) -> nhân đường cong theo window từng layer; tàn lửa không bay lên do lỗi Velocity khác mode.
+- **Slash360_Water**: cùng lỗi Edge / Trail; khói xám giảm (16 hạt, alpha 0.2).
+- **IceSpikeFan_Magma / Thorn**: lỗi Velocity khác mode (mảnh vỡ / bào tử đứng yên) trong `IceSpikeVariantKit`.
+- **LightningStrike_Frost**: sương cyan to và đặc che mất tia + vết nứt -> nhỏ, ít, mờ hơn.
+- **FireTornado_Frost**: phễu cháy trắng -> tông xanh băng, `_EdgeIntensity` 1.6, camera preview lùi để không cắt đỉnh.
+- **FireTornado_Sand**: không đọc ra thân lốc -> cột mảnh hơn, xoắn nhanh hơn, nhiều hạt nhỏ hơn; camera lùi.
+- Giữ nguyên (xem ổn): HealCircle Holy / Nature, LightningStrike Toxic, AuraGauntlet Fire / Poison, FireballThrow Frost / Poison, VioletThunder Azure / Crimson. Ghi chú: FireballThrow Frost vệt bay là thanh trắng đặc, có thể làm mềm sau.
+- Chỉ xem qua `Preview_sheet.png` (camera trên xuống / 3/4 nền tối), chưa xem chạy trong Showcase. Chờ art lead xem.

@@ -11,7 +11,7 @@ Unity project – thư viện VFX.
 - Git: https://github.com/doson2801-dos/AI_VFX (private, nhánh `main`). Asset Unity không có trong git.
   - **Chỉ commit kiến thức + skill + tài liệu** (art lead 2026-11-04): `CLAUDE.md`, `MAP.md`, `SPEC.md`, `AGENTS.md`, `contexte/`, `.claude/rules/`, `.claude/skills/`, mọi `Docs/**/*.md`. **Không** commit file code của Assets (`.cs`, `.shader`, `.py`…), BuildReport, asset.
   - Tự động commit + push lúc **17:30 hằng ngày**: Windows Task Scheduler `VFX_LIb Auto Commit` chạy `tools/auto_commit.ps1` (log `tools/auto_commit.log`; chạy thử `-DryRun`).
-- **Texture cho mọi skill lấy từ `Assets/Library/`** (2026-11-04; thư viện đã phân loại, tên `<thư mục>_NNN`, nguồn ở `Docs/VFX/_Library/classify.csv`). Slash của `/vfx-shader` dùng `Assets/Library/Slash/` làm texture chạy UV.
+- **Texture cho mọi skill lấy từ `Assets/Library/`** (2026-11-04; cây chia lại 2026-11-09: `<nhóm>/<vai trò>/<nhóm>_<vai trò>_NNN`). **Chọn theo `Docs/VFX/_Library/LIBRARY.md`** (thành phần → thư mục), xem ảnh rồi chốt; nguồn ở `library_index.csv`. Slash của `/vfx-shader` dùng `Assets/Library/Slash/Main_tex(Uvmesh)/` làm texture chạy UV.
 
 ## Skill: VFX_Maker (`/vfx-maker`)
 
@@ -45,18 +45,20 @@ Skill quy trình VFX chính của dự án (texture + particle → prefab), ở 
 
 ## Skill: vfx-code (`/vfx-code`, 2026-11-03)
 
-VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn mở trên GitHub (danh mục + giấy phép: `references/sources.md`). Ở `.claude\skills\vfx-code\`, version `1.1.1`.
+VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn mở trên GitHub (danh mục + giấy phép: `references/sources.md`). Ở `.claude\skills\vfx-code\`, version `1.2.0`.
 
 - **Skill tách riêng hoàn toàn với `vfx-maker`** (art lead 2026-11-03): không dùng công cụ / asset / quy trình của nó. Điểm chung duy nhất: gọi **Review Lab** để review.
 - Tự chứa: `lib/core.py` (Canvas, xuất sheet, `--check`) + `fxlib` (noise có chu kỳ, SDF, polar, toon, dissolve/erosion, sét, lửa) + `stylize` (minerva) + `particles` (three.quarks / Godot / Effekseer) + `fluid` (stable fluids). Builder Unity riêng: `assets/VfxCodeBuild.cs` (menu `VFX/vfx-code/Build From Json...`).
 - Lệnh: `python -I D:/Game_prj/VFX_LIb/.claude/skills/vfx-code/lib/render.py <effect.py> --project . --effect <Tên> --gif --check --review` → sheet + json vào `Assets/VFX/<Tên>/Textures/`, preview + GIF + BuildReport vào `Docs/VFX/<Tên>/`, rồi dựng Review Lab.
 - Luật art lead vẫn áp dụng: không gian trước (thiếu thì hỏi), không Horizontal / Vertical Billboard, khói thuỳ, vệt chém = mesh + UV, Frame over Time tuyến tính.
 - 4 mẫu trong `examples/` (shockwave, spark burst, lightning loop, fluid plume), đều qua `--check`.
+- **Realtime code + shader, không texture** (v1.2.0, 2026-11-09): mục 5b + `references/electric-bolt.md`. Mẫu đã duyệt: ElectricBolt (tia điện A→B), shader lưu ở `assets/shaders/` (`SH_VFX_ElectricBolt`, `SH_VFX_GlowStar`), builder `assets/ElectricBoltBuild.example.cs`.
 
 ## Skill: vfx-shader (`/vfx-shader`, tạo lại 2026-11-03)
 
-VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.2.0`. Gọi bằng `/vfx-shader`.
+VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.3.0`. Gọi bằng `/vfx-shader`.
 
+- **Bước 2b research nhanh trên mạng** (art lead 2026-11-09, v1.3.0): trước khi chọn shader, tìm 3–5 nguồn VFX tương tự, ghi "Tham khảo" vào kế hoạch (`references/web-research.md`).
 - Thứ tự: dùng lại shader có sẵn → mở rộng → viết mới (nhẹ, một pass, Built-in + URP). Định hướng không gian bắt buộc (thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, Review Lab.
 - **Tornado / cột gió + học từ prefab tham chiếu** (art lead 2026-11-06, v1.2.0): tornado làm lại từng lớp từ `Stupid_Tornado_Projectile` của rpg-game (`references/tornado.md`; mẫu `Assets/VFX/WindTornado/`). Brief "học theo prefab X": copy theo GUID + render + dump + đọc mesh / texture / Shader Graph trước khi dựng (`references/study-reference.md`; công cụ `scripts/copy_closure.py`, `assets/RefRender.example.cs`). Không tự làm mesh khi họ có, không bỏ lớp chỉ vì hồng.
 - **Slash chỉ làm bằng bộ Coloso** (`VFXLib/ColosoShaderAdditive|Alpha|AlphaCutOut_Optimized`, art lead 2026-11-03), theo `references/coloso.md`: texture xám, màu từ ramp / Color over Lifetime, `MaskTex` = `T_VFX_Gradient_01`, stream `Custom1XYZW`.

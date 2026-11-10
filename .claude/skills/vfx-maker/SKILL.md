@@ -25,8 +25,8 @@ Chế độ C (**codefx**, VFX hoàn toàn bằng code) cùng thành phần Scor
 **Người dùng là art lead.** Yêu cầu hình khối của họ thắng nghiên cứu web và số đo thư viện ([references/shape-language.md](references/shape-language.md), mục "Yêu cầu của art lead"). Quy tắc đang thử nghiệm nằm nháp ở `D:\Game_prj\VFX_LIb\Docs\VFX\_ArtDirection\`. Chỉ đưa vào skill khi art lead nói "chốt".
 
 **Texture lấy từ `Assets/Library/` trước** (art lead 2026-11-04). Đây là thư viện texture đã phân loại bằng mắt:
-- Thư mục: `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`.
-- Tên file `<thư mục>_NNN`; tên cũ và nguồn của từng file ở `Docs/VFX/_Library/classify.csv`.
+- Cây `Assets/Library/<nhóm>/<vai trò>/` (glow, impact, ring, ground, lightning, noise, smoke, spark, trail, water, rune, mask, Slash). Chọn theo `Docs/VFX/_Library/LIBRARY.md` (bảng thành phần → thư mục).
+- Tên file `<nhóm>_<vai trò>_NNN`; tên cũ và nguồn của từng file ở `Docs/VFX/_Library/library_index.csv`.
 - Xem ảnh ứng viên (Read PNG) rồi chọn. Chỉ tạo texture mới (script / Shape Lab / ChatGPT) khi Library không có hình hợp, và nói lý do trong kế hoạch.
 - Texture trong Library dùng chung: build script chỉ `LoadAssetAtPath`, không `ImportTexture` lên nó. Cần import setting khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`.
 - Ghi đường dẫn Library của từng texture trong kế hoạch.
@@ -121,7 +121,7 @@ Sau khi duyệt, lưu kế hoạch vào `Docs/VFX/<Effect>/Plan.md` (kèm nguồ
 
 **Texture: luôn thử theo thứ tự rẻ → đắt** và ghi nguồn từng texture trong kế hoạch.
 
-**Cách 0. `Assets/Library/`** (art lead 2026-11-04, luôn thử trước). Chọn trong thư mục đúng loại (glow, impact, smoke, Slash, trail, wave…), xem ảnh trước khi chọn. Chỉ sang cách 1–3 khi Library không có hình hợp.
+**Cách 0. `Assets/Library/`** (art lead 2026-11-04, luôn thử trước). Chọn theo `Docs/VFX/_Library/LIBRARY.md` (bảng thành phần → thư mục) (thư mục con = vai trò), xem ảnh trước khi chọn. Chỉ sang cách 1–3 khi Library không có hình hợp.
 
 **Cách 1. Sinh bằng script** (~1 giây, gần như không tốn token). Các preset:
 - **Sáng và hạt:** glow, dot, ring (shockwave), flare, comet (spark cho stretched billboard), star (sao anime đặc), glint.

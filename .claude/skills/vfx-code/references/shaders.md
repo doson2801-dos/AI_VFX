@@ -83,6 +83,8 @@ half4  c  = lerp(A, B, f);
 Chia đoạn N = 8–10, lệch khớp theo `hash(i, floor(time·fps/2))` (đổi hình mỗi 2 frame), khoảng cách = min các `vfxSdSegment`.
 Toon: lõi `step(d, w)`, quầng `step(d, 3w)`. Rẻ khi N nhỏ; sét phức tạp thì nướng flipbook (`fxlib.bolt`).
 
+Bản đã dùng trong project (rẻ hơn, không cần min nhiều đoạn): value noise tuyến tính từ hash = đường gấp khúc, khoảng cách `|y − off|·rsqrt(1 + slope²)`, ghim đầu bằng `u(1−u)`. Xem [electric-bolt.md](electric-bolt.md) và `assets/shaders/SH_VFX_ElectricBolt.shader`.
+
 ## 8. Mobile — chi phí
 
 - `half` cho màu / mask; `shader_feature_local` cho tính năng tuỳ chọn.

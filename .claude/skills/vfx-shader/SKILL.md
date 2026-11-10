@@ -3,7 +3,7 @@ name: vfx-shader
 description: "VFX_Shader — làm VFX cần tới shader (technical): chọn đúng shader có sẵn trong project trước (bộ Coloso VFXLib dùng cho slash / trail / vệt trên mesh + UV, shader nhập từ rpg-game, SH_VFX_* dùng chung), cấu hình material + Custom Vertex Streams, texture lấy từ Assets/Library (slash chạy UV dùng Assets/Library/Slash), và chỉ viết hoặc mở rộng shader nhẹ cho mobile (Built-in + URP) khi chưa có cái nào đủ. Bắt đầu bằng định hướng không gian (bắt buộc, thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, tự chụp preview, Review Lab, đăng ký shader. Dùng cho effect mà hình khối / chuyển động / kết thúc do shader quyết định (slash, dissolve, vệt, lửa / khói toon, shockwave, beam, aura). Chỉ chạy khi người dùng gọi /vfx-shader."
 disable-model-invocation: true
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # VFX_Shader
@@ -19,10 +19,10 @@ Trao đổi bằng tiếng Việt; code và tên asset bằng tiếng Anh. Skill
 **Người dùng là art lead.** Yêu cầu hình khối / luật của họ thắng tài liệu. Luật hiện hành:
 - **Slash chỉ làm bằng bộ Coloso** (art lead 2026-11-03), theo [references/coloso.md](references/coloso.md); slash = mesh + UV.
 - **Texture lấy từ `Assets/Library/` trước** (art lead 2026-11-04). Thư viện đã phân loại bằng mắt:
-  - thư mục `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`, tên `<thư mục>_NNN`;
-  - tên cũ và nguồn ở `Docs/VFX/_Library/classify.csv`;
+  - cây `Assets/Library/<nhóm>/<vai trò>/`, tên `<nhóm>_<vai trò>_NNN`; **chọn theo `Docs/VFX/_Library/LIBRARY.md` (bảng thành phần → thư mục)**;
+  - tên cũ và nguồn ở `Docs/VFX/_Library/library_index.csv`;
   - xem ảnh rồi chọn; chỉ bake / tạo texture mới khi Library không có hình hợp, nói lý do trong kế hoạch.
-- **Texture chạy UV của slash (`_MainTex`) lấy trong `Assets/Library/Slash/`** (art lead 2026-11-04). Cách chọn ở [references/coloso.md](references/coloso.md) mục "Texture slash".
+- **Texture chạy UV của slash (`_MainTex`) lấy trong `Assets/Library/Slash/Main_tex(Uvmesh)/`** (art lead 2026-11-04). Cách chọn ở [references/coloso.md](references/coloso.md) mục "Texture slash".
 - Không dùng Horizontal / Vertical Billboard (nằm đất = Billboard + Render Alignment Local; đứng bay = Stretched).
 - Frame over Time của flipbook phải là đường thẳng.
 - Chưa "chốt" thì không đổi `vfx-maker`.
@@ -44,6 +44,10 @@ Theo [references/setup.md](references/setup.md) (build kit, thư viện hàm, no
 
 Đọc [references/direction.md](references/direction.md): ngữ cảnh (air / ground / dir), mặt phẳng, góc camera (mặc định 3/4 nhìn xuống 40°; art lead hay ra lệnh góc khác, ví dụ topdown 60°), neo, quy mô (m, người 2 m), di chuyển, nền, thời gian, thành phần, Art Style + màu. **Thiếu thông tin thì hỏi** (`AskUserQuestion`, ≤ 2 lượt, ≤ 4 câu mỗi lượt); không tự đoán. Đề xuất của Claude ghi là *đề xuất*.
 
+## 2b. Research nhanh trên mạng — BẮT BUỘC (art lead 2026-11-09)
+
+Trước khi chọn shader, tìm nhanh VFX tương tự trên mạng để biết người ta làm thế nào (lớp nào, mesh / texture gì, shader làm gì, timing). Làm theo [references/web-research.md](references/web-research.md): ~3–5 nguồn, tối đa vài phút, rồi ghi **"Tham khảo"** (nguồn → điều học được → áp dụng vào đâu) vào kế hoạch ở mục 4. Chỉ lấy ý tưởng cách làm; không copy asset có bản quyền; luật art lead vẫn thắng nguồn nghiên cứu. Bỏ qua khi: brief đã có prefab / video tham chiếu cụ thể (dùng mục 1 + study-reference), hoặc chỉ sửa effect đã có (mục 8).
+
 ## 3. Chọn shader — BẮT BUỘC, từng thành phần
 
 1. Đọc sổ `Docs/VFX/SHADERS.md` (menu, làm được gì, thuộc tính, chi phí, "không sửa" nếu có).
@@ -62,6 +66,7 @@ Trình bày gọn trong chat rồi hỏi duyệt (`AskUserQuestion`: "Duyệt, l
 ```markdown
 ## VFX_<Effect> — kế hoạch v1
 Không gian: <air/ground/dir> · <mặt phẳng> · camera <...> · neo <...> · <m> · nền <...> (đã chốt: ...; đề xuất: ...)
+Tham khảo (mục 2b): <nguồn → học được → áp dụng>; hoặc "bỏ qua: <lý do>"
 Thời lượng: <s> · Art Style: <...>
 
 | # | Layer | Vai trò & timing | Carrier (mesh / quad) | Shader (dùng lại / mở rộng / mới) | Texture | Kết thúc |
@@ -71,7 +76,7 @@ Thêm: **khác với effect nào, ở điểm nào** (mesh / bố cục / timing
 
 ## 5. Asset và shader
 
-- **Texture hình:** lấy từ `Assets/Library/<loại>/` trước (slash: `Assets/Library/Slash/`; mask / dissolve: `noise/`; vòng: `wave/`; vệt: `trail/`). Chỉ bake bằng script (ví dụ `scripts/bake_slash_textures.py`) hoặc Shape Lab khi Library không có hình hợp. Ramp màu cho slash vẫn có thể bake bằng script. **Giữ nguyên khung UV, tỉ lệ gốc** với texture slash. Kiểm tra bằng cách đọc ảnh, không đoán. Noise dùng chung: `Assets/VFX/_Shared/Textures/Noise/` (tạo bằng `scripts/make_noise.py`).
+- **Texture hình:** lấy từ `Assets/Library/<nhóm>/<vai trò>/` trước, tra `Docs/VFX/_Library/LIBRARY.md` (bảng thành phần → thư mục) (slash: `Slash/Main_tex(Uvmesh)`; mask: `mask/gradient`; dissolve: `noise/cloud|cell`; vòng: `ring/` + `impact/radial_ring`; vệt: `trail/`). Chỉ bake bằng script (ví dụ `scripts/bake_slash_textures.py`) hoặc Shape Lab khi Library không có hình hợp. Ramp màu cho slash vẫn có thể bake bằng script. **Giữ nguyên khung UV, tỉ lệ gốc** với texture slash. Kiểm tra bằng cách đọc ảnh, không đoán. Noise dùng chung: `Assets/VFX/_Shared/Textures/Noise/` (tạo bằng `scripts/make_noise.py`).
 - **Shader mới:** copy `assets/SH_VFX_FX.template.shader` → `Assets/VFX/_Shared/Shaders/SH_VFX_<Name>.shader`, dựng hình theo [references/recipes.md](references/recipes.md), giữ đúng [references/mobile-rules.md](references/mobile-rules.md) (một pass unlit, không include URP, ≤ 3 sample, không vòng lặp, `// Cost:` ở header). Viết chung chung, tham số hoá, không hardcode timing của một effect.
 - **Mesh:** ưu tiên `_Imported/Mesh`; mesh tạo bằng code chỉ khi thư viện không có.
 
@@ -128,6 +133,7 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 | [references/ground-spike.md](references/ground-spike.md) | Gai băng / đất đâm lên đất: lớp, số khối, hướng, tuổi thọ, bảng màu Băng ↔ Đất, ghi chú theo nguyên tố, bài học quy trình |
 | [references/tornado.md](references/tornado.md) | Tornado / cột gió: cách bản gốc `Stupid_Tornado_Projectile` hoạt động (mesh, Shader Graph, sheet đóng gói kênh), bảng lớp + số, khác bản gốc, biến thể, lỗi đã gặp |
 | [references/study-reference.md](references/study-reference.md) | Học từ prefab tham chiếu đủ bước: copy theo GUID, render + dump, Shader Graph hồng, đọc mesh / texture, dựng |
+| [references/web-research.md](references/web-research.md) | Research nhanh trên mạng trước khi chọn shader (bước 2b) |
 | [references/direction.md](references/direction.md) | Định hướng không gian |
 | [references/mobile-rules.md](references/mobile-rules.md) | Quy tắc shader mobile (cho shader mới viết) |
 | [references/recipes.md](references/recipes.md) | Công thức SDF / kết thúc cho shader mới |

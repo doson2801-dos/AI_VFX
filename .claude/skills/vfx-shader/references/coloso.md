@@ -43,7 +43,7 @@ Tên trong ô chọn Shader của material là tên menu (dưới mục **VFXLib
 
 ## Texture slash: lấy từ `Assets/Library/Slash/` (art lead 2026-11-04)
 
-Texture chạy UV (`_MainTex`) của mọi slash lấy trong `Assets/Library/Slash/` (`Slash_001` … ; tên cũ ở `Docs/VFX/_Library/classify.csv`).
+Texture chạy UV (`_MainTex`) của mọi slash lấy trong `Assets/Library/Slash/Main_tex(Uvmesh)/` (`Slash_Main_tex_Uvmesh_NNN`; vệt trúng đòn ở `Slash/Onhit/`; tên cũ ở `Docs/VFX/_Library/library_index.csv`).
 1. Xem ảnh các ứng viên (Read PNG) và chọn theo dáng vệt trong brief (lưỡi mảnh, vệt dày, mép rách, vệt kiếm…).
 2. Chỉ chọn ảnh **xám** (màu đến từ ramp / Color over Lifetime). Bỏ qua ảnh có màu sẵn.
 3. Giữ nguyên khung UV và tỉ lệ gốc. Hướng vệt không khớp trục u của mesh thì xoay bằng `_Main90degreeUVFlip` hoặc tiling âm; không sửa file trong Library.

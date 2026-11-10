@@ -3,7 +3,7 @@ name: vfx-code
 description: "Làm VFX hoàn toàn bằng code (Python/numpy → flipbook + prefab Unity, kèm công thức shader realtime), tổng hợp kỹ thuật từ ~50 thư viện VFX mã nguồn mở trên GitHub: pixelfx, minerva pixel-effect-generator, NovaShader, GDQuest, three.quarks, Effekseer, Godot, stable-fluids, WebGL-Fluid-Simulation, VFXToolbox, officina-vfx-tool... Gồm noise có chu kỳ (tile / loop liền), SDF 2D, toạ độ cực, toon band, dissolve / erosion, tia sét, hệ hạt (curl, vortex, sub-emitter, stretched billboard), mô phỏng khói chất lỏng, metaball nổ, vệt chém. Skill độc lập, tách khỏi vfx-maker; chỉ dùng chung Review Lab để review. Chạy khi người dùng gọi /vfx-code."
 disable-model-invocation: true
 metadata:
-  version: "1.1.1"
+  version: "1.2.0"
 ---
 
 # vfx-code — VFX bằng code
@@ -30,7 +30,7 @@ Brief → KHÔNG GIAN (thiếu → HỎI) → chọn kỹ thuật (references/te
 6. Thời gian nằm ở particle (curve, Custom1.x); shader chỉ giữ thông số hình.
 7. **Texture có sẵn lấy từ `Assets/Library/`** (2026-11-04). Khi effect cần một ảnh không vẽ bằng code, lấy từ đây:
    - ví dụ mask, noise, hình vệt chém cho mesh (`Assets/Library/Slash/`), khói, glow;
-   - thư mục `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`, tên `<thư mục>_NNN`; nguồn ở `Docs/VFX/_Library/classify.csv`;
+   - cây `Assets/Library/<nhóm>/<vai trò>/`, tên `<nhóm>_<vai trò>_NNN`; chọn theo `Docs/VFX/_Library/LIBRARY.md` (bảng thành phần → thư mục), nguồn ở `library_index.csv`;
    - xem ảnh trước khi chọn; không đổi import setting của file trong Library (dùng chung), cần thì copy ảnh sang `Assets/VFX/<Effect>/Textures/`.
 
    Texture vẽ bằng code (flipbook của skill này) vẫn làm như cũ.
@@ -126,6 +126,25 @@ Không dùng `--effect` của build_review khi ghi vào `index.html` chung: tran
 4. Shader realtime thay flipbook: [references/shaders.md](references/shaders.md). Kiểm `Docs/VFX/SHADERS.md` + `VfxShaderLib.cginc` trước; viết mới thì ghi vào sổ.
 5. Hạt Shuriken dựng từ recipe (chưa có builder): [references/particles.md](references/particles.md) §3.
 
+## 5b. Realtime: code + shader, không texture (2026-11-09)
+
+Dùng khi art lead muốn effect **hoàn toàn bằng code và shader** (không sheet, không ảnh Library). Hình do shader tính trên quad particle, thời gian / seed đi qua Custom1. Mẫu đã duyệt: **ElectricBolt**, tia điện nối A→B. Chi tiết ở [references/electric-bolt.md](references/electric-bolt.md):
+- không gian;
+- cách shader dựng tia: hash gấp khúc, ghim đầu, toon, đổi hình, đứt khúc;
+- bảng lớp + số;
+- cách đặt tia A→B bằng Stretched Billboard;
+- lỗi đã gặp.
+
+- Shader (bản lưu trong skill; chép vào `Assets/VFX/_Shared/Shaders/` nếu project chưa có, rồi ghi vào `Docs/VFX/SHADERS.md`):
+  - `assets/shaders/SH_VFX_ElectricBolt.shader` (`VFX/FX/Electric Bolt`): tia / cung điện gấp khúc, 0 sample;
+  - `assets/shaders/SH_VFX_GlowStar.shader` (`VFX/FX/Glow Star`): chớp, quầng, sao gai toon, 0 sample.
+- Builder mẫu: `assets/ElectricBoltBuild.example.cs` → `Assets/VFX/<Effect>/Editor/<Effect>Build.cs`. Dùng `VfxBuildKit` / `VfxLightningKit` của project (`Assets/VFX/_Kit/`) để tạo hạt, lưu prefab và chụp preview; dùng lại `VFX/FX/Spark` cho tia lửa.
+- Quy trình giữ như skill: không gian trước (thiếu thì hỏi), research nhanh, kế hoạch duyệt một lần. Sau đó:
+  - Unity đang mở thì nhờ art lead bấm **VFX → <Effect> → Build**;
+  - đọc `BuildReport.txt` + `Preview_sheet.png`, sửa;
+  - dựng Review Lab;
+  - được duyệt thì thêm vào `Included` + `VfxShowcaseLights`.
+
 ## 6. Bàn giao
 
 Báo ngắn: đường dẫn effect `.py`, sheet, Review Lab, prefab (nếu đã dựng); kết quả `--check`; phần chưa kiểm chứng (chưa xem trong Unity, chưa thử trên máy mobile).
@@ -136,3 +155,4 @@ Báo ngắn: đường dẫn effect `.py`, sheet, Review Lab, prefab (nếu đã
 - [references/particles.md](references/particles.md): hệ hạt, nhịp, đưa sang Unity, đóng gói flipbook.
 - [references/shaders.md](references/shaders.md): công thức shader realtime mobile.
 - [references/sources.md](references/sources.md): danh mục ~50 repo đã khảo sát, giấy phép, học được gì.
+- [references/electric-bolt.md](references/electric-bolt.md): tia điện A→B realtime bằng shader, không texture (mẫu đã duyệt 2026-11-09).
