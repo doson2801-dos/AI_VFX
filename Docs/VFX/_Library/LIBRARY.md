@@ -53,6 +53,11 @@ Thư mục chỉ cho biết **họ** của ảnh, không bảo đảm đúng hì
 5. **Chốt**: 1 ảnh chính + 1–2 dự phòng. Ghi vào kế hoạch dạng bảng `Thành phần | Ảnh chọn | Lý do | Đã loại (vì sao)`.
 6. **Kiểm sau khi dựng**: xem preview / Review Lab, thành phần phải ra **đúng hình đã định** (không cạnh vuông, không ra màu lạ, không chớp đen). Sai thì quay lại bước 3 đổi ảnh, không chỉnh thông số để chữa hình sai.
 
+**Hai loại texture sheet (art lead 2026-11-10) — phải phân loại trước khi gán:**
+- **Sheet biến thể** (nhiều hình khác nhau cùng loại, ví dụ 2×2 cụm mây / khói / tia): mỗi hạt lấy **một khung ngẫu nhiên** (Start Frame random, Frame over Time = 0). Được phun nhiều hạt.
+- **Sheet hoạt ảnh / flipbook** (một vật diễn biến theo khung: một ngọn lửa, một vụ nổ, một tia sét vỡ): chạy hết khung theo đời hạt (Frame over Time tuyến tính). **Chỉ dùng đơn** (một hoặc vài hạt to, đúng hình), **không phun nhiều hạt** (lỗi FireLoop_03 ở AuraGauntlet_Fire: ra đám que diêm).
+- Không rõ loại nào thì xem sheet: các khung giống nhau ở các pha khác nhau (to dần rồi tan) = hoạt ảnh; các khung là hình khác nhau cùng cỡ = biến thể.
+
 Quy tắc theo loại (đã gặp lỗi hoặc art lead chốt):
 - **Chớp / quầng (glow)**: ảnh đối xứng tròn, `edge_touch=0`, xám. Không lấy flare có vòng hay tia cố định khi cần "quầng mềm".
 - **Sao / flare**: kiểm số cánh và độ dài cánh so với brief (4 cánh mảnh ≠ chùm 16 tia ≠ sao 8 gai).
