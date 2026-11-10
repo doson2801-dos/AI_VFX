@@ -70,3 +70,8 @@ Thêm dòng khi gặp (file → vai trò thực → nơi đúng). Chưa di chuy�
 |---|---|---|
 | `glow/flare/glow_flare_003` | chùm tia xoè (sunburst), không phải sao | dùng cho "tia nắng / bùng tia", không cho sao chớp |
 | `glow/flare/glow_flare_008` | cầu mềm có gai nhỏ | gần `soft_round` hơn là flare |
+| `trail/streak/trail_streak_012` | khối trắng đặc, mép phải rách (không alpha) | Additive ra **thanh trắng đặc**, không phải vệt băng / đuôi sao; chỉ hợp vệt tốc độ trắng |
+| `water/splash/water_splash_002` | mạng vân xám loang (giống vân dung nham / nứt), chạm mép | không phải vũng chất lỏng |
+| `smoke/sheet/smoke_sheet_002` | 4 cụm mây cartoon trắng (2×2) | là khói / nổ cartoon, không phải lửa; dùng làm "ngọn lửa" ra cục mây |
+| `glow/soft_round/glow_soft_round_008`, `_029` | cầu mềm 128 px, chỉ chiếm nửa khung, nền đen | quá nhỏ cho quầng lớn (GroundFlash) → mờ vỡ; ưu tiên `_007` (500 px) hoặc `_005` |
+| `ground/crack_radial/ground_crack_radial_001` | vỡ kính dày, chạm mép | tốt cho nứt đất nhưng không hợp "băng lạnh" mảnh; cần scale + fade mép |
