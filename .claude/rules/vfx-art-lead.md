@@ -43,6 +43,8 @@
 ## Khác biệt giữa các effect
 - Effect mới / biến thể: đổi **ít nhất hai** trong: mesh, bố cục-vị trí, timing, lớp phụ. Không chỉ đổi màu.
 - Biến thể **vẫn là cùng hiệu ứng** (cùng hành vi, số mảnh, lớp, tính chất hình học). Không tự biến thành effect khác.
+- **Giữ tạo hình cốt lõi (art lead 2026-11-10)**: khác biệt phải **thực chất** (đổi chất liệu / mesh / bố cục / timing / lớp phụ) **mà vẫn nhận ra là cùng hiệu ứng**. Đổi màu hoặc đổi texture mà mất hình xương sống (ví dụ aura ôm vật → bông khói, cột sét → laser mờ, thân tornado → khói be) là **hỏng**, kể cả khi đã "khác ít nhất hai".
+- **Tạo hình trước khi làm**: mọi effect / biến thể bắt đầu bằng `Docs/VFX/_Anatomy/<loại>.md` (cấu trúc, **Bất biến**, Được đổi, Lỗi đã gặp) + `materials.md` (hình đặc trưng theo chất liệu). Chép "Bất biến" vào kế hoạch. **Chưa có file hoặc chưa hiểu đối tượng → research trước** (prefab tham chiếu → ảnh / video art lead → web → Plan cũ; cách làm ở `_Anatomy/README.md`), hỏi art lead nếu vẫn mơ hồ, **lưu thành file mới + dòng chỉ mục** để lần sau tra thẳng, không research lại. Sau build đối chiếu preview với "Bất biến"; thiếu một cái là chưa xong. Gặp lỗi mới thì thêm vào "Lỗi đã gặp".
 - Chất liệu quyết định hình: băng cứng nên gai dài được; đất xốp nên ngắn (~1–2 m), thô, đỉnh vỡ.
 
 ## Skill

@@ -5,7 +5,7 @@ Unity project – thư viện VFX.
 ## Harness (khung làm việc, 2026-11-04)
 
 - **Đầu mỗi hội thoại:** đọc `CLAUDE.md` + `MAP.md`; việc VFX đọc thêm `Docs/VFX/_ArtDirection/PROGRESS.md`.
-- Luật art lead: `.claude/rules/vfx-art-lead.md` (tự nạp). Quy tắc agent / phiên song song: `AGENTS.md`. Mục tiêu + tiêu chí xong: `SPEC.md`.
+- Luật art lead: `.claude/rules/vfx-art-lead.md` (tự nạp). **Việc VFX: tra `Docs/VFX/_Anatomy/<loại>.md` (tạo hình bất biến) trước khi làm; chưa có thì research rồi lưu file mới** (2026-11-10). Quy tắc agent / phiên song song: `AGENTS.md`. Mục tiêu + tiêu chí xong: `SPEC.md`.
 - Tạo / di chuyển file thì cập nhật `MAP.md`. Học được điều lâu dài thì ghi vào `contexte/<chủ-đề>.md`.
 - Sở thích riêng máy: `CLAUDE.local.md` (không commit). Secret chỉ để trong `.env` (không commit).
 - Git: https://github.com/doson2801-dos/AI_VFX (private, nhánh `main`). Asset Unity không có trong git.

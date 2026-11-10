@@ -56,6 +56,10 @@ Chế độ B không cần bước này khi chưa có project.
 - **B. Chỉ spec + prompt bàn giao**: khi người dùng xin prompt/spec, khi effect làm cho engine khác Unity, hoặc khi giao cho người/agent khác. Xem mục 8.
 - **Mix (mặc định cho đòn trúng / va chạm / nổ):** nếu effect ghép được từ thành phần chuẩn, **tự mix** (auto mix) rồi dựng, không lập kế hoạch từ đầu. Xem mục 9. Art lead xem rồi yêu cầu đổi.
 
+### 1-pre. Tạo hình — BẮT BUỘC (art lead 2026-11-10)
+
+Trước 1a: mở `Docs/VFX/_Anatomy/<loại>.md` + `materials.md`, chép "Bất biến" vào kế hoạch. Chưa có file hoặc chưa hiểu đối tượng thì research và **lưu file mới** (cách làm: `_Anatomy/README.md`). Biến thể phải giữ hình xương sống; sau build đối chiếu preview với "Bất biến".
+
 ### 1a. Định hướng không gian — BẮT BUỘC, trước mọi chế độ
 
 Đọc [references/direction.md](references/direction.md). Xác định: **ngữ cảnh** (air / ground / dir) · **mặt phẳng** (Billboard / nằm đất = Billboard + Render Alignment Local / Stretched; **không dùng Horizontal / Vertical Billboard**) · **góc camera** (mặc định 3/4 nhìn xuống 40°) · **neo** · **quy mô** (m, so với người 2 m) · **di chuyển** · **nền**. Kèm **thời gian** và **các lớp**.
