@@ -1,6 +1,12 @@
 # Tìm asset tái sử dụng
 
-Thứ tự tìm: **project hiện tại → thư viện của art lead / Shape Lab → thư viện VFX chung → tạo mới**. Tạo mới tốn thời gian (chờ ChatGPT, chỉnh sửa), nên tìm kỹ trước.
+Thứ tự tìm: **`Assets/Library/` → project hiện tại → thư viện của art lead / Shape Lab → thư viện VFX chung → tạo mới**. Tạo mới tốn thời gian (chờ ChatGPT, chỉnh sửa), nên tìm kỹ trước.
+
+## 0. `Assets/Library/` (thư viện texture của project, luôn thử trước)
+
+- Cây `Assets/Library/<nhóm>/<vai trò>/<nhóm>_<vai trò>_NNN` (đã chia lại 2026-11-09). Chọn theo bảng thành phần → thư mục ở `Docs/VFX/_Library/LIBRARY.md`; tên cũ, tên gốc và nguồn của từng file ở `Docs/VFX/_Library/library_index.csv`. Xem ảnh (Read PNG) rồi mới chọn.
+- File trong Library dùng chung: chỉ `LoadAssetAtPath`, không `ImportTexture` lên nó. Cần import setting khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`.
+- Các mục dưới đây (rpg-game, Shape Lab, animlibrary) là nguồn **gốc** hoặc nguồn dự phòng khi Library không có hình hợp. Ảnh lấy từ rpg-game thường đã nằm trong Library: tra `library_index.csv` theo tên gốc trước khi copy lại.
 
 ## Thư viện của art lead: `D:\Projects\rpg-game\Assets\RPG_VFX\Duong\Texture\`
 

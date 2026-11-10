@@ -19,6 +19,10 @@
 !*.shadersubgraph
 !*.asmdef
 !*.json
+!*.ps1
+
+# Bảng tra Library (tên cũ / nguồn của từng texture): thông tin, không phải tài nguyên
+!/Docs/VFX/_Library/*.csv
 
 # .meta của code (giữ GUID cho Unity)
 !*.cs.meta

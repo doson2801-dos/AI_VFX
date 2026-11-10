@@ -73,7 +73,7 @@ Phần không hỏi thì tự chọn giá trị hợp lý và ghi là **giả đ
 
 ### 1b. Shape mới (khi effect cần silhouette chưa có)
 
-1. Tìm trong **thư viện shape theo nguyên tố** của Shape Lab trước. Thư viện gồm cả nhóm **PixelFX** (187 effect tham chiếu hình và nhịp). Sau đó tìm trong thư viện texture ([references/library.md](references/library.md)).
+1. Tìm trong **`Assets/Library/`** trước (bảng thành phần → thư mục ở `Docs/VFX/_Library/LIBRARY.md`, xem ảnh rồi chọn). Chưa có hình hợp thì tìm tiếp trong **thư viện shape theo nguyên tố** của Shape Lab (gồm nhóm **PixelFX**, 187 effect tham chiếu hình và nhịp) và các thư viện khác ([references/library.md](references/library.md)).
 2. Chưa có thì dựng/chỉnh trong **Shape Lab** (link và cách dùng ở library.md). Art lead có thể tự chỉnh rồi gửi JSON "Copy thông số".
 3. Đưa **preview silhouette đen–trắng** vào kế hoạch ở bước 2. Không tạo vòng duyệt riêng: silhouette được duyệt cùng kế hoạch.
 

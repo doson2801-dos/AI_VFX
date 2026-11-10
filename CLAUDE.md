@@ -10,7 +10,9 @@ Unity project – thư viện VFX.
 - Sở thích riêng máy: `CLAUDE.local.md` (không commit). Secret chỉ để trong `.env` (không commit).
 - Git: https://github.com/doson2801-dos/AI_VFX (private, nhánh `main`). Asset Unity không có trong git.
   - **Chỉ commit kiến thức + skill + tài liệu** (art lead 2026-11-04): `CLAUDE.md`, `MAP.md`, `SPEC.md`, `AGENTS.md`, `contexte/`, `.claude/rules/`, `.claude/skills/`, mọi `Docs/**/*.md`. **Không** commit file code của Assets (`.cs`, `.shader`, `.py`…), BuildReport, asset.
-  - Tự động commit + push lúc **17:30 hằng ngày**: Windows Task Scheduler `VFX_LIb Auto Commit` chạy `tools/auto_commit.ps1` (log `tools/auto_commit.log`; chạy thử `-DryRun`).
+  - **Hai nhánh, hai việc** (art lead 2026-11-10; mục đích: đổi máy / đổi nền tảng vẫn còn thông tin cũ): `main` = kiến thức, **có trên GitHub**; `master` = nhánh làm việc ở máy, chứa cả tài nguyên (Assets, builder…), **chỉ ở máy, không bao giờ push** (hook `pre-push` chặn). Có thay đổi skill / luật / `.md` / cấu hình dùng chung thì **commit lên git ngay**, không đợi cuối ngày.
+  - Công cụ: `tools/sync_knowledge.py` (commit phạm vi kiến thức lên `master`, chép từng commit sang `main` bằng index tạm, không đổi nhánh, rồi push `main`). Chạy bởi hook `Stop` (sau mỗi lượt Claude, khi đã bật trong `.claude/settings.json`), Task Scheduler `VFX_LIb Auto Commit` lúc **17:30** (`tools/auto_commit.ps1`, phòng khi sửa ngoài Claude), hoặc tay `python -I tools/sync_knowledge.py [--dry-run]`. Log `tools/auto_commit.log`. Chi tiết + cách dựng lại ở máy mới: `contexte/git-sync.md`.
+  - Phạm vi kiến thức: như trên, thêm `.gitignore`, `.mcp.json`, `.claude/settings.json`, `.claude/launch.json`, `tools/sync_knowledge.py`, `tools/auto_commit.ps1`, `Docs/VFX/_Library/*.csv` (bảng tra Library).
 - **Texture cho mọi skill lấy từ `Assets/Library/`** (2026-11-04; cây chia lại 2026-11-09: `<nhóm>/<vai trò>/<nhóm>_<vai trò>_NNN`). **Chọn theo `Docs/VFX/_Library/LIBRARY.md`** (thành phần → thư mục), xem ảnh rồi chốt; nguồn ở `library_index.csv`. Slash của `/vfx-shader` dùng `Assets/Library/Slash/Main_tex(Uvmesh)/` làm texture chạy UV.
 
 ## Skill: VFX_Maker (`/vfx-maker`)

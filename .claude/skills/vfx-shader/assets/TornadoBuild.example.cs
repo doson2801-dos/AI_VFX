@@ -30,9 +30,9 @@ namespace VfxEffects
         const string MeshRing = Ref + "Models/fbx_fx_cylinder_03.FBX";
         const string MeshTube = Ref + "Models/Tornado_vertical.fbx";
         const string SheetElements = Ref + "Textures/Tex_fx_elements_set_01.tga";   // channel-packed sheet; not in Library (unclassified)
-        const string SheetSplash = "Assets/Library/impact/impact_071.tga";           // = Tex_fx_splash_set
-        const string TexDust = "Assets/Library/smoke/smoke_010.png";                  // = Dust01
-        const string TexWind = "Assets/Library/wave/wave_070.png";                    // = Wind01
+        const string SheetSplash = "Assets/Library/impact/flipbook/impact_flipbook_014.tga";           // = Tex_fx_splash_set
+        const string TexDust = "Assets/Library/smoke/soft/smoke_soft_002.png";                  // = Dust01
+        const string TexWind = "Assets/Library/trail/ribbon/trail_ribbon_015.png";                    // = Wind01
         const string ShGraph = "Shader Graphs/Fx_dissolve_particle_apb";
 
         const float Emit = 2.6f;       // emission window (s); longest life 1.3 s -> ends ~3.9 s

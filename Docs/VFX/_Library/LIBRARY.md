@@ -11,9 +11,9 @@ Cách chọn: tìm dòng thành phần trong bảng → mở thư mục (vai tr�
 | Vệt chém chạy UV trên mesh (`_MainTex` slash) | `Slash/Main_tex(Uvmesh)` (18) | ảnh xám; xem `vfx-shader/references/coloso.md` |
 | Vệt / hiệu ứng trúng đòn của slash | `Slash/Onhit` (14) | |
 | Chớp lúc bắt đầu, quầng sáng, lõi sáng, tàn lửa | `glow/soft_round` (36), `soft_oval`, `soft_shape` | additive, nằm đất hoặc billboard |
-| Flare, sao chớp, chớp gai nhọn | `glow/flare` (9), `impact/flash_spiky` (12) | |
+| Flare, sao chớp, chớp gai nhọn | `glow/flare` (10), `impact/flash_spiky` (14) | `flare_010` sao 4 cánh mảnh dài; `flash_spiky_013` hàng gai dựng đứng, `_014` sao 8 gai quầng mềm (từ `Impact_Ground.psd`, 2026-11-10) |
 | Quầng nhỏ / halo | `glow/halo` (3) | |
-| Impact flipbook (nổ, chớp nhiều khung) | `impact/flipbook` (17) | Frame over Time tuyến tính |
+| Impact flipbook (nổ, chớp nhiều khung) | `impact/flipbook` (20) | Frame over Time tuyến tính. `020`, `021` = 2×2 (lưỡi cong, mũi V); `022` = 4×2 ảnh đứng (mảnh bắn lên rồi tan), không alpha thật, chỉ Additive; từ `Impact_Ground.psd` 2026-11-10 |
 | Vòng sóng nổ lan | `impact/radial_ring` (5), `ring/thin` (13), `ring/soft` (17) | nằm đất: Billboard + Local |
 | Vòng chạy UV trên mesh vòng | `ring/Uv_mesh` (19) | |
 | Vòng rách, vòng xoáy, vòng flipbook | `ring/ragged`, `ring/swirl`, `ring/flipbook` | |

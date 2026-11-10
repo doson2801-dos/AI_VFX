@@ -19,7 +19,8 @@
 | `.mcp.json` | Công cụ kết nối: Blender MCP. |
 | `.worktreeinclude` | File không có trong git nhưng cần chép theo mỗi worktree. |
 | `.gitignore` | Chỉ cho tài liệu + code lên git (whitelist). Từ 2026-11-04 chỉ commit kiến thức + skill + `.md` (xem `CLAUDE.md`). |
-| `tools/auto_commit.ps1` | Auto-commit 17:30 hằng ngày (Task Scheduler `VFX_LIb Auto Commit`), chỉ phạm vi kiến thức / skill / `.md`; log `tools/auto_commit.log`. Không lên git. |
+| `tools/sync_knowledge.py` | Đồng bộ kiến thức lên git (2026-11-10): commit phạm vi kiến thức lên `master`, chép sang `main`, push `main`. Chạy bởi hook `Stop` + Task Scheduler 17:30 + tay (`--dry-run`). Lên git. Xem `contexte/git-sync.md`. |
+| `tools/auto_commit.ps1` | Vỏ gọi `sync_knowledge.py` (Task Scheduler `VFX_LIb Auto Commit` 17:30 trỏ vào file này); log `tools/auto_commit.log` (không lên git). Lên git. |
 
 ## Unity
 
@@ -52,7 +53,7 @@
 | `Assets/VFX/_Kit/Editor/VfxLightningKit.cs`, `_Kit/Runtime/VfxPathMover.cs` | Helper cho effect điện; mover cho effect có vệt (showcase). |
 | `Docs/VFX/_Reference/rpg-game_Thunder/` | Ảnh render mẫu rpg-game (Thunder, Spear, Trail). |
 | `Assets/shader_water/` | Shader nước (riêng). |
-| `Assets/Library/` | Thư viện texture VFX đã phân loại (bản **sao chép** từ rpg-game + project, GUID mới): `decals/ glow/ impact/ Lightnings_Electrics/ noise/ Slash/ smoke/ trail/ water/ wave/`. Tên file `<thư mục>_NNN` (đã soát bằng mắt). **Đã chia lại theo vai trò (2026-11-06, art lead tự chỉnh thêm):** `Slash/{Main_tex(Uvmesh),Onhit} glow/ spark/ impact/ ring/ lightning/ ground/ rune/ beam/ smoke/ noise/ mask/ trail/ water/`, mỗi thư mục con chứa ảnh tên `<cha>_<con>_NNN` (ví dụ `glow/soft_round/glow_soft_round_001.png`). Tra ngược tên cũ / tên gốc / nguồn: `Docs/VFX/_Library/library_index.csv`; bảng đổi tên: `rename_manifest.csv`, `reorganize_manifest.csv` (script `reorganize.py`, `rename_library.py`, đều có `--undo`). CLAUDE.md / luật / 3 skill đã trỏ cây mới (2026-11-09); **build script C# cũ trong Assets có thể còn trỏ đường dẫn cũ**. Bản đồ chọn texture: `Docs/VFX/_Library/LIBRARY.md`. Bảng nguồn → đích + tên cũ: `Docs/VFX/_Library/classify.csv`. |
+| `Assets/Library/` | Thư viện texture VFX đã phân loại (bản **sao chép** từ rpg-game + project, GUID mới). **Cây hiện tại, chia theo vai trò (2026-11-06, art lead tự chỉnh thêm):** `Slash/{Main_tex(Uvmesh),Onhit} glow/ spark/ impact/ ring/ lightning/ ground/ rune/ beam/ smoke/ noise/ mask/ trail/ water/`, mỗi thư mục con chứa ảnh tên `<cha>_<con>_NNN` (ví dụ `glow/soft_round/glow_soft_round_001.png`). Tra ngược tên cũ / tên gốc / nguồn: `Docs/VFX/_Library/library_index.csv`; bảng đổi tên: `rename_manifest.csv`, `reorganize_manifest.csv` (script `reorganize.py`, `rename_library.py`, đều có `--undo`). CLAUDE.md / luật / 3 skill đã trỏ cây mới (2026-11-09); **build script C# cũ trong Assets có thể còn trỏ đường dẫn cũ**. Bản đồ chọn texture: `Docs/VFX/_Library/LIBRARY.md`. `classify.csv` là bảng đời trước (tên cũ trước khi chia lại), dùng `library_index.csv` để tra. |
 | `Assets/VFX/_Generated/ComfyUI/` | Texture tạo bằng ComfyUI MCP (Qwen Image 2.1), chưa đưa vào Library. Bản gốc ở `D:\GameProjects\VFX_LIb\`. `T_Impact_ComfyUI_01.png`: chớp impact xám trên nền đen (additive), 1024²; `_02`: bản 4 tia hình chữ thập (sửa từ `_01`); `_06`: 4 tia lệch, dài ngắn và góc khác nhau (ảnh ComfyUI `_04` đã xoá bớt 1 tia bằng script). |
 | `Packages/`, `ProjectSettings/` | Cấu hình Unity. |
 
