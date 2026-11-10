@@ -21,6 +21,7 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 - **Texture sheet có hướng thì không spam**, không hướng thì spam được (`Docs/VFX/_Library/LIBRARY.md`, nhãn ở `library_direction.csv`).
 - **Mesh có đầu-đuôi bay theo quỹ đạo** phải quay mũi theo hướng bay.
 - **Không mượn mesh của effect khác** nếu làm đổi tạo hình (aura → cột lốc xoáy là sai).
+- **Fog + additive = ô vuông** (art lead 2026-11-10, VioletThunder_Crimson Cracks): scene có fog thì mọi quad additive (shader stock Mobile) bị cộng màu fog, hiện thành ô vuông xám chỉ ở Game view, Scene view không thấy. Texture vẫn sạch. Showcase đã tắt fog; gặp ô vuông chỉ ở Game thì tắt fog trước khi đổi texture. Project game thật có fog thì phải kiểm tra tương tự.
 - Texture không alpha thật → làm bản copy có alpha, mờ mép, Wrap Clamp (viền vuông).
 - Thấy mơ hồ về cách dựng một đối tượng: **học prefab tham chiếu của art lead trước**, không đoán từ mesh / texture có sẵn.
 
