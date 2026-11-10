@@ -6,7 +6,7 @@ Dùng khi đổi nguyên tố của một biến thể: **chất liệu mới ph
 
 | Chất liệu | Hình nhận dạng | Chuyển động | Texture / hình hợp (Library) | Dễ sai |
 |---|---|---|---|---|
-| Lửa | lưỡi nhọn hướng lên, đáy rộng, đầu cong; vàng trắng lõi → cam → đỏ → tro | bốc lên, sôi, co nhỏ khi tắt; tàn lửa bay lên | flipbook lửa (`smoke/sheet`, `Flipbooks/Fire`), `glow`, `spark/streak` | dùng **mây cartoon / khói** làm lửa (đã gặp: AuraGauntlet_Fire); dải thẳng cứng |
+| Lửa | lưỡi nhọn hướng lên, đáy rộng, đầu cong; vàng trắng lõi → cam → đỏ → tro | bốc lên, sôi, co nhỏ khi tắt; tàn lửa bay lên | flipbook lửa (`smoke/sheet`, `Flipbooks/Fire`), `glow`, `spark/streak` | dùng **mây cartoon / khói** làm lửa; phun sheet lửa **có hướng** thành đám que diêm; mượn mesh phễu tornado làm lửa ôm vật (đã gặp cả ba: AuraGauntlet_Fire); dải thẳng cứng |
 | Băng | tinh thể **cạnh sắc, mặt phẳng**, trong, sáng ở mép; hơi lạnh trắng xanh | trồi / vỡ dứt khoát, ít chuyển động mềm; mảnh vỡ lấp lánh | mesh tinh thể, `spark/shard`, `ground/crack_*` (mảnh), `glow/flare` | cạnh tròn mềm như thuỷ tinh; trail trắng đặc (đã gặp: FireballThrow_Frost) |
 | Nước | giọt, sóng cuộn, bọt, mặt cong có vệt sáng | chảy cong, văng giọt, rơi | `water/splash`, `bubble`, `tile` | khói xám quanh nước; giọt là chấm tròn |
 | Độc | khí đặc xanh vàng, **bong bóng nổi lên, giọt nhỏ, vũng loang** | nặng, chậm, dồn thấp, giọt rơi | `water/bubble`, `smoke/soft`, `ground/splat` | màu xanh nhưng hình là khói/sét (laser) |

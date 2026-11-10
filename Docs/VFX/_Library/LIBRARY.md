@@ -56,7 +56,19 @@ Thư mục chỉ cho biết **họ** của ảnh, không bảo đảm đúng hì
 **Hai loại texture sheet: CÓ HƯỚNG / KHÔNG CÓ HƯỚNG (art lead 2026-11-10) — phân loại trước khi gán:**
 - **Sheet có hướng (direction)**: hình có trục, đầu và đuôi rõ (ngọn lửa thổi về một phía, sao chổi, tia, vệt, flipbook lửa / chém / sét có hướng). **Không dùng kiểu spam**: dùng đơn hoặc vài hạt to, đặt đúng hướng (Stretched Billboard, đầu = mép TRÁI, hoặc xoay có chủ đích theo hướng chuyển động), không xoay ngẫu nhiên, không phun nhiều hạt (lỗi FireLoop_03 ở AuraGauntlet_Fire: ra đám que diêm chúi lung tung).
 - **Sheet không có hướng**: hình đối xứng hoặc không có trục (cụm mây / khói, puff, glow, bụi, tia lấp lánh tròn). **Được spam**: nhiều hạt, xoay ngẫu nhiên, khung ngẫu nhiên mỗi hạt (Start Frame random).
-- Cách nhận biết: xoay ảnh 90° mà nhìn vẫn hợp lý và không mất ý nghĩa = không hướng; xoay mà sai (lửa chúi xuống, đuôi dẫn đầu) = có hướng. Gắn nhãn từng sheet vào `library_props.csv` khi rà (chưa làm).
+- Cách nhận biết: xoay ảnh 90° mà nhìn vẫn hợp lý và không mất ý nghĩa = không hướng; xoay mà sai (lửa chúi xuống, đuôi dẫn đầu) = có hướng. Nhãn từng ảnh đã gán (2026-11-10, xem contact sheet): cột `direction` trong `library_props.csv`, nguồn sửa tay ở `library_direction.csv` (`omni` = không hướng, `dir` = có hướng, `na` = chạy UV / noise / mask; cột `sheet` = 1 nếu là sheet nhiều khung). Làm mới props: `python -I tools/library_props.py` (không ghi đè nhãn).
+
+### Nhãn hướng theo thư mục (2026-11-10)
+
+`omni` = không hướng, **spam được** (nhiều hạt, xoay / khung ngẫu nhiên). `dir` = có hướng, **không spam** (dùng đơn / vài hạt, đặt đúng hướng). `na` = texture chạy UV / noise / mask, không áp dụng. Ngoại lệ từng file: `library_direction.csv`.
+
+| Thư mục | Hướng | Dùng thế nào |
+|---|---|---|
+| `glow/*`, `ring/thin`, `ring/flipbook`, `rune/circle`, `spark/star`, `smoke/soft`, `smoke/cartoon`, `impact/radial_ring`, `ground/crack_radial`, `crack_x`, `splat` | omni | spam được; nằm đất thì xoay ngẫu nhiên quanh trục đứng |
+| `ring/soft` (15 omni, 3 dir: 009, 010, 015), `ring/ragged` (7 omni, 3 dir: 001, 004, 005), `ring/swirl` (003 dir) | hỗn hợp | xem cột file |
+| `impact/flash_spiky` (dir: 004, 008, 009, 010, 013), `impact/flipbook` (dir: 003, 004, 005, 013, 015, 016, 018, 020, 021, 022), `smoke/sheet` (dir: 007, 014, 016), `spark/dot_sheet` (dir: 002, 003), `water/splash` (dir: 001–004, 009), `water/bubble` (dir: 001), `ground/scorch` (dir: 002) | hỗn hợp | xem cột file; sheet có hướng thì dùng đơn |
+| `spark/streak`, `spark/shard`, `impact/shard`, `trail/*`, `beam`, `lightning/*`, `Slash/Onhit`, `ground/crack_line`, `ground/indicator`, `water/streak` | dir | Stretched (đầu = mép TRÁI) hoặc xoay có chủ đích; không phun nhiều hạt xoay lung tung |
+| `Slash/Main_tex(Uvmesh)`, `ring/Uv_mesh`, `noise/*`, `mask/*`, `water/tile` | na | chạy UV trên mesh / tile; hướng nằm ở UV, không phải hạt |
 
 Quy tắc theo loại (đã gặp lỗi hoặc art lead chốt):
 - **Chớp / quầng (glow)**: ảnh đối xứng tròn, `edge_touch=0`, xám. Không lấy flare có vòng hay tia cố định khi cần "quầng mềm".

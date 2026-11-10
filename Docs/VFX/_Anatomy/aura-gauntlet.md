@@ -22,7 +22,8 @@ Nguyên tố, chất liệu hạt, nhịp lặp, layout quanh vật. **Nhưng ph
 ## Lỗi biến thể đã gặp
 - **Fire**: bỏ mesh sét và dùng `smoke_sheet_002` (cụm mây cartoon trắng) làm lửa → ra bông khói / vụ nổ, **không còn là aura quanh vật**.
 - **Poison**: khí + bong bóng ổn, nhưng không có phần tử "bò quanh vật" mạnh; vũng loang (`water_splash_002`) gần như không thấy.
-- Tránh: lửa phải là **lưỡi lửa dựng cao liếm quanh vật** (flipbook lửa thật), không dùng mây; luôn có 1 phần tử xoáy quanh trục vật.
+- **AuraGauntlet_Fire lần làm lại (2026-11-10), ba lần hỏng**: (1) `FireLoop_03` phun 28 hạt/s → đám que diêm (sheet **có hướng** không được spam); (2) còn 6 ngọn, xoay sai chiều → chúi xuống; (3) mượn mesh phễu tornado (rồi `SM_VFX_Cylinder_02`) làm vỏ lửa → ra **cột lốc xoáy lửa**, mất hình "ôm vật". Art lead bỏ phần aura, chưa có cách dựng được duyệt.
+- Tránh: không mượn mesh của effect khác nếu nó làm đổi tạo hình; lửa ôm vật phải học từ prefab tham chiếu của art lead trước khi dựng (`rpg-game/_Game/Resources_moved/Prefabs/Effects/Player/InUse/VFX_Guantlet_Hand_Aura.prefab`, `RPG_VFX/Duong/Prefab/VFX_BossRaid_Bishop_Idle_Fire.prefab`, `VFX_Library/Prefabs/Gameplay/Elemental Mesh FX/MeshFX_Fire.prefab`); luôn có 1 phần tử xoáy quanh trục vật.
 
 ## Biến thể đã làm
 Gốc (sét tím), Fire, Poison.

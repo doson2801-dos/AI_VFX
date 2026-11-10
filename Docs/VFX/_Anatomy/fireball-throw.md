@@ -24,6 +24,8 @@ Chất liệu quả cầu (lửa; băng: cầu tinh thể + mảnh; độc: cụ
 ## Lỗi biến thể đã gặp
 - **Frost**: đuôi dùng `trail_streak_012` (trắng đặc) nên ra **thanh trắng cong**, thân tinh thể nhỏ khó thấy.
 - **Poison**: thân dùng noise streak nên trông như khối trắng sáng, thiếu cảm giác độc.
+- **Frost, thân tinh thể** (2026-11-10): mesh xoay tự do (tumble) nên mũi chỉ lung tung. Sửa: mesh có trục dài (`SM_VFX_Debris_Crystal_01`: trục +Y, mũi nhọn ở +Y, kiểm bằng Blender) phải **dẫn đầu theo hướng bay**: Euler X +90° đưa +Y về +Z, rồi chúi theo đường cong quỹ đạo. Mọi mesh có đầu-đuôi bay theo quỹ đạo đều theo luật này; không xoay ngẫu nhiên.
+- Đuôi băng đã đổi sang vệt sao chổi mảnh `trail_streak_010` (bản alpha thật), bỏ `trail_streak_012` (khối trắng đặc).
 - Tránh: kiểm preview frame 2–4 thấy **cầu + đuôi tách bạch**; đuôi băng nên là vệt mảnh có hạt lấp lánh, không phải dải đặc.
 
 ## Biến thể đã làm

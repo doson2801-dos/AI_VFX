@@ -16,6 +16,14 @@ Thứ tự nguồn: (1) prefab / texture tham chiếu của art lead hoặc rpg-
 Phải trả lời được: **nó gồm mấy phần, phần nào là xương sống, nhìn từ camera 3/4 thấy hình gì, chuyển động ra sao theo thời gian, thiếu phần nào thì không còn là nó**. Không trả lời được thì hỏi art lead (≤ 2 vòng), không đoán rồi làm.
 Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), kèm **nguồn** và độ chắc (đã xác nhận bởi art lead / suy từ prefab / suy từ tài liệu / giả định).
 
+## Quy tắc thêm từ việc làm lại (2026-11-10, art lead)
+
+- **Texture sheet có hướng thì không spam**, không hướng thì spam được (`Docs/VFX/_Library/LIBRARY.md`, nhãn ở `library_direction.csv`).
+- **Mesh có đầu-đuôi bay theo quỹ đạo** phải quay mũi theo hướng bay.
+- **Không mượn mesh của effect khác** nếu làm đổi tạo hình (aura → cột lốc xoáy là sai).
+- Texture không alpha thật → làm bản copy có alpha, mờ mép, Wrap Clamp (viền vuông).
+- Thấy mơ hồ về cách dựng một đối tượng: **học prefab tham chiếu của art lead trước**, không đoán từ mesh / texture có sẵn.
+
 ## Mẫu file `<loại>.md`
 
 ```

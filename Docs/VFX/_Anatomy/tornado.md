@@ -23,6 +23,7 @@ Chất liệu (lửa, băng, cát...), màu, hạt chân.
 
 ## Lỗi biến thể đã gặp
 - **FireTornado_Sand** (preview): chỉ là cột khói be, **thân xoáy không rõ** → không đọc được là lốc xoáy; cần thân xoắn có sọc rõ.
+- **FireTornado_Sand**: art lead nói chỉ cần thành hình lốc xoáy, cách làm tuỳ ý; hiện vẫn là cột khói be, **chưa sửa**.
 - **FireTornado_Frost**: tốt. Viền vuông do `crack_radial_001` / `spark_shard_001` không alpha → đã làm bản alpha thật (`Assets/VFX/FireTornado/Textures/`).
 
 ## Biến thể đã làm
