@@ -167,8 +167,11 @@ def transplant_to_main():
     f = git('fetch', '-q', 'origin', 'main')
     if f.returncode != 0:
         log('Fetch lỗi (mạng?): ' + f.stderr.decode('utf-8', 'replace').strip()[:200])
-    elif git('merge-base', '--is-ancestor', 'origin/main', 'master').returncode != 0:
-        # origin/main có commit master chưa có (máy / phiên khác đẩy lên): kéo về master trước
+    elif out(git('rev-parse', 'main')) != out(git('rev-parse', 'origin/main')) \
+            and git('merge-base', '--is-ancestor', 'main', 'origin/main').returncode == 0:
+        # origin/main đi trước main ở máy = có commit từ máy / phiên khác (main ở máy chỉ do script này tiến, và đã push).
+        # Không dùng "origin/main là tổ tiên của master": commit đã chép sang main có mã băm khác commit trên master.
+        # Kéo về master trước.
         if DRY:
             log('DryRun: origin/main có commit mới, sẽ merge vào master.')
         else:
@@ -178,6 +181,10 @@ def transplant_to_main():
                 log('Merge origin/main vào master lỗi (xung đột). Cần xử lý tay; chưa chép sang main.')
                 return False
             log('Đã merge commit mới của origin/main vào master.')
+    elif out(git('rev-parse', 'main')) != out(git('rev-parse', 'origin/main')) \
+            and git('merge-base', '--is-ancestor', 'origin/main', 'main').returncode != 0:
+        log('main ở máy và origin/main đã rẽ nhánh (không bên nào là tổ tiên của bên kia). Cần xử lý tay; chưa chép sang main.')
+        return False
     # main phải đi theo origin/main (nếu origin/main đi trước và main là tổ tiên thì tua nhanh)
     if git('rev-parse', '--verify', '-q', 'origin/main').returncode == 0 \
             and git('merge-base', '--is-ancestor', 'main', 'origin/main').returncode == 0 \
