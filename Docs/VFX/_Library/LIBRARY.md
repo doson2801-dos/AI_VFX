@@ -48,6 +48,7 @@ Thư mục chỉ cho biết **họ** của ảnh, không bảo đảm đúng hì
    - `kind=alpha` → dùng Alpha / Cutout / Additive đều được; `black_bg` → **chỉ Additive** (hoặc import `alphaFromGray`); `opaque` → cẩn thận, thường là noise / mask / UV.
    - `color=gray` → tint bằng Start Color / ramp; `tinted|color` → màu bị cố định, chỉ dùng khi brief cần đúng màu đó.
    - `edge_touch=1` → ảnh chạm mép, hay lộ **cạnh vuông** khi scale: không dùng cho glow / flare / hạt, trừ ảnh chạy UV, noise, mask, flipbook.
+   - **Ảnh không alpha thật (`black_bg` / `opaque`, hoặc ảnh RGB) dễ lộ viền vuông** (art lead 2026-11-10, FireTornado): đừng gán thẳng. Copy sang `Assets/VFX/<Effect>/Textures/` rồi tạo bản alpha thật: alpha = độ sáng (max RGB), RGB chia lại theo alpha (Additive nhìn y nguyên), làm mờ mép ~6–8 % vào trong, Wrap = Clamp. Mẫu: `T_FireTornado_Crack.png`, `T_FireTornado_Shard_1x4.png` (sheet thì mờ mép theo từng ô).
    - `warn` có "không POT" / "nhỏ <128": nói rõ trong kế hoạch nếu vẫn dùng.
 5. **Chốt**: 1 ảnh chính + 1–2 dự phòng. Ghi vào kế hoạch dạng bảng `Thành phần | Ảnh chọn | Lý do | Đã loại (vì sao)`.
 6. **Kiểm sau khi dựng**: xem preview / Review Lab, thành phần phải ra **đúng hình đã định** (không cạnh vuông, không ra màu lạ, không chớp đen). Sai thì quay lại bước 3 đổi ảnh, không chỉnh thông số để chữa hình sai.
