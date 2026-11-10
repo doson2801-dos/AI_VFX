@@ -53,10 +53,10 @@ Thư mục chỉ cho biết **họ** của ảnh, không bảo đảm đúng hì
 5. **Chốt**: 1 ảnh chính + 1–2 dự phòng. Ghi vào kế hoạch dạng bảng `Thành phần | Ảnh chọn | Lý do | Đã loại (vì sao)`.
 6. **Kiểm sau khi dựng**: xem preview / Review Lab, thành phần phải ra **đúng hình đã định** (không cạnh vuông, không ra màu lạ, không chớp đen). Sai thì quay lại bước 3 đổi ảnh, không chỉnh thông số để chữa hình sai.
 
-**Hai loại texture sheet (art lead 2026-11-10) — phải phân loại trước khi gán:**
-- **Sheet biến thể** (nhiều hình khác nhau cùng loại, ví dụ 2×2 cụm mây / khói / tia): mỗi hạt lấy **một khung ngẫu nhiên** (Start Frame random, Frame over Time = 0). Được phun nhiều hạt.
-- **Sheet hoạt ảnh / flipbook** (một vật diễn biến theo khung: một ngọn lửa, một vụ nổ, một tia sét vỡ): chạy hết khung theo đời hạt (Frame over Time tuyến tính). **Chỉ dùng đơn** (một hoặc vài hạt to, đúng hình), **không phun nhiều hạt** (lỗi FireLoop_03 ở AuraGauntlet_Fire: ra đám que diêm).
-- Không rõ loại nào thì xem sheet: các khung giống nhau ở các pha khác nhau (to dần rồi tan) = hoạt ảnh; các khung là hình khác nhau cùng cỡ = biến thể.
+**Hai loại texture sheet: CÓ HƯỚNG / KHÔNG CÓ HƯỚNG (art lead 2026-11-10) — phân loại trước khi gán:**
+- **Sheet có hướng (direction)**: hình có trục, đầu và đuôi rõ (ngọn lửa thổi về một phía, sao chổi, tia, vệt, flipbook lửa / chém / sét có hướng). **Không dùng kiểu spam**: dùng đơn hoặc vài hạt to, đặt đúng hướng (Stretched Billboard, đầu = mép TRÁI, hoặc xoay có chủ đích theo hướng chuyển động), không xoay ngẫu nhiên, không phun nhiều hạt (lỗi FireLoop_03 ở AuraGauntlet_Fire: ra đám que diêm chúi lung tung).
+- **Sheet không có hướng**: hình đối xứng hoặc không có trục (cụm mây / khói, puff, glow, bụi, tia lấp lánh tròn). **Được spam**: nhiều hạt, xoay ngẫu nhiên, khung ngẫu nhiên mỗi hạt (Start Frame random).
+- Cách nhận biết: xoay ảnh 90° mà nhìn vẫn hợp lý và không mất ý nghĩa = không hướng; xoay mà sai (lửa chúi xuống, đuôi dẫn đầu) = có hướng. Gắn nhãn từng sheet vào `library_props.csv` khi rà (chưa làm).
 
 Quy tắc theo loại (đã gặp lỗi hoặc art lead chốt):
 - **Chớp / quầng (glow)**: ảnh đối xứng tròn, `edge_touch=0`, xám. Không lấy flare có vòng hay tia cố định khi cần "quầng mềm".
