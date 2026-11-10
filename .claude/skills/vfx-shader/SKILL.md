@@ -3,7 +3,7 @@ name: vfx-shader
 description: "VFX_Shader — làm VFX cần tới shader (technical): chọn đúng shader có sẵn trong project trước (bộ Coloso VFXLib dùng cho slash / trail / vệt trên mesh + UV, shader nhập từ rpg-game, SH_VFX_* dùng chung), cấu hình material + Custom Vertex Streams, texture lấy từ Assets/Library (slash chạy UV dùng Assets/Library/Slash), và chỉ viết hoặc mở rộng shader nhẹ cho mobile (Built-in + URP) khi chưa có cái nào đủ. Bắt đầu bằng định hướng không gian (bắt buộc, thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, tự chụp preview, Review Lab, đăng ký shader. Dùng cho effect mà hình khối / chuyển động / kết thúc do shader quyết định (slash, dissolve, vệt, lửa / khói toon, shockwave, beam, aura). Chỉ chạy khi người dùng gọi /vfx-shader."
 disable-model-invocation: true
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # VFX_Shader
@@ -38,7 +38,7 @@ Theo [references/setup.md](references/setup.md) (build kit, thư viện hàm, no
 
 ## 1. Nhận mô tả
 
-Đọc mô tả, ảnh / video tham chiếu (Read), JSON Shape Lab nếu có. Đọc hết những gì đã có trước khi hỏi. Người dùng chỉ sửa một effect đã có thì nhảy tới mục 8.
+Đọc mô tả, ảnh / video tham chiếu (Read), JSON Shape Lab nếu có. Đọc hết những gì đã có trước khi hỏi. **Brief nói "học theo / làm giống prefab X" (rpg-game…):** làm đủ [references/study-reference.md](references/study-reference.md) (copy bản gốc, render, dump, đọc mesh + texture + Shader Graph) trước khi lập kế hoạch; dùng mesh + shader + số của họ trước, không chỉ đọc số rồi tự dựng (art lead 2026-11-04 và 2026-11-06). Người dùng chỉ sửa một effect đã có thì nhảy tới mục 8.
 
 ## 2. Định hướng không gian — BẮT BUỘC
 
@@ -50,6 +50,7 @@ Theo [references/setup.md](references/setup.md) (build kit, thư viện hàm, no
 2. Rà thực tế: Glob `Assets/**/*.shader` (bỏ `Library/`), đọc `Properties` + `#pragma shader_feature` của ứng viên. Sổ có thể thiếu shader mới thêm.
 3. **Gai đâm lên đất (băng / đất):** làm theo [references/ground-spike.md](references/ground-spike.md).
 3b. **Magic circle (vòng phép):** không viết shader; làm theo [references/magic-circle.md](references/magic-circle.md) (texture vẽ bằng script + particle, cách của vfx-maker / HealCircle).
+3c. **Tornado / cột gió xoáy:** không viết shader; làm theo [references/tornado.md](references/tornado.md) (làm lại `Stupid_Tornado_Projectile` của rpg-game từng lớp: vành `fbx_fx_cylinder_03` + Shader Graph `Fx_dissolve_particle_apb`, ống, sương, vụn; art lead 2026-11-06). Mẫu: `Assets/VFX/WindTornado/`.
 4. Với **mesh + UV** (slash, vệt, trail, vòng): đọc [references/coloso.md](references/coloso.md) và chọn mesh trong `_Imported/Mesh`. Render thử mesh với texture tô UV (đỏ = u, xanh lá = v) trước khi chọn: tên mesh không nói hướng UV (ví dụ `Slash_360` là vòng dây đứng, không hợp topdown; `Slash_Circle_Thin` là vành phẳng).
 5. Quyết định: **Dùng lại** (chỉ đổi thuộc tính, tạo material) → **Mở rộng** (keyword mới, mặc định tắt, không đổi thuộc tính cũ; shader "không sửa" thì không mở rộng) → **Viết mới**.
 6. Ghi quyết định và lý do vào cột "Shader" của bảng thành phần.
@@ -78,6 +79,7 @@ Thêm: **khác với effect nào, ở điểm nào** (mesh / bố cục / timing
 
 - Copy `assets/ShaderFxBuild.template.cs` (quad) hoặc `assets/ColosoMeshFxBuild.example.cs` (mesh + Coloso, ví dụ Slash360) → `Assets/VFX/<Effect>/Editor/<Effect>Build.cs`. Prefab dựng từ script, không chỉnh tay; sửa script rồi build lại. Dùng `VfxBuildKit` (`Assets/VFX/_Kit/`).
 - Mỗi thành phần = một layer đúng ID. Thuộc tính material đặt trong script. Mesh renderer thì `SetActiveVertexStreams` đúng với shader (Coloso: `Position, Color, UV, Custom1XYZW`).
+- **ĐỌC HƯỚNG MESH trước khi đặt Start Rotation / alignment — mọi VFX dùng mesh** (art lead 2026-11-06, lỗi FireTornado: đặt Whips nghiêng ±11° vì giả định trục mesh là Y, nhưng mesh phải xoay X 90° mới đúng hướng). Trục của mesh nhập **không mặc định là Y**: `fbx_fx_cylinder_03`, `Tornado_vertical`, `tornado_mesh` đều có trục vành / phễu trên **Z** trong Unity. Làm: (1) đọc `mesh.bounds` + trục xoay trong build script (hàm `Describe()` ở `assets/TornadoFireBuild.example.cs` log ra "revolution axis ~ Z"); (2) nếu bản tham chiếu đặt Start Rotation X ≈ 90° / 270° cho mesh đó thì **đó là tín hiệu trục khác Y**, đừng bỏ qua con số; (3) tính hướng mong muốn (vòng nằm ngang quanh cột = trục vành thẳng đứng = X 90°); (4) xem preview đủ góc rồi mới báo xong. Chi tiết: [references/tornado.md](references/tornado.md) mục "Hướng mesh".
 - **Dựng đúng không gian đã chốt:** size theo mét, renderer mode theo mặt phẳng, simulation space theo neo, `cameraPos`/`lookAt` của `Finish()` khớp camera game (ví dụ topdown 60°: `lookAt + d·(0, sin60°, −cos60°)`).
 - **Không `ImportTexture` lên texture dùng chung** (`Assets/Library/`, `_Shared/Textures/Noise/` …): chỉ `LoadAssetAtPath`. Cần setting khác thì copy ảnh (không copy `.meta`) sang `Assets/VFX/<Effect>/Textures/`. Import đổi wrap / sRGB của chúng sẽ hỏng các effect khác.
 - Tên: `VFX_<Effect>`, `M_<Effect>_<Layer>`, `SH_VFX_<Name>`, `T_<Effect>_<Tên>`.
@@ -112,6 +114,7 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 - **Khói:** texture `Assets/VFX/fx_t_smoke_02.png` + shader mobile mặc định của Unity (`Mobile/Particles/Alpha Blended`; `VfxBuildKit.Material` tự chọn, URP đổi sang URP Particles Unlit). Tô màu bằng Start Color. Không dùng thành phần Dust chuẩn / khói toon cho effect mới (art lead 2026-11-03).
 - **Slash:** chỉ bộ Coloso ([references/coloso.md](references/coloso.md)); `_MainTex` chạy UV lấy từ `Assets/Library/Slash/`.
 - **Magic circle:** cách vfx-maker / HealCircle ([references/magic-circle.md](references/magic-circle.md)).
+- **Tornado / cột gió:** [references/tornado.md](references/tornado.md); học prefab tham chiếu theo [references/study-reference.md](references/study-reference.md).
 - **Gai băng / đất đâm lên:** [references/ground-spike.md](references/ground-spike.md) (5–9 khối chính, sát nhau, nghiêng ngẫu nhiên, mỗi khối một tuổi thọ).
 - **Có khác biệt giữa các effect / biến thể, không chỉ đổi màu** (art lead 2026-11-04). Khi làm effect mới hoặc **biến thể** của effect đã có (ví dụ Băng → Đất), **đổi ít nhất hai trong bốn thứ**: **mesh** (mesh khác trong thư viện), **bố cục / vị trí** (cụm tròn ↔ cung ↔ quạt ↔ hàng ↔ rải; hướng, độ cao, số khối), **timing** (nhịp trồi / giữ / tan, thứ tự xuất hiện và biến mất, tuổi thọ), **lớp phụ** (khói, mảnh vỡ, vết nứt, impact ở đâu, lúc nào). **Nhưng biến thể vẫn là cùng hiệu ứng: đừng tự biến nó thành một effect khác** (art lead: "nếu cần fx khác tôi sẽ yêu cầu"). Đừng tái dùng nguyên builder và chỉ đổi bảng màu. Trong kế hoạch thêm dòng **"Khác với bản nào, ở điểm nào"** (mesh / bố cục / timing / lớp phụ).
 - Số khối chính của cụm (băng, đá…) giữ ít (5–9) và sát nhau; hướng mỗi khối ngẫu nhiên, không thẳng đứng đều (art lead, IceSpikeFan).
@@ -123,9 +126,11 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 | [references/coloso.md](references/coloso.md) | Bộ Coloso: cách dùng chuẩn, Custom Streams, công thức slash quanh mesh vòng, lỗi thường gặp |
 | [references/magic-circle.md](references/magic-circle.md) | Vòng phép: dùng cách vfx-maker / HealCircle, không viết shader |
 | [references/ground-spike.md](references/ground-spike.md) | Gai băng / đất đâm lên đất: lớp, số khối, hướng, tuổi thọ, bảng màu Băng ↔ Đất, ghi chú theo nguyên tố, bài học quy trình |
+| [references/tornado.md](references/tornado.md) | Tornado / cột gió: cách bản gốc `Stupid_Tornado_Projectile` hoạt động (mesh, Shader Graph, sheet đóng gói kênh), bảng lớp + số, khác bản gốc, biến thể, lỗi đã gặp |
+| [references/study-reference.md](references/study-reference.md) | Học từ prefab tham chiếu đủ bước: copy theo GUID, render + dump, Shader Graph hồng, đọc mesh / texture, dựng |
 | [references/direction.md](references/direction.md) | Định hướng không gian |
 | [references/mobile-rules.md](references/mobile-rules.md) | Quy tắc shader mobile (cho shader mới viết) |
 | [references/recipes.md](references/recipes.md) | Công thức SDF / kết thúc cho shader mới |
 | [references/setup.md](references/setup.md) | Chuẩn bị project |
-| `assets/` | Template shader, build script quad, ví dụ mesh + Coloso (Slash360), ví dụ vòng phép (HealCircle), ví dụ gai đất / băng (`GroundSpikeBuild.example.cs`), `VfxShaderLib.cginc` |
-| `scripts/` | `make_noise.py`, `bake_slash_textures.py`, `heal_circle_textures.py` |
+| `assets/` | Template shader, build script quad, ví dụ mesh + Coloso (Slash360), ví dụ vòng phép (HealCircle), ví dụ gai đất / băng (`GroundSpikeBuild.example.cs`), ví dụ tornado (`TornadoBuild.example.cs` vành + Graph, `TornadoFireBuild.example.cs` phễu + Thrust), công cụ render + dump prefab tham chiếu (`RefRender.example.cs`), `VfxShaderLib.cginc` |
+| `scripts/` | `make_noise.py`, `bake_slash_textures.py`, `heal_circle_textures.py`, `copy_closure.py` (copy prefab + phụ thuộc theo GUID) |

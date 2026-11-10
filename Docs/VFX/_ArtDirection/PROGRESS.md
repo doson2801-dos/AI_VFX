@@ -1,9 +1,45 @@
-# VFX_LIb – Tiến trình (cập nhật 2026-11-03)
+# VFX_LIb – Tiến trình (cập nhật 2026-11-06)
 
-> ## ĐIỂM BẮT ĐẦU CHO PHIÊN MỚI (lưu 2026-11-03, trước khi reset workspace)
-> **Skill:** `/vfx-maker` **2.2.0** là skill VFX duy nhất (`/vfx-shader` đã xoá).
+> ## ĐIỂM BẮT ĐẦU CHO PHIÊN MỚI (cập nhật 2026-11-06)
+> Đọc cùng `CLAUDE.md` + `MAP.md`. Các khối bên dưới là lịch sử theo ngày; khi mâu thuẫn thì khối này và `CLAUDE.md` thắng.
+>
+> **Skill hiện có (3, ở `.claude/skills/`):**
+> - `/vfx-maker` **2.3.1**: texture + particle → prefab. Định hướng không gian bắt buộc (§1a), auto mix thành phần chuẩn (§9). **Đã bỏ chế độ C (codefx)** từ 2.3.0 (2026-11-03).
+> - `/vfx-code` **1.1.1**: VFX hoàn toàn bằng code (~50 thư viện GitHub), tách hẳn khỏi vfx-maker; chung duy nhất là Review Lab.
+> - `/vfx-shader` **1.2.0** (tạo lại 2026-11-03; 2026-11-06 thêm tornado + quy trình học prefab tham chiếu): VFX cần shader; dùng lại shader có sẵn trước. Slash chỉ dùng bộ Coloso.
+> - Luật art lead: `.claude/rules/vfx-art-lead.md`. Texture lấy từ `Assets/Library/` trước.
+>
+> **Scene chung `Assets/VFX/_Showcase/Scenes/VFX_Showcase.unity`** (menu VFX → Showcase → Build Scene; chỉ thêm effect trong `Included`, giữ nguyên setup của art lead). Danh sách khi chạy lấy từ Hierarchy (`VFX_Instances`). Đèn demo chỉ lúc Play (`VfxShowcaseLights.cs`).
+>
+> **Effect đang có trong Showcase:**
+> - `Slash360_Earth`: vệt chém 360° (Coloso).
+> - `IceSpikeFan` Băng (pha lê) + Đất (đá): chờ art lead duyệt.
+> - `HealCircle` v2.
+> - 4 effect điện: `LightningStrike`, `ThunderSpear`, `LightningTrail`, `AuraGauntlet` (học từ rpg-game; số liệu: `vfx-shader/references/thunder-core.md`, `lightning-set.md`).
+> - `FireballThrow` (2026-11-05): cầu lửa ném vòng cung 8 m / 0,8 s rồi nổ tại chân mục tiêu; một prefab tự chạy (sub-emitter Death). Plan: `Docs/VFX/FireballThrow/Plan.md`.
+> - `VioletThunder` (2026-11-05): sét tím-hồng đánh xuống đất, tích điện 0,4 s → tia toon + chớp + impact đất + dòng điện bò ~1,4 s. Plan: `Docs/VFX/VioletThunder/Plan.md`.
+>
+> - `WindTornado` v3 (2026-11-06): lốc xoáy gió 3,6 m làm lại từng lớp từ `Stupid_Tornado_Projectile` của rpg-game (vành gió + Shader Graph + ống + sương). Prefab trong project chính cần bấm **VFX → WindTornado → Build** (Unity đang mở lúc làm). Chờ art lead duyệt, chưa vào `Included`. Plan: `Docs/VFX/WindTornado/Plan.md`.
+>
+> - `FireTornado` (2026-11-06): lốc lửa 4,5 m, tornado thứ hai (khác WindTornado cả mesh / bố cục / timing / lớp phụ), làm theo quy trình tornado của skill, không cần prefab tham chiếu. **Đã thêm vào `Included`** và bảng đèn demo; cần bấm **VFX → FireTornado → Build** rồi **VFX → Showcase → Build Scene** (Unity đang mở lúc làm). Plan: `Docs/VFX/FireTornado/Plan.md`.
+>
+> **Đã làm nhưng chưa vào `Included` / cần làm lại:**
+> - `GroundBlast` v5c: khói `VFX/FX/Erode Sphere` (số lấy ở `GroundBlastBuild.cs` mục 3b). **Chưa build lại với shader v3.** Mask `_TEMP` từ video, không ship.
+> - `MushroomBlast` v2: nổ nấm ~3 m, chưa vào `Included`.
+> - Thành phần mix `Assets/VFX/_Components/` (Impact / Glow / Ring / Sparks / Dust) còn giữ; Mix cũ và Scorch / CodeFX đã xoá hoặc bỏ.
+>
+> **Git:** nhánh `master` chỉ ở máy này (GitHub là `main`). Chỉ commit kiến thức + skill + `.md`; Task Scheduler `VFX_LIb Auto Commit` chạy 17:30 hằng ngày. Asset / code Assets không lên git.
+>
+> **Còn mở:**
+> - Duyệt IceSpikeFan Băng / Đất, FireballThrow, VioletThunder; quyết định đưa GroundBlast / MushroomBlast vào `Included`.
+> - Cách làm từng nguyên tố (Lửa, Băng, Sét, Độc, Đất): art lead sẽ cập nhật vào skill (`references/elements.md` chưa tạo).
+> - Debris (thành phần tuỳ chọn), hit-stop / rung camera trong recipe, biến thể Dir (Scorch đã bỏ nên có thể không còn cần).
+> - Quy trình "shader → bake sheet" vẫn tạm dừng, chưa chốt.
+
+> ## Khối lịch sử: điểm bắt đầu lưu 2026-11-03 (trước khi reset workspace; một số mục đã lỗi thời)
+> **Skill lúc đó:** `/vfx-maker` **2.2.0** là skill VFX duy nhất (`/vfx-shader` đã xoá).
 > - §1a: định hướng không gian là bắt buộc; thiếu thông tin thì hỏi.
-> - §9 Chế độ C: VFX bằng code (codefx).
+> - §9 Chế độ C: VFX bằng code (codefx). *(đã bỏ ở 2.3.0)*
 > - §10: **auto mix từ thành phần chuẩn**, mặc định cho đòn trúng / nổ.
 > - Chi tiết: skill `references/mix.md`, `references/components/STANDARD.md`.
 >
