@@ -20,6 +20,7 @@
 | `.worktreeinclude` | File không có trong git nhưng cần chép theo mỗi worktree. |
 | `.gitignore` | Chỉ cho tài liệu + code lên git (whitelist). Từ 2026-11-04 chỉ commit kiến thức + skill + `.md` (xem `CLAUDE.md`). |
 | `tools/sync_knowledge.py` | Đồng bộ kiến thức lên git (2026-11-10): commit phạm vi kiến thức lên `master`, chép sang `main`, push `main`. Chạy bởi hook `Stop` + Task Scheduler 17:30 + tay (`--dry-run`). Lên git. Xem `contexte/git-sync.md`. |
+| `tools/library_props.py` | Đo thuộc tính ảnh trong `Assets/Library` → `Docs/VFX/_Library/library_props.csv`; `--contact <nhóm>/<vai trò>` dựng contact sheet vào `Docs/VFX/_Library/_contact/` (2026-11-10, phục vụ "Luật chọn" của `LIBRARY.md`). Chỉ ở máy (`.py`). |
 | `tools/auto_commit.ps1` | Vỏ gọi `sync_knowledge.py` (Task Scheduler `VFX_LIb Auto Commit` 17:30 trỏ vào file này); log `tools/auto_commit.log` (không lên git). Lên git. |
 
 ## Unity
@@ -70,7 +71,7 @@
 | `Docs/VFX/_Tasks/` | Bảng giao việc vẽ texture (`VFX_Texture_Tasks.xlsx`, 2026-11-09): Impact đất / không, Bolt-Electric/Lightning, Shockwave; kéo vào Google Drive để thành Google Sheet. |
 | `tools/py/` | Script phụ: `copy_closure.py` (copy prefab + phụ thuộc theo GUID), `RefRender.cs.txt` (bản sao của `vfx-shader/assets/RefRender.example.cs`). Bản chính thức nằm trong skill `vfx-shader`. |
 | `tools/paseo-sdk/` | Gọi Claude bằng code. Mặc định gọi thẳng máy chủ API nội bộ: `gateway.mjs` (thư viện, stream), `ask.mjs`, `chat.mjs` (~1 s). Qua Paseo (`@getpaseo/client`, cần app mở): `paseo-ask.mjs`, `paseo-chat.mjs`, `providers.mjs`, `bench-reuse.mjs`, `check-default.mjs`, `fix-agent-models.mjs` (đổi agent dùng tên model sai sang tên máy chủ nhận). Xem `README.md` (gồm cấu hình model của app Paseo). |
-| `Docs/VFX/_Library/` | Script phân loại texture (`classify.py`, chạy thử mặc định, `--apply` để chép) + bảng kết quả `classify.csv` + `LIBRARY.md` (bản đồ thành phần → thư mục Library, 2026-11-09) + `components_by_effect.md` (thành phần texture của từng effect trong Showcase, 2026-11-06, làm cơ sở chia lại Library). |
+| `Docs/VFX/_Library/` | Script phân loại texture (`classify.py`, chạy thử mặc định, `--apply` để chép) + bảng kết quả `classify.csv` + `LIBRARY.md` (bản đồ thành phần → thư mục Library, 2026-11-09) + `library_props.csv` (thuộc tính đo được từng ảnh: alpha / nền đen, xám / màu, chạm mép) + `components_by_effect.md` (thành phần texture của từng effect trong Showcase, 2026-11-06, làm cơ sở chia lại Library). |
 | `Docs/VFX/SHADERS.md` | Danh mục shader: kiểm tra trước khi viết shader mới. |
 | `Docs/CannonLibraryAudit_v1/` | Kiểm kê thư viện Cannon VFX (có bản project Unity kiểm thử). |
 | `Docs/StrongExplosion/`, `Docs/Meteor/`, `Docs/Models/`, `Docs/blender-mcp/` | Tài liệu từng chủ đề riêng. |

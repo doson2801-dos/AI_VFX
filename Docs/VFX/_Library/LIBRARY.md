@@ -36,3 +36,37 @@ Cách chọn: tìm dòng thành phần trong bảng → mở thư mục (vai tr�
 | `_MaskTex` gradient 1D | `mask/gradient` (8) | slash: `T_VFX_Gradient_01` |
 
 `_review/` là thư mục tạm chờ phân loại: không dùng.
+
+## Luật chọn (2026-11-10)
+
+Thư mục chỉ cho biết **họ** của ảnh, không bảo đảm đúng hình. Ví dụ `glow/flare`: `003` là chùm tia xoè (không phải sao), `001` đỏ chéo, `008` là cầu mềm, `010` sao 4 cánh mảnh. Nên mỗi lần chọn làm đủ các bước:
+
+1. **Viết yêu cầu thành phần** trước khi mở thư mục: hình gì; đứng hay nằm đất; blend (Additive / Alpha / Cutout); ảnh đơn hay sheet (lưới?); xám (tint được) hay đã có màu; có cần mép mềm không.
+2. **Tra bảng ở trên** ra thư mục (có thể 2 thư mục lân cận, ví dụ `glow/soft_round` + `soft_oval`).
+3. **Xem cả thư mục**: `python -I tools/library_props.py --contact <nhóm>/<vai trò>` → Read `Docs/VFX/_Library/_contact/<nhóm>_<vai trò>.png` (nền caro: thấy alpha thật; ảnh có nền đen không alpha sẽ hiện nền đen). Thư mục > 24 ảnh: contact sheet vẫn đủ, nhưng chọn xong phải Read ảnh gốc của ứng viên.
+4. **Lọc bằng `library_props.csv`** (`python -I tools/library_props.py` để làm mới khi Library đổi):
+   - `kind=alpha` → dùng Alpha / Cutout / Additive đều được; `black_bg` → **chỉ Additive** (hoặc import `alphaFromGray`); `opaque` → cẩn thận, thường là noise / mask / UV.
+   - `color=gray` → tint bằng Start Color / ramp; `tinted|color` → màu bị cố định, chỉ dùng khi brief cần đúng màu đó.
+   - `edge_touch=1` → ảnh chạm mép, hay lộ **cạnh vuông** khi scale: không dùng cho glow / flare / hạt, trừ ảnh chạy UV, noise, mask, flipbook.
+   - `warn` có "không POT" / "nhỏ <128": nói rõ trong kế hoạch nếu vẫn dùng.
+5. **Chốt**: 1 ảnh chính + 1–2 dự phòng. Ghi vào kế hoạch dạng bảng `Thành phần | Ảnh chọn | Lý do | Đã loại (vì sao)`.
+6. **Kiểm sau khi dựng**: xem preview / Review Lab, thành phần phải ra **đúng hình đã định** (không cạnh vuông, không ra màu lạ, không chớp đen). Sai thì quay lại bước 3 đổi ảnh, không chỉnh thông số để chữa hình sai.
+
+Quy tắc theo loại (đã gặp lỗi hoặc art lead chốt):
+- **Chớp / quầng (glow)**: ảnh đối xứng tròn, `edge_touch=0`, xám. Không lấy flare có vòng hay tia cố định khi cần "quầng mềm".
+- **Sao / flare**: kiểm số cánh và độ dài cánh so với brief (4 cánh mảnh ≠ chùm 16 tia ≠ sao 8 gai).
+- **Vòng sóng / rune nằm đất**: tròn đều, tâm đúng giữa ảnh (vì xoay quanh tâm), mép không chạm khung.
+- **Tia sét / vệt / trail Stretched**: ảnh **nằm ngang**, hướng bay = mép TRÁI; ảnh dựng đứng thì sai hướng.
+- **Flipbook**: biết lưới (cột × hàng) và số khung thật trước khi gán; khung cuối nên gần trong suốt; Frame over Time tuyến tính.
+- **Noise**: chọn theo việc (tan = `cloud|cell`, sọc = `streak`, méo UV = `swirl`, cutout = `hard_edge`); tileable thì kiểm có thấy mối nối không.
+- **Nứt đất / vết cháy**: nằm đất, `kind=alpha` ưu tiên; nền đen thì chỉ Additive.
+- **Khói / lửa hữu cơ**: theo luật hình dáng (khói mặc định, khói nổ = Erode Sphere); không chọn theo bảng này một mình.
+
+### Sai vai trò đã biết
+
+Thêm dòng khi gặp (file → vai trò thực → nơi đúng). Chưa di chuyển file khi chưa có lệnh art lead.
+
+| File | Vai trò thực | Ghi chú |
+|---|---|---|
+| `glow/flare/glow_flare_003` | chùm tia xoè (sunburst), không phải sao | dùng cho "tia nắng / bùng tia", không cho sao chớp |
+| `glow/flare/glow_flare_008` | cầu mềm có gai nhỏ | gần `soft_round` hơn là flare |
