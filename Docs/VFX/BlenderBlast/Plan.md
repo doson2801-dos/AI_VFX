@@ -30,3 +30,25 @@ Bài học Blender MCP:
 - AgX làm lửa cháy trắng → view transform `Standard`, emission thấp (1,5–3).
 
 Nhận xét tự review: đạt 4 bất biến. Yếu: lửa phẳng màu (chưa có gradient sâu), khói tan bằng co nhỏ chứ chưa ăn mòn thành sợi như GroundBlast, viền vòng sóng hơi dày.
+
+---
+
+## Thử 2 + 3 (2026-11-11): mô phỏng → flipbook
+
+Cùng không gian (ground, 3/4 40°, nền tối). Sheet 8×8, ô 256 px, RGBA, 64 frame trải đều thời lượng nguồn. Camera **ortho** 3/4 40°, khung cố định bao trọn vụ nổ lúc lớn nhất.
+
+| Sheet | Nguồn | Kết quả |
+|---|---|---|
+| `Textures/T_BlenderBlast_Sim_8x8.png` | Mantaflow tự bake (`Source~/BlenderBlast_Sim.blend`, `blast_sim.py`) | **hỏng**: cầu lửa nhỏ, khói tan sau ~20 frame, màu ngả xanh. Giữ để so, không dùng. |
+| `Textures/T_VDB_GroundExplosion_8x8.png` | JangaFX Ground Explosion (frame 1–185) | nổ đất, cột khói nghiêng; lửa còn cháy trắng frame 5–12 |
+| `Textures/T_VDB_GasolineExplosion_8x8.png` | JangaFX Gasoline Explosion (4–130) | cầu lửa → nấm khói tròn, hợp brief nhất |
+| `Textures/T_VDB_MidairExplosion_8x8.png` | JangaFX Mid-Air Explosion (1–125) | lưỡi lửa phụt ngang rồi cuộn khói |
+
+Preview trên nền tối: `Docs/VFX/BlenderBlast/VDB_*_preview.png`, `Sim_sheet_preview.png`. Nguồn VDB: `D:\Game_prj\_VDB\` (CC0). Lệnh render lại:
+`blender -b --factory-startup -P Source~/vdb_render.py -- <thư mục VDB> <thư mục ra> 64 <frame đầu> <frame cuối> <độ đặc 15> <lửa 0.6–12> full <ngưỡng lửa>` rồi `python -I Source~/make_sheet.py`.
+
+Còn yếu / việc tiếp:
+- Vụ nổ chỉ chiếm ~40% ô (khung tính theo hộp lưới VDB, rộng hơn khói thật) → crop sát để tăng độ nét.
+- Khói xám phẳng, thiếu khối sáng tối; lửa Gasoline / Mid-Air hơi nhạt; Ground cháy trắng.
+- Chưa phân loại hướng (luật Library): Ground / Mid-Air **có hướng** (nghiêng / phụt một phía) → không spam, không xoay ngẫu nhiên; Gasoline gần như không hướng.
+- Chưa dựng prefab particle (Frame over Time tuyến tính) và chưa vào Review Lab.
