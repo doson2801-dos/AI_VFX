@@ -53,4 +53,5 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Cầu ném bay cung rồi nổ | `fireball-throw.md` | suy từ Plan |
 | Sét tím từ trời (tích rồi nổ) | `violet-thunder.md` | suy từ Plan |
 | Lốc xoáy đứng | `tornado.md` | suy từ Plan + yêu cầu art lead 2026-11-10 |
+| Vụ nổ (nổ đất) | `explosion.md` | suy từ Plan GroundBlast + MushroomBlast |
 | Tạo hình đặc trưng theo chất liệu / nguyên tố | `materials.md` | kiến thức chung, chỉnh khi art lead chốt khác |
