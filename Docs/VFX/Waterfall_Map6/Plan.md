@@ -6,6 +6,7 @@ Tạo hình: `Docs/VFX/_Anatomy/waterfall.md`. Ref: video art lead `VFX waterfal
 ## Lịch sử
 1. Bản 1 (chưa có video): vệt trắng 2 lớp + bọt bắn tung + bọt phẳng lưới + gợn to. Art lead: "trông rối quá".
 2. Bản 2 (theo video ref): thân màu phẳng + viền trắng mép, cụm bọt trắng đặc, vòng gợn mảnh đứt đoạn. Ảnh `preview.png`.
+3. Thêm bọt + gợn ở chỗ thác trên rơi xuống bậc giữa (art lead: "thiếu 1 chút chỗ này"), nền phủ đặc hơn. Ảnh `preview_ledge_top.png`.
 
 ## Không gian
 - Đứng yên trong thế giới, Built-in, camera game ortho size 96, nhìn xuống 45°, yaw 334.8°. Dải thác rộng 8–15 m, cao ~22–46 m.
@@ -21,11 +22,11 @@ Tạo hình: `Docs/VFX/_Anatomy/waterfall.md`. Ref: video art lead `VFX waterfal
 ## Lớp (bản 2)
 | Lớp | Cách làm | Số chính |
 |---|---|---|
-| Flow | tam giác `Road_M6/Plane.037` có normal.y < 0.93, đẩy ra 0.25 m; gom tam giác chung cạnh + cùng hướng thành mặt; UV0 u = ngang / 24 m, v = theo dốc / 45 m | nền α 0.12, dải sáng α 0.3 cut 0.75, speed 0.4; viền phải 0.9 m, trái 0.35 m |
+| Flow | tam giác `Road_M6/Plane.037` có normal.y < 0.93, đẩy ra 0.25 m; gom tam giác chung cạnh + cùng hướng thành mặt; UV0 u = ngang / 24 m, v = theo dốc / 45 m | nền (0.34,0.54,0.93) α 0.65, dải sáng α 0.65 cut 0.75, speed 0.4; viền phải 0.9 m, trái 0.35 m |
 | Foam_Blobs | hộp W×1.0 × W×0.25, dời ra trước 0.55W (trước đá), speed 0.5–2, gravity 0 | size W×0.8–1.3, 30/s·strength, life 0.5–0.9, cut 0.18 soft 0.01 |
 | Ripples | vòng nở 0.45→2.3× (ease-out), alpha ăn mòn, 3 cung, khe 22% | size W×1×hệ số, 1.1/s, life 1.8–2.2, cut 0.3 |
 
-Điểm chân (x,z): Fall_A–D ở mặt sông dưới y −9.79; Pool_Top (y 35.5, gợn ×0.45); Ledge_Mid (y 13.5, không gợn).
+Điểm chân (x,z): Fall_A–D ở mặt sông dưới y −9.79; Pool_Top (y 35.5, gợn ×0.45); Ledge_Top (chỗ thác trên rơi xuống bậc y 13.9, gợn ×0.5, thêm 2026-11-12); Ledge_Mid (y 13.5, không gợn).
 
 ## Chưa làm
 - Mép tràn (lip), giọt bắn: ref không có, bỏ.
