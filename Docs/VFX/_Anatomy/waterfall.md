@@ -1,38 +1,39 @@
-# Thác nước (stylized, môi trường loop)
-Độ chắc: giả định, đã dựng 1 bản (Map6), chờ video ref của art lead · Cập nhật: 2026-11-12 · Nguồn: brief art lead (airport-tycoon S_Map6, mesh `Road_M6/Plane.037`) + kiến thức chung về thác toon
+# Thác nước (stylized toon, môi trường loop)
+Độ chắc: theo video ref art lead (2026-11-12) + đã dựng Map6 · Cập nhật: 2026-11-12 · Nguồn: `C:\Users\Manh\Downloads\VFX waterfall.mp4` (khung hình lưu ở `Docs/VFX/Waterfall_Map6/ref_frame.png`), brief airport-tycoon S_Map6
 
 ## Nó là gì
-Mặt nước rơi thẳng có vệt sáng chạy từ trên xuống. Chân thác có bọt trắng sủi liên tục, từ đó gợn sóng tròn lan ra trên mặt nước. Effect loop, không có chớp.
+Dải nước rơi thẳng, **màu phẳng gần như không hoạ tiết**, chỉ có **một đường viền trắng mảnh dọc mép**. Chân thác có **một cụm bọt trắng đặc** sôi tại chỗ, quanh đó **2–3 vòng gợn trắng mảnh, đứt đoạn** lan ra trên mặt nước. Loop, không chớp.
 
 ## Cấu trúc
 | Phần | Vai trò | Hình dáng | Bắt buộc? |
 |---|---|---|---|
-| Dòng chảy | xương sống | mesh phủ đúng mặt thác, texture vệt dọc chạy UV theo chiều rơi (V) | có |
-| Mép tràn (lip) | phụ | dải bọt mảnh ở mép trên, nơi nước bắt đầu rơi | nên có |
-| Bọt chân thác | xương sống | cụm blob trắng toon sủi lên rồi xẹp, bám dọc chân dải thác, không bay xa | có |
-| Gợn sóng | xương sống | vòng tròn mảnh nằm trên mặt nước (Billboard + Local), sinh ở chân thác, nở ra rồi mờ | có |
-| Giọt bắn / sương | phụ | vài giọt văng ngắn, sương mỏng | tuỳ |
+| Thân thác | xương sống | mesh phủ mặt thác; màu phẳng + viền trắng mép (một bên dày hơn); chuyển động = vài dải sáng nhạt trượt xuống, **không phải vệt trắng** | có |
+| Cụm bọt chân | xương sống | blob trắng đặc viền cứng, gom thành một đám mây ~1–1.3× bề rộng dải, phồng / xẹp tại chỗ, không bắn xa | có |
+| Gợn sóng | xương sống | vòng trắng mảnh nằm trên mặt nước, đứt thành cung, nở ~2× cụm bọt rồi mảnh dần; 2–3 vòng cùng lúc | có |
+| Viền nước chạm bờ | phụ | đường trắng mảnh ở mép mặt nước (shader nước của map lo) | tuỳ |
 
 ## Chuyển động / nhịp
-- Dòng chảy: liên tục, nhanh dần từ trên xuống (tốc độ UV hằng, có thể 2 lớp tốc độ khác nhau).
-- Bọt: sinh liên tục, mỗi blob sống ~0.6–1.2 s, phồng to rồi co / mờ.
-- Gợn sóng: mỗi vòng ~1.5–2.5 s, nở từ nhỏ đến ~2–3× chiều rộng dải thác, mờ dần theo bán kính; vài vòng chồng nhau lệch pha.
+- Thân: dải sáng nhạt trượt xuống chậm (~0.4 UV/s, tile dọc 45 m).
+- Bọt: mỗi blob 0.5–0.9 s, phồng lên rồi co lại, gần như đứng yên.
+- Gợn: mỗi vòng ~2 s, ease-out, cạn dần bằng ăn mòn (mảnh đi), không mờ đục.
 
 ## Bất biến
-- Chuyển động **từ trên xuống** trên mặt thác (không đứng yên, không chạy ngang).
-- Bọt **nằm ở chân thác**, ngay mặt nước bên dưới, không lơ lửng giữa thác.
-- Gợn sóng **nằm phẳng trên mặt nước** và **tỏa ra từ chỗ có bọt**.
-- Loop liền, không có nhịp bùng.
+- Thân thác **sạch, phẳng**; chi tiết duy nhất là viền trắng mép và chuyển động rất nhẹ.
+- Bọt **gom một cụm ở chân thác**, trắng đặc, viền cứng.
+- Gợn **nằm phẳng trên mặt nước, tỏa từ cụm bọt**, nét mảnh, đứt đoạn.
+- Loop liền, không chớp.
 
 ## Được đổi
-Màu (nước trong / đục / phép), độ dày vệt, số dải thác, có hay không có sương / giọt bắn, kiểu vòng (tròn đều / méo).
+Màu nước, độ dày viền, số dải thác, kích thước cụm bọt theo bề rộng dải, số cung của vòng gợn.
 
 ## Lỗi đã gặp
-- **Đá chân thác che hết bọt** (Map6, 2026-11-12): map thường đặt tảng đá ngay chân thác, nhô ra ~0.6× bề rộng dải. Bọt đặt sát chân thì bị che. Cách tránh: dời bọt ra trước và hai bên đá (hộp phát ~1.15W × 0.75W), bọt ôm viền đá.
-- **Blob trong sheet chỉ chiếm ~1/3 ô**: size hạt phải ~3× kích thước blob muốn thấy, nếu không chỉ ra chấm li ti.
-- **Lưới bọt (`water_tile_002`) nằm phẳng nhìn như vết nứt**: bọt mặt nước dùng blob sheet nằm phẳng thay vì lưới.
-- **Gợn sóng to hơn hồ thì tràn ra lơ lửng qua mép vách**: hồ nhỏ (bậc giữa) cần hệ số size riêng.
-- Ảnh chụp bằng camera tạm làm nước stylized (shader dùng depth) hiện trắng, bọt trắng lẫn mất; kiểm tra bằng Scene view.
+- **Vệt trắng dày đặc trên thân thác = "rối quá"** (art lead 2026-11-12). Hai lớp vệt trắng chồng nhau + mặt gờ nghiêng kéo texture thành sọc ngang. Ref chỉ có màu phẳng + viền mép. Mặt nghiêng phải lấy V theo hướng dốc của mặt, không theo trục Y.
+- **Đá chân thác che hết bọt** (Map6): đá nhô ra ~0.6× bề rộng dải. Đặt cụm bọt + tâm gợn ra trước đá (~0.55W).
+- **Blob trong sheet chỉ chiếm ~1/3 ô**: size hạt ~3× blob muốn thấy.
+- **Bọt phun lên có trọng lực, rải rộng** thì thành tung toé, không giống cụm mây của ref: speed thấp, gravity 0, hộp phát mỏng.
+- **Lưới bọt (`water_tile_002`) nằm phẳng nhìn như vết nứt**: không dùng.
+- **Gợn to hơn hồ** thì tràn qua mép vách: hồ nhỏ cần hệ số size riêng.
+- Ảnh chụp bằng camera tạm làm nước stylized (shader dùng depth) hiện trắng; kiểm tra bằng Scene view.
 
 ## Biến thể đã làm
-- `VFX_Waterfall_Map6` (airport-tycoon S_Map6): bản gốc, toon, dòng chảy 2 lớp + bọt blob + gợn. Plan: `Docs/VFX/Waterfall_Map6/Plan.md`.
+- `VFX_Waterfall_Map6` (airport-tycoon S_Map6). Plan: `Docs/VFX/Waterfall_Map6/Plan.md`.
