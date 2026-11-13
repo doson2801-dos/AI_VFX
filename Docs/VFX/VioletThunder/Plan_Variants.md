@@ -82,3 +82,10 @@ Quầng mềm `Textures/T_VioletThunder_SoftGlow.png` **không nằm trong Libra
 | Tia (Toxic 011 dày lên / Gold 010 / Storm 009) | xem mục "Sheet tia riêng" phía trên | | |
 
 **Arc là sheet có hướng (nhãn `dir`) nhưng được xoay ngẫu nhiên**: ngoại lệ có chủ ý vì đây là dòng điện bò tứ phía trên đất (không có đầu / đuôi rõ như tia); để bớt spam đã giảm còn 6–7 hạt đầu + rate nhỏ, tối đa 24 hạt. **Chờ art lead chốt**: đổi nhãn arc thành `omni` trong `library_direction.csv`, hay bắt đặt hướng cố định.
+
+## Đèn demo trong Showcase (thêm 2026-11-13, art lead nhắc sau khi đưa vào Showcase)
+Khớp tên trong `VfxShowcaseLights.Table` là **khớp chính xác** (prefix bản gốc không áp cho biến thể), nên mỗi effect mới phải có dòng riêng. Đã thêm 12 dòng (chỉ lúc Play, không sửa prefab):
+- Toxic: charge (root) `#9CFF3A`, `Flash` `#D8FF9A`, `ArcsCore` `#9CFF3A`.
+- Gold: charge (root, tích trên cao) `#FFD24A`, `Flash` `#FFF0B0`, `ArcsCore` `#FFD24A`.
+- VioletStorm: mây (root) `#A04CFF` 8 m, `S1_Flash`..`S3_Flash` `#D890FF`, `S4_Flash` `#F0C8FF` (sáng hơn), `ArcsCore` `#E8C0FF`.
+Đã chạy Play và kiểm bằng `execute_code`: cả 12 lớp bật Lights module, không có cảnh báo "layer not found". **Quy trình**: mỗi effect mới đưa vào Showcase thì thêm dòng vào `Table` (trong CLAUDE.md đã ghi, lần này mình bỏ sót).

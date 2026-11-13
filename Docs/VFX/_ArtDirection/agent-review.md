@@ -6,6 +6,7 @@ Quy trình bắt buộc cho mọi VFX / biến thể **tạo mới**: làm xong 
 1. Người làm tự chạy `python -I tools/check_texture_plan.py` (phải exit 0) + xem preview / Review Lab của chính mình.
 2. Gọi **agent review** (Agent tool, `subagent_type` mặc định, **không fork**: agent phải không biết người làm đã chọn gì và vì sao). Đưa brief ở dưới, **chỉ đưa đường dẫn, không đưa kết luận của người làm** (tránh bị dẫn).
 3. Agent trả báo cáo: mỗi mục `ĐẠT` / `LỖI` + bằng chứng (đường dẫn file, dòng, ảnh). Người làm sửa mọi `LỖI`, build lại, **gọi agent review lại** đến khi không còn lỗi (tối đa 3 vòng; vòng 3 vẫn lỗi thì báo art lead kèm lỗi còn lại, không giấu).
+3b. **Khi đưa vào Showcase** (sau khi art lead duyệt): thêm tiền tố vào `Included`, **thêm dòng đèn vào `VfxShowcaseLights.Table`** (khớp tên chính xác, mỗi biến thể một dòng), chạy Build Scene, rồi Play kiểm đèn bật và log không có cảnh báo. (Bỏ sót đèn ở đợt Toxic / Gold / Storm 2026-11-13.)
 4. Chuyển art lead: nêu **kết quả review của agent** (đã đạt những gì, đã sửa gì, còn điểm yếu nào mình biết) + link Review Lab. Art lead là người duyệt cuối; mình không tự chốt "đạt".
 
 ## Brief mẫu cho agent review (điền `<...>`)
