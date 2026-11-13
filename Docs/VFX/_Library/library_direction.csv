@@ -490,3 +490,8 @@ water/tile/water_tile_004.png,na,0,chạy UV / noise / mask
 water/tile/water_tile_005.png,na,0,chạy UV / noise / mask
 water/tile/water_tile_006.png,na,0,chạy UV / noise / mask
 water/tile/water_tile_007.png,na,0,chạy UV / noise / mask
+lightning/bolt_sheet/lightning_bolt_sheet_009.png,dir,1,4x2 khung dọc; ảnh đứng 1024x2048, alpha thật
+lightning/bolt_sheet/lightning_bolt_sheet_010.png,dir,1,4x2 khung dọc; ảnh đứng 1024x2048, alpha thật
+lightning/bolt_sheet/lightning_bolt_sheet_011.png,dir,1,4x2 khung dọc; ảnh đứng 1024x2048, alpha thật
+lightning/bolt_sheet/lightning_bolt_sheet_012.png,dir,1,4x2 khung dọc; ảnh đứng 1024x2048, alpha thật
+lightning/bolt_sheet/lightning_bolt_sheet_013.png,dir,0,2x1 tia đơn to; ảnh đứng 1024x2048, alpha thật
