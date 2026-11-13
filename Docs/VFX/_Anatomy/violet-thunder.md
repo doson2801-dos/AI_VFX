@@ -26,4 +26,4 @@ Màu / nguyên tố (xanh lam, đỏ thẫm), hình dư điện (arc / vết n�
 - Giữ chung sheet bolt: khác nhau chủ yếu ở lớp phụ; ok vì cùng hiệu ứng.
 
 ## Biến thể đã làm
-Gốc (tím-hồng), Azure, Crimson.
+Gốc (tím-hồng), Azure, Crimson, Toxic (xanh axit, 2026-11-13), Gold (vàng, 2026-11-13). Effect cùng phong cách nhưng khác hành vi: VioletStorm (loạt sét nhiều điểm).

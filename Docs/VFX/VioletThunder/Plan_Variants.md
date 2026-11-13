@@ -32,3 +32,18 @@ Lớp: SkyGlow (root, order 3), SkyFlare 8, BoltGlow 4, BoltCore 5, Echo 6, Flas
 - Chưa build trong Unity (Unity đang mở). Cần chạy menu, xem preview `Docs/VFX/VioletThunder_Crimson|Azure/Preview_sheet.png` và Review Lab.
 - Hướng nghiêng của tia (`shape.rotation = (90 − tilt, 90, 0)`) tính bằng tay: tilt dương phải nghiêng từ trái-trên; nếu ngược dấu thì đổi dấu `tilt`.
 - Dòng điện bò dùng frame của sheet tia (2:1, hạt 3D); nếu trông lệch thì đổi thành sheet 4×4 riêng.
+
+# Đợt 2026-11-13: Toxic, Gold (biến thể) + VioletStorm (effect mới cùng phong cách)
+Builder dùng chung `Editor/VioletThunderKit.cs`. Không gian giữ như bản gốc (ground, tia đứng Stretched, lớp đất Billboard + Local, camera 3/4 40°, tia ~6 m). Cần build bản gốc một lần trước (sheet tia). Menu `VFX/VioletThunder/Build Toxic | Build Gold | Build Storm`.
+
+**Bất biến giữ nguyên (Toxic, Gold):** tích → một phát giáng → vỡ vụn → dư điện; tia toon zig-zag (viền + lõi); một chớp + sóng lan đất.
+
+| Bản | Màu | Bố cục | Timing | Lớp phụ |
+|---|---|---|---|---|
+| Toxic | lõi `F2FFD8`, lime `9CFF3A`, xanh `2FBF2A`, sâu `0E5A1E` | tích sôi ngay trên đất, tia gần đứng (−8°) béo 3,4 m, vũng axit nằm lại | tích 0,55 s, tia 0,4 s, dư ~3,2 s | Bubbles (vòng bọt nổ), Pool + PoolEdge, Spores bay lên |
+| Gold | lõi `FFFBE6`, vàng `FFD24A`, hổ phách `FF9A1E`, sâu `B8560A` | tích trên cao 4,2 m, tia đứng thẳng rộng 4,2 m, Halo đập tại chỗ | tích 0,32 s, tia 0,3 s | Halo, Shards phun cao (rơi lại), 2 gợn, Motes |
+
+**VioletStorm (effect khác, tím-hồng):** mây giông 6 m, 3 điểm đất được báo (vòng co) rồi bị đánh lần lượt (0,30 / 0,52 / 0,74 s), cuối là một tia lớn ở tâm (0,98 s) kèm chớp đất, sóng ragged, dòng điện bò, vết cháy. Mỗi điểm một chớp + một vòng. Sorting: tia 10..17, chớp 30..33, vòng báo −12.., vòng −4...
+
+## Chưa xác minh (đợt này)
+Unity MCP không kết nối nên **chưa compile, chưa build, chưa xem preview**. Việc cần làm: chạy 3 menu, xem `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png` + Review Lab; kiểm tra hướng nghiêng tia (dấu `tilt`, như ghi chú ở trên); sau khi duyệt thêm `VFX_VioletThunder_Toxic`, `VFX_VioletThunder_Gold`, `VFX_VioletStorm` vào `Included` của `VfxShowcaseBuild.cs` rồi chạy Build Scene.
