@@ -48,6 +48,9 @@
 - **Tạo hình trước khi làm**: mọi effect / biến thể bắt đầu bằng `Docs/VFX/_Anatomy/<loại>.md` (cấu trúc, **Bất biến**, Được đổi, Lỗi đã gặp) + `materials.md` (hình đặc trưng theo chất liệu). Chép "Bất biến" vào kế hoạch. **Chưa có file hoặc chưa hiểu đối tượng → research trước** (prefab tham chiếu → ảnh / video art lead → web → Plan cũ; cách làm ở `_Anatomy/README.md`), hỏi art lead nếu vẫn mơ hồ, **lưu thành file mới + dòng chỉ mục** để lần sau tra thẳng, không research lại. Sau build đối chiếu preview với "Bất biến"; thiếu một cái là chưa xong. Gặp lỗi mới thì thêm vào "Lỗi đã gặp".
 - Chất liệu quyết định hình: băng cứng nên gai dài được; đất xốp nên ngắn (~1–2 m), thô, đỉnh vỡ.
 
+## Quy trình bàn giao (art lead chốt 2026-11-13)
+- VFX / biến thể mới: làm xong → `tools/check_texture_plan.py` pass → **agent khác review theo luật** → sửa đến khi đạt → **chuyển art lead review lần cuối**. Brief mẫu + thứ tự: `Docs/VFX/_ArtDirection/agent-review.md`. Không tự chốt "đạt"; không thêm vào `Included` khi art lead chưa duyệt.
+
 ## Skill
 - `vfx-code` tách hẳn khỏi `vfx-maker`; điểm chung duy nhất là Review Lab.
 - Mỗi effect mới: prefab `VFX_<Tên>.prefab` trong `Prefabs/`, thêm vào `Included` của `VfxShowcaseBuild.cs` (khi art lead duyệt), chạy lại **VFX → Showcase → Build Scene**.

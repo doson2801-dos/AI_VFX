@@ -14,6 +14,8 @@
 
 - **Texture từng thành phần (2026-11-13)**: làm VFX / biến thể mới thì mỗi texture trong builder phải có một dòng trong plan: thành phần → thư mục tra từ `LIBRARY.md` → ảnh chốt + ảnh đã loại. **Không sao chép đường dẫn texture từ builder cũ** nếu chưa tra lại; lớp phụ (arc, cracks, ring, glow) cũng tra. Làm VFX ngoài skill (không gọi /vfx-maker, /vfx-shader) vẫn phải theo bước này. **Trước khi bàn giao chạy `python -I tools/check_texture_plan.py`** (mặc định bỏ qua 21 builder cũ liệt kê ở `tools/texture_plan_legacy.txt`, chỉ kiểm builder tạo mới; `--all` để kiểm cả cũ; báo đường dẫn Library chưa có trong plan hoặc không tồn tại; exit 1 nếu có). Script chỉ kiểm ảnh Library có được ghi tên trong plan chưa, **không** biết ảnh chọn có đúng vai trò (vẫn phải xem contact sheet).
 
+- **Review bằng agent khác trước khi chuyển art lead (art lead chốt 2026-11-13)**: VFX / biến thể tạo mới → script kiểm (`check_texture_plan.py` exit 0) → agent review độc lập theo luật → sửa đến khi đạt → mới chuyển art lead duyệt lần cuối. Không tự nói "xong", không thêm vào `Included` khi chưa qua đủ. Chi tiết + brief mẫu: `Docs/VFX/_ArtDirection/agent-review.md`.
+
 ## Chạy nhiều phiên song song
 Git chỉ chứa tài liệu + code, **không có texture / prefab / mesh**. Vì vậy:
 - **Việc cần Unity / asset** (dựng prefab, texture, Showcase): các phiên làm chung thư mục `D:\Game_prj\VFX_LIb`, **mỗi phiên một effect** (`Assets/VFX/<Tên>/` + `Docs/VFX/<Tên>/`). Không hai phiên sửa cùng một file.
