@@ -28,3 +28,10 @@ Giả định: chạm đất theo thời gian (0.8 s), không dùng va chạm v�
 - Thêm L8 FlameLicks, L9 TrailSmoke, L10 Embers (sinh liên tục dọc đường bay bằng sub-emitter Birth).
 - Đầu cầu (L1): vỏ ăn mòn 0.1 → 0.3, vân tối 0.12 → 0.25, noise chạy nhanh gấp ~2–4 lần, lắc đuôi 0.08 → 0.18.
 - Thứ tự vẽ: TrailSmoke 0, Smoke 1, FlameLicks 2, Body 3, Core + trail 4, Embers 5, FireBurst 6, Sparks 7, Flash 8. Ngân sách ~130 hạt, 9 material.
+
+## v3 (2026-11-13) — art lead: "shader smoke, thêm burn dissolve, kiểu vệt cháy ở cạnh của khói"
+- Khói vụ nổ (L7, `VFX/FX/Erode Sphere`) trước đó chỉ sáng ở các **gân bên trong** (ngưỡng nhiệt Custom1.y), không có gì phát sáng ở **rìa đang tan** (ngưỡng alpha Custom1.x).
+- Mở rộng shader (v5): thuộc tính mới `_BurnWidth`. Ngay phía trong ngưỡng alpha, dải rộng `_BurnWidth` (theo đơn vị mask) được tô: sát mép = vàng sáng (đầu ramp nhiệt), vào trong = cam → đỏ sẫm, rồi dải **than tối** phía sau, trước khi tới màu khói. Vệt chạy theo Custom1.x nên **di chuyển cùng với lúc khói tan**. Màu lấy từ ramp có sẵn (`T_GroundBlast_SmokeRamp`), không thêm thuộc tính màu. Mặc định 0 (tắt) nên GroundBlast / MushroomBlast không đổi.
+- FireballThrow bật `_BurnWidth = 0.12` (builder `FireballThrowBuild.cs`, dòng sau `_Lumps`). Khói đuôi (L9 TrailSmoke, shader stock + `fx_t_smoke_02`) **không đổi** (không có ăn mòn).
+- Không gian, bất biến, timing của effect giữ nguyên. Frost / Poison không dùng shader này nên không đổi.
+- Chưa xác minh: xem frame 0.85–1.8 s trong preview / Review Lab; chỉnh `_BurnWidth` (0,06–0,2) và `_EmisBoost` nếu rìa quá mảnh hoặc quá chói.
