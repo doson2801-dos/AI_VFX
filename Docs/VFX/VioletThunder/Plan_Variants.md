@@ -40,8 +40,8 @@ Builder dùng chung `Editor/VioletThunderKit.cs`. Không gian giữ như bản g
 
 | Bản | Màu | Bố cục | Timing | Lớp phụ |
 |---|---|---|---|---|
-| Toxic | lõi `F2FFD8`, lime `9CFF3A`, xanh `2FBF2A`, sâu `0E5A1E` | tích sôi ngay trên đất, tia gần đứng (−8°, nét làm dày) rộng 2,2 m (Length Scale 3, tia dài ~6,6 m), vũng axit nằm lại | tích 0,55 s, tia 0,4 s, dư ~4,8 s (Pool 3,65 s, Arcs 3,5 s, Spores 4,8 s) | Bubbles (vòng bọt nổ), Pool + PoolEdge, Spores bay lên |
-| Gold | lõi `FFFBE6`, vàng `FFD24A`, hổ phách `FF9A1E`, sâu `B8560A` | tích trên cao 4,2 m, tia đứng thẳng rộng 2,0 m (Length Scale 4, tia dài ~8 m), Halo đập tại chỗ | tích 0,32 s, tia 0,3 s | Halo, Shards phun cao (rơi lại), 2 gợn, Motes |
+| Toxic | lõi `F2FFD8`, lime `9CFF3A`, xanh `2FBF2A`, sâu `0E5A1E` | tích sôi ngay trên đất, tia gần đứng (−8°, nét làm dày) rộng 2,9 m (Length Scale 2,25, tia dài ~6,6 m), vũng axit nằm lại | tích 0,55 s, tia 0,4 s, dư ~4,8 s (Pool 3,65 s, Arcs 3,5 s, Spores 4,8 s) | Bubbles (vòng bọt nổ), Pool + PoolEdge, Spores bay lên |
+| Gold | lõi `FFFBE6`, vàng `FFD24A`, hổ phách `FF9A1E`, sâu `B8560A` | tích trên cao 4,2 m, tia đứng thẳng rộng 2,67 m (Length Scale 3, tia dài ~8 m), Halo đập tại chỗ | tích 0,32 s, tia 0,3 s | Halo, Shards phun cao (rơi lại), 2 gợn, Motes |
 
 **VioletStorm (effect khác, tím-hồng):** mây giông 6 m, 3 điểm đất được báo (vòng co) rồi bị đánh lần lượt (0,30 / 0,52 / 0,74 s), cuối là một tia lớn ở tâm (0,98 s) kèm chớp đất, sóng ragged, dòng điện bò, vết cháy. Mỗi điểm một chớp + một vòng. Sorting (không trùng): tia 10..17, chớp 30..33, vòng báo −12..−15, vòng −4..−7, Scorch −8, GroundFlash −3, Shock −1, Arcs 0/1, mây 3, vòng −4...
 
@@ -52,7 +52,7 @@ Ban đầu 3 bản dùng chung sheet tia của bản gốc nên nhìn na ná nha
 | Toxic | `lightning_bolt_sheet_011` + **làm dày nét 17 px** (`make_bolt_sheet.py ... 17`) | mảnh có gân, dày lên để đúng Bất biến "tia toon dày" | thử `012` rồi **bỏ**: nét móc "S"/"C" ngắn, tia lơ lửng không chạm đất (đúng lỗi "móc" của Crimson); `009` (dùng cho Storm), `010` (dùng cho Gold) |
 | Gold | `lightning_bolt_sheet_010` | dày vừa, zig-zag cao | `011` (quá mảnh), `012` (móc), `013` (2 khung to, không phải lưới 4×2) |
 | VioletStorm | `lightning_bolt_sheet_009` | ngắn, gấp khúc | `010` / `011` (dùng cho Gold / Toxic), `012` (móc) |
-Ảnh Library là tia **đứng** 4×2 (1024×2048), nên `tools/make_bolt_sheet.py <png> <tiền_tố>` cắt từng khung, xoay 90° cùng chiều kim đồng hồ (đầu chạm đất = mép TRÁI), ghép lại 2 cột × 4 hàng theo thứ tự khung và làm thêm bản glow mờ: `Textures/T_VioletThunder_<Toxic|Gold>_Bolt(Glow)_2x4.png`, `T_VioletStorm_Bolt(Glow)_2x4.png`. Khung sau khi xoay tỉ lệ 4:1 nên Length Scale = 4 (bề rộng Toxic 1,7 / Gold 2,0 / Storm 1,5–2,1 m, tia dài 6–8 m); dòng điện bò dùng hạt 3D 4:1.
+Ảnh Library là tia **đứng** 4×2 (1024×2048), nên `tools/make_bolt_sheet.py <png> <tiền_tố>` cắt từng khung, xoay 90° cùng chiều kim đồng hồ (đầu chạm đất = mép TRÁI), ghép lại 2 cột × 4 hàng theo thứ tự khung và làm thêm bản glow mờ: `Textures/T_VioletThunder_<Toxic|Gold>_Bolt(Glow)_2x4.png`, `T_VioletStorm_Bolt(Glow)_2x4.png`. Nội dung tia được **thu về 75% bề ngang ô** (SQUEEZE) để glow mờ không chạm biên ô (lỗi cũ: glow bị cắt thẳng, agent review vòng 3 bắt được), nên Length Scale mặc định 3 và bề rộng bù lên (Toxic 2,9 / Gold 2,67 / Storm 2,0 và 2,8 cho tia cuối), độ dài thật giữ ~6–8 m.
 Bài học: lớp glow và lõi **phải cùng bề rộng** (cùng Stretch), glow rộng hơn thì lệch khỏi lõi.
 
 ## Dòng điện bò trên đất: dùng `lightning/arc_sheet` (sửa 2026-11-13, art lead nhắc)
@@ -60,7 +60,7 @@ Lần đầu mình đặt sheet tia nằm phẳng làm arc mà **không tra bả
 | Bản | Sheet | Lưới | Nét | Đã loại |
 |---|---|---|---|---|
 | Toxic | `arc_sheet_003` (đổi từ `006` sau review: các ô `006` là nét cong chữ "C"/"2" hiện thành móc, không đọc như điện) | 3×3 | zig-zag gọn | 005 (mờ, khó chia lưới), 004 / 007 (có sẵn màu), `arc_single_001` (một sợi đơn) |
-| Gold | `arc_sheet_003` (đổi từ `001`: `001` mean_lum 0,014, gần như không thấy) | 3×3 | zig-zag gọn | `001`, `006` |
+| Gold | `arc_sheet_003` (đổi từ `001`: nét `001` nhỏ, coverage 0,011 (`003` 0,019, nét lớn hơn; số đo mean_lum chỉ nhích 0,014 → 0,017 nên lý do chủ yếu là nhìn contact sheet và preview; **arc `003` vẫn nhỏ và mờ**, điểm yếu còn lại) | 3×3 | zig-zag gọn | `001`, `006` |
 | Storm | `arc_sheet_003` | 3×3 | zig-zag gọn | |
 Ô vuông nên hạt Start Size 1,6–2,8 m, không còn 3D 2:1. Glow = bản làm mờ của chính sheet đó (`tools/make_arc_glow.py` → `Textures/T_..._ArcGlow.png`), đặt dưới sheet Library. **Bài học: mọi thành phần phải tra LIBRARY.md trước, kể cả lớp phụ.**
 
