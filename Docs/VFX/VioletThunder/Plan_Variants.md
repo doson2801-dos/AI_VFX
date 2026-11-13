@@ -31,7 +31,7 @@ Lớp: SkyGlow (root, order 3), SkyFlare 8, BoltGlow 4, BoltCore 5, Echo 6, Flas
 ## Chưa xác minh
 - Chưa build trong Unity (Unity đang mở). Cần chạy menu, xem preview `Docs/VFX/VioletThunder_Crimson|Azure/Preview_sheet.png` và Review Lab.
 - Hướng nghiêng của tia (`shape.rotation = (90 − tilt, 90, 0)`) tính bằng tay: tilt dương phải nghiêng từ trái-trên; nếu ngược dấu thì đổi dấu `tilt`.
-- Dòng điện bò dùng frame của sheet tia (2:1, hạt 3D); nếu trông lệch thì đổi thành sheet 4×4 riêng.
+- (Đã lỗi thời cho Azure / Crimson, chúng vẫn dùng frame của sheet tia 2:1 và nên được làm lại như Toxic / Gold) Dòng điện bò phải lấy từ `lightning/arc_sheet`, không dùng sheet tia đặt nằm phẳng; xem mục "Dòng điện bò trên đất" ở dưới.
 
 # Đợt 2026-11-13: Toxic, Gold (biến thể) + VioletStorm (effect mới cùng phong cách)
 Builder dùng chung `Editor/VioletThunderKit.cs`. Không gian giữ như bản gốc (ground, tia đứng Stretched, lớp đất Billboard + Local, camera 3/4 40°, tia ~6 m). Cần build bản gốc một lần trước (sheet tia). Menu `VFX/VioletThunder/Build Toxic | Build Gold | Build Storm`.

@@ -23,7 +23,8 @@ Màu / nguyên tố (xanh lam, đỏ thẫm), hình dư điện (arc / vết n�
 
 ## Lỗi biến thể đã gặp
 - **Crimson**: có một tia hình "móc" lạ ở frame 3–4. **Azure / Crimson** nhìn chung tốt (dùng đúng `ring_ragged`, `ring_thin`, `flare_005`) nhưng quầng `glow_soft_round_008` chỉ 128 px (nửa khung), vỡ nhẹ khi to; ưu tiên `_007`.
-- Giữ chung sheet bolt: khác nhau chủ yếu ở lớp phụ; ok vì cùng hiệu ứng.
+- Dùng chung một sheet tia cho mọi biến thể (bản Azure / Crimson) làm các bản nhìn na ná nhau. **Bất biến chỉ đòi "tia toon dày zig-zag", không đòi cùng một ảnh**: mỗi biến thể phải chọn lại sheet tia và sheet arc từ Library theo quy trình chọn (xem contact sheet `lightning/bolt_sheet`, `arc_sheet`). Toxic / Gold / VioletStorm (2026-11-13) đã làm vậy, xem `Plan_Variants.md`.
+- **Lớp phụ cũng phải tra `LIBRARY.md`** (lần đầu của Toxic / Gold / Storm đã bỏ sót arc, dùng sheet tia đặt nằm phẳng).
 
 ## Biến thể đã làm
 Gốc (tím-hồng), Azure, Crimson, Toxic (xanh axit, 2026-11-13), Gold (vàng, 2026-11-13). Effect cùng phong cách nhưng khác hành vi: VioletStorm (loạt sét nhiều điểm).

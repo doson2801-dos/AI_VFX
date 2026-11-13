@@ -12,6 +12,8 @@
 - Sản phẩm VFX đặt ở `Assets/VFX/<Tên>/`, tài liệu của nó ở `Docs/VFX/<Tên>/`. Không tạo file rác ở thư mục gốc.
 - Secret (API key, mật khẩu) chỉ để trong `.env` (đã bị `.gitignore` chặn). Không viết vào file khác.
 
+- **Texture từng thành phần (2026-11-13)**: làm VFX / biến thể mới thì mỗi texture trong builder phải có một dòng trong plan: thành phần → thư mục tra từ `LIBRARY.md` → ảnh chốt + ảnh đã loại. **Không sao chép đường dẫn texture từ builder cũ** nếu chưa tra lại; lớp phụ (arc, cracks, ring, glow) cũng tra. Làm VFX ngoài skill (không gọi /vfx-maker, /vfx-shader) vẫn phải theo bước này.
+
 ## Chạy nhiều phiên song song
 Git chỉ chứa tài liệu + code, **không có texture / prefab / mesh**. Vì vậy:
 - **Việc cần Unity / asset** (dựng prefab, texture, Showcase): các phiên làm chung thư mục `D:\Game_prj\VFX_LIb`, **mỗi phiên một effect** (`Assets/VFX/<Tên>/` + `Docs/VFX/<Tên>/`). Không hai phiên sửa cùng một file.

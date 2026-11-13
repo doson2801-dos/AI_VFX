@@ -21,7 +21,8 @@ Cách chọn: tìm dòng thành phần trong bảng → mở thư mục (vai tr�
 | Vòng rune / vòng phép | `rune/circle` (9) | vẽ bằng script cũng được (luật hình học) |
 | Nứt đất toả tròn / vệt nứt / chữ X | `ground/crack_radial` (13), `crack_line` (15), `crack_x` (3) | nằm đất |
 | Vết cháy, vết bắn, dấu chỉ vùng | `ground/scorch` (3), `splat` (5), `indicator` (4) | |
-| Tia sét: sheet nhiều khung / đơn / cung điện | `lightning/bolt_sheet` (13), `arc_sheet` (7), `arc_single` (1) | Stretched, additive. `009`–`013` (Thunder 1–5, 2026-11-13): ảnh **đứng** 1024×2048, alpha thật, trắng (tint được); `009`–`012` lưới 4×2 (8 khung), `013` = 2×1 tia đơn to; xoay 90° nếu dùng Stretched (đầu = mép TRÁI) |
+| Dòng điện bò trên đất / cung điện ngắn nằm phẳng / tia nhánh nhỏ | `lightning/arc_sheet` (7; vuông, lưới 3×3 hoặc 4×4; không dùng sheet tia đặt nằm phẳng), `arc_single` (1, một sợi đơn) | Billboard + Local (nằm đất), additive. Ví dụ: `006` 4×4 dày uốn cong, `001` 3×3 tia nhỏ lấp lánh, `003` 3×3 zig-zag gọn; `004` / `007` đã có màu; xem contact sheet trước khi chốt |
+| Tia sét đứng (thân tia): sheet nhiều khung / đơn | `lightning/bolt_sheet` (13) | Stretched, additive. `009`–`013` (Thunder 1–5, 2026-11-13): ảnh **đứng** 1024×2048, alpha thật, trắng (tint được); `009`–`012` lưới 4×2 (8 khung), `013` = 2×1 tia đơn to; xoay 90° nếu dùng Stretched (đầu = mép TRÁI) |
 | Khói mềm (mặc định `Assets/VFX/fx_t_smoke_02.png`) | `smoke/soft` (6) | luật khói mặc định vẫn giữ |
 | Khói / lửa flipbook, khói cartoon | `smoke/sheet` (20), `smoke/cartoon` (7) | khói vụ nổ làm theo Erode Sphere, không dùng ảnh |
 | Tia lửa, sao nhỏ, vệt sao chổi, chấm sáng | `spark/star` (20), `streak` (7), `dot_sheet` (2) | |
