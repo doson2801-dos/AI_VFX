@@ -2,7 +2,7 @@
 
 Cùng hiệu ứng với `VFX_VioletThunder` (sét từ trời đánh một điểm đất: tích điện → một tia → nổ trên đất → dòng điện bò trên đất). Mỗi bản đổi **ít nhất hai** trong: mesh/hình tia, bố cục, timing, lớp phụ. Không gian giữ như bản gốc: ground, tia đứng = Stretched Billboard (texture ngang, đầu chạm đất = mép trái), lớp nằm đất = Billboard + Local (GameObject X 90°), camera 3/4 40°, neo điểm đất, tia cao ~6 m, vùng nổ ~3–5 m. Mọi hạt Scaling Mode Hierarchy, Frame over Time tuyến tính, shader `Mobile/Particles/Additive` (không shader mới).
 
-Texture: sheet tia 2×4 và halo của bản gốc (`Assets/VFX/VioletThunder/Textures/T_VioletThunder_Bolt_2x4`, `_BoltGlow_2x4`; trắng + alpha nên tô màu bằng Start Color). **Cần build bản gốc (VFX → VioletThunder → Build) ít nhất một lần trước.** Còn lại lấy từ `Assets/Library/`: `glow/soft_round/glow_soft_round_008`, `glow/flare/glow_flare_005` (sao X), `ring/thin/ring_thin_003`, `ring/ragged/ring_ragged_002`, `ground/crack_radial/ground_crack_radial_001`, `spark/shard/spark_shard_001` (1×4, mũi bên trái), `spark/star/spark_star_001`.
+Texture của Crimson / Azure (bản cũ): sheet tia 2×4 và halo của bản gốc (`Assets/VFX/VioletThunder/Textures/T_VioletThunder_Bolt_2x4`, `_BoltGlow_2x4`; trắng + alpha nên tô màu bằng Start Color). **Cần build bản gốc (VFX → VioletThunder → Build) ít nhất một lần trước.** Còn lại lấy từ `Assets/Library/`: `glow/soft_round/glow_soft_round_008`, `glow/flare/glow_flare_005` (sao X), `ring/thin/ring_thin_003`, `ring/ragged/ring_ragged_002`, `ground/crack_radial/ground_crack_radial_001`, `spark/shard/spark_shard_001` (1×4, mũi bên trái), `spark/star/spark_star_001`.
 
 Ghi chú: builder gốc còn trỏ tên cũ trong Library (`glow/glow_023`, `wave/wave_015`...) — Library đã đổi tên, builder gốc sẽ báo thiếu asset nếu build lại. Hai biến thể này dùng đường dẫn mới.
 
@@ -40,10 +40,10 @@ Builder dùng chung `Editor/VioletThunderKit.cs`. Không gian giữ như bản g
 
 | Bản | Màu | Bố cục | Timing | Lớp phụ |
 |---|---|---|---|---|
-| Toxic | lõi `F2FFD8`, lime `9CFF3A`, xanh `2FBF2A`, sâu `0E5A1E` | tích sôi ngay trên đất, tia gần đứng (−8°) béo 3,4 m, vũng axit nằm lại | tích 0,55 s, tia 0,4 s, dư ~3,2 s | Bubbles (vòng bọt nổ), Pool + PoolEdge, Spores bay lên |
-| Gold | lõi `FFFBE6`, vàng `FFD24A`, hổ phách `FF9A1E`, sâu `B8560A` | tích trên cao 4,2 m, tia đứng thẳng rộng 4,2 m, Halo đập tại chỗ | tích 0,32 s, tia 0,3 s | Halo, Shards phun cao (rơi lại), 2 gợn, Motes |
+| Toxic | lõi `F2FFD8`, lime `9CFF3A`, xanh `2FBF2A`, sâu `0E5A1E` | tích sôi ngay trên đất, tia gần đứng (−8°) rộng 2,2 m (Length Scale 3, tia dài ~6,6 m), vũng axit nằm lại | tích 0,55 s, tia 0,4 s, dư ~3,2 s | Bubbles (vòng bọt nổ), Pool + PoolEdge, Spores bay lên |
+| Gold | lõi `FFFBE6`, vàng `FFD24A`, hổ phách `FF9A1E`, sâu `B8560A` | tích trên cao 4,2 m, tia đứng thẳng rộng 2,0 m (Length Scale 4, tia dài ~8 m), Halo đập tại chỗ | tích 0,32 s, tia 0,3 s | Halo, Shards phun cao (rơi lại), 2 gợn, Motes |
 
-**VioletStorm (effect khác, tím-hồng):** mây giông 6 m, 3 điểm đất được báo (vòng co) rồi bị đánh lần lượt (0,30 / 0,52 / 0,74 s), cuối là một tia lớn ở tâm (0,98 s) kèm chớp đất, sóng ragged, dòng điện bò, vết cháy. Mỗi điểm một chớp + một vòng. Sorting: tia 10..17, chớp 30..33, vòng báo −12.., vòng −4...
+**VioletStorm (effect khác, tím-hồng):** mây giông 6 m, 3 điểm đất được báo (vòng co) rồi bị đánh lần lượt (0,30 / 0,52 / 0,74 s), cuối là một tia lớn ở tâm (0,98 s) kèm chớp đất, sóng ragged, dòng điện bò, vết cháy. Mỗi điểm một chớp + một vòng. Sorting (không trùng): tia 10..17, chớp 30..33, vòng báo −12..−15, vòng −4..−7, Scorch −8, GroundFlash −3, Shock −1, Arcs 0/1, mây 3, vòng −4...
 
 ## Sheet tia riêng từng bản (sửa 2026-11-13 sau góp ý của art lead: "sao không thay texture bolt khác?")
 Ban đầu 3 bản dùng chung sheet tia của bản gốc nên nhìn na ná nhau. Đã chọn lại sau khi xem contact sheet `lightning/bolt_sheet`:
@@ -66,3 +66,18 @@ Lần đầu mình đặt sheet tia nằm phẳng làm arc mà **không tra bả
 
 ## Trạng thái
 Đã build trong Unity qua MCP (không lỗi compile / console), preview ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Còn yếu: arc của Gold mờ và nhỏ, mây giông Storm còn tròn, tia Toxic mảnh. Chưa đưa vào `Included` (chờ art lead duyệt).
+
+## Bảng chọn texture lớp phụ của Toxic / Gold / VioletStorm (xem contact sheet 2026-11-13)
+Quầng mềm `Textures/T_VioletThunder_SoftGlow.png` **không nằm trong Library**: là bản alpha-correct của `glow/soft_round/glow_soft_round_017` (512 px, mép mịn) do bản gốc tạo, thay `_008` (chỉ 128 px, vỡ khi to); dùng cho quầng tích điện, GroundFlash, Pool, Scorch. (Dòng "glow_soft_round_008" ở đầu file là của bản cũ, lỗi thời.)
+| Thành phần | Ảnh chốt | Lý do | Đã loại |
+|---|---|---|---|
+| Flash (chớp chữ X, cả 3) | `glow/flare/glow_flare_002` | X sáng sắc, xám, nền đen dùng Additive; omni nên xoay được | `005` (X quá mờ, chớp yếu, từng dùng ở bản đầu), `004` / `006` (có vòng tròn), `001` (đỏ), `003` (tia xoè, không phải X), `010` (alpha, 4 cánh dài hơi cứng) |
+| Vòng báo / gợn / vòng (Ripples, Warn, Ring, Bubbles) | `ring/thin/ring_thin_003` | vòng mảnh sắc, alpha, omni, co / nở dễ | `013` (vàng), `012` (xanh), `004`/`007`/`008` (viền đặc nền đen), `001` (răng cưa), `014`/`009` (vòng sạch hơn, lớn hơn: chưa dùng vì phải chỉnh lại kích thước, có thể đổi lần sau) |
+| Shock (Toxic, Storm), Halo (Gold) | `ring/ragged/ring_ragged_002` | quầng vòng tia xạ mềm, omni, black_bg Additive; **không phải viền rách** (agent review nhắc đúng), dùng như sóng mềm | `003` (lửa có màu), `006`/`007` (xanh có màu), `005` (cầu vồng), `008`/`010` (quá nhạt), `004` (có hướng) |
+| PoolEdge (Toxic) | `ring/ragged/ring_ragged_009` | vòng răng cưa thật, xám, nền đen Additive, omni | `002` (viền mềm, không rách), `001` (hai cung rời, có hướng, nhãn xem), `004` (có hướng, vệt nhoè) |
+| Spores (Toxic), Motes (Gold) | `spark/star/spark_star_001` | sao 4 cánh trắng, alpha, omni | `006`/`007`/`015` (có màu), `010` (hình sao 5 cánh), `014` (dấu cộng), `012`/`018` (nền đen, quá nhạt) |
+| Shards (Gold) | `spark/shard/spark_shard_002` (2×4) | **đầu dày ở mép TRÁI, đuôi nhọn bên phải = đúng luật Stretched**; có alpha thật | `001`: **ngược hướng** (đầu sáng tù nằm bên phải), black_bg; Crimson (bản cũ) dùng `001` nên bị ngược, chưa sửa |
+| Arc (Toxic 006 / Gold 001 / Storm 003) | xem mục "Dòng điện bò" phía trên | | |
+| Tia (Toxic 011 / Gold 010 / Storm 009) | xem mục "Sheet tia riêng" phía trên | | |
+
+**Arc là sheet có hướng (nhãn `dir`) nhưng được xoay ngẫu nhiên**: ngoại lệ có chủ ý vì đây là dòng điện bò tứ phía trên đất (không có đầu / đuôi rõ như tia); để bớt spam đã giảm còn 6–7 hạt đầu + rate nhỏ, tối đa 24 hạt. **Chờ art lead chốt**: đổi nhãn arc thành `omni` trong `library_direction.csv`, hay bắt đặt hướng cố định.

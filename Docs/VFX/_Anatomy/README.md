@@ -52,6 +52,7 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Aura ôm vật thể (găng) | `aura-gauntlet.md` | suy từ Plan_Variants (bản gốc không có Plan) |
 | Cầu ném bay cung rồi nổ | `fireball-throw.md` | suy từ Plan |
 | Sét tím từ trời (tích rồi nổ) | `violet-thunder.md` | suy từ Plan |
+| Loạt sét nhiều điểm (báo trước, đánh lần lượt, tia cuối) | `violet-storm.md` | suy từ Plan_Variants + preview |
 | Lốc xoáy đứng | `tornado.md` | suy từ Plan + yêu cầu art lead 2026-11-10 |
 | Vụ nổ (nổ đất) | `explosion.md` | suy từ Plan GroundBlast + MushroomBlast |
 | Thác nước (dòng chảy + bọt chân + gợn sóng) | `waterfall.md` | theo video ref art lead + đã dựng Map6 |
