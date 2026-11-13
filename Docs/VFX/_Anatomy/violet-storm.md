@@ -24,7 +24,7 @@ Số điểm, vị trí điểm, thời điểm, màu, sheet tia / arc, độ d�
 
 ## Lỗi đã gặp
 - Glow rộng hơn lõi → quầng lệch khỏi lõi (phải cùng bề rộng).
-- Chớp đất của tia cuối nổ trước khi tia chạm đất (dời +0,05 s).
+- Chớp đất của tia cuối nổ trước khi tia chạm đất: dời +0,05 s cho **cả** Flash, vòng, GroundFlash, Shock, Arcs (lần đầu quên Flash và vòng).
 - `sortingOrder` trùng (Scorch với vòng điểm thứ 3), sửa: Scorch −8.
 - GroundFlash + Scorch + Shock chồng nhau thành **đĩa hồng phẳng**: đã giảm Scorch (4 m), GroundFlash còn 1 hạt; theo dõi.
 - Mây giông 4,6 m vẫn tròn đều: chưa sửa.
