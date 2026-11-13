@@ -55,5 +55,14 @@ Ban đầu 3 bản dùng chung sheet tia của bản gốc nên nhìn na ná nha
 Ảnh Library là tia **đứng** 4×2 (1024×2048), nên `tools/make_bolt_sheet.py <png> <tiền_tố>` cắt từng khung, xoay 90° cùng chiều kim đồng hồ (đầu chạm đất = mép TRÁI), ghép lại 2 cột × 4 hàng theo thứ tự khung và làm thêm bản glow mờ: `Textures/T_VioletThunder_<Toxic|Gold>_Bolt(Glow)_2x4.png`, `T_VioletStorm_Bolt(Glow)_2x4.png`. Khung sau khi xoay tỉ lệ 4:1 nên Length Scale = 4 (bề rộng Toxic 1,7 / Gold 2,0 / Storm 1,5–2,1 m, tia dài 6–8 m); dòng điện bò dùng hạt 3D 4:1.
 Bài học: lớp glow và lõi **phải cùng bề rộng** (cùng Stretch), glow rộng hơn thì lệch khỏi lõi.
 
+## Dòng điện bò trên đất: dùng `lightning/arc_sheet` (sửa 2026-11-13, art lead nhắc)
+Lần đầu mình đặt sheet tia nằm phẳng làm arc mà **không tra bảng LIBRARY.md** (vai trò "cung điện" có sẵn `arc_sheet`). Đã làm lại đúng quy trình (tra bảng → contact sheet → chọn):
+| Bản | Sheet | Lưới | Nét | Đã loại |
+|---|---|---|---|---|
+| Toxic | `arc_sheet_006` | 4×4 | dày, uốn cong như chất nhầy | 005 (mờ, khó chia lưới), 004 / 007 (có sẵn màu), `arc_single_001` (một sợi đơn) |
+| Gold | `arc_sheet_001` | 3×3 | tia nhỏ lấp lánh (hơi mờ, xem Trạng thái) | |
+| Storm | `arc_sheet_003` | 3×3 | zig-zag gọn | |
+Ô vuông nên hạt Start Size 1,6–2,8 m, không còn 3D 2:1. Glow = bản làm mờ của chính sheet đó (`tools/make_arc_glow.py` → `Textures/T_..._ArcGlow.png`), đặt dưới sheet Library. **Bài học: mọi thành phần phải tra LIBRARY.md trước, kể cả lớp phụ.**
+
 ## Trạng thái
-Đã build trong Unity qua MCP (không lỗi compile / console), preview ổn ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Chưa xem Review Lab, chưa xem trong Showcase, chưa đưa vào `Included` (chờ art lead duyệt). Hướng nghiêng của tia (dấu `tilt`) nhìn đúng trong preview.
+Đã build trong Unity qua MCP (không lỗi compile / console), preview ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Còn yếu: arc của Gold mờ và nhỏ, mây giông Storm còn tròn, tia Toxic mảnh. Chưa đưa vào `Included` (chờ art lead duyệt).
