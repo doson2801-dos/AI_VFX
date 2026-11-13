@@ -45,5 +45,15 @@ Builder dùng chung `Editor/VioletThunderKit.cs`. Không gian giữ như bản g
 
 **VioletStorm (effect khác, tím-hồng):** mây giông 6 m, 3 điểm đất được báo (vòng co) rồi bị đánh lần lượt (0,30 / 0,52 / 0,74 s), cuối là một tia lớn ở tâm (0,98 s) kèm chớp đất, sóng ragged, dòng điện bò, vết cháy. Mỗi điểm một chớp + một vòng. Sorting: tia 10..17, chớp 30..33, vòng báo −12.., vòng −4...
 
-## Chưa xác minh (đợt này)
-Unity MCP không kết nối nên **chưa compile, chưa build, chưa xem preview**. Việc cần làm: chạy 3 menu, xem `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png` + Review Lab; kiểm tra hướng nghiêng tia (dấu `tilt`, như ghi chú ở trên); sau khi duyệt thêm `VFX_VioletThunder_Toxic`, `VFX_VioletThunder_Gold`, `VFX_VioletStorm` vào `Included` của `VfxShowcaseBuild.cs` rồi chạy Build Scene.
+## Sheet tia riêng từng bản (sửa 2026-11-13 sau góp ý của art lead: "sao không thay texture bolt khác?")
+Ban đầu 3 bản dùng chung sheet tia của bản gốc nên nhìn na ná nhau. Đã chọn lại sau khi xem contact sheet `lightning/bolt_sheet`:
+| Bản | Sheet Library | Nét | Loại |
+|---|---|---|---|
+| Toxic | `lightning_bolt_sheet_011` | mảnh, có gân nhánh | |
+| Gold | `lightning_bolt_sheet_010` | dày vừa, zig-zag cao | |
+| VioletStorm | `lightning_bolt_sheet_009` | ngắn, gấp khúc | |
+Ảnh Library là tia **đứng** 4×2 (1024×2048), nên `tools/make_bolt_sheet.py <png> <tiền_tố>` cắt từng khung, xoay 90° cùng chiều kim đồng hồ (đầu chạm đất = mép TRÁI), ghép lại 2 cột × 4 hàng theo thứ tự khung và làm thêm bản glow mờ: `Textures/T_VioletThunder_<Toxic|Gold>_Bolt(Glow)_2x4.png`, `T_VioletStorm_Bolt(Glow)_2x4.png`. Khung sau khi xoay tỉ lệ 4:1 nên Length Scale = 4 (bề rộng Toxic 1,7 / Gold 2,0 / Storm 1,5–2,1 m, tia dài 6–8 m); dòng điện bò dùng hạt 3D 4:1.
+Bài học: lớp glow và lõi **phải cùng bề rộng** (cùng Stretch), glow rộng hơn thì lệch khỏi lõi.
+
+## Trạng thái
+Đã build trong Unity qua MCP (không lỗi compile / console), preview ổn ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Chưa xem Review Lab, chưa xem trong Showcase, chưa đưa vào `Included` (chờ art lead duyệt). Hướng nghiêng của tia (dấu `tilt`) nhìn đúng trong preview.
