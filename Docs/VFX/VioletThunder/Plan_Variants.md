@@ -65,7 +65,7 @@ Lần đầu mình đặt sheet tia nằm phẳng làm arc mà **không tra bả
 Ô vuông nên hạt Start Size 1,6–2,8 m, không còn 3D 2:1. Glow = bản làm mờ của chính sheet đó (`tools/make_arc_glow.py` → `Textures/T_..._ArcGlow.png`), đặt dưới sheet Library. **Bài học: mọi thành phần phải tra LIBRARY.md trước, kể cả lớp phụ.**
 
 ## Trạng thái
-Đã build trong Unity qua MCP (không lỗi compile / console), preview ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Còn yếu: arc của Gold mờ và nhỏ, mây giông Storm còn tròn, tia Toxic mảnh. Chưa đưa vào `Included` (chờ art lead duyệt).
+Đã build trong Unity qua MCP (không lỗi compile / console), preview ở `Docs/VFX/VioletThunder_Toxic|Gold`, `VioletStorm/Preview_sheet.png`. Còn yếu: arc của Gold mờ và nhỏ, mây giông Storm còn tròn, tia Toxic mảnh. **Đã duyệt và đưa vào Showcase (art lead 2026-11-13)**: `VFX_VioletStorm` thêm vào `Included`; Toxic / Gold khớp prefix `VFX_VioletThunder` sẵn có; đã chạy Build Scene, scene có 3 instance (nhóm VioletThunder). Spark Gold chỉnh theo art lead: Cone 45°, Limit Velocity over Lifetime (limit 1, dampen 0,2), lifetime 0,3–0,5 s.
 
 ## Bảng chọn texture lớp phụ của Toxic / Gold / VioletStorm (xem contact sheet 2026-11-13)
 Quầng mềm `Textures/T_VioletThunder_SoftGlow.png` **không nằm trong Library**: là bản alpha-correct của `glow/soft_round/glow_soft_round_017` (512 px, mép mịn) do bản gốc tạo, thay `_008` (chỉ 128 px, vỡ khi to); dùng cho quầng tích điện, GroundFlash, Pool, Scorch. (Dòng "glow_soft_round_008" ở đầu file là của bản cũ, lỗi thời.)
