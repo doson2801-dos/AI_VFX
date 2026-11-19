@@ -6,3 +6,6 @@ Không gian (đề xuất, chưa duyệt): billboard hướng camera / UI, tâm 
 Nhịp: 0,10 rương mở (chớp xanh + 44 hạt pixel + cột sáng) → 0,45 quầng vàng quanh thẻ "?" + sao → 0,90 thẻ trắng dần + sao gai → 1,28 lật thẻ: chớp trắng, 8 tia nhiều màu, 2 vòng, sao nổ → 1,3–3,2 quầng tím-hồng (độ hiếm) + sao trôi.
 Texture: sao/vòng/chớp/tia lấy lại từ StarDrop (đã duyệt, nguồn Library); mới vẽ PIL: `RW_CardGlow` (quầng chữ nhật mềm), `RW_CardShape` (thẻ trắng), `RW_Pixel` (ô vuông, Point filter).
 Đã xem Play mode (timescale 0,2): `Play_montage.jpg`; mô phỏng edit mode: `Preview_sheet.jpg`. Chưa qua agent review / art lead.
+
+## Sửa 1 (2026-11-19, art lead): bỏ đoạn rương mở
+Bỏ `ChestAnchor` (chớp xanh, pixel, cột sáng). Thay bằng **tia hội tụ vào giữa**: `ConvergeRays` (Streak, Stretch, 4 đợt × 10 tia từ vòng r=7, bay vào tâm, 0,05–0,5 s) + `ConvergeGlow` (cầu xanh lớn dần). Các nhịp sau giữ nguyên (quầng 0,45 → thẻ trắng 0,9 → lật 1,28 → quầng tím). Demo: thẻ "?" xuất hiện lúc 0,45 s. Preview mới: `Preview_sheet.jpg`.
