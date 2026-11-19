@@ -8,20 +8,22 @@ Cách chọn: tìm dòng thành phần trong bảng → mở thư mục (vai tr�
 
 | Thành phần cần | Thư mục | Ghi chú |
 |---|---|---|
-| Vệt chém chạy UV trên mesh (`_MainTex` slash) | `Slash/Main_tex(Uvmesh)` (18) | ảnh xám; xem `vfx-shader/references/coloso.md` |
+| Vệt chém chạy UV trên mesh (`_MainTex` slash) | `Slash/Main_tex(Uvmesh)` (18→30) | ảnh xám; `020`–`030` thêm 2026-11-19 từ `Anim.psd` + `Slash_Tex.psd` (alpha thật, xám; `020` = Anim; còn lại là lớp của Slash_Tex, chưa phân loại kỹ); xem `vfx-shader/references/coloso.md` |
 | Vệt / hiệu ứng trúng đòn của slash | `Slash/Onhit` (14) | |
 | Chớp lúc bắt đầu, quầng sáng, lõi sáng, tàn lửa | `glow/soft_round` (36), `soft_oval`, `soft_shape` | additive, nằm đất hoặc billboard |
 | Flare, sao chớp, chớp gai nhọn | `glow/flare` (10), `impact/flash_spiky` (14) | `flare_010` sao 4 cánh mảnh dài; `flash_spiky_013` hàng gai dựng đứng, `_014` sao 8 gai quầng mềm (từ `Impact_Ground.psd`, 2026-11-10) |
 | Quầng nhỏ / halo | `glow/halo` (3) | |
 | Impact flipbook (nổ, chớp nhiều khung) | `impact/flipbook` (20) | Frame over Time tuyến tính. `020`, `021` = 2×2 (lưỡi cong, mũi V); `022` = 4×2 ảnh đứng (mảnh bắn lên rồi tan), không alpha thật, chỉ Additive; từ `Impact_Ground.psd` 2026-11-10 |
 | Vòng sóng nổ lan | `impact/radial_ring` (5), `ring/thin` (13), `ring/soft` (17) | nằm đất: Billboard + Local |
-| Vòng chạy UV trên mesh vòng | `ring/Uv_mesh` (19) | |
+| Vòng chạy UV trên mesh vòng | `ring/Uv_mesh` (19→22) | `021` = dải mờ gradient phía trên, `022`–`023` = dải gai trắng đáy phẳng (2026-11-19, `Shockwave_512x1024.psd`, 1024×512, alpha thật) |
 | Vòng rách, vòng xoáy, vòng flipbook | `ring/ragged`, `ring/swirl`, `ring/flipbook` | |
 | Mảnh vỡ / shard impact | `impact/shard` (2), `spark/shard` (2) | |
 | Vòng rune / vòng phép | `rune/circle` (9) | vẽ bằng script cũng được (luật hình học) |
 | Nứt đất toả tròn / vệt nứt / chữ X | `ground/crack_radial` (13), `crack_line` (15), `crack_x` (3) | nằm đất |
 | Vết cháy, vết bắn, dấu chỉ vùng | `ground/scorch` (3), `splat` (5), `indicator` (4) | |
 | Dòng điện bò trên đất / cung điện ngắn nằm phẳng / tia nhánh nhỏ | `lightning/arc_sheet` (7; vuông, lưới 3×3 hoặc 4×4; không dùng sheet tia đặt nằm phẳng), `arc_single` (1, một sợi đơn) | Billboard + Local (nằm đất), additive. Ví dụ: `006` 4×4 dày uốn cong, `001` 3×3 tia nhỏ lấp lánh, `003` 3×3 zig-zag gọn; `004` / `007` đã có màu; xem contact sheet trước khi chốt |
+| Mai khiên / mặt cầu khiên: nền mờ, vết nứt trên khiên | `shield/fill` (2), `shield/crack` (4) | nhóm mới 2026-11-19 từ `Shield.psd`. `fill_001` = đĩa tròn mờ mép, `_002` = cầu xoáy trắng; `crack_001`–`004` = nứt trắng trong khung tròn (alpha thật, xám). Chưa xem trên mesh cầu |
+| Chớp súng / muzzle flash (2×2) | `impact/flipbook` `023` | từ `Gun.psd` 2026-11-19; 4 gai lệch to nhỏ khác nhau, đầu chĩa phải, alpha thật; có hướng, dùng đơn |
 | Tia sét đứng (thân tia): sheet nhiều khung / đơn | `lightning/bolt_sheet` (13) | Stretched, additive. `009`–`013` (Thunder 1–5, 2026-11-13): ảnh **đứng** 1024×2048, alpha thật, trắng (tint được); `009`–`012` lưới 4×2 (8 khung), `013` = 2×1 tia đơn to; xoay 90° nếu dùng Stretched (đầu = mép TRÁI) |
 | Khói mềm (mặc định `Assets/VFX/fx_t_smoke_02.png`) | `smoke/soft` (6) | luật khói mặc định vẫn giữ |
 | Khói / lửa flipbook, khói cartoon | `smoke/sheet` (20), `smoke/cartoon` (7) | khói vụ nổ làm theo Erode Sphere, không dùng ảnh |
@@ -35,6 +37,10 @@ Cách chọn: tìm dòng thành phần trong bảng → mở thư mục (vai tr�
 | Noise mép cứng (cutout) | `noise/hard_edge` (6) | |
 | Noise đóng gói kênh RGB | `noise/packed_rgb` (6) | xem tornado.md |
 | `_MaskTex` gradient 1D | `mask/gradient` (8) | slash: `T_VFX_Gradient_01` |
+
+### Đợt thêm 2026-11-19 (từ `Downloads/Texture/*.psd`, mỗi lớp xuất ra PNG đủ khung canvas, nền trong suốt)
+
+Chưa chạy `library_props.py` (máy Linux thiếu numpy) và chưa xem từng ảnh trên mesh / particle: ảnh nào còn `chua_xet` thì xem rồi gán nhãn trước khi dùng. Ảnh thêm: `impact/radial_ring` 007–011 (`Shockwave.psd`: vòng gai mờ, tia xoè), `ring/ragged` 011–014 (vòng rách trắng / mờ), `mask/gradient` 010–011 (`Slash_Tex.psd`), `smoke/cartoon` 008 (lửa cartoon bờ dưới, `Untitled-1.psd`, có hướng), `spark/shard` 003, `trail/ribbon` 016–024, `trail/streak` 013 (`Trail.psd`: dải cong, vòi gai, khói sóng). Nguồn từng ảnh ở `library_index.csv` (cột `ten_goc` = `<psd>#layerN`). `Impact_Ground.psd` và `Thunder_1024x2048.psd` đã nhập đợt trước nên không thêm lại. Chưa lấy: các lớp trung gian xám trùng hình, chấm / sao nhỏ của `Trail.psd`, glyph rune (`Trail.psd` lớp 19–20), dải gai `Shockwave.psd` (đã có bản đúng khung 1024×512 ở `Shockwave_512x1024.psd`).
 
 `_review/` là thư mục tạm chờ phân loại: không dùng.
 
