@@ -15,3 +15,6 @@ Nguyên nhân: `RW_CardGlow` / `RW_CardShape` có alpha còn khác 0 sát mép �
 
 ## Sửa 3 (2026-11-19, art lead): root prefab phải có ParticleSystem
 Mọi prefab trong `VFX_Library/Prefab` (Gun_Hit, PisGun_Hit, Slash_Cavalry, SoldierFactory_Upgrade…) đều có `ParticleSystem` ở root (cụm chứa thì emission + renderer tắt). Bản đầu của `VFX_Reward_Chest` chỉ có Transform ở root. Đã thêm root ParticleSystem rỗng (duration 3,5 s, no loop, emission tắt, renderer tắt). Quy ước này lấy từ các prefab có sẵn, không tìm thấy luật viết ra trong `AGENTS.md` của real-war.
+
+## Sửa 4 (2026-11-19, art lead): tia hội tụ lâu hơn
+`ConvergeRays` 4 → 10 đợt (cách 0,1 s, 0,05–~1,3 s); `ConvergeGlow` sống 1,25 s. Mọi nhịp sau đẩy lùi **+0,7 s**: quầng vàng 1,15 → thẻ trắng 1,6 → lật thẻ **1,98 s** → quầng tím đến ~3,9 s. Tổng ~4,2 s; duration root 4,5 s. Demo: thẻ "?" lúc 1,15 s, lật 1,98 s, vòng lặp 5,7 s.
