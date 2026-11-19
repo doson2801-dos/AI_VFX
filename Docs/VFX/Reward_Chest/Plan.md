@@ -9,3 +9,6 @@ Texture: sao/vòng/chớp/tia lấy lại từ StarDrop (đã duyệt, nguồn L
 
 ## Sửa 1 (2026-11-19, art lead): bỏ đoạn rương mở
 Bỏ `ChestAnchor` (chớp xanh, pixel, cột sáng). Thay bằng **tia hội tụ vào giữa**: `ConvergeRays` (Streak, Stretch, 4 đợt × 10 tia từ vòng r=7, bay vào tâm, 0,05–0,5 s) + `ConvergeGlow` (cầu xanh lớn dần). Các nhịp sau giữ nguyên (quầng 0,45 → thẻ trắng 0,9 → lật 1,28 → quầng tím). Demo: thẻ "?" xuất hiện lúc 0,45 s. Preview mới: `Preview_sheet.jpg`.
+
+## Sửa 2 (2026-11-19, art lead): ánh sáng giữa bị cắt vuông
+Nguyên nhân: `RW_CardGlow` / `RW_CardShape` có alpha còn khác 0 sát mép ảnh nên scale lớn + Additive lộ khung chữ nhật. Vẽ lại cả hai: hình mờ nhỏ hơn trong khung, nhân thêm cửa sổ smoothstep về 0 trước mép (alpha mép = 0 đã kiểm), bo góc lớn / mờ hơn; phóng to lại size (aura 6,2×7,8; rarity 7,6×9,5; card white 3,9×5,1). Luật thêm vào "Lỗi đã gặp" nếu art lead duyệt: ảnh glow chữ nhật phải về alpha 0 trước mép ảnh.
