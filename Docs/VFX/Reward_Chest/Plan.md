@@ -12,3 +12,6 @@ Bỏ `ChestAnchor` (chớp xanh, pixel, cột sáng). Thay bằng **tia hội t�
 
 ## Sửa 2 (2026-11-19, art lead): ánh sáng giữa bị cắt vuông
 Nguyên nhân: `RW_CardGlow` / `RW_CardShape` có alpha còn khác 0 sát mép ảnh nên scale lớn + Additive lộ khung chữ nhật. Vẽ lại cả hai: hình mờ nhỏ hơn trong khung, nhân thêm cửa sổ smoothstep về 0 trước mép (alpha mép = 0 đã kiểm), bo góc lớn / mờ hơn; phóng to lại size (aura 6,2×7,8; rarity 7,6×9,5; card white 3,9×5,1). Luật thêm vào "Lỗi đã gặp" nếu art lead duyệt: ảnh glow chữ nhật phải về alpha 0 trước mép ảnh.
+
+## Sửa 3 (2026-11-19, art lead): root prefab phải có ParticleSystem
+Mọi prefab trong `VFX_Library/Prefab` (Gun_Hit, PisGun_Hit, Slash_Cavalry, SoldierFactory_Upgrade…) đều có `ParticleSystem` ở root (cụm chứa thì emission + renderer tắt). Bản đầu của `VFX_Reward_Chest` chỉ có Transform ở root. Đã thêm root ParticleSystem rỗng (duration 3,5 s, no loop, emission tắt, renderer tắt). Quy ước này lấy từ các prefab có sẵn, không tìm thấy luật viết ra trong `AGENTS.md` của real-war.
