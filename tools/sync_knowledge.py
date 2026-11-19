@@ -33,12 +33,12 @@ SYNC_REF = 'refs/vfxlib/synced-master'
 PATHSPECS = [
     'CLAUDE.md', 'MAP.md', 'SPEC.md', 'AGENTS.md', '.gitignore', '.mcp.json', '.worktreeinclude',
     'contexte', '.claude/rules', '.claude/skills', '.claude/settings.json', '.claude/launch.json',
-    'tools/sync_knowledge.py', 'tools/auto_commit.ps1',
+    'tools/sync_knowledge.py', 'tools/auto_commit.ps1', 'tools/make_tree.py',
     ':(glob)Docs/**/*.md', ':(glob)Docs/VFX/_Library/*.csv',
 ]
 SCOPE_RE = re.compile(
     r'^(CLAUDE\.md|MAP\.md|SPEC\.md|AGENTS\.md|\.gitignore|\.mcp\.json|\.worktreeinclude|\.claude/settings\.json|\.claude/launch\.json'
-    r'|tools/sync_knowledge\.py|tools/auto_commit\.ps1|Docs/VFX/_Library/[^/]+\.csv)$'
+    r'|tools/sync_knowledge\.py|tools/auto_commit\.ps1|tools/make_tree\.py|Docs/VFX/_Library/[^/]+\.csv)$'
     r'|^(contexte|\.claude/rules|\.claude/skills)/|^Docs/.*\.md$')
 
 for _s in (sys.stdout, sys.stderr):
