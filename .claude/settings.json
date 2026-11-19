@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python -I \"$CLAUDE_PROJECT_DIR/tools/sync_knowledge.py\" --hook",
+            "command": "python3 -I \"$CLAUDE_PROJECT_DIR/tools/sync_knowledge.py\" --hook",
             "timeout": 60
           }
         ]

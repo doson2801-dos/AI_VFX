@@ -56,4 +56,11 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Lốc xoáy đứng | `tornado.md` | suy từ Plan + yêu cầu art lead 2026-11-10 |
 | Vụ nổ (nổ đất) | `explosion.md` | suy từ Plan GroundBlast + MushroomBlast |
 | Thác nước (dòng chảy + bọt chân + gợn sóng) | `waterfall.md` | theo video ref art lead + đã dựng Map6 |
+| Lửa bốc ở bàn tay (loop, bám tay) | `fire-hand-flame.md` | giả định (brief sheet Run 6, chưa xem video ref) |
+| Sóng lửa thổi ra phía trước (cast, nón mở rộng) | `fire-wave-cast.md` | giả định (brief sheet Run 6, chưa xem video ref) |
+| Tan biến (vật / nhân vật tan thành hạt) | `disintegrate.md` | suy từ research + đề xuất mặc định |
+| Súng phun lửa (dòng lửa liên tục từ nòng, nón mở rộng, bia cháy) | `flamethrower.md` | suy từ research + đề xuất mặc định |
+| Đạn bay thẳng có đuôi (cầu lửa Pyro, đạn Nova) | `hero-projectile.md` | suy từ ảnh ref animlibrary Projectile 25 / 6 |
+| Tia laser bắn một phát (lõi + viền màu, nòng, điểm va chạm) | `laser-beam.md` | giả định (brief sheet Run 6, chưa xem video ref) |
+| Nổ mở phần thưởng (hộp / Starr Drop: tích, vòng, chớp, chùm tia, nổ sao) | `reward-burst.md` | theo video ref art lead 2026-11-18 |
 | Tạo hình đặc trưng theo chất liệu / nguyên tố | `materials.md` | kiến thức chung, chỉnh khi art lead chốt khác |

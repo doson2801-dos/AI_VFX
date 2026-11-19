@@ -20,6 +20,8 @@
 > - `VioletThunder` (2026-11-05): sét tím-hồng đánh xuống đất, tích điện 0,4 s → tia toon + chớp + impact đất + dòng điện bò ~1,4 s. Plan: `Docs/VFX/VioletThunder/Plan.md`.
 > - `ElectricBolt` (2026-11-09, art lead "ổn đó"): tia điện nối A→B, tay → ngực 8 m, một phát ~0,45 s, xanh-trắng toon, **hoàn toàn code + shader, không texture** (shader mới `VFX/FX/Electric Bolt` + `VFX/FX/Glow Star`, dùng lại `VFX/FX/Spark`). Đã vào `Included` (Showcase: cao 1,3 m, xoay Y 90°, focus z 4) và bảng đèn demo; cần bấm **VFX → Showcase → Build Scene**. Research: `Docs/VFX/ElectricBolt/Research.md`, Plan: `Docs/VFX/ElectricBolt/Plan.md`.
 >
+> - `Disintegrate` (2026-11-18, order Cường): tan biến bản **HTML canvas + WebAudio** (`Docs/VFX/Disintegrate/index.html`), chưa có prefab Unity, chưa vào `Included`; chờ Cường + art lead duyệt. Plan: `Docs/VFX/Disintegrate/Plan.md`.
+>
 > - `WindTornado` v3 (2026-11-06): lốc xoáy gió 3,6 m làm lại từng lớp từ `Stupid_Tornado_Projectile` của rpg-game (vành gió + Shader Graph + ống + sương). Prefab trong project chính cần bấm **VFX → WindTornado → Build** (Unity đang mở lúc làm). Chờ art lead duyệt, chưa vào `Included`. Plan: `Docs/VFX/WindTornado/Plan.md`.
 >
 > - `FireTornado` (2026-11-06): lốc lửa 4,5 m, tornado thứ hai (khác WindTornado cả mesh / bố cục / timing / lớp phụ), làm theo quy trình tornado của skill, không cần prefab tham chiếu. **Đã thêm vào `Included`** và bảng đèn demo; cần bấm **VFX → FireTornado → Build** rồi **VFX → Showcase → Build Scene** (Unity đang mở lúc làm). Plan: `Docs/VFX/FireTornado/Plan.md`.
