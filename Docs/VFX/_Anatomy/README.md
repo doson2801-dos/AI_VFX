@@ -64,3 +64,4 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Tia laser bắn một phát (lõi + viền màu, nòng, điểm va chạm) | `laser-beam.md` | giả định (brief sheet Run 6, chưa xem video ref) |
 | Nổ mở phần thưởng (hộp / Starr Drop: tích, vòng, chớp, chùm tia, nổ sao) | `reward-burst.md` | theo video ref art lead 2026-11-18 |
 | Tạo hình đặc trưng theo chất liệu / nguyên tố | `materials.md` | kiến thức chung, chỉnh khi art lead chốt khác |
+| Đất bung lên khi xe chạy (clod + bụi từ bánh sau, theo tốc độ) | `dirt-kickup.md` | suy từ web + giả định (art lead chưa có ref) |
