@@ -25,3 +25,6 @@ Clods_Rake: 34/s, sống 0,45–0,75 s, cỡ 1,0–1,6 m local, tốc độ 4,5�
 
 ## Còn mở
 Dust phần nào bị thân xe che khi xe chạy đè; trộn lẫn với khói tàu trắng trong scene; răng cào nằm ~1 m trên đất trong model; Tractor.prefab của project chưa nối field (nối tay trên instance Demo_scene).
+
+## Cập nhật texture đất (2026-11-20, art lead: giống đất thật hơn)
+`T_Dirt_Clods_2x2.png` (256×256, sheet 2×2, cùng đường dẫn / GUID / import) vẽ lại bằng `make_dirt_clods.py` (PIL thuần, `python3 -I make_dirt_clods.py <ra.png>`): 4 ô = cục to xốp / cục dẹt / cụm vụn / mảnh dài; mép vỡ theo noise, vụn li ti quanh, vân + sỏi, sáng trên tối dưới, xám-nâu nhẹ (đã sáng hơn để Start Color nâu sẫm không thành đen). Bản cũ: `_old/T_Dirt_Clods_2x2.old.png`. So sánh: `texture_before_after.png`; preview Play: `preview_newtex_1.png`, `preview_newtex_2.png`. Không động prefab / scene (art lead đã chỉnh vị trí phát sau bản của tôi: Clods y 1.30 z 3.49, Dust y 0.71).
