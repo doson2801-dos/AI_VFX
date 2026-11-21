@@ -15,6 +15,11 @@ Stack: Phaser 4, TypeScript, Vite, Playwright. Trả lời người dùng bằng
 4. Sau mỗi cơ chế: chạy typecheck và test, xem ảnh trong `artifacts/`, sửa rồi mới làm tiếp.
 5. Khi xong: chạy `npm run build`, báo tiêu chí nào đạt và điểm nào cần người chơi tự đánh giá.
 
+## Commit tự động
+- Task Scheduler `Game_AI Knowledge Commit` chạy `tools/daily_commit.ps1` lúc 18:00 hàng ngày, log ở `tools/daily_commit.log`.
+- Chỉ commit kiến thức (`CLAUDE.md`, `docs/`, `.claude/rules`, `.claude/skills`) và chỉ push nhánh `game-ai-prototype`.
+- Không push nhánh `main` từ dự án này. `main` có lịch commit riêng.
+
 ## Luật
 - Mọi thông số gameplay nằm trong `src/config.ts` và có khoảng tune trong `TUNING_RANGES`.
 - Không thêm tính năng ngoài phạm vi brief.
