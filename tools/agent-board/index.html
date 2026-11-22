@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Board</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f5f6fa; --card: #ffffff; --text: #1b1f3b; --muted: #636a86; --line: #c9cde0;
+  --working: #2563eb; --done: #15803d; --stale: #b45309; --error: #dc2626; --idle: #8a90a8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14162b; --card: #1f2340; --text: #eef0fa; --muted: #a4a9c6; --line: #3d4368;
+    --working: #60a5fa; --done: #4ade80; --stale: #fbbf24; --error: #f87171; --idle: #7d83a3;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, "Segoe UI", sans-serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 40px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+h1 { margin: 0; font-size: 22px; }
+h2 { margin: 28px 0 8px; font-size: 16px; }
+#conn { color: var(--muted); font-size: 13px; }
+#graph { position: relative; }
+#edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#edges path { fill: none; stroke: var(--line); stroke-width: 2; }
+#edges path.on { stroke: var(--working); stroke-dasharray: 7 6; animation: flow .8s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -13; } }
+.top { display: flex; justify-content: center; margin-bottom: 56px; }
+.team { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.node { position: relative; width: 100%; min-height: 148px; padding: 12px 14px; background: var(--card);
+  border: 2px solid var(--c, var(--idle)); border-radius: 10px; }
+.top .node { max-width: 340px; }
+.node[data-status=working] { --c: var(--working); }
+.node[data-status=done] { --c: var(--done); }
+.node[data-status=stale] { --c: var(--stale); }
+.name { font-weight: 650; }
+.owns { color: var(--muted); font-size: 12px; }
+.badge { display: inline-block; margin: 8px 0 4px; font-size: 12px; font-weight: 650; color: var(--c, var(--idle)); }
+.action { min-height: 21px; overflow-wrap: anywhere; }
+.meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.err { color: var(--error); font-size: 12px; overflow-wrap: anywhere; }
+#log { list-style: none; margin: 0; padding: 0; background: var(--card); border-radius: 10px; max-height: 320px; overflow: auto; }
+#log li { display: grid; grid-template-columns: 72px 150px 1fr; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 13px; }
+#log li:last-child { border-bottom: 0; }
+#log .t, #log .r { color: var(--muted); }
+#log .x { overflow-wrap: anywhere; }
+#log .bad { color: var(--error); }
+@media (max-width: 760px) {
+  .top { margin-bottom: 16px; }
+  .team { grid-template-columns: 1fr; }
+  .top .node { max-width: none; }
+  #edges { display: none; }
+  #log li { grid-template-columns: 64px 1fr; }
+  #log .x { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { #edges path.on { animation: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header><h1>Đội agent</h1><span id="conn">Đang kết nối…</span></header>
+  <section id="graph">
+    <svg id="edges" aria-hidden="true"></svg>
+    <div class="top" id="top"></div>
+    <div class="team" id="team"></div>
+  </section>
+  <h2>Hoạt động gần đây</h2>
+  <ul id="log"></ul>
+</main>
+<script>
+const ROLES = [
+  ['producer', 'Producer', 'Điều phối, bảng tiến độ'],
+  ['game-designer', 'Game Designer', 'docs/briefs'],
+  ['gameplay-programmer', 'Gameplay Programmer', 'src, index.html'],
+  ['qa-tester', 'QA Tester', 'tests'],
+  ['balance-tuner', 'Balance Tuner', 'Giá trị TUNING'],
+  ['vfx-artist', 'VFX Artist', 'vfx, public/vfx'],
+];
+const NAMES = Object.fromEntries(ROLES.map(([id, name]) => [id, name]));
+const STATUS = { idle: 'Rảnh', working: 'Đang làm', done: 'Đã xong', stale: 'Không có tín hiệu' };
+const el = (tag, cls, text = '') => {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  node.textContent = text;
+  return node;
+};
+const parts = {};
+for (const [id, name, owns] of ROLES) {
+  const card = el('article', 'node');
+  card.dataset.role = id;
+  const p = { card, badge: el('div', 'badge'), action: el('div', 'action'), meta: el('div', 'meta'), err: el('div', 'err') };
+  card.append(el('div', 'name', name), el('div', 'owns', owns), p.badge, p.action, p.meta, p.err);
+  parts[id] = p;
+  document.getElementById(id === 'producer' ? 'top' : 'team').append(card);
+}
+const clock = (ts) => new Date(ts).toLocaleTimeString('vi-VN', { hour12: false });
+const duration = (ms) => {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  return s < 60 ? `${s} giây` : `${Math.floor(s / 60)} phút ${s % 60} giây`;
+};
+let state = null;
+
+function drawEdges() {
+  const svg = document.getElementById('edges');
+  const box = document.getElementById('graph').getBoundingClientRect();
+  svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  svg.replaceChildren();
+  const from = parts.producer.card.getBoundingClientRect();
+  const x1 = from.left + from.width / 2 - box.left;
+  const y1 = from.bottom - box.top;
+  for (const [id] of ROLES.slice(1)) {
+    const to = parts[id].card.getBoundingClientRect();
+    const x2 = to.left + to.width / 2 - box.left;
+    const y2 = to.top - box.top;
+    const mid = (y1 + y2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${x1} ${y1} C${x1} ${mid} ${x2} ${mid} ${x2} ${y2}`);
+    if (state?.nodes[id].status === 'working') path.classList.add('on');
+    svg.append(path);
+  }
+}
+
+function render() {
+  if (!state) return;
+  for (const [id] of ROLES) {
+    const n = state.nodes[id];
+    const p = parts[id];
+    p.card.dataset.status = n.status;
+    p.badge.textContent = STATUS[n.status] + (n.running > 1 ? ` (${n.running})` : '');
+    p.action.textContent = n.action || 'Chưa có hoạt động';
+    const bits = [];
+    if (n.status === 'working' && n.since) bits.push(duration(Date.now() - n.since));
+    if (n.tools) bits.push(`${n.tools} thao tác`);
+    if (n.lastTs) bits.push(`cuối lúc ${clock(n.lastTs)}`);
+    p.meta.textContent = bits.join(' · ');
+    p.err.textContent = n.lastError ? `Lỗi gần nhất: ${n.lastError}` : '';
+  }
+  const list = document.getElementById('log');
+  list.replaceChildren(...(state.log.length ? state.log.map((item) => {
+    const li = el('li');
+    li.append(el('span', 't', clock(item.ts)), el('span', 'r', NAMES[item.role]), el('span', item.error ? 'x bad' : 'x', item.text));
+    return li;
+  }) : [Object.assign(el('li'), { textContent: 'Chưa có hoạt động nào được ghi.' })]));
+  drawEdges();
+}
+
+const source = new EventSource('/events');
+source.onopen = () => { document.getElementById('conn').textContent = 'Đang theo dõi trực tiếp'; };
+source.onerror = () => { document.getElementById('conn').textContent = 'Mất kết nối, đang thử lại…'; };
+source.onmessage = (message) => { state = JSON.parse(message.data); render(); };
+addEventListener('resize', drawEdges);
+setInterval(render, 1000);
+</script>
+</body>
+</html>

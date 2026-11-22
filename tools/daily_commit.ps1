@@ -9,7 +9,7 @@ $Git = 'C:\Program Files\Git\cmd\git.exe'
 $Repo = Split-Path $PSScriptRoot -Parent
 $LogFile = Join-Path $PSScriptRoot 'daily_commit.log'
 $LockFile = Join-Path $PSScriptRoot '.daily_commit.lock'
-$Scope = @('CLAUDE.md', 'docs', '.claude/rules', '.claude/skills', 'tools/daily_commit.ps1')
+$Scope = @('CLAUDE.md', 'docs', '.claude/agents', '.claude/rules', '.claude/skills', 'tools/daily_commit.ps1')
 
 # Never wait for a login window in a background task.
 $env:GIT_TERMINAL_PROMPT = '0'

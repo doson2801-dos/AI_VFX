@@ -13,18 +13,19 @@ Stack: Phaser 4, TypeScript, Vite, Playwright. Trả lời người dùng bằng
 ## Đội agent
 Phiên chính là Producer, theo skill `producer`, và giao việc qua `.claude/agents/`:
 
-| Vị trí | Agent | Được sửa |
-|---|---|---|
-| Producer | phiên chính | `docs/production/` |
-| Game Designer | `game-designer` | `docs/briefs/` |
-| Gameplay Programmer | `gameplay-programmer` | `src/`, `index.html` |
-| QA Tester | `qa-tester` | `tests/` |
-| Balance Tuner | `balance-tuner` | giá trị `TUNING` trong `src/config.ts` |
+| Vị trí | Agent | Skill | Được sửa |
+|---|---|---|---|
+| Producer | phiên chính | `producer` | `docs/production/` |
+| Game Designer | `game-designer` | `write-brief` | `docs/briefs/` |
+| Gameplay Programmer | `gameplay-programmer` | `implement-mechanic` | `src/`, `index.html` |
+| QA Tester | `qa-tester` | `qa-acceptance` | `tests/` |
+| Balance Tuner | `balance-tuner` | `tune-balance` | giá trị `TUNING` trong `src/config.ts` |
+| VFX Artist | `vfx-artist` | `phaser-vfx`, dựa trên `vfx-code` | `vfx/`, `public/vfx/` |
 
 Kết luận đạt phải do `qa-tester` đưa ra. Agent chuyên môn không commit hay push.
 
 ## Quy trình cho mỗi prototype
-Skill `new-prototype` hướng dẫn chi tiết các bước dưới đây.
+Skill `producer` điều phối các bước dưới đây qua đội agent.
 
 1. Đọc brief trong `docs/briefs/`. Nếu chưa có, tạo từ `docs/GAME_BRIEF_TEMPLATE.md`. Chỉ hỏi khi thiếu thông tin làm thay đổi gameplay.
 2. Chia brief thành các cơ chế nhỏ, làm từng cơ chế một.
@@ -34,7 +35,7 @@ Skill `new-prototype` hướng dẫn chi tiết các bước dưới đây.
 
 ## Commit tự động
 - Task Scheduler `Game_AI Knowledge Commit` chạy `tools/daily_commit.ps1` lúc 18:00 hàng ngày, log ở `tools/daily_commit.log`.
-- Chỉ commit kiến thức (`CLAUDE.md`, `docs/`, `.claude/rules`, `.claude/skills`) và chỉ push nhánh `game-ai-prototype`.
+- Chỉ commit kiến thức (`CLAUDE.md`, `docs/`, `.claude/agents`, `.claude/rules`, `.claude/skills`) và chỉ push nhánh `game-ai-prototype`.
 - Không push nhánh `main` từ dự án này. `main` có lịch commit riêng.
 
 ## Luật

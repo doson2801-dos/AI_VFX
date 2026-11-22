@@ -17,8 +17,23 @@ Mỗi prototype có `docs/production/<ten-game>.md`, tạo từ `docs/PRODUCTION
    2. `qa-tester` viết test theo tiêu chí và kiểm tra.
    3. Nếu không đạt, gửi nguyên báo cáo lỗi cho `gameplay-programmer`, rồi QA kiểm lại.
 3. **Cân chỉnh:** giao `balance-tuner` khi các cơ chế đã đạt, rồi `qa-tester` kiểm lại.
-4. **Kiểm tra cuối:** `qa-tester` chạy `npm run verify`.
-5. **Báo người dùng:** tiêu chí đạt, chưa đạt, chưa kiểm được và các điểm cần tự chơi để đánh giá.
+4. **Kiểm tra cuối:** `qa-tester` chạy `npm run verify`, gồm typecheck, test, build và kiểm tra code dev không lọt vào `dist/`.
+5. **Chốt brief:** gửi kết luận của QA cho `game-designer` để đánh dấu tiêu chí đạt.
+6. **Báo người dùng:** tiêu chí đạt, chưa đạt, chưa kiểm được (ví dụ điện thoại thật) và các điểm cần tự chơi để đánh giá. Test tự động không kết luận được game có vui hay không.
+
+## Skill của từng agent
+| Agent | Skill |
+|---|---|
+| `game-designer` | `write-brief` |
+| `gameplay-programmer` | `implement-mechanic` |
+| `qa-tester` | `qa-acceptance` |
+| `balance-tuner` | `tune-balance` |
+| `vfx-artist` | `phaser-vfx`, dựa trên `vfx-code` |
+
+## VFX
+Chỉ giao `vfx-artist` khi brief có hiệu ứng trong phạm vi và cơ chế liên quan đã được QA kết luận đạt. Thứ tự: `vfx-artist` tạo sheet, `gameplay-programmer` gắn vào game, `qa-tester` kiểm lại. Người dùng là người duyệt hình ảnh.
+
+Nếu không gọi được agent, Producer tự làm bước đó theo đúng skill tương ứng và báo rõ với người dùng rằng bước kiểm tra không còn độc lập.
 
 ## Giao việc
 - Agent chỉ biết những gì ghi trong lời giao. Luôn nêu: tên game, đường dẫn brief, đúng một việc, tiêu chí xong, báo cáo của bước trước nếu liên quan.

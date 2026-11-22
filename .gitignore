@@ -1,3 +1,6 @@
+.agent-board/
+vfx/*/out/
+.venv-vfx/
 node_modules/
 dist/
 test-results/
