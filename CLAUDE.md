@@ -7,13 +7,16 @@ Stack: Phaser 4, TypeScript, Vite, Playwright. Trả lời người dùng bằng
 - `npm run typecheck`: kiểm tra kiểu
 - `npm test`: chạy test trình duyệt, ảnh chụp nằm trong `artifacts/`
 - `npm run build`: build bản phát hành vào `dist/`
+- `npm run verify`: chạy typecheck, test, build và kiểm tra code dev không lọt vào `dist/`
 
 ## Quy trình cho mỗi prototype
+Skill `new-prototype` hướng dẫn chi tiết các bước dưới đây.
+
 1. Đọc brief trong `docs/briefs/`. Nếu chưa có, tạo từ `docs/GAME_BRIEF_TEMPLATE.md`. Chỉ hỏi khi thiếu thông tin làm thay đổi gameplay.
 2. Chia brief thành các cơ chế nhỏ, làm từng cơ chế một.
 3. Mỗi cơ chế phải có test Playwright theo tiêu chí trong brief.
 4. Sau mỗi cơ chế: chạy typecheck và test, xem ảnh trong `artifacts/`, sửa rồi mới làm tiếp.
-5. Khi xong: chạy `npm run build`, báo tiêu chí nào đạt và điểm nào cần người chơi tự đánh giá.
+5. Khi xong: chạy `npm run verify`, báo tiêu chí nào đạt và điểm nào cần người chơi tự đánh giá.
 
 ## Commit tự động
 - Task Scheduler `Game_AI Knowledge Commit` chạy `tools/daily_commit.ps1` lúc 18:00 hàng ngày, log ở `tools/daily_commit.log`.
