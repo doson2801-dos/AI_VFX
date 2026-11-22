@@ -8,6 +8,20 @@ Stack: Phaser 4, TypeScript, Vite, Playwright. Trả lời người dùng bằng
 - `npm test`: chạy test trình duyệt, ảnh chụp nằm trong `artifacts/`
 - `npm run build`: build bản phát hành vào `dist/`
 - `npm run verify`: chạy typecheck, test, build và kiểm tra code dev không lọt vào `dist/`
+- `npm run board`: mở sơ đồ node theo dõi agent tại http://127.0.0.1:5180, dữ liệu từ hook trong `.claude/settings.json`
+
+## Đội agent
+Phiên chính là Producer, theo skill `producer`, và giao việc qua `.claude/agents/`:
+
+| Vị trí | Agent | Được sửa |
+|---|---|---|
+| Producer | phiên chính | `docs/production/` |
+| Game Designer | `game-designer` | `docs/briefs/` |
+| Gameplay Programmer | `gameplay-programmer` | `src/`, `index.html` |
+| QA Tester | `qa-tester` | `tests/` |
+| Balance Tuner | `balance-tuner` | giá trị `TUNING` trong `src/config.ts` |
+
+Kết luận đạt phải do `qa-tester` đưa ra. Agent chuyên môn không commit hay push.
 
 ## Quy trình cho mỗi prototype
 Skill `new-prototype` hướng dẫn chi tiết các bước dưới đây.
