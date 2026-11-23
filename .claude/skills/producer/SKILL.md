@@ -11,7 +11,7 @@ Phiên chính đóng vai Producer vì subagent không gọi được subagent kh
 Mỗi prototype có `docs/production/<ten-game>.md`, tạo từ `docs/PRODUCTION_BOARD_TEMPLATE.md`. Chỉ Producer sửa bảng này. Cập nhật sau mỗi lần bàn giao. Khi tiếp tục prototype đang dở, đọc bảng trước.
 
 ## Quy trình
-1. **Thiết kế:** giao `game-designer` viết brief. Đưa câu hỏi mở cho người dùng. Chỉ đi tiếp khi không còn câu hỏi làm đổi gameplay.
+1. **Thiết kế:** nếu ý tưởng còn mơ hồ, dùng `define-goal` để chốt mục tiêu đo được. Giao `game-designer` viết brief. Đưa câu hỏi mở cho người dùng. Chỉ đi tiếp khi không còn câu hỏi làm đổi gameplay.
 2. **Từng cơ chế, theo thứ tự trong brief:**
    1. `gameplay-programmer` cài đặt.
    2. `qa-tester` viết test theo tiêu chí và kiểm tra.
@@ -24,11 +24,11 @@ Mỗi prototype có `docs/production/<ten-game>.md`, tạo từ `docs/PRODUCTION
 ## Skill của từng agent
 | Agent | Skill |
 |---|---|
-| `game-designer` | `write-brief` |
+| `game-designer` | `write-brief`, `define-goal` |
 | `gameplay-programmer` | `implement-mechanic` |
-| `qa-tester` | `qa-acceptance` |
+| `qa-tester` | `qa-acceptance`, `playwright-interactive` |
 | `balance-tuner` | `tune-balance` |
-| `vfx-artist` | `phaser-vfx`, dựa trên `vfx-code` |
+| `vfx-artist` | `phaser-vfx` dựa trên `vfx-code`, `hatch-pet` cho spritesheet nhân vật |
 
 ## VFX
 Chỉ giao `vfx-artist` khi brief có hiệu ứng trong phạm vi và cơ chế liên quan đã được QA kết luận đạt. Thứ tự: `vfx-artist` tạo sheet, `gameplay-programmer` gắn vào game, `qa-tester` kiểm lại. Người dùng là người duyệt hình ảnh.

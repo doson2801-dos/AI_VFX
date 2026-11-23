@@ -16,11 +16,11 @@ Phiên chính là Producer, theo skill `producer`, và giao việc qua `.claude/
 | Vị trí | Agent | Skill | Được sửa |
 |---|---|---|---|
 | Producer | phiên chính | `producer` | `docs/production/` |
-| Game Designer | `game-designer` | `write-brief` | `docs/briefs/` |
+| Game Designer | `game-designer` | `write-brief`, `define-goal` | `docs/briefs/` |
 | Gameplay Programmer | `gameplay-programmer` | `implement-mechanic` | `src/`, `index.html` |
-| QA Tester | `qa-tester` | `qa-acceptance` | `tests/` |
+| QA Tester | `qa-tester` | `qa-acceptance`, `playwright-interactive` | `tests/` |
 | Balance Tuner | `balance-tuner` | `tune-balance` | giá trị `TUNING` trong `src/config.ts` |
-| VFX Artist | `vfx-artist` | `phaser-vfx`, dựa trên `vfx-code` | `vfx/`, `public/vfx/` |
+| VFX Artist | `vfx-artist` | `phaser-vfx` dựa trên `vfx-code`, `hatch-pet` | `vfx/`, `public/vfx/` |
 
 Kết luận đạt phải do `qa-tester` đưa ra. Agent chuyên môn không commit hay push.
 
