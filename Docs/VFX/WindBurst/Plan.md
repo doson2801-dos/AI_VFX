@@ -35,4 +35,4 @@ Thứ tự vẽ: Vortex 0, WaveRing 1, WaveRing2 2, Dust 3, Streaks 4, Leaves 5.
 | Lá | `spark/shard` | `spark_shard_002` (không có ảnh lá thật trong Library: xấp xỉ) | `spark_shard_001` | `003` |
 
 Builder: `Assets/VFX/WindBurst/Editor/WindBurstBuild.cs` (menu `VFX/WindBurst/Build`). Prefab `Assets/VFX/WindBurst/Prefabs/VFX_WindBurst.prefab`. Preview `Docs/VFX/WindBurst/Preview_sheet.png`.
-Chưa chắc: (a) bản preview đầu quá nhiều dải nhọn kiểu nhím, đã giảm (đang chờ xem lại); (b) chiều xoắn của dải so với đĩa Vortex có thể ngược nhau; (c) lá chỉ là lưỡi nhọn trắng nhuộm xanh; (d) chưa vào `Included`.
+Chưa chắc: v1.1 (sau review): dải 23 cái (9/8/6), dài 5×, rộng 0.2–0.3 m nên thấy rõ, hơi kiểu gai nhọn. Chiều xoắn: orbitalY dương = thuận chiều kim đồng hồ nhìn từ trên (hệ toạ độ trái Unity), Vortex xoay z âm = thuận chiều kim đồng hồ nhìn từ trên: cùng chiều theo suy luận, chưa kiểm bằng video. Chưa chắc: (a) dải còn nhọn; (c) lá chỉ là lưỡi nhọn trắng nhuộm xanh; (d) chưa vào `Included`.

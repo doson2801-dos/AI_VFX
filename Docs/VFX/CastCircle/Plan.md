@@ -23,7 +23,7 @@ Màu (*đề xuất*, xanh dương-cyan): Core `#E8FDFF` · Cyan `#3FD8FF` · Bl
 | 4 | RingInner | sao 5 cánh 0.6 m, +210°/s, trễ 0.1 | như trên | -3 |
 | 5 | Shock | vành sóng nở 0.3->2.8 m ở t=0.6 | như trên | -2 |
 | 6 | Flash | chớp lõi t=0.6 | như trên | 1 |
-| 7 | Motes | 28 hạt cone 10° bắn ra +Z | Billboard | 2 |
+| 7 | Motes | 36 hạt cone 10° (0.1-0.2 m) bắn ra +Z | Billboard | 2 |
 | 8 | Sparkles | 8 sao 4 cánh quanh viền | Billboard | 3 |
 
 ## Texture (chép từ Library bằng `prep_tex.py`, Library không đổi)
@@ -39,8 +39,12 @@ Màu (*đề xuất*, xanh dương-cyan): Core `#E8FDFF` · Cyan `#3FD8FF` · Bl
 | Sparkles | `spark/star` | `spark_star_003.png` | `_001`, `_008` | 006, 014, 015, 017, 010 |
 
 ## Kết quả preview (2026-11-25)
-`Docs/VFX/CastCircle/Preview_sheet.png` (14 khung, 0.1 s): vòng đứng (tỉ lệ cao/rộng ~0.78 = đúng vòng đứng nhìn 40°), 3 vòng đọc được, chớp t=0.6 + vành sóng, tắt ~1.2 s. Build không lỗi, 140 hạt tối đa.
+`Docs/VFX/CastCircle/Preview_sheet.png` (14 khung, 0.1 s): vòng đứng (tỉ lệ cao/rộng ~0.78 = đúng vòng đứng nhìn 40°), 3 vòng đọc được, chớp t=0.6 + vành sóng, tắt ~1.2 s. Build không lỗi, 148 hạt tối đa.
 Chưa chắc: chưa xem trên rig nhân vật thật (vị trí tay phụ thuộc skeleton, cần gắn prefab làm con của bone tay + xoay theo hướng nhân vật); chưa kiểm hạt Motes bay đúng +Z trên preview (khung nhỏ); chưa review vfx-director.
+
+## Đối chiếu Bất biến (2026-11-25, sau review vfx-director)
+- Camera sau lưng: `Preview_motes_zoom.png` (zoom 2x). Camera bên (từ +X): `Preview_side.png` (4 khung t=0.62 / 0.7 / 0.8 / 0.9 s): vòng đứng, pháp tuyến +Z (ellipse hẹp), **Motes bay ra +Z rõ** sau chớp. Motes ban đầu quá nhỏ (0.04-0.1 m, gần như không thấy) -> nâng 0.1-0.2 m, 36 hạt, rebuild không lỗi.
+- Đối chiếu `_Anatomy/cast-circle.md`: 3 vòng xoay xen kẽ, một chớp t=0.6 s, tắt 1.2 s, không Vertical Billboard. Đạt từng mục.
 
 ## Dựng
 Menu `VFX/CastCircle/Build` hoặc `-executeMethod VfxEffects.CastCircleBuild.BuildBatch`. Prefab `Assets/VFX/CastCircle/Prefabs/VFX_CastCircle.prefab`. Chưa vào `Included`.

@@ -30,3 +30,7 @@ Chất liệu quả cầu (lửa; băng: cầu tinh thể + mảnh; độc: cụ
 
 ## Biến thể đã làm
 Gốc (lửa), Frost, Poison.
+- **FireballStraight** (2026-11-25, chờ art lead): bay thẳng 10 m / 0,65 s, đuôi dài (aspect 4,5, ribbon ~8 m) + comet tàn lửa, nổ trên không ở độ cao ngực. Khác gốc ở hành vi (không cung, không chạm đất) và timing. Plan: `Docs/VFX/FireballStraight/Plan.md`.
+- **FireballCharge** (2026-11-25, chờ art lead): tích tụ 1 s trước tay (quả 0,6 m + tuft xoay + tàn lửa hút vào + vòng co), thả, bay thẳng 6 m, nổ nhỏ ~1,4 m. Hạt thân dùng `startDelay` = thời gian tích tụ. Plan: `Docs/VFX/FireballCharge/Plan.md`.
+
+Lỗi mới (2026-11-25): Meteor `_HeadX` cho Stretched Billboard: quad trải x -Aspect..+Aspect (đơn vị nửa chiều cao), đầu cầu = mép trái = vị trí hạt, nên `_HeadX = -(Aspect - 0,9)` (không tỉ lệ thuận theo aspect). `trail_streak_012` và `glow_soft_round_029` nằm trong "Sai vai trò đã biết" (không dùng). Sheet 2×2 `smoke_sheet_002` làm lưỡi lửa ra cục mây: Library chưa có sheet lửa thật.

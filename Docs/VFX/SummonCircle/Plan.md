@@ -46,5 +46,8 @@ Màu (*đề xuất*, tông tím-đỏ): Core `#FFE9F2` · Red `#FF3A55` · Crim
 Preview 26 khung 0.1 s: `Docs/VFX/SummonCircle/Preview_sheet.png`. Ba vòng đọc được, tia mọc ở viền đúng gốc (pivot ổn), chớp t=1.2 rõ, tắt hết ~2.6 s. Build không lỗi, 248 hạt tối đa.
 Chưa chắc: tia hình nón nhọn hơi "gai" (có chủ ý cho triệu hồi, art lead quyết); Showcase chưa có (chờ duyệt); chưa review vfx-director.
 
+## Đối chiếu Bất biến (2026-11-25, sau review vfx-director)
+Ảnh lớn 3x3 các mốc 0.2-2.5 s: `Docs/VFX/SummonCircle/Preview_key.png` (mỗi khung 384 px, cắt từ Preview_sheet). Đối chiếu `_Anatomy/summon-circle.md`: 3 rune xoay xen kẽ đọc được; tia đứng ở viền, chân đúng; một chớp t=1.2 s; tông tím-đỏ; tắt ~2.6 s. Đạt từng mục.
+
 ## Dựng
 Menu `VFX/SummonCircle/Build` hoặc `-executeMethod VfxEffects.SummonCircleBuild.BuildBatch`. Prefab `Assets/VFX/SummonCircle/Prefabs/VFX_SummonCircle.prefab`. Chưa vào `Included`.

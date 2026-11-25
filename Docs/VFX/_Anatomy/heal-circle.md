@@ -27,3 +27,4 @@ Màu, họa tiết vòng (thánh: vòng chữ + sao; thiên nhiên: dây leo + l
 
 ## Biến thể đã làm
 Gốc (xanh lá), Holy, Nature, **Arcane** (tím, 2026-11-18, order thử của anh Hậu: nạp 3 nhịp + vành sóng, 2 vòng rune Library `rune/circle` 003 + 008, 6 cầu sáng leo xoắn, cột hẹp 3 m; v2: cột bùng ~0.1 s rồi tan; v3: pivot cột ở gốc + texture cột `trail_streak_001`; v4: cột đứng yên, bùng tại chỗ rồi tan; kế hoạch `Docs/VFX/HealCircle_Arcane/Plan.md`).
+**SummonCircle** (2026-11-25, vòng triệu hồi 6 m, tím-đỏ, 3 rune + 8 tia viền; xem `summon-circle.md`) và **CastCircle** (2026-11-25, vòng dựng đứng trước tay, xanh dương-cyan; xem `cast-circle.md`) là hai effect riêng cùng họ "vòng phép", không phải biến thể hồi máu.

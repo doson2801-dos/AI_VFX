@@ -15,8 +15,8 @@ Khác với: WindTornado (cột xoáy đứng đứng yên) và WindShellTrail (
 ## Lớp
 | ID | Lớp | Vai trò / timing | Carrier | Shader | Texture |
 |---|---|---|---|---|---|
-| L1 | Blade (root) | lưỡi chính, sống 0.6 s, bay 13.3 m/s, mờ vào 10% / ra 30% cuối, tan streak theo Custom1.x | mesh `SM_VFX_Slash_Circle_Thin` cắt cung 40% vòng, tâm cung = x của hạt | Coloso Alpha | xem dưới |
-| L2 | Edge | viền sáng mỏng trên lưỡi, cung 24% | cùng mesh, scale ×1.01 | Coloso Additive | xem dưới |
+| L1 | Blade (root) + BladeM | **v1.1**: lưỡi = 2 nửa đối xứng (A và B lật gương, mỗi nửa cung 24% vòng, đầu dày ở giữa u = 0.25, đuôi mỏng ra hai mũi) ghép thành lưỡi liềm; lưỡi chính, sống 0.6 s, bay 13.3 m/s, mờ vào 10% / ra 30% cuối, tan streak theo Custom1.x | mesh `SM_VFX_Slash_Circle_Thin` cắt cung 40% vòng, tâm cung = x của hạt | Coloso Alpha | xem dưới |
+| L2 | Edge + EdgeM | viền sáng mỏng trên lưỡi, mỗi nửa cung 17% | cùng mesh, scale ×1.01 | Coloso Additive | xem dưới |
 | L3 | Wake | 7 hạt mang theo cùng tốc độ, mỗi hạt kéo một Trails ribbon (đời 0.3 s) = vạch gió dài | Trails PerParticle, World | Mobile Additive | xem dưới |
 | L4 | Dust0..7 | 8 trạm dọc đường, mỗi trạm nổ khi lưỡi đi qua (startDelay = x / v), 3 hạt khói bụi | Billboard, World | Mobile Alpha Blended | xem dưới |
 | L5 | Leaves0..7 | như L4, 3 lá văng ngẫu nhiên, gravity 0.3 | Stretched Billboard (2x4 ô ngẫu nhiên) | Mobile Alpha Blended | xem dưới |
@@ -29,7 +29,7 @@ Lý do Dust / Leaves dùng trạm: Edge shape + arc Loop **không quét** theo t
 |---|---|---|---|---|
 | Blade `_MainTex` | `Slash/Main_tex(Uvmesh)` | `Slash_Main_tex_Uvmesh_028` (xám nhiều lớp, đầu trái, đuôi sọc phải = lớp gió) | `Slash_Main_tex_Uvmesh_029` | `025` (hình tia sét), `006` (sao chổi tròn), `016` (khối phồng) |
 | Edge `_MainTex` | `Slash/Main_tex(Uvmesh)` | `Slash_Main_tex_Uvmesh_030` (nêm đặc, đuôi sọc) | `027` | `021` (quá cụt) |
-| `_MaskTex` | `mask/gradient` | `mask_gradient_008` (dải sáng giữa, mờ hai mép v) | `mask_gradient_005` | `003` (hình đặc), `004` (viền răng) |
+| `_MaskTex` | luật Coloso (không phải Library) | `Assets/VFX/Slash360/Textures/T_VFX_Gradient_01.png` | - | `mask_gradient_008` (đã thay theo review: luật bắt buộc T_VFX_Gradient_01) |
 | Dissolve | `noise/streak` | `noise_streak_003` (sọc ngang, tan thành sợi) | `noise_streak_006` | `005`/`007` (sọc dọc) |
 | Wake ribbon | `trail/streak` | `trail_streak_005` (vạch mảnh nhọn hai đầu, có alpha) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi ở LIBRARY) |
 | Dust | `smoke/soft` | `smoke_soft_004` (đốm mềm, alpha) | `smoke_soft_001` | `smoke_soft_003` (nhỏ, có chi tiết), `006` (hạt thô) |
@@ -38,4 +38,5 @@ Lý do Dust / Leaves dùng trạm: Edge shape + arc Loop **không quét** theo t
 Ghi chú: Frame over Time không dùng (chọn ô ngẫu nhiên, không chạy flipbook).
 
 Builder: `Assets/VFX/WindSlash/Editor/WindSlashBuild.cs` (menu `VFX/WindSlash/Build`). Prefab `Assets/VFX/WindSlash/Prefabs/VFX_WindSlash.prefab`. Preview `Docs/VFX/WindSlash/Preview_sheet.png`.
-Chưa chắc: (a) hình lưỡi liềm hơi giống "đầu sao chổi" vì texture 028 bất đối xứng (chỉ một mũi kéo đuôi); (b) hướng đầu / đuôi của texture trên mesh chỉ kiểm bằng preview; (c) chưa vào `Included`, chưa có đèn demo; (d) Finish() của kit thay scene đang mở bằng scene trống khi chụp preview.
+v1.1 (sau review): bán kính 2.6 m, ghép hai nửa lật gương nên hết đầu sao chổi, ra hình C hai mũi kéo ra sau; xoá code chết Sweeper / Drift.
+Chưa chắc: (a) lưỡi vẫn nhỏ so với 8 m đường bay (~2.5 m chord), cần art lead xem; (b) hướng đầu / đuôi của texture trên mesh chỉ kiểm bằng preview; (c) chưa vào `Included`, chưa có đèn demo; (d) Finish() của kit thay scene đang mở bằng scene trống khi chụp preview.

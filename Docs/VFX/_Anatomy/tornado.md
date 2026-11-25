@@ -28,3 +28,4 @@ Chất liệu (lửa, băng, cát...), màu, hạt chân.
 
 ## Biến thể đã làm
 FireTornado (lửa), Frost, Sand; WindTornado (gió).
+WindBurst (gió bùng quanh chân, 1.2 s) là hiệu ứng khác tornado: không đứng yên, không cột; xem `wind-burst.md`.

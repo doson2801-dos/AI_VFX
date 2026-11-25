@@ -28,4 +28,4 @@ Màu (cam–vàng / xanh / tím), số lưỡi, nhịp bốc, lớp tàn, khói.
 (chưa có; thêm khi build)
 
 ## Biến thể đã làm
-(chưa có) — `VFXHandFlame` là bản gốc.
+(chưa có) — `VFXHandFlame` là bản gốc. Liên quan: pha tích tụ của `FireballCharge` (2026-11-25) là một quả lửa lớn dần trước tay, không dùng chung lớp với flame tay.

@@ -65,3 +65,7 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Nổ mở phần thưởng (hộp / Starr Drop: tích, vòng, chớp, chùm tia, nổ sao) | `reward-burst.md` | theo video ref art lead 2026-11-18 |
 | Tạo hình đặc trưng theo chất liệu / nguyên tố | `materials.md` | kiến thức chung, chỉnh khi art lead chốt khác |
 | Đất bung lên khi xe chạy (clod + bụi từ bánh sau, theo tốc độ) | `dirt-kickup.md` | suy từ web + giả định (art lead chưa có ref) |
+| Lưỡi gió chém bay ngang (lưỡi liềm mesh + sọc gió + bụi / lá dọc đường) | `wind-slash.md` | giả định từ Plan + preview (2026-11-25) |
+| Gió bùng quanh chân (vòng gió nằm đất + dải xoắn + bụi / lá) | `wind-burst.md` | giả định từ Plan + preview (2026-11-25) |
+| Vòng triệu hồi nằm đất (3 rune xoay, tia viền, chớp giữa) | `summon-circle.md` | suy từ order + Plan |
+| Vòng phép dựng đứng trước tay (3 vòng đồng tâm, chớp, hạt bắn ra trước) | `cast-circle.md` | suy từ order + Plan |

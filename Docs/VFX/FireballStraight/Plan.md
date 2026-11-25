@@ -24,7 +24,7 @@ Hành vi (thẳng, vận tốc không đổi, nổ trên không ở độ cao ng
 | L4b | Embers | tàn lửa tròn rơi, 60/s | Birth sub-emitter | `glow_soft_round_007` |
 | L4c | ShedComets | tia comet thả ngược sau cầu (có hướng: ít, nhỏ, đúng hướng), 45/s | Stretched | `spark/streak/spark_streak_001` |
 | L5 | Flash | **một** chớp Impact, 0,14 s, 2,2 m | Billboard Additive | `impact/flash_spiky/impact_flash_spiky_001` |
-| L6 | FireBurst | khối glow nóng → cam → đỏ, 0,45 s, 2 m | Billboard Additive | `glow/soft_round/glow_soft_round_029` |
+| L6 | FireBurst | khối glow nóng → cam → đỏ, 0,45 s, 2 m | Billboard Additive | `glow/soft_round/glow_soft_round_005` |
 | L7 | Sparks | 18 comet bắn 360° rồi rơi | Stretched Additive | `spark_streak_001` |
 | L8 | Smoke | 9 cầu ăn mòn nhỏ (luật khói vụ nổ, GroundBlast v5c), cháy → gân → than → tan | Mesh `SM_VFX_SphereUV`, `VFX/FX/Erode Sphere` | mask `T_GroundBlast_SmokeErode` + ramp |
 
@@ -35,8 +35,8 @@ Các ảnh glow / flash / smoke / streak đã dùng trong FireballThrow (tên c�
 | Thành phần | Ảnh chọn | Lý do | Dự phòng / đã loại |
 |---|---|---|---|
 | Ribbon đuôi | `trail/streak/trail_streak_011` | trái đặc, phải rách sọc: đuôi lửa liền mà không thành thanh đặc, black_bg dùng Additive | dự phòng `trail_streak_010` (comet mảnh); loại `trail_streak_012` (opaque trắng đặc: lỗi đuôi băng đã gặp) |
-| Lõi / tàn lửa | `glow/soft_round/glow_soft_round_007` | glow tròn mềm, alpha | `glow_soft_round_029` |
-| Khối nổ | `glow/soft_round/glow_soft_round_029` | lõi đặc, mép mềm | `007` |
+| Lõi / tàn lửa | `glow/soft_round/glow_soft_round_007` | glow tròn mềm, alpha | `glow_soft_round_005` |
+| Khối nổ (FireBurst) | `glow/soft_round/glow_soft_round_005` | 329 px alpha thật, xám; thay `_029` (128 px, ghi "sai vai trò" ở LIBRARY.md) theo review | `007` (500 px, black_bg) |
 | Chớp | `impact/flash_spiky/impact_flash_spiky_001` | sao gai mềm | `flash_spiky_014` |
 | Comet | `spark/streak/spark_streak_001` | đầu tròn bên trái, đuôi nhọn, black_bg Additive | `spark_streak_003` (alpha thật, chạm mép), loại `006` (khối to) |
 | Lưỡi lửa | `smoke/sheet/smoke_sheet_002` | 2×2 mây toon 2 tông, nhuộm thành lửa; không hướng nên được spam | `smoke/cartoon/*` |
@@ -47,3 +47,8 @@ Shader: dùng lại `VFX/FX/Meteor`, `VFX/FX/Erode Sphere`, stock. Không viết
 - `_HeadX` công thức `-(Aspect-0.9)` suy từ shader + đo preview; kiểm lại trong Showcase.
 - Hình lưỡi lửa là mây toon nhuộm (cùng cách FireballThrow v2); art lead chưa nói có hợp không.
 - Chưa có Lights demo trong `VfxShowcaseLights.Table` (chờ duyệt).
+
+## Review vfx-director (2026-11-25) và đối chiếu Bất biến
+- FireBurst đổi sang `glow_soft_round_005` (029 nằm trong "Sai vai trò đã biết"; đã loại).
+- **Lưỡi lửa (FlameLicks)**: `smoke_sheet_002` ghi trong LIBRARY.md là "4 cụm mây cartoon, không phải lửa". Đã tìm ảnh lửa thật trong `Assets/Library/`: **không có** thư mục / ảnh lửa flipbook (các `FX_TX_Fire_FireLoop_*`, `TX_VFX_Flame*` chỉ có trong contact sheet `fire_candidates.png`, chưa nhập Library; chỉ có `impact/flipbook/001-003` là FireImpact dùng cho nổ). Vẫn dùng `smoke_sheet_002` nhuộm cam. **Art lead quyết**: nhập `FireLoop_03` (hướng, dùng ít hạt theo luật sheet có hướng) hay giữ mây toon.
+- Đối chiếu Bất biến trên preview: thân + đuôi tách bạch giữa chuyến bay, bay thẳng, một chớp ở đích (0,65 s), không nổ trước đó. Còn lệch: đầu cầu hơi cháy trắng.
