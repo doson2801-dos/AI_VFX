@@ -29,6 +29,8 @@ Chớp 0 → 0.3 s · vòng gai 0–0.7 s · tia gai 0–0.4 s · bụi nở 0�
 Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không chip mảnh xúc xắc, kiểu bụi (cuộn / bốc cột).
 
 ## Lỗi dự đoán
+- **Billboard bị mặt đất cắt**: hạt billboard cỡ lớn có tâm sát y = 0 thì nửa dưới chìm dưới sàn và lộ cạnh phẳng / chữ nhật. Nâng tâm lên ≥ nửa kích thước (chớp 1.6–1.8 m, bụi phát từ y = 1 m); preview dựng sàn thật mới thấy.
+- Drag của Limit Velocity mặc định nhân theo kích thước hạt (`multiplyDragByParticleSize`): hạt to bị phanh quá mạnh, bụi không toả được. Dùng Speed Modifier của Velocity over Lifetime để điều khiển tầm toả.
 - Bụi ra màu bùn / khói bẩn nếu alpha blend vàng sẫm: giữ vàng sáng + hạt cộng sáng bên trong.
 - Chớp + quầng cháy trắng kín khung: chớp ≤ 6 m, alpha đỉnh ≤ 0.9, ≤ 0.3 s.
 - Stretched hạt tia: texture symmetric nên không lệ thuộc hướng, nhưng vẫn không xoay ngẫu nhiên thủ công.

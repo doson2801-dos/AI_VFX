@@ -14,7 +14,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.8 s (gia tốc, nhanh dần), xoay ~0.5 vòng. Vệt dài ~5–6 m ngược lên; tan sạch trong ~0.5 s sau khi xúc xắc dừng. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.8 s (gia tốc, nhanh dần), xoay ~1.2 vòng (540°/s). Vệt dài ~5–6 m ngược lên; tan sạch trong ~0.5 s sau khi xúc xắc dừng. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
 - Dải **xuất phát từ các góc** của xúc xắc (nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
@@ -27,6 +27,7 @@ Rơi ~0.8 s (gia tốc, nhanh dần), xoay ~0.5 vòng. Vệt dài ~5–6 m ngư�
 Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xoắn, mật độ lấp lánh, chất khói (bụi vàng / khói mềm).
 
 ## Lỗi biến thể / lỗi dự đoán
+- **Ribbon (Trails mode Ribbon): vị trí 0 của width / color over trail là đầu CŨ (đuôi), 1 là đầu mới** (sát hạt gốc). Đặt ngược thì dải dày + cụt phẳng ở xa xúc xắc, mảnh ở sát (reviewer 2026-11-25). Thêm: Noise + hướng ngẫu nhiên của cone + rate over time cho ra dây zig-zag giống **tia sét** (bản thử 1–2 bị chê): dùng rate over distance, không Noise, cone góc ~1°, texture dải mềm `trail_ribbon_019` (không dùng `trail_streak_005` làm ribbon: mảnh như dây điện).
 - Ribbon (Trails) cần `renderMode None` ở hạt gốc, nếu không hiện thêm chuỗi chấm dọc dải.
 - Texture dải có đầu / đuôi thon theo U: lấy khúc giữa (tiling X 0.4) để thân dải không bị tối đầu.
 - Rate over distance không chạy khi chụp Simulate bằng bước lớn: dùng bước 1/60 s hoặc rate over time.
