@@ -27,10 +27,11 @@ Rơi ~0.45 s (gia tốc, nhanh dần; art lead muốn rơi mạnh), xoay ~0.65 v
 Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xoắn, mật độ lấp lánh, chất khói (bụi vàng / khói mềm).
 
 ## Lỗi biến thể / lỗi dự đoán
-- **Ribbon (Trails mode Ribbon): vị trí 0 của width / color over trail là đầu CŨ (đuôi), 1 là đầu mới** (sát hạt gốc). Đặt ngược thì dải dày + cụt phẳng ở xa xúc xắc, mảnh ở sát (reviewer 2026-11-25). Thêm: Noise + hướng ngẫu nhiên của cone + rate over time cho ra dây zig-zag giống **tia sét** (bản thử 1–2 bị chê): dùng rate over distance, không Noise, cone góc ~1°, texture dải mềm `trail_ribbon_019` (không dùng `trail_streak_005` làm ribbon: mảnh như dây điện).
+- **Ribbon (Trails mode Ribbon): vị trí 0 của width / color over trail là đầu CŨ (đuôi), 1 là đầu mới** (sát hạt gốc). Đặt ngược thì dải dày + cụt phẳng ở xa xúc xắc, mảnh ở sát (reviewer 2026-11-25). Thêm: Noise + hướng ngẫu nhiên của cone + rate over time cho ra dây zig-zag giống **tia sét** (bản thử 1–2 bị chê): dùng rate over distance, không Noise, cone góc ~1°, texture dải mềm (`trail_ribbon_019` ở v1–v2; v3 art lead chê gãy / cứng / đều nên đổi sang một ô của `impact_flipbook_016`; không dùng `trail_streak_005` làm ribbon: mảnh như dây điện).
+- **Ribbon: startSize và startColor phải HẰNG cho từng dải** (với `sizeAffectsWidth` + `inheritParticleColor`, mỗi điểm lấy một cỡ / màu ngẫu nhiên khác thì mép dải răng cưa, sọc màu). Biến thiên đặt ở `widthOverTrail` / `colorOverTrail` và khác nhau **giữa các dải** (đời, rộng, tốc độ).
 - Ribbon (Trails) cần `renderMode None` ở hạt gốc, nếu không hiện thêm chuỗi chấm dọc dải.
-- Texture dải có đầu / đuôi thon theo U: lấy khúc giữa (tiling X 0.4) để thân dải không bị tối đầu.
+- Texture dải có đầu / đuôi thon theo U: lấy khúc giữa (tiling cửa sổ một ô (0.32×0.3, offset 0.08/0.07)) để thân dải không bị tối đầu.
 - Rate over distance không chạy khi chụp Simulate bằng bước lớn: dùng bước 1/60 s hoặc rate over time.
 
 ## Biến thể đã làm
-- `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead).
+- `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.

@@ -72,10 +72,10 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## v3 (feedback Sơn sau demo v2: "trail bị gãy, cứng, quá đều, đổi thử texture impact khác")
 - Texture dải: `trail_ribbon_019` → `impact_flipbook_016` (ô dưới-trái, xem bảng texture).
 - Bớt đều: mỗi trong 4 dải một đời (×1 / 0.8 / 1.15 / 0.9), một độ rộng (×1 / 0.85 / 1.2 / 0.95), một tốc độ toả (×1 / 1.35 / 0.75 / 1.15); đường cong độ rộng lên xuống không đều (6 nút) và độ sáng dọc dải đổi (alpha 0.5–1).
-- Bớt gãy / cứng: xoay xúc xắc 800 → 520°/s (~0.65 vòng trong 0.45 s) để góc uốn của dải sát xúc xắc bớt gắt; không dùng Noise (đã thử, ra răng cưa kiểu tia sét).
+- Bớt gãy / cứng (sau review v3: mép dải răng cưa do `startSize` / `startColor` ngẫu nhiên **theo từng hạt**; đã đặt hằng cho từng dải, khác nhau giữa các dải): xoay xúc xắc 800 → 520°/s (~0.65 vòng trong 0.45 s) để góc uốn của dải sát xúc xắc bớt gắt; không dùng Noise (đã thử, ra răng cưa kiểu tia sét).
 
 ## Chưa chắc (điểm yếu em biết)
-- Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (800°/s), xoắn chưa dày bằng ref.
+- Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (520°/s), xoắn chưa dày bằng ref.
 - Bụi vàng chỉ là mảng mềm alpha (chưa có texture bụi hạt mịn riêng); phần "tan thành hạt" nhờ lớp Motes cộng sáng.
 - Chưa có chip vỡ của xúc xắc (docs chỉ nói "tan biến thành bụi").
 - Chưa thử trên nền sáng; chưa vào `Included` / Showcase (đợi art lead).
