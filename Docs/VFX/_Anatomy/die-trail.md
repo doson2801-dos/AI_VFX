@@ -33,5 +33,11 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - Texture dải có đầu / đuôi thon theo U: lấy khúc giữa (tiling cửa sổ một ô (0.32×0.3, offset 0.08/0.07)) để thân dải không bị tối đầu.
 - Rate over distance không chạy khi chụp Simulate bằng bước lớn: dùng bước 1/60 s hoặc rate over time.
 
+## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
+- Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
+- **`numCapVertices` phải 0**: cap tròn đâm ra TRƯỚC xúc xắc nửa bề rộng (thấy như gậy sáng thò xuống dưới khối).
+- TrailRenderer không chạy khi `ParticleSystem.Simulate` / chụp edit mode: preview phải chụp ở Play mode (`VfxDieCapture`, `Time.captureFramerate` 60). `WaitForEndOfFrame` không chạy trong batchmode; `cam.Render()` vào RenderTexture thì chạy.
+- Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
+
 ## Biến thể đã làm
 - `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.

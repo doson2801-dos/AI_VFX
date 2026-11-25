@@ -19,7 +19,7 @@ Xúc xắc chạm đất: **một chớp vàng-trắng**, **vòng gai lan nằm 
 Chớp 0 → 0.3 s · vòng gai 0–0.7 s · tia gai 0–0.4 s · bụi nở 0–0.6 s, bốc và tan tới ~1.5 s · lấp lánh rải 0.1–1.4 s.
 
 ## Bất biến
-- Một chớp, một ngữ cảnh (ground).
+- Một chớp, một ngữ cảnh (**ground**, art lead 2026-11-25: tâm nổ ở y ≈ 0 chạm sàn, không lơ lửng trên không): chớp là đĩa + sao **nằm trên sàn** (Billboard + Local) cộng một lõi nhỏ đứng với Pivot (0,0.5,0) để đáy ở y = 0; bụi phát từ sàn.
 - Thân là **bụi vàng mềm tan thành hạt**, không phải lửa cam / khói xám / khối cầu sần.
 - **Có lấp lánh** trong bụi; có **chớp + tia gai + vòng gai** ở lúc nổ (đúng ref nổ vàng).
 - Màu vàng theme Hero xuyên suốt (lõi trắng vàng, bụi vàng nhạt → vàng đậm).
@@ -29,6 +29,7 @@ Chớp 0 → 0.3 s · vòng gai 0–0.7 s · tia gai 0–0.4 s · bụi nở 0�
 Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không chip mảnh xúc xắc, kiểu bụi (cuộn / bốc cột).
 
 ## Lỗi dự đoán
+- **Nổ lơ lửng trên không** (art lead 2026-11-25, v2–v3): nâng tâm chớp lên y 1.6–1.8 và bụi lên y 1.0 để sàn khỏi cắt billboard thì mất ngữ cảnh ground. Đừng nâng tâm; dùng lớp nằm đất (Local) và **Pivot (0,0.5,0)** (đáy quad = vị trí hạt) cho billboard đứng; pivot quay theo quad nên startRotation = 0.
 - **Billboard bị mặt đất cắt**: hạt billboard cỡ lớn có tâm sát y = 0 thì nửa dưới chìm dưới sàn và lộ cạnh phẳng / chữ nhật. Nâng tâm lên ≥ nửa kích thước (chớp 1.6–1.8 m, bụi phát từ y = 1 m); preview dựng sàn thật mới thấy.
 - Drag của Limit Velocity mặc định nhân theo kích thước hạt (`multiplyDragByParticleSize`): hạt to bị phanh quá mạnh, bụi không toả được. Dùng Speed Modifier của Velocity over Lifetime để điều khiển tầm toả.
 - Bụi ra màu bùn / khói bẩn nếu alpha blend vàng sẫm: giữ vàng sáng + hạt cộng sáng bên trong.

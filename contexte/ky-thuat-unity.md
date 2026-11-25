@@ -32,3 +32,8 @@
 - Billboard cỡ lớn có tâm sát y = 0 bị sàn cắt nửa dưới (lộ cạnh phẳng): nâng tâm ≥ nửa kích thước.
 - `limitVelocityOverLifetime.drag` mặc định **nhân theo kích thước hạt** (`multiplyDragByParticleSize`): hạt to bị phanh mạnh, bụi không toả. Điều khiển tầm toả bằng `velocityOverLifetime.speedModifier` (đủ 3 trục cùng mode).
 - Unity đang mở project (Linux, Hub): build bằng `refresh_unity compile=request` rồi `execute_menu_item VFX/<Effect>/Build` qua MCP; builder tự mở lại `VFX_Showcase.unity` ở cuối. Mỗi lần chạy ~1.5 phút.
+
+## TrailRenderer, billboard đứng trên sàn, chụp Play mode (LuckyDice v4, 2026-11-25)
+- **TrailRenderer mượt hơn Trails module** của PS cho vật rơi nhanh + xoay (Trails module ra đường gãy). `numCapVertices = 0` (cap tròn đâm ra trước vật). `widthCurve` / `colorGradient`: 0 = đầu mới.
+- **Billboard đứng chạm sàn**: Pivot (0, 0.5, 0) đặt đáy quad ở y của hạt (không bị sàn cắt), thay cho nâng tâm hạt lên cao (làm nổ lơ lửng). Pivot xoay theo quad nên đặt startRotation = 0.
+- TrailRenderer không cập nhật khi `Simulate` tay: chụp ở Play mode với `Time.captureFramerate = 60`, `cam.Render()` vào RenderTexture (không dùng `WaitForEndOfFrame`, không chạy trong batchmode). Batch không cửa sổ: `DISPLAY=:0 flock work/vfx_orders/.unity.lock Unity -batchmode -projectPath . -executeMethod ...` **không có `-quit`**, watcher `[InitializeOnLoad]` tự thoát khi có file done (domain reload khi vào Play mode xoá delegate). `pkill -f "Unity -batchmode"` giết luôn shell đang chạy lệnh có chứa chuỗi đó.
