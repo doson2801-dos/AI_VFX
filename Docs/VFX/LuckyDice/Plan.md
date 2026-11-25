@@ -25,24 +25,26 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 | ID | Lớp | Vai trò | Carrier / shader | Order |
 |---|---|---|---|---|
 | T1 | Aura | quầng vàng bám Die, 2.6 m | Billboard, Local, Additive | 0 |
-| T2 | Smoke (root) | khói vàng dài để lại sau lưng, 55/s, đời 0.8–1.2 s, nở 0.6→2.0 | Billboard, World, Alpha Blended | 1 |
-| T3 | Corner_0, 3, 5, 6 (4 đỉnh xen kẽ, v2) | **xương sống**: mỗi đỉnh một dải ribbon (Trails mode Ribbon), phát theo quãng đường 6 điểm/m, bay ra ngoài theo đường chéo góc 2.0 m/s, đời 0.4 s (~8 m ở tốc độ rơi 0.45 s), rộng ~1.1–1.4 m ở sát xúc xắc, thon dần về đuôi, hạt gốc `renderMode None` | Trails, World, Additive | 2, 5, 7, 8 |
+| T2 | Smoke (root) | khói vàng dài để lại sau lưng, 3.5 hạt / m (rate over distance), đời 0.8–1.2 s, nở 0.6→2.0 | Billboard, World, Alpha Blended | 1 |
+| T3 | Corner_0, 3, 5, 6 (4 đỉnh xen kẽ) | **xương sống (v4)**: mỗi đỉnh một **component TrailRenderer** (không dùng Trails module của PS), con của Die: đời 0.4 s (× 1 / 0.8 / 1.15 / 0.9), rộng 1.7 m (× 1 / 0.85 / 1.2 / 0.95), đầu dày, đuôi thon về 0, `numCornerVertices` 8 (bo góc mượt), `numCapVertices` 0 (cap tròn đâm ra trước xúc xắc nửa bề rộng), Alignment View, texture Stretch. `VfxDieTrailControl`: `Begin()` khi bật, `End()` khi hạ cánh | TrailRenderer, World, Additive | 2, 5, 7, 8 |
 | T4 | Sparks | tia vụn ngắn bắn ra từ khối, 55/s, pivot (0,1,0) | Stretched, World, Additive | 10 |
 | T5 | Glints | sao lấp lánh nhấp nháy dọc vệt, 55/s | Billboard, World, Additive | 11 |
 
 ## Lớp VFX_DieExplosion (~1.6 s)
 | ID | Lớp | Timing / vai trò | Carrier / shader | Order |
 |---|---|---|---|---|
-| X1 | Pool | quầng vàng trên đất 3→7.5 m, 1.1 s | nằm đất (Local), Additive | 0 |
+| X1 | Pool | quầng vàng trên đất 3→7.5 m, 1.1 s, y = 0.04 | nằm đất (Local), Additive | 0 |
 | X2 | Ring | vòng gai 0.8→9.2 m (2.3R), 0.65 s | nằm đất, Additive | 1 |
 | X3 | Ring2 | vòng thứ hai trễ 0.07 s, →8 m (2R) | nằm đất, Additive | 2 |
-| X4 | Dust (root) | 30 mảng bụi vàng cuộn ra theo mặt đất + bốc lên, đời 0.9–1.3 s, tan dần | Billboard, World, Alpha Blended | 3 |
-| X5 | DustRise | 18 mảng bốc thành vòm (không để bụi dẹt như đĩa) | Billboard, World, Alpha Blended | 4 |
-| X6 | Motes | 110 hạt vàng mịn cộng sáng, bay lên chậm, tắt | Billboard, World, Additive | 5 |
-| X7 | Spikes | 34 tia gai nửa cầu 11–19 m/s, đời 0.3–0.55 s, pivot (0,1,0) | Stretched, World, Additive | 6 |
-| X8 | FlashCore | **một chớp**: cầu sáng 3.6 m, 0.3 s | Billboard, Additive | 7 |
-| X9 | FlashStar | sao 8 gai 5 m, cùng chớp | Billboard, Additive | 8 |
-| X10 | Sparkles | 16 sao 4 cánh nhấp nháy trong bụi, 0.12–1.4 s | Billboard, World, Additive | 9 |
+| X4 | FlashGround | **chớp nằm đất (v4)**: đĩa sáng 2→7 m, 0.3 s | nằm đất (Local), Additive | 3 |
+| X5 | Dust (root) | 30 mảng bụi vàng cuộn ra theo mặt đất + bốc lên, đời 0.9–1.3 s, tan dần; phát từ y = 0.1; **Pivot (0,0.5,0)** = đáy quad ở y của hạt nên bụi đứng trên sàn, không bị sàn cắt; không xoay (pivot xoay theo quad) | Billboard, World, Alpha Blended | 4 |
+| X6 | DustRise | 18 mảng bốc thành vòm, pivot như X5 | Billboard, World, Alpha Blended | 5 |
+| X7 | Motes | 110 hạt vàng mịn cộng sáng, bay lên chậm, tắt | Billboard, World, Additive | 6 |
+| X8 | Spikes | 34 tia gai nửa cầu từ y = 0.1, 11–19 m/s, đời 0.3–0.55 s, pivot (0,1,0) | Stretched, World, Additive | 7 |
+| X9 | FlashStarGround | sao 8 gai **nằm trên sàn** 2.5→8.5 m, cùng chớp | nằm đất (Local), Additive | 8 |
+| X10 | FlashCore | cầu sáng nhỏ đứng (3 m, pivot (0,0.5,0), đáy ở y = 0.05), cùng chớp | Billboard, Additive | 9 |
+| X11 | FlashStar | sao 8 gai đứng 4.2 m (pivot như X10), cùng chớp | Billboard, Additive | 10 |
+| X12 | Sparkles | 16 sao 4 cánh nhấp nháy trong bụi (từ y = 0.2), 0.12–1.4 s | Billboard, World, Additive | 11 |
 
 ## Texture (Library, đã xem contact sheet từng thư mục)
 | Thành phần | Thư mục | Chốt | Dự phòng | Đã loại (lý do) |
@@ -51,9 +53,9 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 | T4 Sparks, X7 Spikes | `trail/streak` | `trail_streak_005` (nhãn `dir` trong CSV nhưng hình là thấu kính **đối xứng** nên dùng được nhiều hạt; vẫn Stretched theo vận tốc, không xoay tay) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi sai vai trò), `003`/`008` (có hướng đầu-đuôi rõ) |
 | T2 Smoke, X4 Dust, X5 DustRise | `smoke/soft` | `smoke_soft_005` (= `Assets/VFX/fx_t_smoke_02.png`, khói mặc định theo luật; alpha, omni, 418×397 không POT) | `smoke_soft_004` | `smoke_soft_002` (4 cục rõ), `smoke_soft_006` (nền đen, nhỏ), `smoke_soft_001` (nền đen) |
 | T1 Aura, X1 Pool | `glow/soft_round` | `glow_soft_round_005` (alpha, mép mềm; 329 px không POT, đủ cho quầng mềm) | `glow_soft_round_013` | `glow_soft_round_001` (có viền vòng), `010` (đã có màu cam) |
-| X6 Motes, X8 FlashCore | `glow/soft_round` | `glow_soft_round_007` (nền đen, Additive; 500 px không POT) | `glow_soft_round_006` | `glow_soft_round_008`/`029` (128 px, quá nhỏ) |
+| X7 Motes, X4 FlashGround, X10 FlashCore | `glow/soft_round` | `glow_soft_round_007` (nền đen, Additive; 500 px không POT) | `glow_soft_round_006` | `glow_soft_round_008`/`029` (128 px, quá nhỏ) |
 | T5 Glints, X10 Sparkles | `spark/star` | `spark_star_003` (sao 4 cánh có quầng mềm, alpha) | `spark_star_004`, `009` | `spark_star_006`/`007` (đã có màu vàng cố định), `017` (viền xám) |
-| X9 FlashStar | `impact/flash_spiky` | `impact_flash_spiky_014` (sao 8 gai quầng mềm, alpha, omni) | `impact_flash_spiky_005` | `006`/`010` (đặc, có hướng), `013` (hàng gai dựng đứng) |
+| X9 FlashStarGround, X11 FlashStar | `impact/flash_spiky` | `impact_flash_spiky_014` (sao 8 gai quầng mềm, alpha, omni) | `impact_flash_spiky_005` | `006`/`010` (đặc, có hướng), `013` (hàng gai dựng đứng) |
 | X2 Ring | `impact/radial_ring` | `impact_radial_ring_003` (vòng gai mờ, nền đen = Additive) | `impact_radial_ring_007` | `006` (nền tối đậm cả đĩa) |
 | X3 Ring2 | `impact/radial_ring` | `impact_radial_ring_004` | `impact_radial_ring_008` | `010` (đặc, có hướng) |
 | Die demo (chỉ VFX_DieDrop) | không thuộc Library | `Assets/VFX/LuckyDice/Textures/T_DieDemo_Faces.png` (atlas 3×2 mặt 1–6, vẽ bằng script) | | Lý do tạo mới: Library không có texture mặt xúc xắc; chỉ để xem demo, game có model Die riêng |
@@ -73,6 +75,10 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 - Texture dải: `trail_ribbon_019` → `impact_flipbook_016` (ô dưới-trái, xem bảng texture).
 - Bớt đều: mỗi trong 4 dải một đời (×1 / 0.8 / 1.15 / 0.9), một độ rộng (×1 / 0.85 / 1.2 / 0.95), một tốc độ toả (×1 / 1.35 / 0.75 / 1.15); đường cong độ rộng lên xuống không đều (6 nút) và độ sáng dọc dải đổi (alpha 0.5–1).
 - Bớt gãy / cứng (sau review v3: mép dải răng cưa do `startSize` / `startColor` ngẫu nhiên **theo từng hạt**; đã đặt hằng cho từng dải, khác nhau giữa các dải): xoay xúc xắc 800 → 520°/s (~0.65 vòng trong 0.45 s) để góc uốn của dải sát xúc xắc bớt gắt; không dùng Noise (đã thử, ra răng cưa kiểu tia sét).
+
+## v4 (feedback Sơn sau demo v3 + tin thêm)
+- "trail vẫn quá gãy, thử dùng trail renderer": bốn dải đổi từ Trails module của Particle System sang **TrailRenderer** (xem T3). Luật art lead không cấm; không liên quan Horizontal / Vertical Billboard (Alignment View). TrailRenderer không chạy khi `Simulate` tay trong edit mode, nên preview / GIF chụp ở **Play mode** (`VFX/LuckyDice/Capture (play mode)`, `VfxDieCapture`, 60 Hz).
+- "thay đổi thành nổ tại mặt đất, tôi thấy có vẻ đang để texture nổ trên không": đúng, v2–v3 em nâng chớp lên y 1.6–1.8 và gốc bụi lên y 1.0 cho sàn khỏi cắt billboard nên nổ lơ lửng. Nay tâm nổ y ≈ 0: chớp là đĩa + sao nằm trên sàn (Billboard + Local), bụi / chớp đứng dùng Pivot (0,0.5,0).
 
 ## Chưa chắc (điểm yếu em biết)
 - Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (520°/s), xoắn chưa dày bằng ref.
