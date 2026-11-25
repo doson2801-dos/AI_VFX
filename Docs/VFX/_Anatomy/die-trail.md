@@ -7,17 +7,17 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 ## Cấu trúc
 | Phần | Vai trò | Hình dáng | Bắt buộc |
 |---|---|---|---|
-| Dải từ góc | **xương sống**: 8 góc mỗi góc một dải (ribbon) | mảnh, lõi vàng sáng, mép mềm, nở dần ra ngoài + xoắn nhờ xúc xắc xoay, thon về đuôi | **có** |
+| Dải từ góc | **xương sống**: **4 đỉnh xen kẽ** (art lead 2026-11-25: 8 dải bị vỡ), mỗi đỉnh một dải (ribbon) | mảnh, lõi vàng sáng, mép mềm, nở dần ra ngoài + xoắn nhờ xúc xắc xoay, thon về đuôi | **có** |
 | Khói vàng | thân vệt dài phía sau | khối mềm vàng nhạt, nở dần, tan | có |
 | Quầng | halo quanh xúc xắc | cầu mềm vàng, không che mặt xúc xắc | có (nhẹ) |
 | Tia vụn | vệt tia ngắn bắn ra từ góc | gạch mảnh Stretched | nên có |
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.8 s (gia tốc, nhanh dần), xoay ~1.2 vòng (540°/s). Vệt dài ~5–6 m ngược lên; tan sạch trong ~0.5 s sau khi xúc xắc dừng. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.45 s (gia tốc, nhanh dần; art lead muốn rơi mạnh), xoay ~1 vòng (800°/s). Vệt dài ~5–6 m ngược lên; tan sạch trong ~0.5 s sau khi xúc xắc dừng. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
-- Dải **xuất phát từ các góc** của xúc xắc (nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
+- Dải **xuất phát từ các đỉnh** của xúc xắc (4 đỉnh xen kẽ; nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
 - Dải **liền mạch, mảnh, xoắn**, thon dần về đuôi; không phải chuỗi đốm rời, không phải thanh thẳng cứng.
 - **Màu vàng** (theme Hero), lõi sáng hơn mép; không trắng xanh, không cam đỏ.
 - Có **khói vàng dài** (docs: "long golden smoke trail") và **lấp lánh**.
