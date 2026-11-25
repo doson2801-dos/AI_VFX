@@ -14,7 +14,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.45 s (gia tốc, nhanh dần; art lead muốn rơi mạnh), xoay ~1 vòng (800°/s). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.45 s (gia tốc, nhanh dần; art lead muốn rơi mạnh), xoay ~0.65 vòng (520°/s). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
 - Dải **xuất phát từ các đỉnh** của xúc xắc (4 đỉnh xen kẽ; nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).

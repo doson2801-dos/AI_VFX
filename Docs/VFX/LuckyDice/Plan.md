@@ -47,7 +47,7 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## Texture (Library, đã xem contact sheet từng thư mục)
 | Thành phần | Thư mục | Chốt | Dự phòng | Đã loại (lý do) |
 |---|---|---|---|---|
-| T3 Corner ribbon | `trail/ribbon` | `trail_ribbon_019` (dải mềm gợn, alpha, hợp ribbon Trails) | `trail_ribbon_020`, `017` | `trail_ribbon_023`/`024` (dải gai: ra hình dây thép gai), `trail_streak_005` làm ribbon (mảnh như dây điện, bản thử 1 bị chê trông giống tia sét), `014`/`015` (dải lụa to nhiều lớp) |
+| T3 Corner ribbon (v3) | `impact/flipbook` | `impact_flipbook_016` ô dưới-trái (lưỡi thuôn nhọn hai đầu, mép gợn, alpha, xám; sheet 2×2 có hướng nhưng dùng **một ô** kéo dọc ribbon bằng tiling 0.32×0.3 offset 0.08/0.07, không spam; art lead yêu cầu thử ảnh nhóm impact) | `impact_flipbook_020`, `013`, `impact_shard_002` | **v2 `trail_ribbon_019`** (art lead: dải gãy, cứng, quá đều); ô trên-trái của `016` (mép răng cưa to, ra dải cưa); `impact_flipbook_005` / `023` (chùm mảnh vụn, không phải dải); `007`/`018` (blob) | `trail_ribbon_023`/`024` (dải gai: ra hình dây thép gai), `trail_streak_005` làm ribbon (mảnh như dây điện, bản thử 1 bị chê trông giống tia sét), `014`/`015` (dải lụa to nhiều lớp) |
 | T4 Sparks, X7 Spikes | `trail/streak` | `trail_streak_005` (nhãn `dir` trong CSV nhưng hình là thấu kính **đối xứng** nên dùng được nhiều hạt; vẫn Stretched theo vận tốc, không xoay tay) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi sai vai trò), `003`/`008` (có hướng đầu-đuôi rõ) |
 | T2 Smoke, X4 Dust, X5 DustRise | `smoke/soft` | `smoke_soft_005` (= `Assets/VFX/fx_t_smoke_02.png`, khói mặc định theo luật; alpha, omni, 418×397 không POT) | `smoke_soft_004` | `smoke_soft_002` (4 cục rõ), `smoke_soft_006` (nền đen, nhỏ), `smoke_soft_001` (nền đen) |
 | T1 Aura, X1 Pool | `glow/soft_round` | `glow_soft_round_005` (alpha, mép mềm; 329 px không POT, đủ cho quầng mềm) | `glow_soft_round_013` | `glow_soft_round_001` (có viền vòng), `010` (đã có màu cam) |
@@ -68,6 +68,11 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## v2 (feedback Sơn sau demo v1)
 - Tăng tốc độ rơi: 0.8 s → 0.45 s (quadratic, chạm đất ~35 m/s), xoay 800°/s (~1 vòng).
 - Trail giảm còn **4 đỉnh** (xen kẽ 0, 3, 5, 6) vì 8 dải bị vỡ; ribbon đời 0.4 s, rộng 1.1–1.4 m (4 dải nên dày hơn).
+
+## v3 (feedback Sơn sau demo v2: "trail bị gãy, cứng, quá đều, đổi thử texture impact khác")
+- Texture dải: `trail_ribbon_019` → `impact_flipbook_016` (ô dưới-trái, xem bảng texture).
+- Bớt đều: mỗi trong 4 dải một đời (×1 / 0.8 / 1.15 / 0.9), một độ rộng (×1 / 0.85 / 1.2 / 0.95), một tốc độ toả (×1 / 1.35 / 0.75 / 1.15); đường cong độ rộng lên xuống không đều (6 nút) và độ sáng dọc dải đổi (alpha 0.5–1).
+- Bớt gãy / cứng: xoay xúc xắc 800 → 520°/s (~0.65 vòng trong 0.45 s) để góc uốn của dải sát xúc xắc bớt gắt; không dùng Noise (đã thử, ra răng cưa kiểu tia sét).
 
 ## Chưa chắc (điểm yếu em biết)
 - Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (800°/s), xoắn chưa dày bằng ref.
