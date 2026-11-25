@@ -33,3 +33,6 @@ Chưa có (2026-11-25: bản gốc SummonCircle, tông tím-đỏ).
 - **Gốc** (2026-11-25): vòng nằm đất 6 m, magenta/tím, 3 rune xoay, 8 tia nhọn viền, chớp giữa.
 - **Rise** (2026-11-25, art lead "làm theo kiểu khác"): trụ rune 3 tầng trồi lên từ đất (cách ~0.5 m, thu nhỏ, xoay xen kẽ), vòng chính nhỏ 2.5 m + nứt phát sáng, xoáy + hạt hút vào tâm rồi chớp một lần; không có tia gai; xanh-tím điện. Kế hoạch `Docs/VFX/SummonCircle/Plan_Rise.md`. Bài học: lớp nằm đất (node xoay X 90°) muốn bay lên phải dùng Velocity over Lifetime space **World** (local Y của node xoay không phải hướng lên).
 
+
+## Luật art lead 2026-11-25
+Không thêm decal vỡ địa hình (vết nứt đất, `ground_crack_*`) vào vòng phép trừ khi art lead yêu cầu. Bản `SummonCircle_Rise` (lưới nứt `ground_crack_radial_010`) vi phạm điều này.

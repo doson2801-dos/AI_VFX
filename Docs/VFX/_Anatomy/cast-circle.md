@@ -28,3 +28,6 @@ Màu, họa tiết 3 vòng, kích thước, nhịp nở / chớp, hạt thả (t
 
 ## Biến thể đã làm
 Chưa có (2026-11-25: bản gốc CastCircle, tông xanh dương-cyan).
+
+## Luật art lead 2026-11-25
+Không thêm decal vỡ địa hình vào vòng phép trừ khi art lead yêu cầu.
