@@ -37,4 +37,4 @@ Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không
 - Stretched hạt tia: texture symmetric nên không lệ thuộc hướng, nhưng vẫn không xoay ngẫu nhiên thủ công.
 
 ## Biến thể đã làm
-- `Assets/VFX/LuckyDice/Prefabs/VFX_DieExplosion.prefab` (2026-11-25, order sondh_docs, chờ art lead).
+- `Assets/VFX/LuckyDice/Prefabs/VFX_DieExplosion.prefab` (2026-11-25, order sondh_docs, chờ art lead). v4: nổ chạm sàn (chớp = đĩa + sao nằm đất + lõi nhỏ đứng pivot đáy y = 0, bụi phát từ sàn).

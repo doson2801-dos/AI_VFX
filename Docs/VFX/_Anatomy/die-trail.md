@@ -37,7 +37,8 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
 - **`numCapVertices` phải 0**: cap tròn đâm ra TRƯỚC xúc xắc nửa bề rộng (thấy như gậy sáng thò xuống dưới khối).
 - TrailRenderer không chạy khi `ParticleSystem.Simulate` / chụp edit mode: preview phải chụp ở Play mode (`VfxDieCapture`, `Time.captureFramerate` 60). `WaitForEndOfFrame` không chạy trong batchmode; `cam.Render()` vào RenderTexture thì chạy.
+- **Phụ thuộc fps**: TrailRenderer lấy mẫu mỗi khung; xúc xắc rơi ~35 m/s nên ở 30 fps cách ~1.2 m / điểm, dải gấp khúc (bo góc `numCornerVertices` 8 giảm bớt). Nội suy bằng `AddPosition` thử rồi bỏ: `emitting=false` thì không vẽ; `emitting=true` thì thứ tự điểm đảo, dải vỡ.
 - Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
 
 ## Biến thể đã làm
-- `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.
+- `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v4: dải = 4 TrailRenderer (không còn Trails module). v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.
