@@ -6,7 +6,7 @@ Không gian: ground · neo ở chân (y = 0) · mặt đất: Billboard + Render
 
 Khác với: WindTornado (cột đứng yên ~4 s, mesh) và WindShellTrail (đuôi theo vật bay): đây là **bùng một lần quanh chân, lan ngang mặt đất**, hình xương sống là vòng gió + dải xoắn bay lên.
 
-## Bất biến (chưa có file Anatomy riêng: `_Anatomy/wind-burst.md`)
+## Bất biến (bản đầy đủ ở `_Anatomy/wind-burst.md`)
 - **Vòng gió lan ra** từ chân đến ~2.5 m, nằm đất.
 - **Dải gió xoắn** quay quanh trục dọc và bay lên.
 - Bụi + lá bị cuốn theo vòng xoáy (cùng chiều quay với dải).

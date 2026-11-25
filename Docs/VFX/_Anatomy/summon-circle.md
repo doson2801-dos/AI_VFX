@@ -25,3 +25,6 @@ Màu (tím-đỏ <-> xanh lục tối, cam...), họa tiết rune, số tia (6-1
 ## Lỗi đã gặp
 - Quad Stretched nằm giữa hạt nên tia chìm nửa dưới đất: dùng pivot y = lengthScale/2 (như HealCircle_Arcane v3); preview xác nhận chân tia đúng ở viền.
 - Texture tia hình nón nhọn nên dễ giống "gai"; nếu art lead muốn mềm hơn thì đổi `trail_streak_011` / `spark_streak_002`.
+
+## Biến thể đã làm
+Chưa có (2026-11-25: bản gốc SummonCircle, tông tím-đỏ).

@@ -24,3 +24,6 @@ Màu, họa tiết 3 vòng, kích thước, nhịp nở / chớp, hạt thả (t
 ## Lỗi đã gặp
 - Nhìn từ camera sau lưng (3/4 40°), hạt bay +Z đi xa camera nên thu nhỏ và lẫn vào tâm vòng: kiểm hạt bằng camera bên (`Docs/VFX/CastCircle/Preview_side.png`). Hạt 0.04-0.1 m gần như không thấy; đã nâng lên 0.1-0.2 m, 36 hạt.
 - Vòng đứng nhìn 40° bị dẹt theo chiều cao ~cos40 = 0.77 (không phải lỗi).
+
+## Biến thể đã làm
+Chưa có (2026-11-25: bản gốc CastCircle, tông xanh dương-cyan).

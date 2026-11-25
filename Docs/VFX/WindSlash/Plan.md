@@ -6,7 +6,7 @@ Không gian: dir (bay thẳng +X) · lưỡi nằm ngang cao 1.0 m, nghiêng lă
 
 Khác với: WindTornado (cột xoáy đứng đứng yên) và WindShellTrail (vệt đuôi sau vật bay, không có lưỡi): đây là **lưỡi liềm gió bay một phát** (mesh + UV) kèm vệt, bụi, lá để lại dọc đường.
 
-## Bất biến (viết cho effect này, chưa có file Anatomy riêng: `_Anatomy/wind-slash.md`)
+## Bất biến (bản đầy đủ ở `_Anatomy/wind-slash.md`)
 - Có **một lưỡi liềm** (mesh + UV, shader Coloso) bay thẳng, lồi về phía trước, hai mũi kéo ra sau.
 - **Sọc gió** kéo dài sau lưỡi (đường mảnh dài theo hướng bay).
 - Bụi + lá bị cuốn và **rơi lại dọc đường bay** (không đi cùng lưỡi).
