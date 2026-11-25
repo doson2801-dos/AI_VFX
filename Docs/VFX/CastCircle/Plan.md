@@ -46,5 +46,9 @@ Chưa chắc: chưa xem trên rig nhân vật thật (vị trí tay phụ thuộ
 - Camera sau lưng: `Preview_motes_zoom.png` (zoom 2x). Camera bên (từ +X): `Preview_side.png` (4 khung t=0.62 / 0.7 / 0.8 / 0.9 s): vòng đứng, pháp tuyến +Z (ellipse hẹp), **Motes bay ra +Z rõ** sau chớp. Motes ban đầu quá nhỏ (0.04-0.1 m, gần như không thấy) -> nâng 0.1-0.2 m, 36 hạt, rebuild không lỗi.
 - Đối chiếu `_Anatomy/cast-circle.md`: 3 vòng xoay xen kẽ, một chớp t=0.6 s, tắt 1.2 s, không Vertical Billboard. Đạt từng mục.
 
+## v2 (feedback art lead 2026-11-25: sai không gian trong Showcase)
+- Prefab không đổi (vòng hướng +Z). Camera Showcase nhìn +Z nên vòng hiện thẳng mặt, không đọc ra vòng đứng hướng ra trước. Đặt trong Showcase: **xoay instance Y 45°**, focusOffset (0.6, 0, 0.6); thêm nhánh `VFX_CastCircle` trong `VfxShowcaseBuild.Place()` (dựng lại giống vậy) và đã chỉnh instance trong scene `VFX_Showcase` rồi lưu (rot Y 45°, focusOffset).
+- Preview của builder giờ dùng camera 3/4 quay -45° quanh mục tiêu (tương đương Showcase): vòng là ellipse nghiêng đọc rõ là vòng đứng, Motes bay ra phía trước-phải sau chớp. Dùng được cho 3 camera Showcase: Top-down thấy vòng nghiêng, Side 8° thấy vòng ellipse hẹp hơn (ước tính, chưa chụp từng góc).
+
 ## Dựng
 Menu `VFX/CastCircle/Build` hoặc `-executeMethod VfxEffects.CastCircleBuild.BuildBatch`. Prefab `Assets/VFX/CastCircle/Prefabs/VFX_CastCircle.prefab`. Chưa vào `Included`.

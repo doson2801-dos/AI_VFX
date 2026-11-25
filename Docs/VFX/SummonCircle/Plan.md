@@ -2,7 +2,7 @@
 
 Vòng triệu hồi nằm đất, bán kính ~3 m (đường kính 6 m), một lần ~2.6 s. Pipeline Built-in (Additive mobile), Scaling Mode Hierarchy.
 Không gian (*đề xuất* theo order): ground, nằm đất = Billboard + Render Alignment Local (GameObject xoay X 90°); chùm tia đứng = Stretched Billboard (pivot ở gốc tia); camera 3/4 nhìn xuống 40°; neo cố định tại chỗ triệu hồi (không bám người); nền tối.
-Màu (*đề xuất*, tông tím-đỏ): Core `#FFE9F2` · Red `#FF3A55` · Crimson `#D1306E` · Violet `#9A3BFF` · Deep `#4A0F6B`.
+Màu v2 (art lead 2026-11-25: v1 tím-đỏ bị bẩn): **một họ tím-magenta sạch, hue ~285-295°**: Core `#FFF0FF` (lõi chớp trắng-hồng) · Bright `#E070FF` (tia, tro) · Mid `#B83CFF` (rune giữa, vành sóng) · Violet `#9A2CF0` (rune ngoài) · Deep `#3A0A66` (quầng đất). Không còn đỏ. Phân vai: rune ngoài Core->Violet, rune giữa Core->Mid, rune trong Core->Bright, tia Core->Bright->Mid, cột giữa trắng->Core->Bright, tro Core->Bright->Violet. Preview v2 `Preview_key.png`: một tông thống nhất, sạch. Câu hỏi cho art lead: muốn thiên magenta hơn (hồng) hay tím lam hơn? Đổi chỉ cần sửa 5 hex.
 
 ## Bất biến (loại "vòng phép nằm đất", theo `_Anatomy/heal-circle.md` + yêu cầu order)
 - Vòng đọc được: >= 2 lớp rune xoay ngược chiều, tròn đều, nằm đất, tâm đúng giữa.

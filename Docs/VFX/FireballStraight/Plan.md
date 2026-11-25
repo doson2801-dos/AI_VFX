@@ -20,7 +20,7 @@ Hành vi (thẳng, vận tốc không đổi, nổ trên không ở độ cao ng
 | L1 | Body (root) | thân cầu + đuôi lửa dài, 0–0,65; chết ở đích kích L5–L9 | 1 hạt Stretched 0,75 m × (×4,5), `VFX/FX/Meteor`, vân nhiễu chạy nhanh | noise `T_Noise_Streaks` |
 | L2 | Core + Trail | lõi sáng + ribbon cam→đỏ dài ~8 m (đuôi liền) | hạt Billboard + Trails (World) | `glow/soft_round/glow_soft_round_007` + `trail/streak/trail_streak_011` |
 | L3 | FlameLicks | cụm lưỡi lửa toon sôi sau cầu, 110/s | Birth sub-emitter | `smoke/sheet/smoke_sheet_002` (2×2, khung ngẫu nhiên) |
-| L4 | TrailSmoke | khói xám để lại dọc đường, 60/s, sống ~1,2 s | Birth sub-emitter, stock Alpha | `Assets/VFX/fx_t_smoke_02.png` (luật khói mặc định) |
+| L4 | TrailSmoke | khói xám để lại dọc đường, 60/s, sống ~1,2 s | Birth sub-emitter, stock Alpha | `smoke/sheet/smoke_sheet_002` (thuỳ toon, 2×2) nhuộm nâu ấm → bồ hóng (art lead 2026-11-25, bỏ `fx_t_smoke_02`) |
 | L4b | Embers | tàn lửa tròn rơi, 60/s | Birth sub-emitter | `glow_soft_round_007` |
 | L4c | ShedComets | tia comet thả ngược sau cầu (có hướng: ít, nhỏ, đúng hướng), 45/s | Stretched | `spark/streak/spark_streak_001` |
 | L5 | Flash | **một** chớp Impact, 0,14 s, 2,2 m | Billboard Additive | `impact/flash_spiky/impact_flash_spiky_001` |
@@ -52,3 +52,6 @@ Shader: dùng lại `VFX/FX/Meteor`, `VFX/FX/Erode Sphere`, stock. Không viết
 - FireBurst đổi sang `glow_soft_round_005` (029 nằm trong "Sai vai trò đã biết"; đã loại).
 - **Lưỡi lửa (FlameLicks)**: `smoke_sheet_002` ghi trong LIBRARY.md là "4 cụm mây cartoon, không phải lửa". Đã tìm ảnh lửa thật trong `Assets/Library/`: **không có** thư mục / ảnh lửa flipbook (các `FX_TX_Fire_FireLoop_*`, `TX_VFX_Flame*` chỉ có trong contact sheet `fire_candidates.png`, chưa nhập Library; chỉ có `impact/flipbook/001-003` là FireImpact dùng cho nổ). Vẫn dùng `smoke_sheet_002` nhuộm cam. **Art lead quyết**: nhập `FireLoop_03` (hướng, dùng ít hạt theo luật sheet có hướng) hay giữ mây toon.
 - Đối chiếu Bất biến trên preview: thân + đuôi tách bạch giữa chuyến bay, bay thẳng, một chớp ở đích (0,65 s), không nổ trước đó. Còn lệch: đầu cầu hơi cháy trắng.
+
+## Sửa khói theo art lead (2026-11-25)
+Khói cũ (`fx_t_smoke_02` mờ + khói nổ xám lạnh 0,25/0,23/0,24) lệch phong cách với thân lửa toon. Nay: TrailSmoke dùng cùng sheet thuỳ toon với FlameLicks, màu nâu ấm `#8A5030 -> #4A3028 -> #2E2220`, sống 0,6–0,9 s, co + mờ cùng nhịp lưỡi lửa; khói nổ (Erode Sphere) tô nâu tối ấm `(0,40; 0,27; 0,20)` thay vì xám. Đây là ngoại lệ có chủ đích của luật "khói mặc định" theo yêu cầu art lead.

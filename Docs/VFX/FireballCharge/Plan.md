@@ -18,10 +18,8 @@ Hành vi mới: pha tích tụ 1 s dính tay + thả (Throw / Straight bay ngay)
 | ID | Lớp | Vai trò, timing | Carrier / shader | Texture |
 |---|---|---|---|---|
 | C1 | ChargeBall | quả 0,6 m lớn dần, vân sôi, xoay; 0–1,0 | Billboard, `VFX/FX/Meteor` (Aspect 1, đuôi tắt) | noise `T_Noise_Streaks` |
-| C2 | ChargeGlow | quầng phình + chớp nhẹ | Billboard Additive | `glow/soft_round/glow_soft_round_007` |
-| C3 | ChargeOrbit | tuft lửa toon xoay quanh bóng (mặt phẳng YZ, nhìn rõ từ bên), xoáy vào, 45/s | Circle r 0,85, orbital X + radial âm, Alpha | `smoke/sheet/smoke_sheet_002` |
-| C4 | ChargeInflow | chấm lửa từ vỏ cầu r 1,3 bị hút vào, 70/s | Sphere shell + radial âm | `glow_soft_round_007` |
-| C5 | ChargeRings | 3 vòng mảnh co dần vào bóng, sáng lên khi co | Billboard Additive | `ring/thin/ring_thin_002` |
+| C4 | ChargeInflow | vài tàn lửa từ vỏ cầu r 1,1 bị hút vào, 22/s | Sphere shell + radial âm | `glow_soft_round_007` |
+| C5 | ChargeRings | 2 vòng mảnh co dần vào bóng, sáng lên khi co | Billboard Additive | `ring/thin/ring_thin_002` |
 | C6 | ReleasePop | glow chớp ngắn lúc thả (không phải Impact) | Billboard Additive | `glow/soft_round/glow_soft_round_005` |
 | L1 | Body (root, startDelay 1,0) | quả bay + đuôi, 0,45 s; chết ở đích | Stretched 0,75 m, `VFX/FX/Meteor`, aspect 3 | noise |
 | L2 | Core + Trail | lõi + ribbon ngắn (0,22 s) | Billboard + Trails | `glow_soft_round_007` + `trail/streak/trail_streak_011` |
@@ -46,3 +44,8 @@ Shader: `VFX/FX/Meteor`, `VFX/FX/Erode Sphere`, stock; không viết mới. Ngâ
 - **Lưỡi lửa (FlameLicks)**: `smoke_sheet_002` ghi trong LIBRARY.md là "4 cụm mây cartoon, không phải lửa". Đã tìm ảnh lửa thật trong `Assets/Library/`: **không có** thư mục / ảnh lửa flipbook (các `FX_TX_Fire_FireLoop_*`, `TX_VFX_Flame*` chỉ có trong contact sheet `fire_candidates.png`, chưa nhập Library; chỉ có `impact/flipbook/001-003` là FireImpact dùng cho nổ). Vẫn dùng `smoke_sheet_002` nhuộm cam. **Art lead quyết**: nhập `FireLoop_03` (hướng, dùng ít hạt theo luật sheet có hướng) hay giữ mây toon.
 - Sửa theo review: sortingOrder duy nhất (TrailSmoke 0, Smoke 1, Orbit 2, FlameLicks 3, ChargeGlow 4, ChargeBall 5, Body 6, Core 7, Inflow 8, Embers 9, Rings 10, FireBurst 11, Sparks 12, ReleasePop 13, Flash 14); ChargeBall rõ hơn (`_Volume` 0,8, lõi bớt cháy trắng, to nhanh hơn, quầng glow giảm 40%); sheet chính thêm mốc 1,46 / 1,52 / 1,62 s thấy chớp + nổ nhỏ.
 - Đối chiếu Bất biến trên preview: quả thấy ngay từ 0,3 s và lớn dần (cận cảnh); tuft + vòng + chấm đều hút vào; thả lúc 1,0 s bay thẳng; một chớp Impact ở 1,46 s. Còn lệch: vân quả có mảng hồng ở đáy (crust darkening), chờ art lead.
+
+## Đơn giản hoá pha sạc + khói (art lead 2026-11-25)
+- Pha sạc (0–1 s) chỉ còn: **ChargeBall** (trung tâm, lớn dần) + 2 lớp phụ (**ChargeRings** 2 vòng hút vào ở 0,3 s và 0,65 s, **ChargeInflow** ~22 tàn lửa/s) + ReleasePop tức thời lúc thả. Đã bỏ ChargeOrbit (tuft xoay) và ChargeGlow. Thứ tự đọc: quả to dần → vòng/tàn lửa hút vào → thả. sortingOrder vẫn duy nhất (Body 6, Ball 5, Core 7, Inflow 8, Embers 9, Rings 10 ...).
+- Khói (TrailSmoke khi bay + khói nổ) đổi cùng kiểu FireballStraight: thuỳ toon `smoke_sheet_002` màu nâu ấm, khói nổ Erode Sphere tô nâu ấm.
+- Preview: `Preview_sheet.png` (3/4, mốc 0,15–1,8 s) và `Preview_close.png` (cận cảnh, 0,15–1,1 s).

@@ -23,6 +23,7 @@ Màu, họa tiết 3 vòng, kích thước, nhịp nở / chớp, hạt thả (t
 
 ## Lỗi đã gặp
 - Nhìn từ camera sau lưng (3/4 40°), hạt bay +Z đi xa camera nên thu nhỏ và lẫn vào tâm vòng: kiểm hạt bằng camera bên (`Docs/VFX/CastCircle/Preview_side.png`). Hạt 0.04-0.1 m gần như không thấy; đã nâng lên 0.1-0.2 m, 36 hạt.
+- **SAI KHÔNG GIAN trong Showcase (art lead 2026-11-25)**: camera Showcase nhìn dọc +Z, instance không xoay nên vòng (pháp tuyến +Z) hiện **thẳng mặt từ sau lưng**, không đọc ra "dựng đứng trước tay, hướng ra trước". Cách sửa: prefab giữ hướng ra trước = +Z (chuẩn nhân vật), còn **cách đặt** xoay instance Y 45° (`VfxShowcaseBuild.Place`, focusOffset (0.6, 0, 0.6)) để vòng thành ellipse ~0.7 rộng, chớp / Motes bay ra phía trước-phải. Luôn kiểm bằng camera Showcase thật, không chỉ camera preview của builder; hướng gốc +Z chỉ đúng khi nhìn từ bên hoặc phía trước.
 - Vòng đứng nhìn 40° bị dẹt theo chiều cao ~cos40 = 0.77 (không phải lỗi).
 
 ## Biến thể đã làm
