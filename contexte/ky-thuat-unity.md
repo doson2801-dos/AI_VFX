@@ -24,3 +24,11 @@
 - **Slash mesh vòng, nhiều layer Coloso có `window` khác nhau**: `Custom1.z` = vị trí đầu / **window của chính layer đó**. Layer có window khác Body phải nhân đường cong với `WindowBody / WindowLayer`, nếu không Edge (window nửa) chạy chậm một nửa rồi đứng yên ở mép (mảng trắng cố định), Trail (window lớn) chạy vượt đầu. Đã sửa ở Slash360 Fire / Water; `Slash360Build.cs` (Earth) còn dùng đường cong chung, chưa đụng.
 - **Texture Library cho slash có cột đầu sáng sát mép**: `_MainClampX` kéo cột mép ra ngoài 0..1 nên cả mesh sáng. Copy ảnh sang `Textures/` rồi làm tối vài % cột đầu / cuối (xem `BakeFireMain`).
 - **Build effect khi Unity đang mở project**: không batch được. Cách làm: một script Editor tạm poll file `Temp/remote_cmd.txt` rồi gọi `Build()` (nhớ nhấn Alt + `SetForegroundWindow` một lần để Unity compile script mới, sau đó `AssetDatabase.Refresh()` từ chính script). Scene đang mở có dấu `*` thì `ConfirmSceneSwitch` hiện hộp thoại Save và treo: cần người dùng Save trước. `Finish()` mở scene Demo của effect, nhớ mở lại `VFX_Showcase` sau cùng. Không chụp màn hình để kiểm tra (lộ nội dung riêng tư).
+
+## Ribbon (Trails mode Ribbon), bụi billboard lớn, drag (LuckyDice 2026-11-25)
+- **Ribbon: vị trí 0 của `widthOverTrail` / `colorOverTrail` là đầu CŨ (đuôi), 1 là đầu mới** (sát hạt gốc). Ngược với trail từng hạt trực giác. Muốn thon về đuôi: 0 → 0, 1 → lớn.
+- Dải bám vật rơi nhanh: phát bằng **`rateOverDistance`** (6 điểm / m), không dùng rate over time (khi chụp bằng `Simulate` bước 1/60 s các điểm dồn cục → đường răng cưa kiểu tia sét). Không bật Noise, cone góc ~1°. Hạt gốc `renderMode None` vẫn vẽ ribbon.
+- Ribbon dùng texture dải mềm (`trail_ribbon_019`), không dùng thấu kính `trail_streak_005` (mảnh như dây điện).
+- Billboard cỡ lớn có tâm sát y = 0 bị sàn cắt nửa dưới (lộ cạnh phẳng): nâng tâm ≥ nửa kích thước.
+- `limitVelocityOverLifetime.drag` mặc định **nhân theo kích thước hạt** (`multiplyDragByParticleSize`): hạt to bị phanh mạnh, bụi không toả. Điều khiển tầm toả bằng `velocityOverLifetime.speedModifier` (đủ 3 trục cùng mode).
+- Unity đang mở project (Linux, Hub): build bằng `refresh_unity compile=request` rồi `execute_menu_item VFX/<Effect>/Build` qua MCP; builder tự mở lại `VFX_Showcase.unity` ở cuối. Mỗi lần chạy ~1.5 phút.
