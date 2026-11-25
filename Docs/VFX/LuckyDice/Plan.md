@@ -7,7 +7,7 @@ Sơn trả lời: game **Built-in**, **chưa có model Die** (dùng 1 khối cub
 ## Không gian (các mục *đề xuất* do em chọn)
 - Trail Die: **air / dir** (rơi thẳng xuống). Root gắn vào xúc xắc (game cha vào model Die), vệt ở không gian thế giới.
 - Die explosion: **ground**, neo ở điểm chạm (y = 0), vòng nằm đất = Billboard + Render Alignment Local (xoay X 90°), phần còn lại Billboard / Stretched. Một chớp.
-- Camera 3/4, nhìn xuống 40°. Quy mô *đề xuất*: Die cạnh 1.2 m (nhân vật 2 m), rơi từ cao 8 m, **0.45 s** (nhanh dần; v2: Sơn muốn rơi mạnh hơn, v1 là 0.8 s), xoay ~1.2 vòng. Nổ bán kính ~4 m, ~1.5 s. Màu vàng theme Hero.
+- Camera 3/4, nhìn xuống 40°. Quy mô *đề xuất*: Die cạnh 1.2 m (nhân vật 2 m), rơi từ cao 8 m, **0.45 s** (nhanh dần; v2: Sơn muốn rơi mạnh hơn, v1 là 0.8 s), xoay ~1 vòng. Nổ bán kính ~4 m, ~1.5 s. Màu vàng theme Hero.
 - Pipeline Built-in, shader mobile stock (Additive / Alpha Blended), không shader mới, không texture mới (trừ ảnh mặt Die demo).
 
 ## Bất biến (chép từ `_Anatomy/die-trail.md`, `die-explosion.md`)
@@ -17,7 +17,7 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## Prefab
 | Prefab | Dùng ở đâu | Ghi chú |
 |---|---|---|
-| `VFX_DieTrail` | game cha vào model Die, bật khi xúc xắc bắt đầu rơi, tắt `emission` / destroy khi chạm | root = Particle System (khói); 8 con `Corner_i` đặt đúng 8 góc cube 1.2 m (đổi cỡ Die thì sửa vị trí con) |
+| `VFX_DieTrail` | game cha vào model Die, bật khi xúc xắc bắt đầu rơi, tắt `emission` / destroy khi chạm | root = Particle System (khói); 4 con `Corner_0/3/5/6` đặt đúng 4 đỉnh xen kẽ của cube 1.2 m (đổi cỡ Die thì sửa vị trí con) |
 | `VFX_DieExplosion` | game spawn tại điểm chạm, một lần | root = Particle System (bụi) |
 | `VFX_DieDrop` | **demo / Showcase**: cube tạm có chấm + trail + explosion, script `VfxDieDrop` (rơi 0.45 s, hạ cánh thì tắt cube, dừng phát vệt, nổ) | không dùng trong game thật; model Die do team khác làm |
 
@@ -26,7 +26,7 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 |---|---|---|---|---|
 | T1 | Aura | quầng vàng bám Die, 2.6 m | Billboard, Local, Additive | 0 |
 | T2 | Smoke (root) | khói vàng dài để lại sau lưng, 55/s, đời 0.8–1.2 s, nở 0.6→2.0 | Billboard, World, Alpha Blended | 1 |
-| T3 | Corner_0, 3, 5, 6 (4 đỉnh xen kẽ, v2) | **xương sống**: mỗi đỉnh một dải ribbon (Trails mode Ribbon), phát theo quãng đường 6 điểm/m, bay ra ngoài theo đường chéo góc 2.0 m/s, đời 0.4 s (~8 m ở tốc độ rơi 0.45 s), rộng ~1.1–1.4 m ở sát xúc xắc, thon dần về đuôi, hạt gốc `renderMode None` | Trails, World, Additive | 2–9 |
+| T3 | Corner_0, 3, 5, 6 (4 đỉnh xen kẽ, v2) | **xương sống**: mỗi đỉnh một dải ribbon (Trails mode Ribbon), phát theo quãng đường 6 điểm/m, bay ra ngoài theo đường chéo góc 2.0 m/s, đời 0.4 s (~8 m ở tốc độ rơi 0.45 s), rộng ~1.1–1.4 m ở sát xúc xắc, thon dần về đuôi, hạt gốc `renderMode None` | Trails, World, Additive | 2, 5, 7, 8 |
 | T4 | Sparks | tia vụn ngắn bắn ra từ khối, 55/s, pivot (0,1,0) | Stretched, World, Additive | 10 |
 | T5 | Glints | sao lấp lánh nhấp nháy dọc vệt, 55/s | Billboard, World, Additive | 11 |
 
@@ -70,7 +70,7 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 - Trail giảm còn **4 đỉnh** (xen kẽ 0, 3, 5, 6) vì 8 dải bị vỡ; ribbon đời 0.4 s, rộng 1.1–1.4 m (4 dải nên dày hơn).
 
 ## Chưa chắc (điểm yếu em biết)
-- Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 8 dải toả ra từ góc + xoắn nhờ xúc xắc xoay (800°/s), xoắn chưa dày bằng ref.
+- Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (800°/s), xoắn chưa dày bằng ref.
 - Bụi vàng chỉ là mảng mềm alpha (chưa có texture bụi hạt mịn riêng); phần "tan thành hạt" nhờ lớp Motes cộng sáng.
 - Chưa có chip vỡ của xúc xắc (docs chỉ nói "tan biến thành bụi").
 - Chưa thử trên nền sáng; chưa vào `Included` / Showcase (đợi art lead).

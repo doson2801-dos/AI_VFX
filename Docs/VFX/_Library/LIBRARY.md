@@ -100,3 +100,4 @@ Thêm dòng khi gặp (file → vai trò thực → nơi đúng). Chưa di chuy�
 | `smoke/sheet/smoke_sheet_002` | 4 cụm mây cartoon trắng (2×2) | là khói / nổ cartoon, không phải lửa; dùng làm "ngọn lửa" ra cục mây |
 | `glow/soft_round/glow_soft_round_008`, `_029` | cầu mềm 128 px, chỉ chiếm nửa khung, nền đen | quá nhỏ cho quầng lớn (GroundFlash) → mờ vỡ; ưu tiên `_007` (500 px) hoặc `_005` |
 | `ground/crack_radial/ground_crack_radial_001` | vỡ kính dày, chạm mép | tốt cho nứt đất nhưng không hợp "băng lạnh" mảnh; cần scale + fade mép |
+| `trail/streak/trail_streak_005`, `006` | thấu kính **đối xứng** hai đầu (nhãn `library_direction.csv` là `dir`) | dùng nhiều hạt Stretched theo vận tốc được (LuckyDice 2026-11-25); chờ art lead đồng ý mới đổi nhãn sang `omni` |
