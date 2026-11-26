@@ -63,6 +63,19 @@ Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt)
 | Cụm bụi vàng | Dust startSize 1.4–2.2, DustLow 1.2–2.0 | Dust **1.0–1.6** (−27%), DustLow **0.9–1.5** (−25%); số hạt giữ (22+14, 26) |
 Đo trên khung quay (cùng camera, 640 px; reviewer đo bằng PIL, bề rộng phân vị 1–99% của pixel sáng ít bão hoà = **riêng vòng viền, loại bụi**): viền 93 → 168 px (f22), 132 → 214 (f27), 115 → 199 (f30) (khoảng +60–80%); viền rộng hơn đám bụi ~1.25–1.3 lần (v12: hẹp hơn bụi). Diện tích vùng ấm (bụi) giảm 20% (0.33 s), 33% (0.5 s), 51% (0.73 s). Lưu ý: **tổng bề rộng mọi pixel sáng không tăng** sau 0.3 s (254 → 247 px ở f27) vì bụi nhỏ lại; chỉ viền rộng hơn.
 
+## v14 (Hoàng sau demo v13: "trả lại độ xoắn giống v10, vòng bụi cần bé hơn ~10-15% nữa")
+**Giữ viền đất to ở v13** (Ring 14 / Ring2 12.5 / Pool 12 m); không đổi chớp, Motes, ảnh dải, số hạt.
+| Điểm | v13 | v14 |
+|---|---|---|
+| Xoắn trail | `VfxDieSpin`: w = 450°/s × (t / 0.6 s), tổng ~135° | w = min(2800 × t, **570**)°/s, giảm về **450°/s** ở 25% cuối (tránh khúc gấp lúc chạm đất ở 30 fps): tổng **~275°** (tính; reviewer mô phỏng 267–276°; v10: 270°) |
+| Bụi Dust | tốc độ 16–24 m/s, size 1.0–1.6 | tốc độ **14.4–21.6** (−10%), size **0.9–1.44** (−10%) |
+| Bụi DustLow | tốc độ 0.5–7, size 0.9–1.5 | tốc độ **0.45–6.3**, size **0.81–1.35** (−10%) |
+Đo bụi (cùng camera, pixel ấm không phải gai trắng): xem bảng ở lượt gửi demo (diện tích và bề rộng cụm bụi nhỏ hơn ~7–20% tuỳ thời điểm, bề rộng −7 đến −11%). Phần 0.1–0.3 s đầu sau chạm gần như không đổi vì chủ yếu là vòng gai + chớp, không đổi theo yêu cầu.
+
+**Mâu thuẫn xoắn ↔ không góc nhọn (đã nói với Hoàng):** xoắn của v10 có nhờ xúc xắc xoay nhanh ngay lúc còn rơi chậm; các cung chéo của v10 ở nửa đầu chính là vòng gấp của 4 đỉnh, cũng là nguồn mảnh nhọn. Nguyên tắc dung hòa: tốc độ tiếp tuyến của đỉnh (w·r) so với tốc độ rơi (81·t m/s). Với 2800 / 570 và bán kính đỉnh 0.58–1.01 m thì tỉ lệ này **0.36–0.63** ở t < 0.2 s (nới hơn v13: ~0.2), nên đoạn đầu có nguy cơ vòng gấp hơn v13. Kết quả nhìn trên khung: xoắn ở giữa đoạn rơi gần v10 hơn v13, đoạn đầu vẫn không còn quạt tia / cánh nhọn lớn như v10 nhưng còn vài vệt mảnh ngang mép dưới xúc xắc.
+
+**Lỗi quy trình đã gặp (v14 lần đầu):** component `VfxDieSpin` trong `VFX_DieDrop_v10.prefab` bị Missing Script (`m_Script` fileID 0) nên xúc xắc không xoay, demo đầu sai; nguyên nhân: bản copy project có `Library` cũ, MonoScript của file script mới / vừa sửa chưa gắn với class. Sửa: chạm file script (đổi nội dung) rồi chạy một lượt Unity để reimport, sau đó mới build; kiểm `m_Script` có guid và `debug.txt` (x / z của đỉnh phải đổi) trước khi gửi.
+
 ## Chưa chắc (điểm yếu em biết)
 - **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12 chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.

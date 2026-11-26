@@ -14,7 +14,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay tăng theo tốc độ rơi (tối đa 450°/s lúc chạm đất). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay tăng theo tốc độ rơi (v14: min(2800·t, 570)°/s, giảm về 450°/s ở cuối, tổng ~275°). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
 - Dải **xuất phát từ các đỉnh** của xúc xắc (4 đỉnh xen kẽ; nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
@@ -47,6 +47,7 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
 
 ## Biến thể đã làm
+- v14 (2026-11-26, Hoàng): xoay w = min(2800·t, 570)°/s giảm về 450°/s ở cuối, tổng ~275° như v10; tỉ lệ tốc độ tiếp tuyến / tốc độ rơi 0.36–0.63 ở 0.2 s đầu. Cung chéo của v10 = vòng gấp đầu đoạn rơi = nguồn mảnh nhọn: xoắn giống v10 hơn thì nguy cơ mảnh nhọn hơn.
 - v12 (2026-11-26, Hoàng; = v10 + xoay ∝ tốc độ rơi `VfxDieSpin`, không đổi gì khác).
 - `Assets/VFX/LuckyDice_v10/Prefabs/VFX_DieTrail_v10.prefab` (2026-11-26, Hoàng; dựng riêng, không đè bản chỉnh tay của Sơn): bỏ Sparks, ảnh `trail_ribbon_019`, rộng 1.9, đuôi pha cam, không doãng đuôi.
 - `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v4: dải = 4 TrailRenderer (không còn Trails module). v5: ảnh dải `trail_ribbon_022` (lụa nhiều sợi), thả cao 14 m / 0.6 s. v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.
