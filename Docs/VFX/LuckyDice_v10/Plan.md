@@ -10,8 +10,8 @@
 ## Cách sửa (các số là *đề xuất*)
 | Việc | Nguyên nhân em tìm ra | Sửa v10 |
 |---|---|---|
-| Gai chồi ra (trail) | lớp **Sparks** (vệt Stretched mảnh bắn quanh) + ảnh dải mép răng cưa / cánh nhọn + đuôi doãng ra thành hình nêm | **bỏ Sparks**; ảnh dải `trail_ribbon_019` mép mịn; độ rộng uốn mềm, đuôi **không doãng** (thu về 0.5, mờ dần bằng alpha); `numCornerVertices` 14 |
-| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay 600°/s; màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
+| Gai chồi ra (trail) | lớp **Sparks** (vệt Stretched mảnh bắn quanh) + ảnh dải mép răng cưa / cánh nhọn + đuôi doãng ra thành hình nêm | **bỏ Sparks**; ảnh dải `trail_ribbon_019` mép mịn; độ rộng uốn mềm, đuôi **không doãng** (thu về 0.5, mờ dần bằng alpha); `numCornerVertices` 5 (14 làm quạt tia nhọn ở khúc gấp 0.25 s đầu), `minVertexDistance` 0.14, đầu dải thu về 0.05 rồi lên 1 trong 14% đầu |
+| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay 450°/s (600 làm khúc gấp gắt lúc mới thả); màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
 | Bụi như mây | tốc độ đầu thấp (5–8 m/s) + vận tốc bốc lên 1.4–2.4 + vòm DustRise bốc lên + bụi nở to chậm | **Dust**: tốc độ đầu **16–24 m/s** theo mặt đất, `speedModifier` 1 → 0.4 (0.12 s) → 0.12 (0.4 s) → 0.03, bốc lên chỉ 0.3–0.9, kích thước 0.45 → 1 → 1.3 lần, alpha vào nhanh (0.04 s) rồi tan tại chỗ; **DustLow** (thay DustRise): 26 hạt nửa cầu, tốc độ 0.5–7 giảm nhanh, lấp tâm; **Motes** 5–16 m/s giảm tốc |
 | Vòng dưới đất | | Pool 3.5 → 9.5 m, Ring 1 → 11 m, Ring2 → 9.6 m, chớp nằm đất 8 m, sao nằm đất 9.5 m (v9: 7.5 / 9.2 / 8 / 7 / 8.5); bụi toả ~4.5 m, vòng bán kính ~5.5 m |
 
@@ -21,7 +21,7 @@ Giữ nguyên: không gian (air / dir rơi, ground nổ), camera 3/4 40°, xúc 
 | Thành phần | Thư mục | Chốt | Dự phòng | Đã loại (lý do) |
 |---|---|---|---|---|
 | T3 Corner trail (v10) | `trail/ribbon` | `trail_ribbon_019` (dải mềm gợn, **mép mịn không răng cưa**, alpha, xám 1024×512; mỗi TrailRenderer một ảnh, tiling x 0.6 offset 0.2; có hướng nhưng không spam) | `trail_ribbon_020`, `trail_ribbon_017` (dải mềm một gợn) | v9 của Sơn `trail_ribbon_003`; v5 `trail_ribbon_022` (nhiều sợi mảnh, ra gai nhọn khi to bản); v3–v4 `impact_flipbook_016` (mép lông vũ); `trail_ribbon_023`/`024` (dải gai), `trail_streak_005` làm dải (mảnh như dây điện) |
-| T4 Sparks, X8 Spikes | `trail/streak` | `trail_streak_005` (nhãn `dir` trong CSV nhưng hình là thấu kính **đối xứng** nên dùng được nhiều hạt; vẫn Stretched theo vận tốc, không xoay tay) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi sai vai trò), `003`/`008` (có hướng đầu-đuôi rõ) |
+| X8 Spikes (T4 Sparks đã bỏ ở v10) | `trail/streak` | `trail_streak_005` (nhãn `dir` trong CSV nhưng hình là thấu kính **đối xứng** nên dùng được nhiều hạt; vẫn Stretched theo vận tốc, không xoay tay) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi sai vai trò), `003`/`008` (có hướng đầu-đuôi rõ) |
 | T2 Smoke, X5 Dust, X6 DustRise | `smoke/soft` | `smoke_soft_005` (= `Assets/VFX/fx_t_smoke_02.png`, khói mặc định theo luật; alpha, omni, 418×397 không POT) | `smoke_soft_004` | `smoke_soft_002` (4 cục rõ), `smoke_soft_006` (nền đen, nhỏ), `smoke_soft_001` (nền đen) |
 | T1 Aura, X1 Pool | `glow/soft_round` | `glow_soft_round_005` (alpha, mép mềm; 329 px không POT, đủ cho quầng mềm) | `glow_soft_round_013` | `glow_soft_round_001` (có viền vòng), `010` (đã có màu cam) |
 | X7 Motes, X4 FlashGround, X10 FlashCore | `glow/soft_round` | `glow_soft_round_007` (nền đen, Additive; 500 px không POT) | `glow_soft_round_006` | `glow_soft_round_008`/`029` (128 px, quá nhỏ) |
@@ -29,7 +29,7 @@ Giữ nguyên: không gian (air / dir rơi, ground nổ), camera 3/4 40°, xúc 
 | X9 FlashStarGround, X11 FlashStar | `impact/flash_spiky` | `impact_flash_spiky_014` (sao 8 gai quầng mềm, alpha, omni) | `impact_flash_spiky_005` | `006`/`010` (đặc, có hướng), `013` (hàng gai dựng đứng) |
 | X2 Ring | `impact/radial_ring` | `impact_radial_ring_003` (vòng gai mờ, nền đen = Additive) | `impact_radial_ring_007` | `006` (nền tối đậm cả đĩa) |
 | X3 Ring2 | `impact/radial_ring` | `impact_radial_ring_004` | `impact_radial_ring_008` | `010` (đặc, có hướng) |
-| Die demo (chỉ VFX_DieDrop) | không thuộc Library | `Assets/VFX/LuckyDice/Textures/T_DieDemo_Faces.png` (atlas 3×2 mặt 1–6, vẽ bằng script) | | Lý do tạo mới: Library không có texture mặt xúc xắc; chỉ để xem demo, game có model Die riêng |
+| Die demo (chỉ VFX_DieDrop) | không thuộc Library | `Assets/VFX/LuckyDice_v10/Textures/T_DieDemo_Faces.png` (atlas 3×2 mặt 1–6, vẽ bằng script) | | Lý do tạo mới: Library không có texture mặt xúc xắc; chỉ để xem demo, game có model Die riêng |
 
 ## Đã sửa sau review vfx-director (vòng 1, 2026-11-25)
 - Ribbon: ở mode Ribbon, vị trí 0 của `widthOverTrail` / `colorOverTrail` là **đầu cũ (đuôi)**, 1 là đầu mới sát góc xúc xắc; bản đầu để ngược nên dải dày ở xa, cụt phẳng. Đã lật: đuôi tan về 0, dày nhất sát xúc xắc.

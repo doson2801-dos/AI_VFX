@@ -10,7 +10,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Dải từ góc | **xương sống**: **4 đỉnh xen kẽ** (art lead 2026-11-25: 8 dải bị vỡ), mỗi đỉnh một dải (ribbon) | mảnh, lõi vàng sáng, mép mềm, nở dần ra ngoài + xoắn nhờ xúc xắc xoay, thon về đuôi | **có** |
 | Khói vàng | thân vệt dài phía sau | khối mềm vàng nhạt, nở dần, tan | có |
 | Quầng | halo quanh xúc xắc | cầu mềm vàng, không che mặt xúc xắc | có (nhẹ) |
-| Tia vụn | vệt tia ngắn bắn ra từ góc | gạch mảnh Stretched | nên có |
+| Tia vụn (v10 BỎ: đọc thành gai chồi ra) | vệt tia ngắn bắn ra từ góc | gạch mảnh Stretched | nên có |
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
