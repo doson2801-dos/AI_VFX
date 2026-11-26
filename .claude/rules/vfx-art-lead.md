@@ -52,5 +52,5 @@
 - VFX / biến thể mới: làm xong → `tools/check_texture_plan.py` pass → **agent khác review theo luật** → sửa đến khi đạt → **chuyển art lead review lần cuối**. Brief mẫu + thứ tự: `Docs/VFX/_ArtDirection/agent-review.md`. Không tự chốt "đạt"; không thêm vào `Included` khi art lead chưa duyệt.
 
 ## Skill
-- `vfx-code` tách hẳn khỏi `vfx-maker`; điểm chung duy nhất là Review Lab.
+- `vfx-code` tách hẳn khỏi `vfx-shader`; điểm chung duy nhất là Review Lab (`tools/review-lab/`). `vfx-maker` đã xoá 2026-11-26 (bản lưu ở `_archive/`).
 - Mỗi effect mới: prefab `VFX_<Tên>.prefab` trong `Prefabs/`, thêm vào `Included` của `VfxShowcaseBuild.cs` (khi art lead duyệt), chạy lại **VFX → Showcase → Build Scene**.

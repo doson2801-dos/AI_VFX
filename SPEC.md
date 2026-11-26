@@ -4,7 +4,7 @@
 Thư viện VFX cho Unity (Built-in + URP), dùng lại được trong game. Mỗi effect là một prefab chạy được ngay, đúng định hướng mỹ thuật của art lead.
 
 ## Phạm vi
-- Effect dạng particle + texture (`/vfx-maker`), bằng code (`/vfx-code`), cần shader (`/vfx-shader`).
+- Effect dạng particle + texture (build script, luật art lead), bằng code (`/vfx-code`), cần shader (`/vfx-shader`).
 - Thành phần chuẩn (Impact / Glow / Ring / Sparks / Dust) + auto mix cho đòn trúng / nổ.
 - Công cụ review không cần Unity: Review Lab, Shape Lab, Mix Lab.
 

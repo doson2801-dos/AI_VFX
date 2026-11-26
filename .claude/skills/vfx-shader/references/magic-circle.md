@@ -1,6 +1,6 @@
 # Magic circle (vòng phép) — dùng cách làm đã có, không viết shader
 
-Art lead, 2026-11-03: vfx dạng magic circle **lấy cách làm của các skill khác** (vfx-maker). Vòng phép vẽ bằng script ra rất tốt (hình học chính xác: vòng, chấm, vạch, cánh); đây là loại duy nhất script vẽ tốt. Hình hữu cơ (lửa, khói, nổ) thì không (xem bộ nhớ `script-shapes-geometric-vs-organic`).
+Art lead, 2026-11-03: vfx dạng magic circle **lấy cách làm của các skill khác** (cách làm HealCircle). Vòng phép vẽ bằng script ra rất tốt (hình học chính xác: vòng, chấm, vạch, cánh); đây là loại duy nhất script vẽ tốt. Hình hữu cơ (lửa, khói, nổ) thì không (xem bộ nhớ `script-shapes-geometric-vs-organic`).
 
 Vì vậy với magic circle, **vfx-shader không viết shader mới**: texture vẽ bằng script + particle + shader có sẵn (stock Additive của `VfxBuildKit`, hoặc `ColosoShaderAdditive` nếu cần ramp màu / dissolve). Bước định hướng không gian, kế hoạch duyệt 1 lần, Review Lab giữ nguyên như mọi effect.
 
@@ -21,4 +21,4 @@ Vì vậy với magic circle, **vfx-shader không viết shader mới**: texture
 - Quy mô: so với người 2 m (HealCircle ~2 m dưới chân). Camera mặc định 3/4 nhìn xuống 40°; vòng nằm đất bị dẹt theo góc nhìn.
 - Texture là hình học đơn phần tử cho particle; không bake cả effect vào một ảnh.
 - Frame over Time (nếu có sheet) phải tuyến tính.
-- Skill vfx-maker (`/vfx-maker`) vẫn là chỗ gốc của quy trình texture + particle: nếu effect chỉ là vòng phép thuần (không cần shader nào ngoài stock), người dùng có thể gọi thẳng `/vfx-maker`.
+- `/vfx-maker` đã xoá (2026-11-26). Vòng phép thuần (không cần shader nào ngoài stock) thì vẫn làm theo file này, shader stock.

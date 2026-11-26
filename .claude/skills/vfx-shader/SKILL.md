@@ -25,7 +25,6 @@ Trao đổi bằng tiếng Việt; code và tên asset bằng tiếng Anh. Skill
 - **Texture chạy UV của slash (`_MainTex`) lấy trong `Assets/Library/Slash/Main_tex(Uvmesh)/`** (art lead 2026-11-04). Cách chọn ở [references/coloso.md](references/coloso.md) mục "Texture slash".
 - Không dùng Horizontal / Vertical Billboard (nằm đất = Billboard + Render Alignment Local; đứng bay = Stretched).
 - Frame over Time của flipbook phải là đường thẳng.
-- Chưa "chốt" thì không đổi `vfx-maker`.
 
 ```
 Mô tả → ĐỊNH HƯỚNG KHÔNG GIAN (thiếu → HỎI) → CHỌN SHADER (dùng lại / mở rộng / mới) → KẾ HOẠCH (DUYỆT 1 lần)
@@ -118,7 +117,7 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 
 - **Khói:** texture `Assets/VFX/fx_t_smoke_02.png` + shader mobile mặc định của Unity (`Mobile/Particles/Alpha Blended`; `VfxBuildKit.Material` tự chọn, URP đổi sang URP Particles Unlit). Tô màu bằng Start Color. Không dùng thành phần Dust chuẩn / khói toon cho effect mới (art lead 2026-11-03).
 - **Slash:** chỉ bộ Coloso ([references/coloso.md](references/coloso.md)); `_MainTex` chạy UV lấy từ `Assets/Library/Slash/`.
-- **Magic circle:** cách vfx-maker / HealCircle ([references/magic-circle.md](references/magic-circle.md)).
+- **Magic circle:** cách HealCircle ([references/magic-circle.md](references/magic-circle.md)).
 - **Tornado / cột gió:** [references/tornado.md](references/tornado.md); học prefab tham chiếu theo [references/study-reference.md](references/study-reference.md).
 - **Gai băng / đất đâm lên:** [references/ground-spike.md](references/ground-spike.md) (5–9 khối chính, sát nhau, nghiêng ngẫu nhiên, mỗi khối một tuổi thọ).
 - **Tạo hình trước khi làm** (art lead 2026-11-10): trước bước 2 (và trước 2b), mở `Docs/VFX/_Anatomy/<loại>.md` + `materials.md`; chưa có hoặc chưa hiểu thì research rồi **lưu file mới** theo `_Anatomy/README.md`. Chép "Bất biến" vào kế hoạch; sau build đối chiếu preview với nó. Biến thể phải giữ hình xương sống của effect gốc.
@@ -130,7 +129,7 @@ Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất c�
 | File | Nội dung |
 |---|---|
 | [references/coloso.md](references/coloso.md) | Bộ Coloso: cách dùng chuẩn, Custom Streams, công thức slash quanh mesh vòng, lỗi thường gặp |
-| [references/magic-circle.md](references/magic-circle.md) | Vòng phép: dùng cách vfx-maker / HealCircle, không viết shader |
+| [references/magic-circle.md](references/magic-circle.md) | Vòng phép: dùng cách HealCircle, không viết shader |
 | [references/ground-spike.md](references/ground-spike.md) | Gai băng / đất đâm lên đất: lớp, số khối, hướng, tuổi thọ, bảng màu Băng ↔ Đất, ghi chú theo nguyên tố, bài học quy trình |
 | [references/tornado.md](references/tornado.md) | Tornado / cột gió: cách bản gốc `Stupid_Tornado_Projectile` hoạt động (mesh, Shader Graph, sheet đóng gói kênh), bảng lớp + số, khác bản gốc, biến thể, lỗi đã gặp |
 | [references/study-reference.md](references/study-reference.md) | Học từ prefab tham chiếu đủ bước: copy theo GUID, render + dump, Shader Graph hồng, đọc mesh / texture, dựng |

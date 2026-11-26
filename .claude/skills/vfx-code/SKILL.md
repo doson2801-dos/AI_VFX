@@ -1,6 +1,6 @@
 ---
 name: vfx-code
-description: "Làm VFX hoàn toàn bằng code (Python/numpy → flipbook + prefab Unity, kèm công thức shader realtime), tổng hợp kỹ thuật từ ~50 thư viện VFX mã nguồn mở trên GitHub: pixelfx, minerva pixel-effect-generator, NovaShader, GDQuest, three.quarks, Effekseer, Godot, stable-fluids, WebGL-Fluid-Simulation, VFXToolbox, officina-vfx-tool... Gồm noise có chu kỳ (tile / loop liền), SDF 2D, toạ độ cực, toon band, dissolve / erosion, tia sét, hệ hạt (curl, vortex, sub-emitter, stretched billboard), mô phỏng khói chất lỏng, metaball nổ, vệt chém. Skill độc lập, tách khỏi vfx-maker; chỉ dùng chung Review Lab để review. Chạy khi người dùng gọi /vfx-code."
+description: "Làm VFX hoàn toàn bằng code (Python/numpy → flipbook + prefab Unity, kèm công thức shader realtime), tổng hợp kỹ thuật từ ~50 thư viện VFX mã nguồn mở trên GitHub: pixelfx, minerva pixel-effect-generator, NovaShader, GDQuest, three.quarks, Effekseer, Godot, stable-fluids, WebGL-Fluid-Simulation, VFXToolbox, officina-vfx-tool... Gồm noise có chu kỳ (tile / loop liền), SDF 2D, toạ độ cực, toon band, dissolve / erosion, tia sét, hệ hạt (curl, vortex, sub-emitter, stretched billboard), mô phỏng khói chất lỏng, metaball nổ, vệt chém. Skill độc lập; chỉ dùng chung Review Lab để review. Chạy khi người dùng gọi /vfx-code."
 disable-model-invocation: true
 metadata:
   version: "1.2.0"
@@ -10,7 +10,7 @@ metadata:
 
 Trao đổi bằng tiếng Việt; code và tên asset bằng tiếng Anh. Thư mục skill: `D:/Game_prj/VFX_LIb/.claude/skills/vfx-code/`.
 
-**Skill độc lập** (art lead, 2026-11-03): không dùng công cụ, asset hay quy trình của `vfx-maker`. Điểm chung duy nhất là **Review Lab** để art lead review (mục 4).
+**Skill độc lập** (art lead, 2026-11-03): không dùng công cụ, asset hay quy trình của skill khác. Điểm chung duy nhất là **Review Lab** để art lead review (mục 4).
 
 ```
 Brief → KHÔNG GIAN (thiếu → HỎI) → chọn kỹ thuật (references/techniques.md) → viết effect .py

@@ -13,7 +13,7 @@
 | `MAP.md` | File này. |
 | `contexte/` | Những gì đã học được về dự án, mỗi chủ đề một file (xem `contexte/README.md`). |
 | `.claude/rules/` | Luật cứng của art lead, tự nạp vào mọi phiên. |
-| `.claude/skills/` | Skill dự án: `vfx-maker`, `vfx-code`, `vfx-shader`. |
+| `.claude/skills/` | Skill dự án: `vfx-code`, `vfx-shader` (`vfx-maker` đã xoá 2026-11-26, bản lưu ở `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/`). Review Lab: `tools/review-lab/`. |
 | `.claude/agents/vfx-artist.md` | Agent VFX artist: nhận brief, làm VFX theo luật + skill của project, bàn giao cho `vfx-director` review. |
 | `tools/vfx_artist.py` | Bật / tắt / giữ chạy nhân viên VFX (`on`, `off`, `status`, `watch`). Tự chạy lại sau khi bật máy bằng `~/.config/systemd/user/vfx-artist.service` (ngoài repo; linger bật). |
 | `tools/subsession/briefs/vfx_artist.md` | Brief phiên nhân viên VFX: nhận order HorusChat / WorkAI (profile `vfx`), gửi demo cho người order, nhận feedback, giao. Sổ order: `work/vfx_orders/<mã>/`. |

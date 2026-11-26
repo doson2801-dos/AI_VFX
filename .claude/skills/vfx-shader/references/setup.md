@@ -2,10 +2,10 @@
 
 Kiểm tra từng mục; mục nào đã có thì bỏ qua.
 
-1. **Build kit** (dùng chung với vfx-maker): nếu chưa có `Assets/VFX/_Kit/`, copy:
-   - `D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/assets/VfxBuildKit.cs` → `Assets/VFX/_Kit/Editor/VfxBuildKit.cs`
-   - `D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/assets/VfxDemoReplay.cs` → `Assets/VFX/_Kit/Runtime/VfxDemoReplay.cs`
-   Đã có thì so `VfxBuildKit.Version`; bản trong vfx-maker mới hơn thì cập nhật.
+1. **Build kit** (dùng chung, đã có sẵn trong project): nếu chưa có `Assets/VFX/_Kit/`, copy từ bản lưu `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/assets/`:
+   - `D:/Game_prj/VFX_LIb/Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/assets/VfxBuildKit.cs` → `Assets/VFX/_Kit/Editor/VfxBuildKit.cs`
+   - `D:/Game_prj/VFX_LIb/Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/assets/VfxDemoReplay.cs` → `Assets/VFX/_Kit/Runtime/VfxDemoReplay.cs`
+   Đã có thì so `VfxBuildKit.Version`; bản trong bản lưu mới hơn thì cập nhật.
 2. **Thư viện hàm shader:** nếu chưa có `Assets/VFX/_Shared/Shaders/VfxShaderLib.cginc`, copy từ `assets/VfxShaderLib.cginc` của skill này. Đã có thì so `VFX_SHADER_LIB_VERSION`; chỉ **thêm** hàm mới, không đổi hàm cũ (shader khác đang dùng).
 3. **Noise dùng chung:** nếu chưa có `Assets/VFX/_Shared/Textures/Noise/`, tạo bằng:
    ```
@@ -15,4 +15,4 @@ Kiểm tra từng mục; mục nào đã có thì bỏ qua.
    Noise có sẵn trong project cũng được dùng (ví dụ `Assets/VFX/SmokeStylized/Textures/T_Noise_Dissolve_*.png`), nhưng phải import linear.
 4. **Sổ đăng ký shader:** nếu chưa có `Docs/VFX/SHADERS.md`, tạo từ việc rà `Assets/**/*.shader` (khối Properties, keyword, số sample) theo mẫu cột của sổ hiện có.
 5. **Pipeline và color space:** đọc `ProjectSettings/GraphicsSettings.asset` (`m_CustomRenderPipeline: {fileID: 0}` = Built-in) và `ProjectSettings.asset` (`m_ActiveColorSpace: 1` = Linear). HDRP: báo người dùng, skill không hỗ trợ.
-6. **Review Lab** (dùng chung với vfx-maker): cần có `D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/review-lab/build_review.py` và `review_lab.html`. Thêm cấu hình `review-lab` vào `.claude/launch.json` nếu chưa có: `python -m http.server 8776 --bind 127.0.0.1 --directory Docs/VFX/_Review`.
+6. **Review Lab** (dùng chung): cần có `D:/Game_prj/VFX_LIb/tools/review-lab/build_review.py` và `review_lab.html`. Thêm cấu hình `review-lab` vào `.claude/launch.json` nếu chưa có: `python -m http.server 8776 --bind 127.0.0.1 --directory Docs/VFX/_Review`.
