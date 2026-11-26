@@ -39,7 +39,12 @@ Giữ nguyên: không gian (air / dir rơi, ground nổ), camera 3/4 40°, xúc 
 - Tia gai dài hơn (đời 0.3–0.55 s, length scale 10), thêm lấp lánh quanh xúc xắc (Glints 55/s).
 
 
+## v11 (Hoàng sau demo v10: "trail ổn, riêng đoạn gần điểm xuất phát cần mượt, không góc nhọn; bụi ổn, thêm: tản xa thì bé dần, giảm nhiễu khi đưa vào game")
+- **Trail gần điểm xuất phát:** nguyên nhân là lúc mới thả xúc xắc rơi chậm (rơi bậc hai) nhưng xoay đủ nhanh, bốn đỉnh vẽ vòng nhỏ gấp nên TrailRenderer ra mảnh nhọn. Sửa: tốc độ xoay tăng theo tốc độ rơi (script mới `Assets/VFX/LuckyDice_v10/Runtime/VfxDieSpin.cs`, `VfxDieDrop.spinDegPerSec = 0`, tối đa 550°/s), và dải chỉ bắt đầu phát sau khi xúc xắc rơi được 6% quãng (~0.15 s, ~0.9 m).
+- **Bụi bé dần khi tản xa, ít nhiễu:** Dust size 0.45 → 1 (22% đời) → 0.9 (50%) → 0.35 (hết); DustLow, Motes cũng co về ~0.35 / 0.15. Số hạt: Dust 22+14 → 16+10 (max 90 → 40), DustLow 26 → 16 (max 50 → 24), Motes 110 → 66 (max 130 → 70); đời Dust 0.8–1.1 s.
+
 ## Chưa chắc (điểm yếu em biết)
+- **Còn vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu** (dải nhìn ngang mép) và một khúc gấp nhỏ ở cuối trail sát lúc chạm đất.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
 - Trail chỉ mượt ở 60 fps (xúc xắc 47 m/s ≈ 1.6 m / khung ở 30 fps, dải gấp khúc nhẹ); em chưa nội suy được điểm giữa khung (thử `AddPosition` bị đảo thứ tự điểm).
 - Bụi vẫn là billboard `smoke_soft_005` (khói mặc định), không Erode Sphere: Erode Sphere là luật cho khói vụ nổ lửa / than; brief này là bụi vàng. Art lead quyết nếu muốn khác.

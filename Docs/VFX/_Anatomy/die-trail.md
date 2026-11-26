@@ -36,6 +36,9 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 ## Gai chồi ra / cảm giác ma thuật (Hoàng 2026-11-26, v9)
 - "Gai chồi ra" do: lớp Sparks (vệt Stretched mảnh bắn quanh), ảnh dải mép răng cưa hoặc đầu nhọn, và **đuôi doãng rộng** (thu về nêm nhọn, ra gai màu hồng). Trail ma thuật = dải **mịn, liền, mềm mép**, xoắn quanh xúc xắc, đuôi **pha cam** (màu kem vàng → vàng → cam, mờ bằng alpha), không có tia ngoài dải; sao lấp lánh nhỏ đi kèm.
 
+## Đoạn đầu trail (Hoàng 2026-11-26, v10 → v11)
+- Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Còn lại: vệt ngang mép dưới xúc xắc trong 0.3 s đầu (chưa hết).
+
 ## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
 - **`numCapVertices` phải 0**: cap tròn đâm ra TRƯỚC xúc xắc nửa bề rộng (thấy như gậy sáng thò xuống dưới khối).
