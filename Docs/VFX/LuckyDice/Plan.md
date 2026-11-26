@@ -7,7 +7,7 @@ Sơn trả lời: game **Built-in**, **chưa có model Die** (dùng 1 khối cub
 ## Không gian (các mục *đề xuất* do em chọn)
 - Trail Die: **air / dir** (rơi thẳng xuống). Root gắn vào xúc xắc (game cha vào model Die), vệt ở không gian thế giới.
 - Die explosion: **ground**, neo ở điểm chạm (y = 0), vòng nằm đất = Billboard + Render Alignment Local (xoay X 90°), phần còn lại Billboard / Stretched. Một chớp.
-- Camera 3/4, nhìn xuống 40°. Quy mô *đề xuất*: Die cạnh 1.2 m (nhân vật 2 m), rơi từ cao 8 m, **0.45 s** (nhanh dần; v2: Sơn muốn rơi mạnh hơn, v1 là 0.8 s), xoay ~1 vòng. Nổ bán kính ~4 m, ~1.5 s. Màu vàng theme Hero.
+- Camera 3/4, nhìn xuống 40°. Quy mô *đề xuất*: Die cạnh 1.2 m (nhân vật 2 m), rơi từ cao **14 m** (v5; v1–v4 là 8 m), **0.6 s** (nhanh dần; v4 là 0.45 s; v2: Sơn muốn rơi mạnh hơn, v1 là 0.8 s), xoay ~1 vòng. Nổ bán kính ~4 m, ~1.5 s. Màu vàng theme Hero.
 - Pipeline Built-in, shader mobile stock (Additive / Alpha Blended), không shader mới, không texture mới (trừ ảnh mặt Die demo).
 
 ## Bất biến (chép từ `_Anatomy/die-trail.md`, `die-explosion.md`)
@@ -49,7 +49,7 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## Texture (Library, đã xem contact sheet từng thư mục)
 | Thành phần | Thư mục | Chốt | Dự phòng | Đã loại (lý do) |
 |---|---|---|---|---|
-| T3 Corner ribbon (v3) | `impact/flipbook` | `impact_flipbook_016` ô dưới-trái (lưỡi thuôn nhọn hai đầu, mép gợn, alpha, xám; sheet 2×2 có hướng nhưng dùng **một ô** kéo dọc ribbon bằng tiling 0.32×0.3 offset 0.08/0.07, không spam; art lead yêu cầu thử ảnh nhóm impact) | `impact_flipbook_020`, `013`, `impact_shard_002` | **v2 `trail_ribbon_019`** (art lead: dải gãy, cứng, quá đều); ô trên-trái của `016` (mép răng cưa to, ra dải cưa); `impact_flipbook_005` / `023` (chùm mảnh vụn, không phải dải); `007`/`018` (blob) | `trail_ribbon_023`/`024` (dải gai: ra hình dây thép gai), `trail_streak_005` làm ribbon (mảnh như dây điện, bản thử 1 bị chê trông giống tia sét), `014`/`015` (dải lụa to nhiều lớp) |
+| T3 Corner trail (v5) | `trail/ribbon` | `trail_ribbon_022` (dải lụa nhiều sợi gợn, alpha LA, xám, 1024×512, chạy hết chiều dài dải; tiling y 0.7 offset 0.15; có hướng nhưng là **một ảnh kéo dọc từng TrailRenderer**, không spam) | `trail_band_001` (vệt sao chổi sáng đầu mờ đuôi, alpha, 256², sạch nhưng đều), `trail_ribbon_020` (dải mềm một gợn) | **v3–v4 `impact_flipbook_016`** (Sơn: tìm texture trail khác); `trail_ribbon_019` (v1–v2, gãy / cứng); `021` (xoắn vòng rời rạc), `002` / `009` (dải xoắn mỏng tối), `018` (dải đặc cạnh cứng), `015` (hai sợi thẳng), `beam_001` (khối chữ nhật cạnh vuông) |
 | T4 Sparks, X8 Spikes | `trail/streak` | `trail_streak_005` (nhãn `dir` trong CSV nhưng hình là thấu kính **đối xứng** nên dùng được nhiều hạt; vẫn Stretched theo vận tốc, không xoay tay) | `trail_streak_006` | `trail_streak_012` (khối trắng đặc, đã ghi sai vai trò), `003`/`008` (có hướng đầu-đuôi rõ) |
 | T2 Smoke, X5 Dust, X6 DustRise | `smoke/soft` | `smoke_soft_005` (= `Assets/VFX/fx_t_smoke_02.png`, khói mặc định theo luật; alpha, omni, 418×397 không POT) | `smoke_soft_004` | `smoke_soft_002` (4 cục rõ), `smoke_soft_006` (nền đen, nhỏ), `smoke_soft_001` (nền đen) |
 | T1 Aura, X1 Pool | `glow/soft_round` | `glow_soft_round_005` (alpha, mép mềm; 329 px không POT, đủ cho quầng mềm) | `glow_soft_round_013` | `glow_soft_round_001` (có viền vòng), `010` (đã có màu cam) |
@@ -79,6 +79,11 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 ## v4 (feedback Sơn sau demo v3 + tin thêm)
 - "trail vẫn quá gãy, thử dùng trail renderer": bốn dải đổi từ Trails module của Particle System sang **TrailRenderer** (xem T3). Luật art lead không cấm; không liên quan Horizontal / Vertical Billboard (Alignment View). TrailRenderer không chạy khi `Simulate` tay trong edit mode, nên preview / GIF chụp ở **Play mode** (`VFX/LuckyDice/Capture (play mode)`, `VfxDieCapture`, 60 Hz).
 - "thay đổi thành nổ tại mặt đất, tôi thấy có vẻ đang để texture nổ trên không": đúng, v2–v3 em nâng chớp lên y 1.6–1.8 và gốc bụi lên y 1.0 cho sàn khỏi cắt billboard nên nổ lơ lửng. Nay tâm nổ y ≈ 0: chớp là đĩa + sao nằm trên sàn (Billboard + Local), bụi / chớp đứng dùng Pivot (0,0.5,0).
+
+## v5 (feedback Sơn sau demo v4: "gần ổn rồi, tìm 1 texture trail khác xem và tăng độ cao khi rơi")
+- Texture dải: `impact_flipbook_016` → `trail_ribbon_022` (xem bảng texture; contact sheet cả `trail/ribbon`, `trail/band`, `beam`).
+- Thả cao hơn: 8 m → **14 m**, thời gian rơi 0.45 → **0.6 s** (quadratic, chạm đất ~47 m/s, nhanh hơn v4 ~35 m/s). Camera 3/4 40° lùi ra 27 m, nhìn y = 7 m để thấy trọn đường rơi.
+- Khói trail: đời 0.5–0.8 s (cột khói đứng sau khi nổ ngắn lại), `maxParticles` 180 vì đường rơi dài.
 
 ## Sau review v4 (vfx-director)
 - Thứ tự vẽ: mọi lớp nằm đất (Pool, Ring, Ring2, FlashGround, FlashStarGround) dưới các lớp đứng (Dust 5, DustRise 6, Motes 7, Spikes 8, FlashCore 9, FlashStar 10, Sparkles 11); ở trail Smoke 0 dưới Aura 1.
