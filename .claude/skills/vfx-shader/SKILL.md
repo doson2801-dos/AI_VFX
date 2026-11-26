@@ -99,7 +99,7 @@ Thêm: **khác với effect nào, ở điểm nào** (mesh / bố cục / timing
 ## 7b. Review Lab
 
 ```
-python -I "D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/review-lab/build_review.py" --project . [--effect <Effect>]
+python -I "D:/Game_prj/VFX_LIb/tools/review-lab/build_review.py" --project . [--effect <Effect>]
 ```
 Ghi `Docs/VFX/_Review/index.html` (một file; bỏ `--effect` thì gom tất cả, rất nặng). Cho art lead: timeline preview, so sánh A/B, ghim góp ý, **Xuất phản hồi**. Chạy lại sau mỗi lần build.
 

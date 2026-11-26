@@ -9,7 +9,7 @@
 - Art lead sửa / xoá hình trong Lab (artifact db, collection `libEdits`). "Áp dụng chỉnh sửa" = `python shape_library.py apply-edits <json>` rồi đăng lại.
 
 ## Review Lab (xem effect không cần Unity)
-- `python -I .claude/skills/vfx-maker/review-lab/build_review.py --project . [--effect Tên]` → `Docs/VFX/_Review/index.html`.
+- `python -I tools/review-lab/build_review.py --project . [--effect Tên]` → `Docs/VFX/_Review/index.html`.
 - Bản đăng: https://claude.ai/artifact/DKQDnM9vtH8iNXaLUkURoN. Bản tự chứa > 16 MB nên đăng bản `--link` + ảnh qua `files`, từng đợt ~25–35 file.
 - Phản hồi art lead xuất ra từ nút "Xuất phản hồi": mỗi ghim = một yêu cầu sửa cụ thể.
 

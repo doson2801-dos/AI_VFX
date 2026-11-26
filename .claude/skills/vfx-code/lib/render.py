@@ -31,7 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import core as cf  # noqa: E402
 
-REVIEW_LAB = os.path.join(os.path.dirname(os.path.dirname(HERE)), "vfx-maker", "review-lab", "build_review.py")
+REVIEW_LAB = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(HERE)))), "tools", "review-lab", "build_review.py")
 
 
 def load(path):

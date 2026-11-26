@@ -81,7 +81,7 @@ Mọi VFX để chung một scene: `Assets/VFX/_Showcase/Scenes/VFX_Showcase.uni
 
 ## Review Lab (web review, không cần mở Unity)
 
-- Lệnh: `python -I D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/review-lab/build_review.py --project . [--effect Tên]` → `Docs/VFX/_Review/index.html` (1 file tự chứa).
+- Lệnh: `python -I D:/Game_prj/VFX_LIb/tools/review-lab/build_review.py --project . [--effect Tên]` → `Docs/VFX/_Review/index.html` (1 file tự chứa).
 - Gồm: timeline preview, flipbook, ảnh/GIF, so sánh A/B, ghim góp ý, nút "Xuất phản hồi" để dán vào chat.
 - Gắn vào `/vfx-maker` (mục 5b). Có cấu hình `review-lab` trong `.claude/launch.json` (cổng 8776).
 

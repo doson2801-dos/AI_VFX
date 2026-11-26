@@ -109,7 +109,7 @@ Nháp thử nhiều hướng thì dùng `--out <thư mục tạm>` thay cho `--e
 
 Thêm `--review` vào lệnh render (dựng lại cả trang), hoặc chạy riêng:
 ```bash
-python -I "D:/Game_prj/VFX_LIb/.claude/skills/vfx-maker/review-lab/build_review.py" --project "D:/Game_prj/VFX_LIb"
+python -I "D:/Game_prj/VFX_LIb/tools/review-lab/build_review.py" --project "D:/Game_prj/VFX_LIb"
 ```
 Không dùng `--effect` của build_review khi ghi vào `index.html` chung: trang sẽ chỉ còn 1 effect.
 → `Docs/VFX/_Review/index.html`: timeline từ `Preview_sheet.png`, trình phát flipbook từ sheet trong `Textures/`, GIF, A/B, ghim góp ý. Art lead bấm "Xuất phản hồi" rồi dán vào chat: đọc như danh sách sửa (effect, mốc, toạ độ %). Sửa → render lại với `--review`.
