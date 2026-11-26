@@ -2,7 +2,7 @@
 
 Brief: Khải gửi video YouTube `qeUuME4z9yY` từ 0:40 + "VFX dạng thổi lửa"; "làm gif demo"; "góc camera như ref". Video = Dota 2 "Lina Arcana - Fiery Soul of the Slayer", 0:40 = **Dragon Slave**. Không tải được video (YouTube chặn), chỉ xem 6 khung thu nhỏ (`work/vfx_orders/20261126_khaipd_thoilua/ref/key_tiles.png`).
 
-Không gian: ground / dir (bắn ngang mặt đất, 1 hướng +Z) · quy mô: dài ~10 m, rộng ~3 m ở cuối, nhân vật 2 m · neo = hai tay ở cao 0,9 m *đề xuất* · camera **như ref: Dota nhìn xuống ~60°, nhìn từ bên (sóng chạy ngang màn hình)** *đề xuất (đọc từ khung ref)* · nền: cỏ xanh (ref).
+Không gian: ground / dir (bắn ngang mặt đất, 1 hướng +Z) · quy mô: dài ~10 m, rộng ~3 m ở cuối, nhân vật 2 m · neo = hai tay ở cao 1,0 m *đề xuất* · camera **như ref: Dota nhìn xuống ~60°, nhìn từ bên (sóng chạy ngang màn hình)** *đề xuất (đọc từ khung ref)* · nền: cỏ xanh (ref).
 Timing *đề xuất*: tụ 0,25 s → sóng lao ra 0,45 s (22 m/s) → tàn/khói/vệt cháy còn ~3,5 s. Tổng ~4,5 s, một lần.
 Sản phẩm: **GIF demo** (≤ 10 MiB) + prefab `VFX_FireBreath` (Khải chỉ xin GIF; prefab là bản kèm, chưa vào `Included`).
 
@@ -16,7 +16,7 @@ Sản phẩm: **GIF demo** (≤ 10 MiB) + prefab `VFX_FireBreath` (Khải chỉ 
 | ID | Lớp | Vai trò, timing (s) | Carrier / shader | Texture |
 |---|---|---|---|---|
 | L1 | Wave (root) | quầng nền cam của sóng 0,25–0,70 (không còn là thân chính) | Billboard Add, `Mobile/Particles/Additive`, đường kính tối đa 2 m < 2 × Y0 (không cắt đất) | `glow/soft_round/glow_soft_round_005` |
-| L2 | Tongues | **thân sóng thật**: lưỡi lửa có hướng, ~40 hạt Stretched, tất cả cùng hướng bắn, không xoay, đầu = hướng bay | Stretched Alpha | `FX_TX_Fire_FireLoop_03_4x4` (rpg-game) |
+| L2 | Tongues | **thân sóng thật**: lưỡi lửa có hướng, ~40 hạt Stretched (maxParticles 60), tất cả cùng hướng bắn, không xoay, đầu = hướng bay | Stretched Alpha | `FX_TX_Fire_FireLoop_03_4x4` (rpg-game) |
 | L3 | Head | đầu sóng: quầng hồng-tím + lõi kem + lưỡi liềm bay cùng, 22 m/s | Billboard Add + Stretched Alpha | `glow_soft_round_005`; `FX_TX_Fire_DirectionalFlame_01_4x4` |
 | L4 | Scorch | vệt cháy nằm đất, sống 3–3,8 s (sub-emitter của Head, Local X 90) | Billboard Local, Alpha | `ground/scorch/ground_scorch_003` |
 | L5 | GroundGlow | vệt sáng cam trên đất đi theo sóng | Local flat, Add | `glow_soft_round_005` |
@@ -31,7 +31,7 @@ Thứ tự vẽ (không trùng): Scorch 0, GroundGlow 1, Smoke 3, Wave 4, Tongue
 Đã xem contact sheet `fire_candidates`, `trail_streak`, `ground/scorch` (3 ảnh xem trực tiếp), `smoke_sheet`.
 | Thành phần | Thư mục | Chốt | Lý do | Đã loại |
 |---|---|---|---|---|
-| Thân sóng: lưỡi lửa có hướng | (Library chưa có; rpg-game `Flipbooks/Fire`) | `FireLoop_03` | cam thật, alpha thật, bầu sáng dẫn đầu ở TRÁI = quy ước Stretched | `FireLoop_01` (cục trắng), `FireLoop_04` (xám) |
+| Thân sóng: lưỡi lửa có hướng | (Library chưa có; rpg-game `Flipbooks/Fire`) | `FireLoop_03` | cam thật, alpha thật, bầu sáng dẫn đầu ở TRÁI = quy ước Stretched | `FireLoop_01` (cục trắng), `FireLoop_04` (xám), `smoke/cartoon_008` (lửa cartoon có hướng, ít khung), `impact/flipbook_003` (dir, dạng nổ) |
 | Lưỡi liềm đầu sóng | cùng | `DirectionalFlame_01` | lưỡi liềm dẫn đầu bên trái, bung rồi tan | `DirectionalFlame_03` (xám), `FireSlash_*` (dạng chém) |
 | Quầng nền sóng, đầu sóng, ground glow, tụ | `glow/soft_round` | `glow_soft_round_005` | alpha thật, omni, tint được (warn "không POT" không ảnh hưởng) | `_007` (nền đen) |
 | Vết cháy | `ground/scorch` | `ground_scorch_003` | alpha thật, omni, vệt cháy có nứt; dùng nhiều dấu chồng nhau | `_001` (nền đen, vòng chấm), `_002` (dir, chạm mép), `smoke_sheet_002` (mây, bị review chặn) |
@@ -46,6 +46,7 @@ Hai flipbook rpg-game: copy + resize vào `Assets/VFX/FireBreath/Textures/` qua 
 - L2: billboard xuyên đất bị cắt cạnh thẳng → Y0 1,0 m, đường kính tối đa thân / khói ≤ 2 × độ cao tâm.
 - L3: Scorch → `ground/scorch_003`, Smoke → `smoke_soft_005`, bảng chọn texture đủ cột.
 - L5: Sparks pivot (0,1,0); Anatomy ghi lỗi đã gặp.
+- Vòng 2 (duyệt có điều kiện): lưỡi lửa chưa phủ tới đầu sóng → tăng đời 0,4–0,5 s + tốc độ 21–29 m/s, loe nón 26° / 22° (đã sửa, xem preview). `spark_streak_001` là black_bg dùng Additive nên không lộ khung vuông.
 - Còn mở: thân sóng thon hơn ref? (đo bằng mắt, art lead quyết); sub-emitter Birth chưa xem ở Play mode.
 
 ## Việc chưa chắc

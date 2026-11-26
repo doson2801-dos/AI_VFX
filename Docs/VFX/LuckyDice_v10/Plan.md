@@ -78,6 +78,10 @@ Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt)
 
 **Lỗi quy trình đã gặp (v14 lần đầu):** component `VfxDieSpin` trong `VFX_DieDrop_v10.prefab` bị Missing Script (`m_Script` fileID 0) nên xúc xắc không xoay, demo đầu sai; nguyên nhân: bản copy project có `Library` cũ, MonoScript của file script mới / vừa sửa chưa gắn với class. Sửa: chạm file script (đổi nội dung) rồi chạy một lượt Unity để reimport, sau đó mới build; kiểm `m_Script` có guid và `debug.txt` (x / z của đỉnh phải đổi) trước khi gửi.
 
+## v15 (Hoàng: "giảm bớt số lượng vòng bụi khi die chạm đất, mỗi vòng chi tiết giữ nguyên")
+"Vòng bụi" mơ hồ; em hiểu mặc định (*đề xuất*, đã hỏi Hoàng xác nhận): các **vòng cụm bụi vàng** (không phải viền gai trên đất). Trước v15 có 3 vòng bụi đồng tâm: **Dust đợt 1** (22 hạt ở 0 s), **Dust đợt 2** (14 hạt ở 0.06 s, vòng thứ hai đi sau), **DustLow** (26 hạt, vòng trong lấp tâm). v15 **bỏ Dust đợt 2** → còn 2 vòng (Dust 22 hạt + DustLow 26 hạt); hạt bụi tổng 62 → 48 (−23%), riêng lớp Dust 36 → 22 (−39%). Mỗi vòng còn lại **không đổi** (kích thước 0.9–1.44 / 0.81–1.35, tốc độ, alpha, texture `smoke_soft_005`). Viền đất (Pool / Ring / Ring2 / chớp đất) giữ như v13 / v14; trail và xoay giữ như v14.
+Nếu Hoàng muốn nói viền gai (Ring + Ring2 = 2 viền gai đồng tâm) thì phương án khác: bỏ Ring2.
+
 ## Chưa chắc (điểm yếu em biết)
 - **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12 chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
