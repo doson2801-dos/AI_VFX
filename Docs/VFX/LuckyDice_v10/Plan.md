@@ -53,6 +53,14 @@ Hoàng: (1) trail ổn, riêng đoạn gần điểm xuất phát làm mượt, 
 **Giữ nguyên v10:** mọi thứ còn lại (ảnh dải `trail_ribbon_019`, rộng 1.9 m, màu kem vàng → vàng → cam, vòng đất to, cấu trúc nổ, số hạt...).
 **Tích hợp vào game:** lỗi đoạn đầu trail nằm ở cách xoay của xúc xắc, không ở prefab trail: model Die thật phải xoay chậm lúc mới thả rồi nhanh dần theo tốc độ rơi (copy logic `VfxDieSpin` hoặc gắn `VfxDieSpin` + `VfxDieDrop`).
 
+## v13 (Hoàng sau demo v12: "khi die rơi xuống, viền vàng trên mặt đất tỏa ra to hơn; cụm bụi vàng bé lại một chút để nhìn rõ viền tròn vàng trên đất")
+Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt):
+| Điểm | v12 | v13 |
+|---|---|---|
+| Vòng / viền vàng trên đất (đường kính cuối) | Ring 11 m, Ring2 9.6 m, Pool 9.5 m | Ring **14 m**, Ring2 **12.5 m**, Pool **12 m** (+27% / +30% / +26%); đỉnh giữa đời cũng to hơn (Ring 9 → 11.5 m) |
+| Cụm bụi vàng | Dust startSize 1.4–2.2, DustLow 1.2–2.0 | Dust **1.0–1.6** (−27%), DustLow **0.9–1.5** (−25%); số hạt giữ (22+14, 26) |
+Đo trên khung quay (cùng camera): bề rộng vùng ánh vàng trên đất sau chạm tăng 203 → 259 px (+28%) ở 0.2 s, 240 → 280 (+17%), 277 → 301 (+9%), 295 → 316 (+7%) ở 0.5 s; diện tích vùng bụi vàng giảm 20% (0.33 s), 35% (0.5 s), 61% (0.75 s).
+
 ## Chưa chắc (điểm yếu em biết)
 - **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12 chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
