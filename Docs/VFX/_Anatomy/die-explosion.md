@@ -38,5 +38,6 @@ Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không
 - Stretched hạt tia: texture symmetric nên không lệ thuộc hướng, nhưng vẫn không xoay ngẫu nhiên thủ công.
 
 ## Biến thể đã làm
+- v11 (Hoàng 2026-11-26): bụi **co nhỏ dần ở nửa sau** (size 0.45 → 1 → 0.9 → 0.35), ít hạt hơn (Dust max 40, DustLow 24, Motes 70) cho đỡ nhiễu trong game.
 - `Assets/VFX/LuckyDice_v10/Prefabs/VFX_DieExplosion_v10.prefab` (2026-11-26, Hoàng): bụi theo đặc tính nổ (xem Lỗi dự đoán), vòng đất to hơn (Ring 11 m).
 - `Assets/VFX/LuckyDice/Prefabs/VFX_DieExplosion.prefab` (2026-11-25, order sondh_docs, chờ art lead). v4: nổ chạm sàn (chớp = đĩa + sao nằm đất + lõi nhỏ đứng pivot đáy y = 0, bụi phát từ sàn).

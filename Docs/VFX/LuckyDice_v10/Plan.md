@@ -11,7 +11,7 @@
 | Việc | Nguyên nhân em tìm ra | Sửa v10 |
 |---|---|---|
 | Gai chồi ra (trail) | lớp **Sparks** (vệt Stretched mảnh bắn quanh) + ảnh dải mép răng cưa / cánh nhọn + đuôi doãng ra thành hình nêm | **bỏ Sparks**; ảnh dải `trail_ribbon_019` mép mịn; độ rộng uốn mềm, đuôi **không doãng** (thu về 0.5, mờ dần bằng alpha); `numCornerVertices` 5 (14 làm quạt tia nhọn ở khúc gấp 0.25 s đầu), `minVertexDistance` 0.14, đầu dải thu về 0.05 rồi lên 1 trong 14% đầu |
-| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay 450°/s (600 làm khúc gấp gắt lúc mới thả); màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
+| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay tăng theo tốc độ rơi, tối đa 300°/s (v11) (600 làm khúc gấp gắt lúc mới thả); màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
 | Bụi như mây | tốc độ đầu thấp (5–8 m/s) + vận tốc bốc lên 1.4–2.4 + vòm DustRise bốc lên + bụi nở to chậm | **Dust**: tốc độ đầu **16–24 m/s** theo mặt đất, `speedModifier` 1 → 0.4 (0.12 s) → 0.12 (0.4 s) → 0.03, bốc lên chỉ 0.3–0.9, kích thước 0.45 → 1 → 1.3 lần, alpha vào nhanh (0.04 s) rồi tan tại chỗ; **DustLow** (thay DustRise): 26 hạt nửa cầu, tốc độ 0.5–7 giảm nhanh, lấp tâm; **Motes** 5–16 m/s giảm tốc |
 | Vòng dưới đất | | Pool 3.5 → 9.5 m, Ring 1 → 11 m, Ring2 → 9.6 m, chớp nằm đất 8 m, sao nằm đất 9.5 m (v9: 7.5 / 9.2 / 8 / 7 / 8.5); bụi toả ~4.5 m, vòng bán kính ~5.5 m |
 
@@ -40,11 +40,12 @@ Giữ nguyên: không gian (air / dir rơi, ground nổ), camera 3/4 40°, xúc 
 
 
 ## v11 (Hoàng sau demo v10: "trail ổn, riêng đoạn gần điểm xuất phát cần mượt, không góc nhọn; bụi ổn, thêm: tản xa thì bé dần, giảm nhiễu khi đưa vào game")
-- **Trail gần điểm xuất phát:** nguyên nhân là lúc mới thả xúc xắc rơi chậm (rơi bậc hai) nhưng xoay đủ nhanh, bốn đỉnh vẽ vòng nhỏ gấp nên TrailRenderer ra mảnh nhọn. Sửa: tốc độ xoay tăng theo tốc độ rơi (script mới `Assets/VFX/LuckyDice_v10/Runtime/VfxDieSpin.cs`, `VfxDieDrop.spinDegPerSec = 0`, tối đa 550°/s), và dải chỉ bắt đầu phát sau khi xúc xắc rơi được 6% quãng (~0.15 s, ~0.9 m).
+- **Trail gần điểm xuất phát:** nguyên nhân là lúc mới thả xúc xắc rơi chậm (rơi bậc hai) nhưng xoay đủ nhanh, bốn đỉnh vẽ vòng nhỏ gấp nên TrailRenderer ra mảnh nhọn. Sửa: tốc độ xoay tăng theo tốc độ rơi (script mới `Assets/VFX/LuckyDice_v10/Runtime/VfxDieSpin.cs`, `VfxDieDrop.spinDegPerSec = 0`, tối đa **300°/s**, tổng ~120° ≈ 0.33 vòng); đuôi dải thu về 0.1 (trước 0.5). Đã thử trễ phát dải 6% quãng rơi: ra hai thanh phẳng đứng yên ở điểm bắt đầu (reviewer), nên đặt `trailStartFallen = 0` (tắt trễ). Tối đa 550°/s làm khúc gấp ở cuối trail ở 30 fps, hạ xuống 300°/s.
+- **Tích hợp vào game:** lỗi gốc nằm ở cách xoay của xúc xắc, không ở prefab trail. Model Die thật phải xoay chậm lúc mới thả và nhanh dần theo tốc độ rơi (copy logic `VfxDieSpin`, hoặc gắn thẳng `VfxDieSpin` + `VfxDieDrop`), nếu không đoạn đầu trail vẫn ra mảnh nhọn.
 - **Bụi bé dần khi tản xa, ít nhiễu:** Dust size 0.45 → 1 (22% đời) → 0.9 (50%) → 0.35 (hết); DustLow, Motes cũng co về ~0.35 / 0.15. Số hạt: Dust 22+14 → 16+10 (max 90 → 40), DustLow 26 → 16 (max 50 → 24), Motes 110 → 66 (max 130 → 70); đời Dust 0.8–1.1 s.
 
 ## Chưa chắc (điểm yếu em biết)
-- **Còn vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu** (dải nhìn ngang mép) và một khúc gấp nhỏ ở cuối trail sát lúc chạm đất.
+- **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; khúc gấp cuối trail nhẹ đi nhưng ở 30 fps vẫn còn chút; trail chỉ thật mượt ở 60 fps. Lần sửa cuối (spin 300°/s, bỏ trễ phát, đuôi dải → 0.1) em chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
 - Trail chỉ mượt ở 60 fps (xúc xắc 47 m/s ≈ 1.6 m / khung ở 30 fps, dải gấp khúc nhẹ); em chưa nội suy được điểm giữa khung (thử `AddPosition` bị đảo thứ tự điểm).
 - Bụi vẫn là billboard `smoke_soft_005` (khói mặc định), không Erode Sphere: Erode Sphere là luật cho khói vụ nổ lửa / than; brief này là bụi vàng. Art lead quyết nếu muốn khác.
