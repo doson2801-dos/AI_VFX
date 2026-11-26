@@ -64,6 +64,8 @@ Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt)
 Đo trên khung quay (cùng camera, 640 px; reviewer đo bằng PIL, bề rộng phân vị 1–99% của pixel sáng ít bão hoà = **riêng vòng viền, loại bụi**): viền 93 → 168 px (f22), 132 → 214 (f27), 115 → 199 (f30) (khoảng +60–80%); viền rộng hơn đám bụi ~1.25–1.3 lần (v12: hẹp hơn bụi). Diện tích vùng ấm (bụi) giảm 20% (0.33 s), 33% (0.5 s), 51% (0.73 s). Lưu ý: **tổng bề rộng mọi pixel sáng không tăng** sau 0.3 s (254 → 247 px ở f27) vì bụi nhỏ lại; chỉ viền rộng hơn.
 
 ## v14 (Hoàng sau demo v13: "trả lại độ xoắn giống v10, vòng bụi cần bé hơn ~10-15% nữa")
+**Phụ thuộc:** `VFX_DieDrop_v10` dùng `VfxDieDrop` và `VfxDieTrailControl` ở `Assets/VFX/LuckyDice/Runtime/` (không xoá / đổi tên thư mục đó).
+
 **Giữ viền đất to ở v13** (Ring 14 / Ring2 12.5 / Pool 12 m); không đổi chớp, Motes, ảnh dải, số hạt.
 | Điểm | v13 | v14 |
 |---|---|---|
