@@ -3,9 +3,9 @@
 > ## ĐIỂM BẮT ĐẦU CHO PHIÊN MỚI (cập nhật 2026-11-06)
 > Đọc cùng `CLAUDE.md` + `MAP.md`. Các khối bên dưới là lịch sử theo ngày; khi mâu thuẫn thì khối này và `CLAUDE.md` thắng.
 >
-> **Skill hiện có (3, ở `.claude/skills/`):**
-> - `/vfx-maker` **2.3.1**: texture + particle → prefab. Định hướng không gian bắt buộc (§1a), auto mix thành phần chuẩn (§9). **Đã bỏ chế độ C (codefx)** từ 2.3.0 (2026-11-03).
-> - `/vfx-code` **1.1.1**: VFX hoàn toàn bằng code (~50 thư viện GitHub), tách hẳn khỏi vfx-maker; chung duy nhất là Review Lab.
+> **Skill hiện có (2, ở `.claude/skills/`):**
+> - ~~`/vfx-maker`~~ **đã xoá 2026-11-26** (cũ). Bản lưu v2.3.1: `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/`. Review Lab ở `tools/review-lab/`. Luật mix thành phần đã bỏ.
+> - `/vfx-code` **1.1.1**: VFX hoàn toàn bằng code (~50 thư viện GitHub), tách hẳn khỏi skill khác; chung duy nhất là Review Lab.
 > - `/vfx-shader` **1.2.0** (tạo lại 2026-11-03; 2026-11-06 thêm tornado + quy trình học prefab tham chiếu): VFX cần shader; dùng lại shader có sẵn trước. Slash chỉ dùng bộ Coloso.
 > - Luật art lead: `.claude/rules/vfx-art-lead.md`. Texture lấy từ `Assets/Library/` trước.
 >
