@@ -36,7 +36,14 @@ VFX hoàn toàn bằng code, tổng hợp từ ~50 thư viện VFX mã nguồn m
 
 ## Skill: vfx-shader (`/vfx-shader`, tạo lại 2026-11-03)
 
-VFX cần shader. Ở `.claude/skills/vfx-shader/`, version `1.3.0`. Gọi bằng `/vfx-shader`.
+Skill dựng prefab chính (từ 2026-11-26, sau khi `vfx-maker` bị xoá): effect cần shader / mesh **và** nhánh nhẹ particle + texture thuần. Ở `.claude/skills/vfx-shader/`, version `1.4.0`. Gọi bằng `/vfx-shader`; **worker / agent gọi được** (bỏ `disable-model-invocation`).
+
+- **v1.4.0 (2026-11-26, art lead duyệt gợi ý 1–8):**
+  - Mở đầu bằng `references/effect-index.md` (loại effect → Anatomy → reference → builder / prefab đã có).
+  - `tools/unity_build.py`: build + chụp preview mọi máy (lock chung, tự build trên bản copy khi Unity đang mở, không `-nographics`).
+  - `VfxBuildKit` 1.2.0: `StrictRules` + `RuleChecks` kiểm sortingOrder trùng, Horizontal / Vertical Billboard, pivot Stretched, Frame over Time thẳng (template đặt `StrictRules = true`).
+  - Quy trình texture 6 bước + `check_texture_plan.py` + review `vfx-director` đưa vào skill.
+  - Luật chép lặp trong skill đã bỏ; "Kỹ thuật prefab" (Scaling Mode, root Particle System, cấu trúc prefab) chuyển vào `.claude/rules/vfx-art-lead.md`.
 
 - **Bước 2b research nhanh trên mạng** (art lead 2026-11-09, v1.3.0): trước khi chọn shader, tìm 3–5 nguồn VFX tương tự, ghi "Tham khảo" vào kế hoạch (`references/web-research.md`).
 - Thứ tự: dùng lại shader có sẵn → mở rộng → viết mới (nhẹ, một pass, Built-in + URP). Định hướng không gian bắt buộc (thiếu thì hỏi), kế hoạch duyệt 1 lần, prefab dựng bằng build script, Review Lab.

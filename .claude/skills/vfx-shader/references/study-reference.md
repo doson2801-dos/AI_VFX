@@ -3,7 +3,7 @@
 Art lead (2026-11-04, 2026-11-06) đã từ chối hai lần cách "đọc số trong prefab rồi tự dựng": WindTornado v1 / v2 sai hướng vì chưa chạy bản gốc, rồi art lead dặn "đọc thật kĩ cách setup, mesh, texture". Khi brief nói "học theo / làm giống prefab X" hoặc chỉ tên một prefab:
 
 ## 1. Tìm và copy bản gốc
-- Tìm prefab trong `D:\Projects\rpg-game\Assets` (Glob theo tên). Tìm cả prefab họ hàng (`VFX_Book_Tornado`, `Stupid_Tornado_Projectile`…): đọc hết, hỏi art lead cái nào là chuẩn nếu chưa nói.
+- Tìm prefab trong `<rpg-game>/Assets` (đường dẫn trên máy này: `CLAUDE.local.md`) (Glob theo tên). Tìm cả prefab họ hàng (`VFX_Book_Tornado`, `Stupid_Tornado_Projectile`…): đọc hết, hỏi art lead cái nào là chuẩn nếu chưa nói.
 - Copy prefab + mọi thứ nó dùng (material, shader, texture, mesh, prefab lồng) **giữ GUID**: `python -I scripts/copy_closure.py <src Assets> <dst> <đường dẫn prefab> [...]`. Script bỏ `.cs`. Bản copy vào project chính để ở `Assets/VFX/_Imported/<Tên>/` (đường dẫn con giữ nguyên). Cẩn thận trùng GUID với bản đã nhập (ví dụ `Fx_dissolve_particle_apb.shadergraph` đã có ở `_Imported/RpgGame/ShaderGraph`): xoá bản trùng.
 - Render ở **project tạm** khi Unity đang mở project chính (SKILL mục 7).
 

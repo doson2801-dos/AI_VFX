@@ -20,6 +20,7 @@ namespace VfxEffects
         public static void Build()
         {
             if (!ConfirmSceneSwitch()) return;
+            StrictRules = true;   // new effects: art lead rule violations (sortingOrder, billboard mode, pivot, Frame over Time) fail the build
             EnsureFolders(Root, "Materials", "Prefabs", "Scenes");
 
             // 1. Shared noise (tileable, linear, repeat) + material on the effect shader

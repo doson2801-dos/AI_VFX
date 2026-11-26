@@ -4,7 +4,7 @@ Art lead, 2026-11-02: "vẫn phải xác định không gian như chúng ta đã
 
 Mục tiêu: trước khi lập kế hoạch hay viết code, phải biết rõ **effect nằm ở đâu trong game, to bao nhiêu, nhìn từ đâu, chạy theo thời gian ra sao, gồm những lớp nào**. Thiếu bước này thì effect đúng kỹ thuật nhưng sai quy mô hoặc sai góc nhìn. Ví dụ: Meteor bản đầu bị nhỏ, không rõ camera.
 
-Nguồn: bản sao của `vfx-maker/references/direction.md` (2026-11-03). Luật không gian (không dùng Horizontal / Vertical Billboard, camera mặc định 3/4 nhìn xuống 40°) giống vfx-maker; nếu hai bản lệch nhau thì theo vfx-maker.
+Nguồn gốc: `vfx-maker/references/direction.md` (2026-11-03; skill đó đã xoá, bản lưu ở `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/`). Từ nay **file này là bản chính**. Luật không gian ở `.claude/rules/vfx-art-lead.md` thắng nếu lệch.
 
 ## 1. Phân tích brief (tự làm, không hỏi)
 

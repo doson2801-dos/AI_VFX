@@ -2,7 +2,7 @@
 
 Art lead chọn prefab này làm chuẩn (2026-11-06). Ví dụ làm xong: `Assets/VFX/WindTornado/` (builder mẫu `assets/TornadoBuild.example.cs`, plan `Docs/VFX/WindTornado/Plan.md`, ảnh + dump bản gốc `Docs/VFX/WindTornado/ref_*`). **Không** tự làm mảnh tường bằng Blender, **không** dùng một mesh phễu cao (`tornado_mesh`) làm thân: cả hai đã thử và bị bỏ (v1, v2).
 
-Trước khi làm: đọc [study-reference.md](study-reference.md) (copy + render + dump bản gốc). Prefab gốc: `D:\Projects\rpg-game\Assets\_Game\Resources_moved\Prefabs\Projectile\Stupid_Tornado_Projectile.prefab`. Họ hàng: `VFX_Book_Tornado` (thân = một hạt phễu `tornado_mesh` + shader `Thrust`, đã thử, kém hơn), `VFX_Tornado_Blade`.
+Trước khi làm: đọc [study-reference.md](study-reference.md) (copy + render + dump bản gốc). Prefab gốc: `<rpg-game>/Assets\_Game\Resources_moved\Prefabs\Projectile\Stupid_Tornado_Projectile.prefab`. Họ hàng: `VFX_Book_Tornado` (thân = một hạt phễu `tornado_mesh` + shader `Thrust`, đã thử, kém hơn), `VFX_Tornado_Blade`.
 
 ## Cách bản gốc hoạt động
 - **Mesh**: `fbx_fx_cylinder_03` = vành hở ~340°, bán kính 0,59 m, cao 0,27 m, UV 0..1 vòng quanh / theo chiều cao. `Tornado_vertical` = ống r 0,32, cao 0,29 m.
@@ -46,4 +46,4 @@ Lửa / băng / độc / sét… vẫn là cùng hiệu ứng nhưng đổi ≥ 
 - Hồng trong project tạm = thiếu `com.unity.shadergraph` (thêm vào manifest).
 - Rotation / Size / Velocity over Lifetime lệch kiểu curve giữa các trục: Unity bỏ qua module. Builder mẫu dùng `Spin()` / `SizeXYZ()` để ép mọi trục cùng kiểu curve.
 - Trùng GUID `Fx_dissolve_particle_apb.shadergraph` giữa `_Imported/RpgGame/ShaderGraph` và bản copy: xoá bản copy.
-- Unity đang mở project chính: build ở project tạm (`D:/tmp_w/scratch_wind`, cần các texture Library ở bảng trên và `_Imported/RpgTornado`), rồi art lead bấm **VFX → WindTornado → Build**.
+- Unity đang mở project chính: build ở project tạm (một thư mục tạm (hoặc `tools/unity_build.py`, tự clone), cần các texture Library ở bảng trên và `_Imported/RpgTornado`), rồi art lead bấm **VFX → WindTornado → Build**.
