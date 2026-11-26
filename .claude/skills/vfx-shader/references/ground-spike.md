@@ -14,7 +14,7 @@ Băng và Đất **dùng chung một builder** (demo); chỉ đổi bảng màu 
 | S7 | Đất vỡ | mảnh mesh màu nâu ném lên giữa các khối; order −1 |
 | S1 | Gai (khối chính) | mesh pha lê / gai, order 0 |
 | S6 | Mảnh băng vỡ | `Debris_Crystal_*`, hai đợt: lúc trồi và lúc các khối bắt đầu co; order 1 |
-| S3–S4 | Impact | **auto mix** (`mix/auto_mix.py`, ground, element ice) → `MixRecipeBuild.Build(recipe)` rồi lồng prefab vào; bỏ DST khỏi recipe nếu dùng khói riêng |
+| S3–S4 | Impact | nhóm impact (flash, glow, ring, sparks, khói băng). Bản đã duyệt dựng bằng `MixRecipeBuild.Build(recipe)` (công cụ cũ, mix đã bỏ 2026-11-26; làm mới thì tự dựng các lớp), rồi lồng prefab vào; bỏ DST khỏi recipe nếu dùng khói riêng |
 
 ## Gai (S1): số khối, bố cục, chuyển động
 

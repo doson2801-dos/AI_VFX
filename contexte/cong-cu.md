@@ -13,7 +13,7 @@
 - Bản đăng: https://claude.ai/artifact/DKQDnM9vtH8iNXaLUkURoN. Bản tự chứa > 16 MB nên đăng bản `--link` + ảnh qua `files`, từng đợt ~25–35 file.
 - Phản hồi art lead xuất ra từ nút "Xuất phản hồi": mỗi ghim = một yêu cầu sửa cụ thể.
 
-## Mix Lab (xem / tinh chỉnh mix thành phần)
+## Mix Lab (ĐÃ BỎ 2026-11-26, chỉ còn để tra lịch sử)
 - `Docs/VFX/_ArtDirection/tools/mix_lab/mix_lab.html`. Bản đăng: https://claude.ai/artifact/CMFUvsBJ6YeqapsMZoNwbt.
 - Dữ liệu: `MixCapture` chụp mỗi prefab CMP_* (chạy lại sau khi đổi thành phần).
 - Recipe → `MixRecipeBuild.BuildBatch -recipe Docs/VFX/_Recipes/<tên>.json` → `Assets/VFX/Mixes/<tên>/`.

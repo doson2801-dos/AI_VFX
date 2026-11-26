@@ -10,8 +10,8 @@
   - Tia / vệt có Speed Scale > 0: pivot (0,1,0).
   - Nằm đất: Billboard + Render Alignment Local (GameObject xoay X 90°) hoặc World.
 
-## Mix thành phần (đòn trúng / nổ)
-- Claude **tự mix** bằng `auto_mix.py` từ brief, báo lý do từng lớp. Art lead yêu cầu đổi sau.
+## Đòn trúng / nổ
+- Luật "tự mix thành phần bằng `auto_mix.py`" đã **bỏ** (art lead 2026-11-26). Các lớp tự dựng theo brief, báo lý do từng lớp.
 - Một effect: **một ngữ cảnh, một chớp Impact**.
 - `sortingOrder` không trùng, theo mặt phẳng trước rồi tới độ sáng (bảng ở `ComponentKit`).
 

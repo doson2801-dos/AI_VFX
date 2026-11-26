@@ -19,7 +19,7 @@ Unity project – thư viện VFX.
 
 - Bản lưu đầy đủ (v2.3.1, gồm mix / auto_mix, references, scripts): `Docs/VFX/_ArtDirection/_archive/vfx-maker_2.3.1_2026-11-26/`.
 - Review Lab chuyển ra `tools/review-lab/` (dùng chung cho `/vfx-code`, `/vfx-shader`). Build kit `VfxBuildKit` ở `Assets/VFX/_Kit/Editor/`, `ComponentKit` ở `Assets/VFX/_Components/_Kit/Editor/` (đã nằm trong Assets, builder cũ vẫn chạy).
-- Luật không gian vẫn ở `.claude/rules/vfx-art-lead.md` và `.claude/skills/vfx-shader/references/direction.md`. Mix thành phần tự động (`auto_mix.py`, Mix Lab) không còn là quy trình chính; công cụ nằm trong bản lưu và `Docs/VFX/_ArtDirection/tools/mix_lab/`.
+- Luật không gian vẫn ở `.claude/rules/vfx-art-lead.md` và `.claude/skills/vfx-shader/references/direction.md`. Luật mix thành phần tự động (`auto_mix.py`, Mix Lab) đã **bỏ** (art lead 2026-11-26); công cụ nằm trong bản lưu và `Docs/VFX/_ArtDirection/tools/mix_lab/`.
 - Việc "texture + particle → prefab" làm bằng `/vfx-shader` (cần shader / mesh) hoặc `/vfx-code` (bằng code); luật art lead vẫn áp dụng như cũ.
 - Đọc lại các mục lịch sử nhắc `vfx-maker` trong file này như lịch sử, không phải skill còn dùng.
 

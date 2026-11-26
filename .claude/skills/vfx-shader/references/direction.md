@@ -52,7 +52,7 @@ Nguồn: bản sao của `vfx-maker/references/direction.md` (2026-11-03). Luậ
 | Slash | Vệt chém · Mép sáng · Mảnh vụn · Flash điểm trúng | Theo vũ khí (mesh + UV) hay vệt cố định? |
 | Lửa / khói loop | Thân · Lõi · Tàn lửa · Khói · Quầng | Hướng bốc? Tắt dần khi dừng? |
 
-Đòn trúng / nổ: dùng **thành phần chuẩn + auto mix** (SKILL.md mục 9, `references/mix.md`). Một effect chỉ một ngữ cảnh và một chớp va chạm.
+Đòn trúng / nổ: tự dựng các lớp theo brief (auto mix đã bỏ 2026-11-26). Một effect chỉ một ngữ cảnh và một chớp va chạm.
 
 ## 5. Phong cách và màu
 
