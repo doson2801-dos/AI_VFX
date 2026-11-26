@@ -14,7 +14,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay tăng theo tốc độ rơi (tối đa 300°/s, ~0.33 vòng). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay tăng theo tốc độ rơi (tối đa 450°/s lúc chạm đất). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
 - Dải **xuất phát từ các đỉnh** của xúc xắc (4 đỉnh xen kẽ; nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
@@ -37,7 +37,7 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - "Gai chồi ra" do: lớp Sparks (vệt Stretched mảnh bắn quanh), ảnh dải mép răng cưa hoặc đầu nhọn, và **đuôi doãng rộng** (thu về nêm nhọn, ra gai màu hồng). Trail ma thuật = dải **mịn, liền, mềm mép**, xoắn quanh xúc xắc, đuôi **pha cam** (màu kem vàng → vàng → cam, mờ bằng alpha), không có tia ngoài dải; sao lấp lánh nhỏ đi kèm.
 
 ## Đoạn đầu trail (Hoàng 2026-11-26, v10 → v11)
-- Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Trễ phát dải 6% đầu thử rồi bỏ (ra hai thanh phẳng đứng yên). Spin tối đa 550°/s làm khúc gấp cuối trail ở 30 fps → 300°/s. Model Die trong game phải xoay theo cùng quy tắc (chậm lúc mới thả). Còn lại: vài vệt ngang mép dưới xúc xắc trong 0.3 s đầu.
+- Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Trễ phát dải 6% đầu thử rồi bỏ (ra hai thanh phẳng đứng yên). Trễ phát dải đã bỏ; spin tối đa = 450°/s (như v10 lúc chạm đất). Model Die trong game phải xoay theo cùng quy tắc (chậm lúc mới thả). Còn lại: vài vệt ngang mép dưới xúc xắc trong 0.3 s đầu.
 
 ## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
@@ -47,6 +47,6 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
 
 ## Biến thể đã làm
-- v11 (2026-11-26, Hoàng): xoay ∝ tốc độ rơi (`VfxDieSpin`), đuôi dải → 0.1.
+- v12 (2026-11-26, Hoàng; = v10 + xoay ∝ tốc độ rơi `VfxDieSpin`, không đổi gì khác).
 - `Assets/VFX/LuckyDice_v10/Prefabs/VFX_DieTrail_v10.prefab` (2026-11-26, Hoàng; dựng riêng, không đè bản chỉnh tay của Sơn): bỏ Sparks, ảnh `trail_ribbon_019`, rộng 1.9, đuôi pha cam, không doãng đuôi.
 - `Assets/VFX/LuckyDice/Prefabs/VFX_DieTrail.prefab` (2026-11-25, order sondh_docs, chờ art lead). v2: rơi 0.45 s, 4 đỉnh. v4: dải = 4 TrailRenderer (không còn Trails module). v5: ảnh dải `trail_ribbon_022` (lụa nhiều sợi), thả cao 14 m / 0.6 s. v3: ribbon dùng ô dưới-trái của `impact_flipbook_016`, 4 dải khác đời / rộng / tốc độ, xoay 520°/s.

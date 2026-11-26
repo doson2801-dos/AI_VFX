@@ -39,13 +39,22 @@ Giữ nguyên: không gian (air / dir rơi, ground nổ), camera 3/4 40°, xúc 
 - Tia gai dài hơn (đời 0.3–0.55 s, length scale 10), thêm lấp lánh quanh xúc xắc (Glints 55/s).
 
 
-## v11 (Hoàng sau demo v10: "trail ổn, riêng đoạn gần điểm xuất phát cần mượt, không góc nhọn; bụi ổn, thêm: tản xa thì bé dần, giảm nhiễu khi đưa vào game")
-- **Trail gần điểm xuất phát:** nguyên nhân là lúc mới thả xúc xắc rơi chậm (rơi bậc hai) nhưng xoay đủ nhanh, bốn đỉnh vẽ vòng nhỏ gấp nên TrailRenderer ra mảnh nhọn. Sửa: tốc độ xoay tăng theo tốc độ rơi (script mới `Assets/VFX/LuckyDice_v10/Runtime/VfxDieSpin.cs`, `VfxDieDrop.spinDegPerSec = 0`, tối đa **300°/s**, tổng ~120° ≈ 0.33 vòng); đuôi dải thu về 0.1 (trước 0.5). Đã thử trễ phát dải 6% quãng rơi: ra hai thanh phẳng đứng yên ở điểm bắt đầu (reviewer), nên đặt `trailStartFallen = 0` (tắt trễ). Tối đa 550°/s làm khúc gấp ở cuối trail ở 30 fps, hạ xuống 300°/s.
-- **Tích hợp vào game:** lỗi gốc nằm ở cách xoay của xúc xắc, không ở prefab trail. Model Die thật phải xoay chậm lúc mới thả và nhanh dần theo tốc độ rơi (copy logic `VfxDieSpin`, hoặc gắn thẳng `VfxDieSpin` + `VfxDieDrop`), nếu không đoạn đầu trail vẫn ra mảnh nhọn.
-- **Bụi bé dần khi tản xa, ít nhiễu:** Dust size 0.45 → 1 (22% đời) → 0.9 (50%) → 0.35 (hết); DustLow, Motes cũng co về ~0.35 / 0.15. Số hạt: Dust 22+14 → 16+10 (max 90 → 40), DustLow 26 → 16 (max 50 → 24), Motes 110 → 66 (max 130 → 70); đời Dust 0.8–1.1 s.
+## v12 = v10 + đúng 2 điểm (Hoàng: "làm lại từ bản v10 ... còn lại không thay đổi"; không đưa chỉnh tay của Sơn vào)
+Hoàng: (1) trail ổn, riêng đoạn gần điểm xuất phát làm mượt, không góc nhọn; (2) bụi ổn, thêm: khi tản xa thì bắt đầu bé đi, giảm nhiễu khi đưa vào game.
+
+**Khác v10 đúng ở:**
+| Điểm | v10 | v12 |
+|---|---|---|
+| 1. Trail đầu | xúc xắc xoay đều 450°/s từ lúc mới thả (đang rơi chậm) nên 4 đỉnh vẽ vòng gấp, ra mảnh nhọn | xoay **tăng theo tốc độ rơi** (script mới `Runtime/VfxDieSpin.cs`, `VfxDieDrop.spinDegPerSec = 0`), tối đa **450°/s** (= v10 lúc chạm đất, nên phần cuối giữ như cũ); dải phát ngay (`trailStartFallen = 0`) |
+| 2. Bụi Dust | size 0.45 → 1 (25%) → 1.3 (hết) | size 0.45 → 1 (25%) → 0.8 (50%) → 0.3 (hết): bắt đầu bé đi ngay sau khi tản xa |
+| 2. Bụi DustLow | size 0.5 → 1 (20%) → 1.2 (hết) | size 0.5 → 1 (20%) → 0.8 (60%) → 0.3 (hết) |
+
+**Hoàn lại về v10 (v11 đã đổi thừa, ngoài 2 điểm):** đuôi dải thu về 0.1 (v10: 0.5); spin tối đa 300°/s; số hạt Dust 22+14 / max 90, DustLow 26 / max 50, Motes 110 / max 130; đời Dust 0.9–1.3 s, DustLow 0.9–1.2 s; alpha Dust 0.45; size curve Motes.
+**Giữ nguyên v10:** mọi thứ còn lại (ảnh dải `trail_ribbon_019`, rộng 1.9 m, màu kem vàng → vàng → cam, vòng đất to, cấu trúc nổ, số hạt...).
+**Tích hợp vào game:** lỗi đoạn đầu trail nằm ở cách xoay của xúc xắc, không ở prefab trail: model Die thật phải xoay chậm lúc mới thả rồi nhanh dần theo tốc độ rơi (copy logic `VfxDieSpin` hoặc gắn `VfxDieSpin` + `VfxDieDrop`).
 
 ## Chưa chắc (điểm yếu em biết)
-- **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; khúc gấp cuối trail nhẹ đi nhưng ở 30 fps vẫn còn chút; trail chỉ thật mượt ở 60 fps. Lần sửa cuối (spin 300°/s, bỏ trễ phát, đuôi dải → 0.1) em chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
+- **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12 chỉ kiểm bằng mắt, chưa chạy lại vfx-director.
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
 - Trail chỉ mượt ở 60 fps (xúc xắc 47 m/s ≈ 1.6 m / khung ở 30 fps, dải gấp khúc nhẹ); em chưa nội suy được điểm giữa khung (thử `AddPosition` bị đảo thứ tự điểm).
 - Bụi vẫn là billboard `smoke_soft_005` (khói mặc định), không Erode Sphere: Erode Sphere là luật cho khói vụ nổ lửa / than; brief này là bụi vàng. Art lead quyết nếu muốn khác.
