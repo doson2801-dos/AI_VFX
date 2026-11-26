@@ -11,7 +11,7 @@
 | Việc | Nguyên nhân em tìm ra | Sửa v10 |
 |---|---|---|
 | Gai chồi ra (trail) | lớp **Sparks** (vệt Stretched mảnh bắn quanh) + ảnh dải mép răng cưa / cánh nhọn + đuôi doãng ra thành hình nêm | **bỏ Sparks**; ảnh dải `trail_ribbon_019` mép mịn; độ rộng uốn mềm, đuôi **không doãng** (thu về 0.5, mờ dần bằng alpha); `numCornerVertices` 5 (14 làm quạt tia nhọn ở khúc gấp 0.25 s đầu), `minVertexDistance` 0.14, đầu dải thu về 0.05 rồi lên 1 trong 14% đầu |
-| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay tăng theo tốc độ rơi, tối đa 300°/s (v11) (600 làm khúc gấp gắt lúc mới thả); màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
+| Cảm giác ma thuật + đuôi cam | | dải rộng 1.9 m (× 1 / 0.85 / 1.2 / 0.95), xoắn nhờ xúc xắc xoay tăng theo tốc độ rơi, tối đa 450°/s (v12) (600 làm khúc gấp gắt lúc mới thả); màu **kem vàng → vàng → cam** (1, 0.58, 0.1) ở đuôi; khói trail chỉ còn lớp mỏng ngả cam (alpha 0.28); sao lấp lánh 40/s, một nửa ngả cam |
 | Bụi như mây | tốc độ đầu thấp (5–8 m/s) + vận tốc bốc lên 1.4–2.4 + vòm DustRise bốc lên + bụi nở to chậm | **Dust**: tốc độ đầu **16–24 m/s** theo mặt đất, `speedModifier` 1 → 0.4 (0.12 s) → 0.12 (0.4 s) → 0.03, bốc lên chỉ 0.3–0.9, kích thước 0.45 → 1 → 1.3 lần, alpha vào nhanh (0.04 s) rồi tan tại chỗ; **DustLow** (thay DustRise): 26 hạt nửa cầu, tốc độ 0.5–7 giảm nhanh, lấp tâm; **Motes** 5–16 m/s giảm tốc |
 | Vòng dưới đất | | Pool 3.5 → 9.5 m, Ring 1 → 11 m, Ring2 → 9.6 m, chớp nằm đất 8 m, sao nằm đất 9.5 m (v9: 7.5 / 9.2 / 8 / 7 / 8.5); bụi toả ~4.5 m, vòng bán kính ~5.5 m |
 
@@ -49,7 +49,9 @@ Hoàng: (1) trail ổn, riêng đoạn gần điểm xuất phát làm mượt, 
 | 2. Bụi Dust | size 0.45 → 1 (25%) → 1.3 (hết) | size 0.45 → 1 (25%) → 0.8 (50%) → 0.3 (hết): bắt đầu bé đi ngay sau khi tản xa |
 | 2. Bụi DustLow | size 0.5 → 1 (20%) → 1.2 (hết) | size 0.5 → 1 (20%) → 0.8 (60%) → 0.3 (hết) |
 
-**Hoàn lại về v10 (v11 đã đổi thừa, ngoài 2 điểm):** đuôi dải thu về 0.1 (v10: 0.5); spin tối đa 300°/s; số hạt Dust 22+14 / max 90, DustLow 26 / max 50, Motes 110 / max 130; đời Dust 0.9–1.3 s, DustLow 0.9–1.2 s; alpha Dust 0.45; size curve Motes.
+**Hệ quả của điểm 1 (chưa khai ở lượt trước, reviewer phát hiện):** tổng góc xoay trong lúc rơi còn ~135° (v10 ~270°), nên xoắn / bắt chéo của 4 dải giữa đoạn rơi giảm, dải gần song song hơn. Muốn xoắn như v10 phải cho xoay có sàn hoặc tăng nhanh hơn (đổi thiết kế, Hoàng quyết).
+
+**Hoàn lại về v10 (v11 đã đổi thừa, ngoài 2 điểm):** đuôi dải: v11 đổi 0.5 → 0.1, **v12 hoàn lại 0.5**; spin tối đa 300°/s; số hạt Dust 22+14 / max 90, DustLow 26 / max 50, Motes 110 / max 130; đời Dust 0.9–1.3 s, DustLow 0.9–1.2 s; alpha Dust 0.45; size curve Motes.
 **Giữ nguyên v10:** mọi thứ còn lại (ảnh dải `trail_ribbon_019`, rộng 1.9 m, màu kem vàng → vàng → cam, vòng đất to, cấu trúc nổ, số hạt...).
 **Tích hợp vào game:** lỗi đoạn đầu trail nằm ở cách xoay của xúc xắc, không ở prefab trail: model Die thật phải xoay chậm lúc mới thả rồi nhanh dần theo tốc độ rơi (copy logic `VfxDieSpin` hoặc gắn `VfxDieSpin` + `VfxDieDrop`).
 
@@ -59,7 +61,7 @@ Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt)
 |---|---|---|
 | Vòng / viền vàng trên đất (đường kính cuối) | Ring 11 m, Ring2 9.6 m, Pool 9.5 m | Ring **14 m**, Ring2 **12.5 m**, Pool **12 m** (+27% / +30% / +26%); đỉnh giữa đời cũng to hơn (Ring 9 → 11.5 m) |
 | Cụm bụi vàng | Dust startSize 1.4–2.2, DustLow 1.2–2.0 | Dust **1.0–1.6** (−27%), DustLow **0.9–1.5** (−25%); số hạt giữ (22+14, 26) |
-Đo trên khung quay (cùng camera): bề rộng vùng ánh vàng trên đất sau chạm tăng 203 → 259 px (+28%) ở 0.2 s, 240 → 280 (+17%), 277 → 301 (+9%), 295 → 316 (+7%) ở 0.5 s; diện tích vùng bụi vàng giảm 20% (0.33 s), 35% (0.5 s), 61% (0.75 s).
+Đo trên khung quay (cùng camera, 640 px; reviewer đo bằng PIL, bề rộng phân vị 1–99% của pixel sáng ít bão hoà = **riêng vòng viền, loại bụi**): viền 93 → 168 px (f22), 132 → 214 (f27), 115 → 199 (f30) (khoảng +60–80%); viền rộng hơn đám bụi ~1.25–1.3 lần (v12: hẹp hơn bụi). Diện tích vùng ấm (bụi) giảm 20% (0.33 s), 33% (0.5 s), 51% (0.73 s). Lưu ý: **tổng bề rộng mọi pixel sáng không tăng** sau 0.3 s (254 → 247 px ở f27) vì bụi nhỏ lại; chỉ viền rộng hơn.
 
 ## Chưa chắc (điểm yếu em biết)
 - **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12 chỉ kiểm bằng mắt, chưa chạy lại vfx-director.

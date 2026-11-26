@@ -37,7 +37,7 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - "Gai chồi ra" do: lớp Sparks (vệt Stretched mảnh bắn quanh), ảnh dải mép răng cưa hoặc đầu nhọn, và **đuôi doãng rộng** (thu về nêm nhọn, ra gai màu hồng). Trail ma thuật = dải **mịn, liền, mềm mép**, xoắn quanh xúc xắc, đuôi **pha cam** (màu kem vàng → vàng → cam, mờ bằng alpha), không có tia ngoài dải; sao lấp lánh nhỏ đi kèm.
 
 ## Đoạn đầu trail (Hoàng 2026-11-26, v10 → v11)
-- Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Trễ phát dải 6% đầu thử rồi bỏ (ra hai thanh phẳng đứng yên). Trễ phát dải đã bỏ; spin tối đa = 450°/s (như v10 lúc chạm đất). Model Die trong game phải xoay theo cùng quy tắc (chậm lúc mới thả). Còn lại: vài vệt ngang mép dưới xúc xắc trong 0.3 s đầu.
+- Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Trễ phát dải đã thử rồi bỏ (ra hai thanh phẳng đứng yên). Xoay ∝ tốc độ rơi làm tổng góc xoay giảm (270° → 135°) nên xoắn giữa đoạn rơi giảm. Trễ phát dải đã bỏ; spin tối đa = 450°/s (như v10 lúc chạm đất). Model Die trong game phải xoay theo cùng quy tắc (chậm lúc mới thả). Còn lại: vài vệt ngang mép dưới xúc xắc trong 0.3 s đầu.
 
 ## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
