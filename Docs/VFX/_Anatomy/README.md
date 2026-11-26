@@ -68,6 +68,7 @@ Lưu kết quả ngay khi xong (file mới + dòng trong bảng bên dưới), k
 | Lưỡi gió chém bay ngang (lưỡi liềm mesh + sọc gió + bụi / lá dọc đường) | `wind-slash.md` | giả định từ Plan + preview (2026-11-25) |
 | Gió bùng quanh chân (vòng gió nằm đất + dải xoắn + bụi / lá) | `wind-burst.md` | giả định từ Plan + preview (2026-11-25) |
 | Vòng triệu hồi nằm đất (3 rune xoay, tia viền, chớp giữa) | `summon-circle.md` | suy từ order + Plan |
+| Thổi lửa kiểu Dragon Slave (sóng lửa phẳng bắn ngang + đầu sóng sáng + vệt cháy đất) | `fire-breath.md` | suy từ 6 khung thu nhỏ video ref Dota 2 (Khải 2026-11-26) |
 | Vòng phép dựng đứng trước tay (3 vòng đồng tâm, chớp, hạt bắn ra trước) | `cast-circle.md` | suy từ order + Plan |
 | Vệt vàng bám xúc xắc rơi (dải từ 4 đỉnh + khói vàng + lấp lánh) | `die-trail.md` | suy từ ảnh ref docs Lucky God (2026-11-25) |
 | Xúc xắc nổ tan thành bụi vàng (chớp + vòng gai + tia + bụi + lấp lánh) | `die-explosion.md` | suy từ ảnh ref docs Lucky God (2026-11-25) |
