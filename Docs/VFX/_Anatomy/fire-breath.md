@@ -28,7 +28,9 @@ Tụ 0,25 s → sóng lao ra tới ~9 m trong ~0,45 s (≈ 22 m/s, sóng rất n
 Màu nguyên tố (xanh hextech, tím), độ rộng nón, tầm, tốc độ, thời gian vệt cháy, có / không khói, mức tia lửa, chất liệu vệt (cháy đen / đóng băng / ăn mòn nếu đổi nguyên tố).
 
 ## Lỗi biến thể đã gặp
-(chưa có; thêm khi build)
+- **Thân sóng bằng mây cartoon tô cam** (`smoke_sheet_002`) → ra cục mây tròn, không phải lửa (review 2026-11-26). Thân phải là lưỡi lửa có hướng (FireLoop_03) cùng hướng bắn.
+- **Billboard to ở độ cao thấp xuyên mặt đất → bị cắt cạnh thẳng**: đường kính tối đa ≤ 2 × độ cao tâm hạt (thân / khói), hoặc nâng hạt.
+- Vệt cháy bằng mây (`smoke_sheet_002`) trông như khói xám; dùng `ground/scorch_003` chồng nhiều dấu.
 
 ## Biến thể đã làm
 - `Assets/VFX/FireBreath/` v1 (2026-11-26, order Khải): demo GIF, camera ref Dota ~60°; chưa vào `Included`.

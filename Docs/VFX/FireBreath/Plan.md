@@ -12,30 +12,41 @@ Sản phẩm: **GIF demo** (≤ 10 MiB) + prefab `VFX_FireBreath` (Khải chỉ 
 - **Để lại vệt cháy đen + tàn lửa trên đất sau khi sóng qua.**
 - Màu cam đỏ, lõi vàng, stylized; nhìn ra lửa (lưỡi lửa có vân).
 
-## Lớp
+## Lớp (v1b, sau review vòng 1)
 | ID | Lớp | Vai trò, timing (s) | Carrier / shader | Texture |
 |---|---|---|---|---|
-| L1 | Wave (root) | thân sóng: mây lửa toon bắn từ nón dẹt, 0,25–0,70, sống 0,32–0,5 | Billboard Alpha, `Mobile/Particles/Alpha Blended`, màu theo đời: kem → vàng → cam → đỏ → than | `smoke/sheet/smoke_sheet_002` 2×2 (không hướng, spam được) |
-| L2 | Tongues | lưỡi lửa có hướng, ít hạt to (~19), Stretched, đầu = hướng bay | Stretched Alpha | `FX_TX_Fire_FireLoop_03_4x4` (rpg-game, art lead; PyroNova đã dùng) |
-| L3 | Head | đầu sóng: quầng hồng-tím + lõi kem + lưỡi liềm DirectionalFlame bay cùng, 0,25–0,70, 22 m/s | Billboard Add + Stretched Alpha | `glow_soft_round_005`; `FX_TX_Fire_DirectionalFlame_01_4x4` |
-| L4 | Scorch | vệt cháy đen nằm đất, sống 3–3,8 s, ấm → than | sub-emitter Birth của Head, Billboard Local (X 90), Alpha | `smoke_sheet_002` nhuộm than |
-| L5 | GroundGlow | vệt sáng cam trên đất đi theo sóng, 0,4 s | sub-emitter, Local flat, Add | `glow_soft_round_005` |
-| L6 | Embers | tàn lửa rải trên vệt cháy, 1,4–3,2 s | sub-emitter, Add | `glow_soft_round_002` |
-| L7 | Smoke | khói nâu ấm bốc từ vệt cháy | sub-emitter, Alpha | `smoke_sheet_002` nhuộm nâu |
-| L8 | Sparks | comet bay tới trước rồi rơi, có hướng | Stretched Add | `spark/streak/spark_streak_001` |
-| L9 | Charge + Flash | tụ glow + hạt hút vào 0–0,25 s, chớp nòng lúc bắn | Billboard Add | `glow_soft_round_005`, `_002`, `impact_flash_spiky_001` |
+| L1 | Wave (root) | quầng nền cam của sóng 0,25–0,70 (không còn là thân chính) | Billboard Add, `Mobile/Particles/Additive`, đường kính tối đa 2 m < 2 × Y0 (không cắt đất) | `glow/soft_round/glow_soft_round_005` |
+| L2 | Tongues | **thân sóng thật**: lưỡi lửa có hướng, ~40 hạt Stretched, tất cả cùng hướng bắn, không xoay, đầu = hướng bay | Stretched Alpha | `FX_TX_Fire_FireLoop_03_4x4` (rpg-game) |
+| L3 | Head | đầu sóng: quầng hồng-tím + lõi kem + lưỡi liềm bay cùng, 22 m/s | Billboard Add + Stretched Alpha | `glow_soft_round_005`; `FX_TX_Fire_DirectionalFlame_01_4x4` |
+| L4 | Scorch | vệt cháy nằm đất, sống 3–3,8 s (sub-emitter của Head, Local X 90) | Billboard Local, Alpha | `ground/scorch/ground_scorch_003` |
+| L5 | GroundGlow | vệt sáng cam trên đất đi theo sóng | Local flat, Add | `glow_soft_round_005` |
+| L6 | Embers | tàn lửa rải trên vệt cháy, 1,4–3,2 s | Add | `glow/soft_round/glow_soft_round_002` |
+| L7 | Smoke | khói nhiệt bốc lên từ vệt cháy (đường kính ≤ 1,5 m, bắt đầu cao 0,85 m) | Alpha | `smoke/soft/smoke_soft_005` (= khói mặc định) |
+| L8 | Sparks | comet bay tới trước rồi rơi, pivot (0,1,0) | Stretched Add | `spark/streak/spark_streak_001` |
+| L9 | Charge + Flash | tụ glow + hạt hút vào 0–0,25 s, chớp nòng | Billboard Add | `glow_soft_round_005`, `_002`, `impact/flash_spiky/impact_flash_spiky_001` |
 
 Thứ tự vẽ (không trùng): Scorch 0, GroundGlow 1, Smoke 3, Wave 4, Tongues 5, Head 6, Crest 8, Core 9, Embers 10, Sparks 11, Charge 12, ChargeDots 13, Flash 14. Scaling Mode Hierarchy; Frame over Time tuyến tính; không Horizontal / Vertical Billboard.
 
-## Chọn texture
-Đã xem contact sheet `_contact/fire_candidates.png`, `trail_streak.png`.
-| Thành phần | Chọn | Lý do | Đã loại |
-|---|---|---|---|
-| Lưỡi lửa có hướng | `FireLoop_03` (rpg-game) | màu cam thật, alpha thật, bầu sáng dẫn đầu ở TRÁI = đúng quy ước Stretched | `FireLoop_01` (cục trắng), `FireLoop_04` (xám) |
-| Lưỡi liềm đầu sóng | `DirectionalFlame_01` (rpg-game) | lưỡi liềm dẫn đầu bên trái, bung rồi tan trong 16 khung | `DirectionalFlame_03` (xám), `FireSlash_*` (dạng chém) |
-| Thân sóng | `smoke_sheet_002` | mây toon 2 tông, không hướng, nhuộm thành lửa | `smoke/cartoon/*` (dự phòng) |
-| Quầng / tàn / chớp / comet | `glow_soft_round_005 / 002`, `impact_flash_spiky_001`, `spark_streak_001` | đã dùng ở FireballStraight, đã qua review | `trail_streak_012` (khối trắng đặc) |
-Hai flipbook rpg-game chưa có trong `Assets/Library/`: copy + resize vào `Assets/VFX/FireBreath/Textures/` qua `prep_tex.py` (Library không đổi). **Art lead quyết** có nhập hai flipbook này vào Library không.
+## Chọn texture (thành phần → thư mục → ảnh chốt → ảnh loại)
+Đã xem contact sheet `fire_candidates`, `trail_streak`, `ground/scorch` (3 ảnh xem trực tiếp), `smoke_sheet`.
+| Thành phần | Thư mục | Chốt | Lý do | Đã loại |
+|---|---|---|---|---|
+| Thân sóng: lưỡi lửa có hướng | (Library chưa có; rpg-game `Flipbooks/Fire`) | `FireLoop_03` | cam thật, alpha thật, bầu sáng dẫn đầu ở TRÁI = quy ước Stretched | `FireLoop_01` (cục trắng), `FireLoop_04` (xám) |
+| Lưỡi liềm đầu sóng | cùng | `DirectionalFlame_01` | lưỡi liềm dẫn đầu bên trái, bung rồi tan | `DirectionalFlame_03` (xám), `FireSlash_*` (dạng chém) |
+| Quầng nền sóng, đầu sóng, ground glow, tụ | `glow/soft_round` | `glow_soft_round_005` | alpha thật, omni, tint được (warn "không POT" không ảnh hưởng) | `_007` (nền đen) |
+| Vết cháy | `ground/scorch` | `ground_scorch_003` | alpha thật, omni, vệt cháy có nứt; dùng nhiều dấu chồng nhau | `_001` (nền đen, vòng chấm), `_002` (dir, chạm mép), `smoke_sheet_002` (mây, bị review chặn) |
+| Khói nhiệt | `smoke/soft` | `smoke_soft_005` | khói mặc định của dự án | `smoke_sheet_002` (mây cartoon, "không phải lửa") |
+| Tàn lửa | `glow/soft_round` | `glow_soft_round_002` | chấm nhỏ alpha thật | `_005` (quá to) |
+| Chớp nòng | `impact/flash_spiky` | `impact_flash_spiky_001` | sao gai mềm, omni | `_014` |
+| Comet tia lửa | `spark/streak` | `spark_streak_001` | đầu tròn bên TRÁI, đuôi nhọn, Additive | `trail_streak_012` (khối trắng đặc) |
+Hai flipbook rpg-game: copy + resize vào `Assets/VFX/FireBreath/Textures/` qua `prep_tex.py` (Library không đổi). **Art lead quyết có nhập hai flipbook này vào Library không.**
+
+## Review vòng 1 (vfx-director, 2026-11-26) và cách sửa
+- L1 cao: thân sóng bằng `smoke_sheet_002` (mây = lửa) → bỏ; thân = lưỡi lửa FireLoop_03 ~40 hạt cùng hướng (nhiều hơn "vài hạt" của luật sheet có hướng, nhưng đều thẳng hướng, không xoay: **art lead quyết**), quầng glow làm nền.
+- L2: billboard xuyên đất bị cắt cạnh thẳng → Y0 1,0 m, đường kính tối đa thân / khói ≤ 2 × độ cao tâm.
+- L3: Scorch → `ground/scorch_003`, Smoke → `smoke_soft_005`, bảng chọn texture đủ cột.
+- L5: Sparks pivot (0,1,0); Anatomy ghi lỗi đã gặp.
+- Còn mở: thân sóng thon hơn ref? (đo bằng mắt, art lead quyết); sub-emitter Birth chưa xem ở Play mode.
 
 ## Việc chưa chắc
 - Chỉ xem được khung thu nhỏ của ref: chưa biết độ rộng, nhịp, vân thật của sóng.
