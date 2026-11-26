@@ -29,6 +29,7 @@ Chớp 0 → 0.3 s · vòng gai 0–0.7 s · tia gai 0–0.4 s · bụi nở 0�
 Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không chip mảnh xúc xắc, kiểu bụi (cuộn / bốc cột).
 
 ## Lỗi dự đoán
+- **Bụi như mây bay lên từ điểm nổ** (Hoàng 2026-11-26, v9): tốc độ đầu thấp + vận tốc bốc lên + vòm bụi bốc lên + bụi nở to chậm. Vụ nổ = **bắt đầu nhanh, tỏa chậm dần**, gần như nằm ngang mặt đất: tốc độ đầu 16–24 m/s, `velocityOverLifetime.speedModifier` giảm về ~0.03, bốc lên ≤ 1 m/s, alpha vào nhanh rồi tan tại chỗ; hạt chậm lấp tâm (đừng để vòng rỗng). Vòng lan dưới đất nên to hơn đám bụi một chút (bán kính vòng ~1.2× bụi).
 - **Nổ lơ lửng trên không** (art lead 2026-11-25, v2–v3): nâng tâm chớp lên y 1.6–1.8 và bụi lên y 1.0 để sàn khỏi cắt billboard thì mất ngữ cảnh ground. Đừng nâng tâm; dùng lớp nằm đất (Local) và **Pivot (0,0.5,0)** (đáy quad = vị trí hạt) cho billboard đứng; pivot quay theo quad nên startRotation = 0.
 - **Billboard bị mặt đất cắt**: hạt billboard cỡ lớn có tâm sát y = 0 thì nửa dưới chìm dưới sàn và lộ cạnh phẳng / chữ nhật. Nâng tâm lên ≥ nửa kích thước (chớp 1.6–1.8 m, bụi phát từ y = 1 m); preview dựng sàn thật mới thấy.
 - Drag của Limit Velocity mặc định nhân theo kích thước hạt (`multiplyDragByParticleSize`): hạt to bị phanh quá mạnh, bụi không toả được. Dùng Speed Modifier của Velocity over Lifetime để điều khiển tầm toả.
@@ -37,4 +38,5 @@ Màu vàng, lượng bụi, số tia gai / lấp lánh, bán kính, có / không
 - Stretched hạt tia: texture symmetric nên không lệ thuộc hướng, nhưng vẫn không xoay ngẫu nhiên thủ công.
 
 ## Biến thể đã làm
+- `Assets/VFX/LuckyDice_v10/Prefabs/VFX_DieExplosion_v10.prefab` (2026-11-26, Hoàng): bụi theo đặc tính nổ (xem Lỗi dự đoán), vòng đất to hơn (Ring 11 m).
 - `Assets/VFX/LuckyDice/Prefabs/VFX_DieExplosion.prefab` (2026-11-25, order sondh_docs, chờ art lead). v4: nổ chạm sàn (chớp = đĩa + sao nằm đất + lõi nhỏ đứng pivot đáy y = 0, bụi phát từ sàn).
