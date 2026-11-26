@@ -91,3 +91,4 @@ Phạm vi: 7 effect đang đặt trong scene (Slash360, IceSpikeFan, HealCircle,
 - Slash (vệt chém UV): Slash360
 - Noise: Slash360, FireballThrow, FireTornado
 - Mask / ramp / palette: Slash360, IceSpike, AuraGauntlet, LightningStrike, FireballThrow
+- Dải TrailRenderer (lửa / lụa nhiều sợi, kéo hết chiều dài): LuckyDice v5 dùng `trail/ribbon/trail_ribbon_022` (tiling y 0.7); v3–v4 thử `impact/flipbook/impact_flipbook_016` (một ô)

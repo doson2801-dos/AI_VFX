@@ -19,13 +19,13 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 |---|---|---|
 | `VFX_DieTrail` | game cha vào model Die, bật khi xúc xắc bắt đầu rơi, tắt `emission` / destroy khi chạm | root = Particle System (khói); 4 con `Corner_0/3/5/6` đặt đúng 4 đỉnh xen kẽ của cube 1.2 m (đổi cỡ Die thì sửa vị trí con) |
 | `VFX_DieExplosion` | game spawn tại điểm chạm, một lần | root = Particle System (bụi) |
-| `VFX_DieDrop` | **demo / Showcase**: cube tạm có chấm + trail + explosion, script `VfxDieDrop` (rơi 0.45 s, hạ cánh thì tắt cube, dừng phát vệt, nổ) | không dùng trong game thật; model Die do team khác làm |
+| `VFX_DieDrop` | **demo / Showcase**: cube tạm có chấm + trail + explosion, script `VfxDieDrop` (rơi 14 m / 0.6 s, hạ cánh thì tắt cube, dừng phát vệt, nổ) | không dùng trong game thật; model Die do team khác làm |
 
 ## Lớp VFX_DieTrail
 | ID | Lớp | Vai trò | Carrier / shader | Order |
 |---|---|---|---|---|
-| T1 | Aura | quầng vàng bám Die, 2.6 m | Billboard, Local, Additive | 0 |
-| T2 | Smoke (root) | khói vàng dài để lại sau lưng, 3.5 hạt / m (rate over distance), đời 0.8–1.2 s, nở 0.6→2.0 | Billboard, World, Alpha Blended | 1 |
+| T1 | Aura | quầng vàng bám Die, 2.6 m | Billboard, Local, Additive | 1 |
+| T2 | Smoke (root) | khói vàng dài để lại sau lưng, 3.5 hạt / m (rate over distance), đời 0.5–0.8 s, nở 0.6→2.0 | Billboard, World, Alpha Blended | 0 |
 | T3 | Corner_0, 3, 5, 6 (4 đỉnh xen kẽ) | **xương sống (v4)**: mỗi đỉnh một **component TrailRenderer** (không dùng Trails module của PS), con của Die: đời 0.4 s (× 1 / 0.8 / 1.15 / 0.9), rộng 1.7 m (× 1 / 0.85 / 1.2 / 0.95), đầu dày, đuôi thon về 0, `numCornerVertices` 8 (bo góc mượt), `numCapVertices` 0 (cap tròn đâm ra trước xúc xắc nửa bề rộng), Alignment View, texture Stretch. `VfxDieTrailControl`: `Begin()` khi bật, `End()` khi hạ cánh | TrailRenderer, World, Additive | 2, 5, 7, 8 |
 | T4 | Sparks | tia vụn ngắn bắn ra từ khối, 55/s, pivot (0,1,0) | Stretched, World, Additive | 10 |
 | T5 | Glints | sao lấp lánh nhấp nháy dọc vệt, 55/s | Billboard, World, Additive | 11 |
@@ -90,8 +90,12 @@ Explosion: **một chớp** vàng-trắng · vòng gai nằm đất · tia gai b
 - Sửa lỗi builder: `minVertexDistance` bị nuốt vào comment. Chớp đứng nhỏ lại (FlashCore 2.2 m, FlashStar 3 m) để tâm không cao; đầu đường cong độ rộng trail thu nhỏ (0.4) để bớt "cánh" ngang ở những khung đầu.
 - Thử nội suy điểm giữa khung bằng `TrailRenderer.AddPosition` (cho game 30 fps): thất bại (`emitting=false` thì không vẽ, `emitting=true` thì thứ tự điểm bị đảo, dải vỡ vụn). Đã bỏ, trở lại lấy mẫu tự động.
 
+## Ghi chú luật (cho art lead)
+- Bụi nổ dùng billboard `smoke_soft_005` (khói mặc định), **không** dùng Erode Sphere: Erode Sphere là luật cho khói vụ nổ có lửa / than (GroundBlast); brief này là **bụi vàng tan thành hạt**, nên em coi không thuộc luật đó. Art lead quyết nếu muốn khác.
+- `trail_ribbon_022`: cửa sổ V 0.15–0.85, hai biên có thể cắt cạnh cứng khoảng 30% chiều dài ảnh (đo); trong khung chụp không thấy rõ.
+
 ## Chưa chắc (điểm yếu em biết)
-- **Trail phụ thuộc tốc độ khung của game**: ở 60 fps dải mượt; thử ở 30 fps (xúc xắc ~35 m/s, ~1.2 m mỗi khung) dải thành đoạn thẳng gấp khúc có bo góc (`numCornerVertices` 8 giảm bớt nhưng chưa hết). Cần biết game chạy 30 hay 60 fps.
+- **Trail phụ thuộc tốc độ khung của game**: ở 60 fps dải mượt; thử ở 30 fps (v5: xúc xắc ~47 m/s, ~1.6 m mỗi khung ở 30 fps; v4 ~35 m/s, ~1.2 m) dải thành đoạn thẳng gấp khúc có bo góc (`numCornerVertices` 8 giảm bớt nhưng chưa hết). Cần biết game chạy 30 hay 60 fps.
 - Chưa xem được video ref (Adobe 403, Envato không mô tả vệt): hình dải dựng theo ảnh ref tĩnh. Ref có dải **xoắn quanh** xúc xắc như lửa; bản này là 4 dải toả ra từ đỉnh + xoắn nhờ xúc xắc xoay (520°/s), xoắn chưa dày bằng ref.
 - Bụi vàng chỉ là mảng mềm alpha (chưa có texture bụi hạt mịn riêng); phần "tan thành hạt" nhờ lớp Motes cộng sáng.
 - Chưa có chip vỡ của xúc xắc (docs chỉ nói "tan biến thành bụi").

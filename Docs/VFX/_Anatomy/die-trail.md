@@ -14,7 +14,7 @@ Xúc xắc to rơi từ trên trời xuống mục tiêu, **xoay nhẹ**; từ *
 | Lấp lánh | sao 4 cánh nhấp nháy dọc vệt | nhỏ, thưa | nên có |
 
 ## Chuyển động / nhịp
-Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay ~0.65 vòng (520°/s). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
+Rơi ~0.6 s từ cao 14 m (gia tốc, chạm ~47 m/s; art lead muốn rơi mạnh và cao hơn), xoay ~0.87 vòng (520°/s). Vệt dài ~8 m ngược lên; dải tan trong ~0.4 s sau khi xúc xắc dừng, cột khói còn ~0.9 s. Vệt thuộc không gian thế giới (để lại sau lưng), gốc dải dính vào góc xúc xắc.
 
 ## Bất biến (mất là không còn là nó)
 - Dải **xuất phát từ các đỉnh** của xúc xắc (4 đỉnh xen kẽ; nhìn rõ nhiều dải, không phải một cái đuôi chung từ tâm).
@@ -30,14 +30,14 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - **Ribbon (Trails mode Ribbon): vị trí 0 của width / color over trail là đầu CŨ (đuôi), 1 là đầu mới** (sát hạt gốc). Đặt ngược thì dải dày + cụt phẳng ở xa xúc xắc, mảnh ở sát (reviewer 2026-11-25). Thêm: Noise + hướng ngẫu nhiên của cone + rate over time cho ra dây zig-zag giống **tia sét** (bản thử 1–2 bị chê): dùng rate over distance, không Noise, cone góc ~1°, texture dải mềm (`trail_ribbon_019` ở v1–v2; v3 art lead chê gãy / cứng / đều nên đổi sang một ô của `impact_flipbook_016`; không dùng `trail_streak_005` làm ribbon: mảnh như dây điện).
 - **Ribbon: startSize và startColor phải HẰNG cho từng dải** (với `sizeAffectsWidth` + `inheritParticleColor`, mỗi điểm lấy một cỡ / màu ngẫu nhiên khác thì mép dải răng cưa, sọc màu). Biến thiên đặt ở `widthOverTrail` / `colorOverTrail` và khác nhau **giữa các dải** (đời, rộng, tốc độ).
 - Ribbon (Trails) cần `renderMode None` ở hạt gốc, nếu không hiện thêm chuỗi chấm dọc dải.
-- Texture dải có đầu / đuôi thon theo U: lấy khúc giữa (tiling cửa sổ một ô (0.32×0.3, offset 0.08/0.07)) để thân dải không bị tối đầu.
+- Texture dải có đầu / đuôi thon theo U: với `impact_flipbook_016` (v3–v4) lấy cửa sổ một ô (tiling 0.32×0.3, offset 0.08/0.07); v5 dùng cả ảnh `trail_ribbon_022` (tiling 1×0.7, offset 0/0.15) để thân dải không bị tối đầu.
 - Rate over distance không chạy khi chụp Simulate bằng bước lớn: dùng bước 1/60 s hoặc rate over time.
 
 ## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
 - **`numCapVertices` phải 0**: cap tròn đâm ra TRƯỚC xúc xắc nửa bề rộng (thấy như gậy sáng thò xuống dưới khối).
 - TrailRenderer không chạy khi `ParticleSystem.Simulate` / chụp edit mode: preview phải chụp ở Play mode (`VfxDieCapture`, `Time.captureFramerate` 60). `WaitForEndOfFrame` không chạy trong batchmode; `cam.Render()` vào RenderTexture thì chạy.
-- **Phụ thuộc fps**: TrailRenderer lấy mẫu mỗi khung; xúc xắc rơi ~35 m/s nên ở 30 fps cách ~1.2 m / điểm, dải gấp khúc (bo góc `numCornerVertices` 8 giảm bớt). Nội suy bằng `AddPosition` thử rồi bỏ: `emitting=false` thì không vẽ; `emitting=true` thì thứ tự điểm đảo, dải vỡ.
+- **Phụ thuộc fps**: TrailRenderer lấy mẫu mỗi khung; xúc xắc rơi ~35 m/s (v4) / ~47 m/s (v5) nên ở 30 fps cách ~1.2 / ~1.6 m mỗi điểm, dải gấp khúc (bo góc `numCornerVertices` 8 giảm bớt). Nội suy bằng `AddPosition` thử rồi bỏ: `emitting=false` thì không vẽ; `emitting=true` thì thứ tự điểm đảo, dải vỡ.
 - Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
 
 ## Biến thể đã làm
