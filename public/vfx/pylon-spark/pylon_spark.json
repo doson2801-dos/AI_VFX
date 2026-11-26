@@ -1,0 +1,76 @@
+{
+ "source": "vfx/PylonSpark/pylon_spark.py",
+ "name": "pylon_spark",
+ "blend": "add",
+ "duration": 0.36,
+ "loop": false,
+ "fps": 44.44444444444444,
+ "frames": 16,
+ "cols": 4,
+ "rows": 4,
+ "times": [
+  0.0,
+  0.0225,
+  0.045,
+  0.0675,
+  0.09,
+  0.1125,
+  0.135,
+  0.1575,
+  0.18,
+  0.2025,
+  0.225,
+  0.2475,
+  0.27,
+  0.2925,
+  0.315,
+  0.3375
+ ],
+ "size": [
+  96,
+  96
+ ],
+ "res": 1.0,
+ "space": {
+  "context": "air",
+  "plane": "billboard",
+  "camera": "side 2D",
+  "width_m": 4.0,
+  "anchor": "pylon anchor",
+  "background": "dark"
+ },
+ "pivot": [
+  0.5,
+  0.5
+ ],
+ "sheets": [
+  "T_pylon_spark_4x4.png"
+ ],
+ "options": {
+  "seed": 5,
+  "long_n": 7,
+  "short_n": 11,
+  "ramp": [
+   [
+    1,
+    1,
+    1
+   ],
+   [
+    1,
+    0.9,
+    0.48
+   ],
+   [
+    0.45,
+    0.74,
+    1
+   ],
+   [
+    0.16,
+    0.34,
+    1
+   ]
+  ]
+ }
+}

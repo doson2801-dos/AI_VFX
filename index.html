@@ -15,6 +15,34 @@
       }
       #touch button.active { background: #ffffff66; }
       @media (pointer: coarse) { #touch { display: flex; } }
+      #gf-retry, #gf-next {
+        display: none; position: fixed; box-sizing: border-box; margin: 0; padding: 0;
+        border: 2px solid #ffffff88; border-radius: 10px; background: #2e3560; color: #fff;
+        font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; touch-action: none;
+      }
+      #gf-next { background: #2f8f4e; }
+      #gf-next.locked { opacity: 0.55; }
+      #gf-retry:active, #gf-next:active { filter: brightness(1.3); }
+      body.game-gatefall #touch, body.game-slot-five #touch { display: none; }
+      #sf-spin, #sf-new, #sf-help, #sf-help-close {
+        display: none; position: fixed; box-sizing: border-box; margin: 0; padding: 0;
+        border: 2px solid #ffffff88; border-radius: 12px; background: #2e3560; color: #fff;
+        font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; touch-action: none; line-height: 1.05;
+      }
+      /* Oval spin button (brief 4.9). */
+      #sf-spin { background: #c0453a; border-radius: 50%; border-width: 3px; }
+      #sf-spin.dim { opacity: 0.4; }
+      #sf-new.highlight { background: #2f8f4e; border-color: #ffffff; }
+      #sf-help { border-radius: 50%; }
+      #sf-help.open { background: #4a56a0; border-color: #ffffff; }
+      #sf-help-close { background: #3a2f60; z-index: 2; }
+      #sf-spin:active, #sf-new:active, #sf-help:active, #sf-help-close:active { filter: brightness(1.3); }
+      /* Shown on every device in Slot Five: desktop mice click them too. The close button shows only with the legend. */
+      body.game-slot-five #sf-spin, body.game-slot-five #sf-new, body.game-slot-five #sf-help,
+      body.game-slot-five #sf-help-close.show { display: block; }
+      @media (pointer: coarse) {
+        body.game-gatefall #gf-retry, body.game-gatefall #gf-next.show { display: block; }
+      }
     </style>
   </head>
   <body>
@@ -26,6 +54,12 @@
       </div>
       <div><button id="btn-jump" aria-label="Nhảy">▲</button></div>
     </div>
+    <button id="gf-retry" type="button" aria-label="Thử lại">Thử lại</button>
+    <button id="gf-next" type="button" aria-label="Màn kế">Màn kế</button>
+    <button id="sf-spin" type="button" aria-label="Quay">QUAY</button>
+    <button id="sf-new" type="button" aria-label="Trận mới">Trận mới</button>
+    <button id="sf-help" type="button" aria-label="Chú giải icon" aria-expanded="false">?</button>
+    <button id="sf-help-close" type="button" aria-label="Đóng chú giải">✕</button>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

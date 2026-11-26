@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { LEVEL, TUNING, VIEW } from '../config';
-import { inputOverride, touchInput, type InputState } from '../game/controls';
+import { addPlayerKeys, approach, readPlayerInput, type InputState, type PlayerKeys } from '../game/controls';
 
 export type GameStatus = 'playing' | 'won' | 'lost';
 
@@ -18,12 +18,9 @@ export interface GameState {
 
 type ArcadeImage = Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
-const approach = (value: number, target: number, step: number) =>
-  value < target ? Math.min(value + step, target) : Math.max(value - step, target);
-
 export class GameScene extends Phaser.Scene {
   private player!: ArcadeImage;
-  private keys!: Record<'left' | 'right' | 'up' | 'a' | 'd' | 'w' | 'space' | 'r', Phaser.Input.Keyboard.Key>;
+  private keys!: PlayerKeys;
   private hud!: Phaser.GameObjects.Text;
   private banner!: Phaser.GameObjects.Text;
 
@@ -98,10 +95,7 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, LEVEL.width, VIEW.height);
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
-    const keyboard = this.input.keyboard!;
-    this.keys = keyboard.addKeys({
-      left: 'LEFT', right: 'RIGHT', up: 'UP', a: 'A', d: 'D', w: 'W', space: 'SPACE', r: 'R',
-    }) as typeof this.keys;
+    this.keys = addPlayerKeys(this.input.keyboard!);
 
     this.hud = this.add.text(16, 14, '', { fontFamily: 'system-ui, sans-serif', fontSize: '22px', color: '#ffffff' })
       .setScrollFactor(0);
@@ -174,14 +168,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private readInput(): InputState {
-    if (inputOverride.bot) return inputOverride.bot(this.getState());
-    if (inputOverride.manual) return inputOverride.manual;
-    const k = this.keys;
-    return {
-      left: k.left.isDown || k.a.isDown || touchInput.left,
-      right: k.right.isDown || k.d.isDown || touchInput.right,
-      jump: k.up.isDown || k.w.isDown || k.space.isDown || touchInput.jump,
-    };
+    return readPlayerInput(this.keys, () => this.getState());
   }
 
   private finish(status: 'won' | 'lost'): void {

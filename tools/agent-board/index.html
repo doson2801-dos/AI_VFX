@@ -6,16 +6,16 @@
 <title>Agent Board</title>
 <style>
 :root {
-  color-scheme: light dark;
-  --bg: #f5f6fa; --card: #ffffff; --text: #1b1f3b; --muted: #636a86; --line: #c9cde0;
-  --working: #2563eb; --done: #15803d; --stale: #b45309; --error: #dc2626; --idle: #8a90a8;
+  color-scheme: dark;
+  --bg: #0d1017; --card: #171b25; --text: #edf0f7; --muted: #9aa3b5; --line: #2a3040;
+  --done: #4ade80; --stale: #fbbf24; --error: #f87171; --idle: #6b7385;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14162b; --card: #1f2340; --text: #eef0fa; --muted: #a4a9c6; --line: #3d4368;
-    --working: #60a5fa; --done: #4ade80; --stale: #fbbf24; --error: #f87171; --idle: #7d83a3;
-  }
-}
+[data-role=producer] { --accent: #facc15; }
+[data-role=game-designer] { --accent: #f472b6; }
+[data-role=gameplay-programmer] { --accent: #60a5fa; }
+[data-role=qa-tester] { --accent: #34d399; }
+[data-role=balance-tuner] { --accent: #fb8a4c; }
+[data-role=vfx-artist] { --accent: #a78bfa; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, "Segoe UI", sans-serif; }
 main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 40px; }
@@ -25,27 +25,32 @@ h2 { margin: 28px 0 8px; font-size: 16px; }
 #conn { color: var(--muted); font-size: 13px; }
 #graph { position: relative; }
 #edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-#edges path { fill: none; stroke: var(--line); stroke-width: 2; }
-#edges path.on { stroke: var(--working); stroke-dasharray: 7 6; animation: flow .8s linear infinite; }
+#edges path { fill: none; stroke: var(--accent); stroke-opacity: .35; stroke-width: 2; }
+#edges path.on { stroke-opacity: 1; stroke-dasharray: 7 6; animation: flow .8s linear infinite; }
 @keyframes flow { to { stroke-dashoffset: -13; } }
+@keyframes pulse { 50% { opacity: .35; } }
 .top { display: flex; justify-content: center; margin-bottom: 56px; }
 .team { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
 .node { position: relative; width: 100%; min-height: 148px; padding: 12px 14px; background: var(--card);
-  border: 2px solid var(--c, var(--idle)); border-radius: 10px; }
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); border-top: 4px solid var(--accent); border-radius: 10px; }
 .top .node { max-width: 340px; }
-.node[data-status=working] { --c: var(--working); }
+.node[data-status=working] { --c: var(--accent); border-color: var(--accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent); }
 .node[data-status=done] { --c: var(--done); }
 .node[data-status=stale] { --c: var(--stale); }
-.name { font-weight: 650; }
+.name { font-weight: 650; color: var(--accent); }
 .owns { color: var(--muted); font-size: 12px; }
-.badge { display: inline-block; margin: 8px 0 4px; font-size: 12px; font-weight: 650; color: var(--c, var(--idle)); }
+.badge { display: flex; align-items: center; gap: 6px; margin: 8px 0 4px; font-size: 12px; font-weight: 650; color: var(--c, var(--muted)); }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--idle)); }
+.node[data-status=working] .badge::before { animation: pulse 1.2s ease-in-out infinite; }
 .action { min-height: 21px; overflow-wrap: anywhere; }
 .meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .err { color: var(--error); font-size: 12px; overflow-wrap: anywhere; }
 #log { list-style: none; margin: 0; padding: 0; background: var(--card); border-radius: 10px; max-height: 320px; overflow: auto; }
 #log li { display: grid; grid-template-columns: 72px 150px 1fr; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 13px; }
 #log li:last-child { border-bottom: 0; }
-#log .t, #log .r { color: var(--muted); }
+#log .t { color: var(--muted); }
+#log .r { color: var(--accent); font-weight: 600; }
 #log .x { overflow-wrap: anywhere; }
 #log .bad { color: var(--error); }
 @media (max-width: 760px) {
@@ -56,7 +61,7 @@ h2 { margin: 28px 0 8px; font-size: 16px; }
   #log li { grid-template-columns: 64px 1fr; }
   #log .x { grid-column: 1 / -1; }
 }
-@media (prefers-reduced-motion: reduce) { #edges path.on { animation: none; } }
+@media (prefers-reduced-motion: reduce) { #edges path.on, .node .badge::before { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -117,6 +122,7 @@ function drawEdges() {
     const y2 = to.top - box.top;
     const mid = (y1 + y2) / 2;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.dataset.role = id;
     path.setAttribute('d', `M${x1} ${y1} C${x1} ${mid} ${x2} ${mid} ${x2} ${y2}`);
     if (state?.nodes[id].status === 'working') path.classList.add('on');
     svg.append(path);
@@ -141,7 +147,9 @@ function render() {
   const list = document.getElementById('log');
   list.replaceChildren(...(state.log.length ? state.log.map((item) => {
     const li = el('li');
-    li.append(el('span', 't', clock(item.ts)), el('span', 'r', NAMES[item.role]), el('span', item.error ? 'x bad' : 'x', item.text));
+    const role = el('span', 'r', NAMES[item.role]);
+    role.dataset.role = item.role;
+    li.append(el('span', 't', clock(item.ts)), role, el('span', item.error ? 'x bad' : 'x', item.text));
     return li;
   }) : [Object.assign(el('li'), { textContent: 'Chưa có hoạt động nào được ghi.' })]));
   drawEdges();

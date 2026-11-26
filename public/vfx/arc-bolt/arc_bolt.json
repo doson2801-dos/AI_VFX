@@ -1,0 +1,63 @@
+{
+ "source": "vfx/ArcBolt/arc_bolt.py",
+ "name": "arc_bolt",
+ "blend": "add",
+ "duration": 0.24,
+ "loop": false,
+ "fps": 33.333333333333336,
+ "frames": 8,
+ "cols": 4,
+ "rows": 2,
+ "times": [
+  0.0,
+  0.03,
+  0.06,
+  0.09,
+  0.12,
+  0.15,
+  0.18,
+  0.21
+ ],
+ "size": [
+  192,
+  48
+ ],
+ "res": 1.0,
+ "space": {
+  "context": "dir",
+  "plane": "stretch",
+  "camera": "side 2D",
+  "width_m": 8.0,
+  "anchor": "character to pylon anchor",
+  "background": "dark"
+ },
+ "pivot": [
+  0.03125,
+  0.5
+ ],
+ "sheets": [
+  "T_arc_bolt_4x2.png"
+ ],
+ "options": {
+  "seed": 11,
+  "length": 172,
+  "hold": 2,
+  "nodes": 8,
+  "amp": 11.0,
+  "core": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "mid": [
+   0.42,
+   0.72,
+   1.0
+  ],
+  "outer": [
+   0.16,
+   0.34,
+   1.0
+  ]
+ }
+}
