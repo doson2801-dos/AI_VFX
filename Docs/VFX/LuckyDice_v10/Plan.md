@@ -89,13 +89,13 @@ Chỉ sửa trail (từ v15, thư mục `LuckyDice_v10`; không đụng bản S�
 | Điểm | v15 | v16 |
 |---|---|---|
 | Độ rộng theo chiều dài dải | cố định 1.9 m × (1 / 0.85 / 1.2 / 0.95) | script mới `Runtime/VfxDieTrailShape.cs`: rộng = min(rộng gốc, **0.4 × chiều dài hiện tại** của dải): dải luôn là vệt hẹp chỉ ngược lên theo đường rơi, rộng ra dần khi dài ra; sau khi chạm đất dải ngắn lại thì mảnh dần |
-| `widthCurve` (0 = đầu ở góc) | 0.05 → 1 ở 14% → 0.78 ở 50% → 0.5 | 0.03 → 0.45 ở 20% → **1 ở 45%** → 0.82 ở 75% → 0.5: xòe từ góc **thoai thoải (nửa góc mở ~20°)**, không còn cánh ngang |
+| `widthCurve` (0 = đầu ở góc) | 0.05 → 1 ở 14% → 0.78 ở 50% → 0.5 | 0.03 → 0.45 ở 20% → **1 ở 45%** → 0.82 ở 75% → 0.5: xòe từ góc **thoai thoải (nửa góc mở trung bình ~25°, dốc nhất ~33°)**, không còn cánh ngang |
 Giữ nguyên: màu, ảnh dải `trail_ribbon_019`, thời gian dải, số dải (4 đỉnh), xoay (`VfxDieSpin`), đường rơi, khói / aura / lấp lánh, mọi lớp nổ.
 **Đánh đổi nói thẳng:** nửa đầu đoạn rơi (≤ ~0.35 s) dải mảnh hơn v15 vì ngắn hơn (v15 rộng 1.9 m ngay từ đầu); full rộng khi dải dài ≥ 4.75 m (t ≈ 0.35 s). Muốn dày hơn: tăng `widthPerLength` (0.4 → 0.6) trong `VfxDieTrailShape` (trên prefab trail, chỉnh trực tiếp được).
 **Tích hợp game:** `VFX_DieTrail_v10` đã có `VfxDieTrailShape` (tự chạy); model Die thật chỉ cần gắn prefab như cũ.
 
 ## Chưa chắc (điểm yếu em biết)
-- **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12–v15 đã được vfx-director review (không lỗi luật).
+- **(v16 đã hết cánh / thanh ngang ở mép dưới xúc xắc; còn vài sợi mảnh chữ V ở đỉnh khối ~3 khung đầu và móc nhỏ ở đầu dải f007–f008)**; trước v16 là vài vệt ngang ở mép dưới trong ~0.3 s đầu; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12–v16 đã được vfx-director review (không lỗi luật; v16: Duyệt).
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
 - Trail chỉ mượt ở 60 fps (xúc xắc 47 m/s ≈ 1.6 m / khung ở 30 fps, dải gấp khúc nhẹ); em chưa nội suy được điểm giữa khung (thử `AddPosition` bị đảo thứ tự điểm).
 - Bụi vẫn là billboard `smoke_soft_005` (khói mặc định), không Erode Sphere: Erode Sphere là luật cho khói vụ nổ lửa / than; brief này là bụi vàng. Art lead quyết nếu muốn khác.
