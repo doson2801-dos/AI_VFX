@@ -39,6 +39,15 @@
 | `tools/identity.py`, `horuschat_cli.py`, `horuschat_watch.py`, `horuschat_daemon.py`, `workai_watch.py`, `workai_daemon.py`, `paseo_cmd.py`, `subsession/subsession.py` | Phụ thuộc của `tro_ly.py` (danh tính, CLI + bộ canh HorusChat / WorkAI, gọi Paseo). `paseo_cmd.py` đã sửa để tìm `paseo` trong PATH trên Linux. Toast của bộ canh dùng PowerShell nên trên Linux chỉ ghi log lỗi. |
 | `tools/horuschat_mcp/`, `tools/workai/workai.py` | Client HorusChat (MCP) và WorkAI. Khoá điền tay vào `tools/horuschat_mcp/.env.haunv` và `tools/workai/.env.haunv` (không commit). |
 
+## Slot Five (prototype game, bàn giao từ Phaser 2026-11-27)
+
+| Đường dẫn | Chứa gì |
+|---|---|
+| `Docs/SlotFive/HANDOFF.md` | Đọc đầu tiên: bàn giao để làm lại Slot Five (slot đối kháng 4x4, màn dọc, hệ Sét) bằng Unity. |
+| `Docs/SlotFive/brief.md`, `production.md` | Brief bản 5 (nguồn sự thật) và bảng tiến độ của bản Phaser. |
+| `Docs/SlotFive/research_icon_rates.md` | Nghiên cứu tỉ lệ icon trong game slot chiến đấu. |
+| `Docs/SlotFive/reference/*.ts.txt` | Logic, thông số và manifest VFX của bản Phaser, dùng làm chuẩn để port sang C#. |
+
 ## Unity
 
 - **Dọn 2026-11-05 (art lead):** `Assets/` chỉ còn effect có trong scene Showcase + phần dùng chung. Đã xoá (vào Thùng rác Windows): `Assets/StrongExplosion_v1`, `Assets/Scenes`, `Assets/_Game`, `Assets/VFX/{BombBlast_Shader, CodeShockwaveGround, CodeSparkBurst, Explosion, FireStylized, FireballImpact, FireballLoop, FireballProjectile, Lightning_Impact, Lightning_Strike, Meteor, SmokeStylized, StylizedSlash, ThunderChainImpact, ThunderImpact, Shaders}`, 5 Mix cũ, `smoke.mat`, ảnh `tread_*.png` ở gốc. Tài liệu của chúng trong `Docs/VFX/` (kể cả `ThunderImpact/`, `ThunderChainImpact/`) và `contexte/` vẫn giữ; builder của ThunderImpact / ThunderChainImpact còn trong git (commit `b23b0b6`).
