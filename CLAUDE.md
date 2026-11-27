@@ -54,6 +54,14 @@ Skill dựng prefab chính (từ 2026-11-26, sau khi `vfx-maker` bị xoá): eff
 - **Có khác biệt giữa các effect / biến thể, không chỉ đổi màu** (art lead 2026-11-04): khi làm effect mới hoặc biến thể (ví dụ Băng → Đất), đổi ít nhất hai trong mesh / vị trí-bố cục / timing / lớp phụ so với bản đã có. **Nhưng đúng yêu cầu: biến thể vẫn là cùng hiệu ứng; không tự biến nó thành một effect khác.** Effect khác chỉ làm khi art lead yêu cầu.
 - Bản `/vfx-shader` cũ (quad + noise) đã gộp vào vfx-maker rồi xoá 2026-11-02, bản lưu ở `Docs/VFX/_ArtDirection/_archive/vfx-shader_skill_2026-11-02/`.
 
+## Skill: team-ui (`/team-ui`, 2026-11-27)
+
+Điều phối đội UI Unity (uGUI) cho một màn hình / HUD / popup: bối cảnh → UX spec → review spec → visual + danh sách asset → cài đặt → review song song → polish. Chuyển thể từ `team-ui` của Claude Code Game Studios: bỏ `project.yaml`, `/ux-design`, `/ux-review`, agent engine / accessibility riêng; engine cố định Unity + uGUI, review qua ảnh chụp từ UnityMCP.
+- Agent: `ux-designer` (spec, review, accessibility), `ui-programmer` (sprite, code uGUI, build / test / chụp qua MCP; **trả danh sách file trước, ghi sau khi duyệt**), `art-director` (chỉ `--team small`).
+- Tài liệu ở `Docs/UI/<feature>/`; mẫu ở `Docs/UI/_templates/`. Chưa có `Docs/UI/accessibility-requirements.md` thì báo cáo luôn ghi `Accessibility: NOT ASSESSED`, không báo đạt.
+- Cách làm UI theo kiểu SlotFive: dựng bằng code, toạ độ ở file layout riêng, sprite gán qua menu build scene.
+- `.claude/agents/` không nằm trong phạm vi `tools/sync_knowledge.py`, nên 3 agent này chỉ ở máy cho tới khi thêm vào `SCOPE_RE`.
+
 ## Scene chung VFX_Showcase (2026-11-03)
 
 Mọi VFX để chung một scene: `Assets/VFX/_Showcase/Scenes/VFX_Showcase.unity`. Khi chạy có giao diện (uGUI dựng bằng code, `Assets/VFX/_Showcase/Runtime/VfxShowcase.cs`) để đổi qua lại: danh sách theo nhóm bên trái, Prev / Replay / Next, Loop, Speed, 3 góc camera (Top-down 60°, 3/4 40°, Side 8°). Phím: ← → đổi VFX, Space phát lại, 1/2/3 camera, L loop, con lăn chuột zoom. **UI tự fit mọi tỉ lệ game view** (2026-11-13): Canvas `ScaleWithScreenSize` 1280×720 + `ScreenMatchMode.Expand` (vùng 1280×720 luôn nằm gọn, màn rộng hơn thì giãn thêm); nút co chữ thay vì ngắt dòng.

@@ -1,0 +1,10 @@
+Effect: SF_Cast_ChainFlash   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:39
+Preview times (s): 0.03, 0.1, 0.18, 0.26, 0.34, 0.44
+
+Layers:
+  VFX_SF_ChainFlash  max=1  life=0.45  mode=Billboard  mat=M_SF_Cast_ChainFlash_Glow (Mobile/Particles/Additive)
+  VFX_SF_ChainFlash/Sweep  max=1  life=0.3  mode=Billboard  mat=M_SF_Cast_ChainFlash_Sweep (Mobile/Particles/Additive)
+Total maxParticles: 2
+
+Errors: none

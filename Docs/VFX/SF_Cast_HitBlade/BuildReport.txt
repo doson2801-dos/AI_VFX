@@ -1,0 +1,10 @@
+Effect: SF_Cast_HitBlade   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:38
+Preview times (s): 0.02, 0.06, 0.1, 0.15, 0.2, 0.24
+
+Layers:
+  VFX_SF_HitBlade  max=1  life=0.1  mode=Billboard  mat=M_SF_Cast_HitBlade_Flash (Mobile/Particles/Additive)
+  VFX_SF_HitBlade/Cut  max=1  life=0.2  mode=Billboard  mat=M_SF_Cast_HitBlade_Cut (Mobile/Particles/Additive)
+Total maxParticles: 2
+
+Errors: none

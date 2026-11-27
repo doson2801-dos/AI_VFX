@@ -1,0 +1,10 @@
+Effect: SF_Cast_ProjBlade   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:38
+Preview times (s): 0.05, 0.12, 0.19, 0.26, 0.33
+
+Layers:
+  VFX_SF_ProjBlade  max=10  life=0.15  mode=Billboard  mat=M_SF_Cast_ProjBlade_Wake (Mobile/Particles/Additive)
+  VFX_SF_ProjBlade/Blade  max=1  life=1  mode=Mesh  mat=M_SF_Cast_ProjBlade_Blade (VFXLib/ColosoShaderAdditive_Optimized)
+Total maxParticles: 11
+
+Errors: none

@@ -14,13 +14,14 @@ Dùng ở bước 1–2 của skill: **tìm loại gần nhất → mở Anatomy
 | Gió bùng quanh chân | `wind-burst` | | `WindBurst` | |
 | Sét đánh từ trời / loạt sét | `lightning-strike`, `violet-thunder`, `violet-storm` | `thunder-core`, `lightning`, `lightning-set` | `LightningStrike`, `VioletThunder` (5 biến thể) + `VioletStorm` | |
 | Điện bám vũ khí / vệt điện / aura | `aura-gauntlet` | `lightning-set`, `thunder-core` | `ThunderSpear`, `LightningTrail`, `AuraGauntlet` | |
-| Tia điện A→B bằng shader (không texture) | (chưa có) | `vfx-code/references/electric-bolt.md` | `ElectricBolt` | |
+| Tia điện A→B bằng shader (không texture) | (chưa có) | `vfx-code/references/electric-bolt.md` | `ElectricBolt`, `SF_Cast` (`VFX_SF_VoltLink`: tia nối ô-ô trên UI 2D, game đặt độ dài) | |
 | Cầu lửa / đạn bay có đuôi | `hero-projectile`, `fireball-throw` | | `FireballThrow` (Frost / Poison), `FireballStraight`, `FireballCharge` | |
 | Lửa thổi / phun / sóng lửa | `fire-breath`, `flamethrower`, `fire-wave-cast`, `fire-hand-flame` | `study-reference` (nếu học prefab) | `FireBreath` | |
 | Nổ đất, khói vụ nổ | `explosion` | | `GroundBlast`, `MushroomBlast`, `BlenderBlast` (chưa thấy Anatomy riêng) | |
 | Tia laser | `laser-beam` | | (chưa có prefab) | |
 | Xúc xắc: vệt + nổ | `die-trail`, `die-explosion` | | `LuckyDice` | |
 | Nổ mở phần thưởng | `reward-burst` | | | |
+| Pop khi ăn ô (puzzle / slot) | `match-pop` | | `SF_Cast` (`VFX_SF_MatchPop` + nảy thẻ UI trong `SlotFiveGame`) | |
 | Tan biến thành cát bụi | `disintegrate` | | bản html trong `Docs/VFX/Disintegrate/` | |
 | Đất bung lên khi xe chạy | `dirt-kickup` | | | |
 | Thác nước (môi trường loop) | `waterfall` | | | |

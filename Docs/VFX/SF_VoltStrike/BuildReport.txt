@@ -1,0 +1,16 @@
+Effect: SF_VoltStrike   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 23:59:57
+Preview times (s): 0.1, 0.25, 0.3, 0.34, 0.4, 0.48, 0.6
+
+Layers:
+  VFX_SF_VoltStrike  max=1  life=0.3  mode=Billboard  mat=M_SF_VoltStrike_Charge (VFX/FX/Glow Star)
+  VFX_SF_VoltStrike/Bolt  max=1  life=0.3  mode=Stretch  mat=M_SF_VoltStrike_Bolt (VFX/FX/Electric Bolt)
+  VFX_SF_VoltStrike/Branch1  max=1  life=0.22  mode=Stretch  mat=M_SF_VoltStrike_Branch1 (VFX/FX/Electric Bolt)
+  VFX_SF_VoltStrike/Branch2  max=1  life=0.18  mode=Stretch  mat=M_SF_VoltStrike_Branch2 (VFX/FX/Electric Bolt)
+  VFX_SF_VoltStrike/AtFlare  max=1  life=0.2  mode=Billboard  mat=M_SF_VoltStrike_Flare (VFX/FX/Glow Star)
+  VFX_SF_VoltStrike/AtFeetWave  max=1  life=0.32  mode=Billboard  mat=M_SF_VoltStrike_Wave (Mobile/Particles/Additive)
+  VFX_SF_VoltStrike/AtArcs  max=3  life=0.15  mode=Billboard  mat=M_SF_VoltStrike_Arcs (Mobile/Particles/Additive)
+  VFX_SF_VoltStrike/AtSparks  max=10  life=0.25  mode=Billboard  mat=M_SF_VoltStrike_Sparks (Mobile/Particles/Additive)
+Total maxParticles: 19
+
+Errors: none

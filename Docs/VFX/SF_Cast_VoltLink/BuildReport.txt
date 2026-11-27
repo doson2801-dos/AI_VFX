@@ -1,0 +1,11 @@
+Effect: SF_Cast_VoltLink   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:39
+Preview times (s): 0.02, 0.06, 0.12, 0.2, 0.28, 0.34
+
+Layers:
+  VFX_SF_VoltLink  max=1  life=0.36  mode=Stretch  mat=M_SF_Cast_VoltLink_Bolt (VFX/FX/Electric Bolt)
+  VFX_SF_VoltLink/Bolt2  max=1  life=0.24  mode=Stretch  mat=M_SF_Cast_VoltLink_Bolt2 (VFX/FX/Electric Bolt)
+  VFX_SF_VoltLink/Tip  max=1  life=0.15  mode=Billboard  mat=M_SF_Cast_VoltLink_Tip (VFX/FX/Glow Star)
+Total maxParticles: 3
+
+Errors: none

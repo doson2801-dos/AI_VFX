@@ -232,8 +232,8 @@ Dùng cùng công thức, với `p` tính trên tổng trọng số của 5 icon
 
 | Vùng | Khóa trong `layout.boxes` | Hộp `x, y, w, h` | Ghi chú |
 |---|---|---|---|
-| Chỉ báo lượt | `turnBanner` | 120, 16, 300, 40 | Không đổi |
-| Khung quay | `reelFrame` | 57, 64, 426, 426 | Bản 4. Ô 96x96, khe 6, đệm 12. Bản 3 là 26, 72, 488, 394 |
+| Chỉ báo lượt | `turnBanner` | 120, 774, 300, 40 | **Unity bản 5.2 (2026-11-27, art lead chọn):** chuyển xuống mép trên panel để nhường chỗ khung vàng. Bản 4 là 120, 16, 300, 40 |
+| Khung quay | `reelFrame` | 68, 4, 404, 505 | **Unity bản 5.3 (2026-11-27):** panel là `background.png` của bộ `fantasy-slot-assets` (1280x1600, có sẵn viền vàng) hiển thị tỉ lệ 404/1280; icon dọc 256x320 → ô ≈ 81x101, đặt đúng như `preview.png` (ô đầu ở (88, 115) px ảnh, bước cột 282, bước hàng 348). Bản 5.2: 76, 66, 388, 390 ô 80x80 + khung vàng riêng. Bản 4 là 57, 64, 426, 426 với ô 96x96; bản 3 là 26, 72, 488, 394 |
 | Vùng số nổi người chơi | `playerFloat` | 16, 536, 160, 90 | Bản 4. Bản 3 có y = 520 |
 | Vùng số nổi đối thủ | `foeFloat` | 364, 536, 160, 90 | Bản 4. Bản 3 có y = 520 |
 | Nhân vật người chơi | `playerFighter` | 40, 636, 64, 88 | Bản 4. Bản 3 là 40, 620, 64, 104 |
@@ -245,11 +245,11 @@ Dùng cùng công thức, với `p` tính trên tổng trọng số của 5 icon
 | Nút Nhanh | `fastBtn` | 96, 832, 64, 64 | Bản 4.1. `#sf-fast`, chữ "Nhanh". Trạng thái bật có nền khác hẳn trạng thái tắt |
 | Nút quay | `spinBtn` | 170, 820, 200, 88 | Không đổi |
 | Nút trận mới | `newBtn` | 400, 832, 96, 64 | Không đổi |
-| Bảng chú giải (khi mở) | `legend` | 57, 64, 426, 426 | Bản 4. Trùng `reelFrame`, nút đóng 64x64 ở góc trên phải |
+| Bảng chú giải (khi mở) | `legend` | 68, 4, 404, 505 (Unity 5.3, trùng panel quay; bản 4 là 57, 64, 426, 426) | Bản 4. Trùng `reelFrame`, nút đóng 64x64 ở góc trên phải |
 
 - **Panel dưới, bản 4.1:** nút "?" ở x 20 đến 84, nút Nhanh ở x 96 đến 160, nút quay ở x 170 đến 370, nút trận mới ở x 400 đến 496. Các nút cách nhau ít nhất 10 px. Ở 390x844, các nút 64x64 có kích thước khoảng 46x46 px CSS, đủ mức 44 px.
-- **Tâm ô `(x, y)`** là `(117 + 102x, 124 + 102y)`.
-- **Khoảng trống cast** đi từ đáy `reelFrame` (y = 490) tới đỉnh nhân vật (y = 636), cao 146 px, bằng 15,2% chiều cao màn. Trong khoảng này chỉ có viên cast và số nổi.
+- **Tâm ô `(x, y)`** ≈ `(136,2 + 89x, 90,8 + 109,8y)` từ Unity bản 5.3 (tính từ số đo ảnh × 404/1280). Bản 5.2 là `(138 + 88x, 128 + 88y)`, bản 4 là `(117 + 102x, 124 + 102y)`.
+- **Khoảng trống cast** đi từ đáy `reelFrame` (y = 490) tới đỉnh nhân vật (y = 636), cao 146 px, bằng 15,2% chiều cao màn. **Unity bản 5.3:** từ đáy panel quay (y = 509) tới 636, cao 127 px = 13,2% (art lead chấp nhận dưới mức 15% từ bản 5.2). Trong khoảng này chỉ có viên cast và số nổi.
 - Số nổi chỉ nằm trong vùng `*Float` của bên nhận, nên không đè lên lưới.
 - Nút `#sf-*` là DOM. Vị trí nút là hộp tương ứng nhân `scale`, cộng độ lệch của canvas.
 - **Chữ:** chữ HUD tối thiểu 17 px game. Số máu và chỉ báo lượt tối thiểu 22 px game. Tương phản tối thiểu 4,5:1 theo WCAG.

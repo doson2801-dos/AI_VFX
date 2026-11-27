@@ -1,0 +1,11 @@
+Effect: SF_Cast_ProjVolt   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:37
+Preview times (s): 0.05, 0.12, 0.19, 0.26, 0.33
+
+Layers:
+  VFX_SF_ProjVolt  max=5  life=0.12  mode=Billboard  mat=M_SF_Cast_ProjVolt_Core (Mobile/Particles/Additive)
+  VFX_SF_ProjVolt/Arcs  max=4  life=0.07  mode=Billboard  mat=M_SF_Cast_ProjVolt_Arcs (Mobile/Particles/Additive)
+  VFX_SF_ProjVolt/Sparks  max=11  life=0.15  mode=Billboard  mat=M_SF_Cast_ProjVolt_Sparks (Mobile/Particles/Additive)
+Total maxParticles: 20
+
+Errors: none

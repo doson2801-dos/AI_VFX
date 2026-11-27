@@ -27,4 +27,4 @@ Màu / nguyên tố (sét băng: tinh thể; sét độc: bong bóng / bào tử
 - Tránh: giữ cột sét **rõ trong ≥ 0.2 s**, có zig-zag / phân nhánh; chất liệu thể hiện ở **lớp phụ** (nứt băng / vũng độc), không bằng đổi màu cột.
 
 ## Biến thể đã làm
-Gốc (vàng), Frost, Toxic.
+Gốc (vàng), Frost, Toxic. **SF_VoltStrike** (2026-11-27, Slot Five UI 2D): tia xiên từ chuỗi ô Sét xuống nhân vật, Electric Bolt + 2 nhánh, tụ điện ở ô, chớp / vòng sóng dẹt / cung / tàn ở nhân vật (`Docs/VFX/SF_VoltStrike/Plan.md`).
