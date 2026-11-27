@@ -11,3 +11,7 @@ artifacts/
 !package-lock.json
 .env
 .env.*
+
+# Thư viện texture VFX (~163 MB), nguồn Library.tar.gz trên Google Drive
+vfx/Library/
+__pycache__/
