@@ -13,8 +13,20 @@ description: Dùng thư viện vfx-code để tạo hiệu ứng flipbook cho ga
 | `lib/`, `examples/`, `references/techniques.md`, `references/particles.md` | Dùng |
 | Luật về không gian, nhịp hiệu ứng, sheet ≤ 1024 px, sửa ≥ 3 vòng, `--check` sạch | Giữ |
 | `--effect`, `--project`, `--review`, Review Lab | Không dùng, chỉ dùng `--out` |
-| Prefab, shader Unity, `Assets/Library/`, thư mục `assets/` | Không dùng |
+| Prefab, shader Unity, thư mục `assets/` | Không dùng |
+| `Assets/Library/` (texture có sẵn) | Dùng bản ở `vfx/Library/`, xem mục dưới |
 | Đường dẫn `D:/Game_prj/VFX_LIb` | Bỏ qua |
+
+## Thư viện texture `vfx/Library/`
+- Bản sao thư viện thành phần của vfx-code. Cây `vfx/Library/<nhóm>/<vai trò>/` giống `Assets/Library/`. Có 15 nhóm: `Slash`, `beam`, `glow`, `ground`, `impact`, `lightning`, `mask`, `noise`, `ring`, `rune`, `smoke`, `spark`, `trail`, `water`, `_review`.
+- Không nằm trong Git vì nặng khoảng 163 MB. Nguồn là file `Library.tar.gz` trên Google Drive của người dùng. Máy mới thì giải nén file đó vào `vfx/` để có `vfx/Library/`.
+- File `.meta` là của Unity, bỏ qua.
+- Chỉ đọc, không sửa file trong thư viện. Cần chỉnh ảnh thì chép sang `vfx/<Effect>/textures/`.
+- Xem ảnh trước khi chọn. Ảnh trong `_review/` chưa được duyệt, không dùng.
+- Không chép ảnh thư viện vào `public/`. Chỉ sheet đã render mới vào `public/vfx/`.
+- Chọn ảnh theo `docs/vfx/_Library/LIBRARY.md`, là bảng thành phần → thư mục. Nguồn và tên cũ xem trong `docs/vfx/_Library/library_index.csv`. Hai file này chép từ `Docs/VFX/_Library/` trên nhánh `main` ngày 2026-11-27. Trong các file đó, đọc `Assets/Library/` thành `vfx/Library/`. Phần Unity như `LoadAssetAtPath` hay import setting thì bỏ qua.
+- Ghi đường dẫn ảnh đã dùng và lý do chọn vào báo cáo.
+- Nếu `LIBRARY.md` nhắc tới một thư mục mà `vfx/Library/` không có, ví dụ nhóm `shield/`, thì bản `Library.tar.gz` đang cũ hơn bảng. Báo Producer, không tự đoán.
 
 ## Không gian mặc định
 Game là 2D nhìn ngang. Dùng `plane="billboard"`, `camera="side 2D"`, `background="dark"`. `width_m` quy đổi theo nhân vật cao 48 px tương ứng 2 m. Thiếu thông tin làm đổi hình khối thì không tự đoán: ghi câu hỏi vào báo cáo cho Producer.
