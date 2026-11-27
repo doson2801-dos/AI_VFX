@@ -32,6 +32,10 @@ Kế thừa từ `fireball-throw.md`: đuôi là thanh trắng đặc (dùng tex
 - **Ribbon đuôi (Trails) có mép cắt vuông ở đầu** nếu alpha bắt đầu ở 1: cho alpha bắt đầu từ 0 rồi lên 0,9 trong 10–12% đầu.
 - **Hạt Stretched đứng yên** cần vận tốc rất nhỏ (+Z 0,01) để có hướng xác định; length = size × lengthScale.
 - Đạn loop do code game di chuyển root; đuôi ribbon chỉ thấy khi root chuyển động (đặt hạt đuôi Local + Trails World space).
+- **Quầng mềm alpha thấp trên nền UI tối thành đĩa xám phẳng** (SF_Cast 2026-11-27): bỏ quầng, hoặc giữ nhỏ và đủ sáng.
+- **Coloso với `_MainColor` HDR > 1 trên ảnh trắng đặc thì cháy trắng** (SF_Cast 2026-11-27): để ≈ 1, màu lấy từ Start Color / ramp.
+- **Đạn dạng cầu / vòng (UI 2D) vẫn cần đuôi**: tàn hạt World space rơi lại, mỗi loại một hình riêng để không chỉ khác màu.
 
 ## Biến thể đã làm
 `VFXPyroProjectile`, `NovaProjectile` (project runner6, 2026-11-17, chờ art lead).
+- `VFX_SF_Proj*` / `VFX_SF_Hit*` (Slot Five, 2026-11-27, chờ art lead): bản **UI 2D** trên mặt phẳng màn hình XY, đạn 350 ms do code đẩy (hướng bay = +X cục bộ). Đuôi là tàn hạt World space thay cho ribbon; đạn Kiếm là lưỡi cung mesh + Coloso xoay nên không có đầu cố định. Plan: `Docs/VFX/SF_Cast/Plan.md`.

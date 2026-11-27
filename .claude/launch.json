@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "agent-board",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["tools/agent-board/server.mjs"],
+      "port": 5181
+    },
+    {
       "name": "shape-lab",
       "runtimeExecutable": "python",
       "runtimeArgs": [

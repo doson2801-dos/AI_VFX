@@ -1,0 +1,11 @@
+Effect: SF_Cast_HitHeal   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:38
+Preview times (s): 0.02, 0.06, 0.1, 0.15, 0.2, 0.24
+
+Layers:
+  VFX_SF_HitHeal  max=1  life=0.25  mode=Billboard  mat=M_SF_Cast_HitHeal_Ring (Mobile/Particles/Additive)
+  VFX_SF_HitHeal/Rise  max=7  life=0.25  mode=Billboard  mat=M_SF_Cast_HitHeal_Rise (Mobile/Particles/Additive)
+  VFX_SF_HitHeal/Glow  max=1  life=0.2  mode=Billboard  mat=M_SF_Cast_HitHeal_Glow (Mobile/Particles/Additive)
+Total maxParticles: 9
+
+Errors: none

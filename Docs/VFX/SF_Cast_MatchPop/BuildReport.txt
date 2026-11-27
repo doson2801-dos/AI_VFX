@@ -1,0 +1,12 @@
+Effect: SF_Cast_MatchPop   Kit: 1.2.0   Unity: 2022.3.62f3   Pipeline: Built-in
+Built: 2026-11-27 15:48:40
+Preview times (s): 0.02, 0.06, 0.1, 0.16, 0.24, 0.34
+
+Layers:
+  VFX_SF_MatchPop  max=1  life=0.15  mode=Billboard  mat=M_SF_Cast_MatchPop_Flash (Mobile/Particles/Additive)
+  VFX_SF_MatchPop/Ring  max=1  life=0.25  mode=Billboard  mat=M_SF_Cast_MatchPop_Ring (Mobile/Particles/Additive)
+  VFX_SF_MatchPop/Burst  max=10  life=0.35  mode=Billboard  mat=M_SF_Cast_MatchPop_Burst (Mobile/Particles/Additive)
+  VFX_SF_MatchPop/Chips  max=6  life=0.4  mode=Stretch  mat=M_SF_Cast_MatchPop_Chips (Mobile/Particles/Additive)
+Total maxParticles: 18
+
+Errors: none

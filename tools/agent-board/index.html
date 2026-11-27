@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Board · AI_VFX</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0d1017; --card: #171b25; --text: #edf0f7; --muted: #9aa3b5; --line: #2a3040;
+  --done: #4ade80; --stale: #fbbf24; --error: #f87171; --idle: #6b7385; --accent: #a78bfa;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, "Segoe UI", sans-serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 40px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+h1 { margin: 0; font-size: 22px; }
+h2 { margin: 28px 0 8px; font-size: 16px; }
+#conn { color: var(--muted); font-size: 13px; }
+#graph { position: relative; }
+#edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#edges path { fill: none; stroke: var(--accent); stroke-opacity: .35; stroke-width: 2; }
+#edges path.on { stroke-opacity: 1; stroke-dasharray: 7 6; animation: flow .8s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -13; } }
+@keyframes pulse { 50% { opacity: .35; } }
+.top { display: flex; justify-content: center; margin-bottom: 56px; }
+.team { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.team:empty::after { content: "Chưa có subagent nào được gọi."; color: var(--muted); font-size: 13px; text-align: center; grid-column: 1 / -1; }
+.node { position: relative; width: 100%; min-height: 148px; padding: 12px 14px; background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); border-top: 4px solid var(--accent); border-radius: 10px; }
+.top .node { max-width: 340px; }
+.node[data-status=working] { --c: var(--accent); border-color: var(--accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent); }
+.node[data-status=done] { --c: var(--done); }
+.node[data-status=stale] { --c: var(--stale); }
+.name { font-weight: 650; color: var(--accent); overflow-wrap: anywhere; }
+.owns { color: var(--muted); font-size: 12px; }
+.badge { display: flex; align-items: center; gap: 6px; margin: 8px 0 4px; font-size: 12px; font-weight: 650; color: var(--c, var(--muted)); }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--idle)); }
+.node[data-status=working] .badge::before { animation: pulse 1.2s ease-in-out infinite; }
+.action { min-height: 21px; overflow-wrap: anywhere; }
+.meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.err { color: var(--error); font-size: 12px; overflow-wrap: anywhere; }
+#log { list-style: none; margin: 0; padding: 0; background: var(--card); border-radius: 10px; max-height: 320px; overflow: auto; }
+#log li { display: grid; grid-template-columns: 72px 170px 1fr; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 13px; }
+#log li:last-child { border-bottom: 0; }
+#log li.empty { display: block; color: var(--muted); }
+#log .t { color: var(--muted); }
+#log .r { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
+#log .x { overflow-wrap: anywhere; }
+#log .bad { color: var(--error); }
+@media (max-width: 760px) {
+  .top { margin-bottom: 16px; }
+  .team { grid-template-columns: 1fr; }
+  .top .node { max-width: none; }
+  #edges { display: none; }
+  #log li { grid-template-columns: 64px 1fr; }
+  #log .x { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { #edges path.on, .node .badge::before { animation: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header><h1>Agent · AI_VFX</h1><span id="conn">Đang kết nối…</span></header>
+  <section id="graph">
+    <svg id="edges" aria-hidden="true"></svg>
+    <div class="top" id="top"></div>
+    <div class="team" id="team"></div>
+  </section>
+  <h2>Hoạt động gần đây</h2>
+  <ul id="log"></ul>
+</main>
+<script>
+const MAIN = 'main';
+const KNOWN = {
+  main: ['Phiên chính', 'Nhận yêu cầu, làm và giao việc'],
+  'general-purpose': ['General-purpose', 'Việc nhiều bước'],
+  Explore: ['Explore', 'Tìm kiếm, chỉ đọc'],
+  Plan: ['Plan', 'Lập kế hoạch'],
+  'web-fetch': ['Web fetch', 'Đọc trang web'],
+  fork: ['Fork', 'Bản sao của phiên chính'],
+};
+const STATUS = { idle: 'Rảnh', working: 'Đang làm', done: 'Đã xong', stale: 'Không có tín hiệu' };
+const nameOf = (id) => (KNOWN[id] ?? [id])[0];
+const accentOf = (id) => {
+  if (id === MAIN) return '#facc15';
+  let h = 0;
+  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  return `hsl(${h} 75% 68%)`;
+};
+const el = (tag, cls, text = '') => {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  node.textContent = text;
+  return node;
+};
+const parts = {};
+function card(id) {
+  if (parts[id]) return parts[id];
+  const c = el('article', 'node');
+  c.style.setProperty('--accent', accentOf(id));
+  const p = { card: c, badge: el('div', 'badge'), action: el('div', 'action'), meta: el('div', 'meta'), err: el('div', 'err') };
+  c.append(el('div', 'name', nameOf(id)), el('div', 'owns', (KNOWN[id] ?? [, 'Subagent'])[1]), p.badge, p.action, p.meta, p.err);
+  parts[id] = p;
+  document.getElementById(id === MAIN ? 'top' : 'team').append(c);
+  return p;
+}
+const clock = (ts) => new Date(ts).toLocaleTimeString('vi-VN', { hour12: false });
+const duration = (ms) => {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  return s < 60 ? `${s} giây` : `${Math.floor(s / 60)} phút ${s % 60} giây`;
+};
+let state = null;
+
+function drawEdges() {
+  const svg = document.getElementById('edges');
+  const box = document.getElementById('graph').getBoundingClientRect();
+  svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  svg.replaceChildren();
+  if (!state || !parts[MAIN]) return;
+  const from = parts[MAIN].card.getBoundingClientRect();
+  const x1 = from.left + from.width / 2 - box.left;
+  const y1 = from.bottom - box.top;
+  for (const id of state.order.slice(1)) {
+    const to = parts[id].card.getBoundingClientRect();
+    const x2 = to.left + to.width / 2 - box.left;
+    const y2 = to.top - box.top;
+    const mid = (y1 + y2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.style.setProperty('--accent', accentOf(id));
+    path.setAttribute('d', `M${x1} ${y1} C${x1} ${mid} ${x2} ${mid} ${x2} ${y2}`);
+    if (state.nodes[id].status === 'working') path.classList.add('on');
+    svg.append(path);
+  }
+}
+
+function render() {
+  if (!state) return;
+  const team = document.getElementById('team');
+  for (const id of state.order) {
+    const n = state.nodes[id];
+    const p = card(id);
+    if (id !== MAIN) team.append(p.card);   // keep the order the server sends
+    p.card.dataset.status = n.status;
+    p.badge.textContent = STATUS[n.status] + (n.running > 1 ? ` (${n.running})` : '');
+    p.action.textContent = n.action || 'Chưa có hoạt động';
+    const bits = [];
+    if (n.status === 'working' && n.since) bits.push(duration(Date.now() - n.since));
+    if (n.tools) bits.push(`${n.tools} thao tác`);
+    if (n.lastTs) bits.push(`cuối lúc ${clock(n.lastTs)}`);
+    p.meta.textContent = bits.join(' · ');
+    p.err.textContent = n.lastError ? `Lỗi gần nhất: ${n.lastError}` : '';
+  }
+  const list = document.getElementById('log');
+  list.replaceChildren(...(state.log.length ? state.log.map((item) => {
+    const li = el('li');
+    const role = el('span', 'r', nameOf(item.role));
+    role.style.setProperty('--accent', accentOf(item.role));
+    li.append(el('span', 't', clock(item.ts)), role, el('span', item.error ? 'x bad' : 'x', item.text));
+    return li;
+  }) : [el('li', 'empty', 'Chưa có hoạt động nào được ghi.')]));
+  drawEdges();
+}
+
+const source = new EventSource('/events');
+source.onopen = () => { document.getElementById('conn').textContent = 'Đang theo dõi trực tiếp'; };
+source.onerror = () => { document.getElementById('conn').textContent = 'Mất kết nối, đang thử lại…'; };
+source.onmessage = (message) => { state = JSON.parse(message.data); render(); };
+addEventListener('resize', drawEdges);
+setInterval(render, 1000);
+</script>
+</body>
+</html>
