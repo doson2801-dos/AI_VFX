@@ -1,0 +1,60 @@
+{
+ "source": "vfx/SfProjBlade/sf_proj_blade.py",
+ "name": "sf_proj_blade",
+ "blend": "add",
+ "duration": 0.32,
+ "loop": true,
+ "fps": 25.0,
+ "frames": 8,
+ "cols": 4,
+ "rows": 2,
+ "times": [
+  0.0,
+  0.04,
+  0.08,
+  0.12,
+  0.16,
+  0.2,
+  0.24,
+  0.28
+ ],
+ "size": [
+  64,
+  64
+ ],
+ "res": 1.0,
+ "space": {
+  "context": "air",
+  "plane": "billboard",
+  "camera": "side 2D",
+  "width_m": 2.67,
+  "anchor": "projectile center, no rotation",
+  "background": "dark"
+ },
+ "pivot": [
+  0.5,
+  0.5
+ ],
+ "sheets": [
+  "T_sf_proj_blade_4x2.png"
+ ],
+ "options": {
+  "radius": 20.0,
+  "bite": 18.0,
+  "offset": 7.0,
+  "ghosts": [
+   [
+    0.22,
+    0.5
+   ],
+   [
+    0.44,
+    0.28
+   ],
+   [
+    0.66,
+    0.13
+   ]
+  ]
+ }
+}

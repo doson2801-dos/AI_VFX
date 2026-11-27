@@ -1,0 +1,54 @@
+{
+ "source": "vfx/SfChainFlash/sf_chain_flash.py",
+ "name": "sf_chain_flash",
+ "blend": "add",
+ "duration": 0.48,
+ "loop": false,
+ "fps": 33.333333333333336,
+ "frames": 16,
+ "cols": 4,
+ "rows": 4,
+ "times": [
+  0.0,
+  0.03,
+  0.06,
+  0.09,
+  0.12,
+  0.15,
+  0.18,
+  0.21,
+  0.24,
+  0.27,
+  0.3,
+  0.33,
+  0.36,
+  0.39,
+  0.42,
+  0.45
+ ],
+ "size": [
+  96,
+  96
+ ],
+ "res": 1.0,
+ "space": {
+  "context": "air",
+  "plane": "billboard",
+  "camera": "side 2D",
+  "width_m": 4.0,
+  "anchor": "cell center, tint = icon colour",
+  "background": "dark"
+ },
+ "pivot": [
+  0.5,
+  0.5
+ ],
+ "sheets": [
+  "T_sf_chain_flash_4x4.png"
+ ],
+ "options": {
+  "half": 41.0,
+  "corner": 11.0,
+  "band": 13.0
+ }
+}

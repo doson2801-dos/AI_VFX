@@ -43,25 +43,24 @@ export const TUNING = {
   gfSwipeMinPx: 28,
   gfSwipeAxisRatio: 1.2,
   gfEndLockMs: 300,
-  // Slot Five (brief v4, 4x4 grid). Weights are integers; sfB* is the base value of a 3-chain.
-  sfWFire: 8,
-  sfWVolt: 6,
-  sfWFrost: 6,
-  sfWEarth: 8,
-  sfWBlade: 40,
-  sfWHeal: 13,
-  sfWShield: 13,
-  sfWLucky: 6,
+  // Slot Five (brief v5, 4x4 grid). Weights are integers; sfB* is the base value of a 3-chain.
+  // Brief v5 (4.1.1): one element per match fills the element slot. sfElement: 0 fire, 1 volt (Sét), 2 frost, 3 earth.
+  sfElement: 1,
+  sfWElement: 22,
+  sfWBlade: 36,
+  sfWHeal: 15,
+  sfWShield: 15,
+  sfWLucky: 12,
   sfBFire: 10,
   sfBVolt: 15,
   sfBFrost: 15,
   sfBEarth: 10,
   sfBBlade: 5,
-  sfBHeal: 20,
+  sfBHeal: 50,
   sfBShield: 20,
   sfLen4Mult: 2,
   sfPlayerMaxHp: 450,
-  sfFoeMaxHp: 450,
+  sfFoeMaxHp: 440,
   sfSeed: 777,
   sfSpinBaseMs: 700,
   sfReelStopGapMs: 180,
@@ -75,6 +74,8 @@ export const TUNING = {
   sfCastStaggerMs: 120,
   sfCastFlightMs: 350,
   sfCastTailMs: 250,
+  // Slot Five fast mode (brief v4.1, 4.11): every timing key k becomes Math.round(k * sfFastFactor).
+  sfFastFactor: 0.35,
 };
 
 /** Slider ranges for the in-game tuning panel: [min, max, step]. */
@@ -123,10 +124,8 @@ export const TUNING_RANGES: Record<keyof typeof TUNING, [number, number, number]
   gfSwipeAxisRatio: [1, 2, 0.1],
   gfEndLockMs: [0, 800, 50],
   // Slot Five
-  sfWFire: [1, 60, 1],
-  sfWVolt: [1, 60, 1],
-  sfWFrost: [1, 60, 1],
-  sfWEarth: [1, 60, 1],
+  sfElement: [0, 3, 1],
+  sfWElement: [1, 60, 1],
   sfWBlade: [1, 60, 1],
   sfWHeal: [1, 60, 1],
   sfWShield: [1, 60, 1],
@@ -153,6 +152,7 @@ export const TUNING_RANGES: Record<keyof typeof TUNING, [number, number, number]
   sfCastStaggerMs: [0, 300, 10],
   sfCastFlightMs: [150, 800, 10],
   sfCastTailMs: [0, 600, 10],
+  sfFastFactor: [0.1, 1, 0.05],
 };
 
 export const VIEW = { width: 960, height: 540 };

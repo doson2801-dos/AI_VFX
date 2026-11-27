@@ -1,0 +1,50 @@
+{
+ "source": "vfx/SfHitEarth/sf_hit_earth.py",
+ "name": "sf_hit_earth",
+ "blend": "alpha",
+ "duration": 0.24,
+ "loop": false,
+ "fps": 50.0,
+ "frames": 12,
+ "cols": 4,
+ "rows": 3,
+ "times": [
+  0.0,
+  0.02,
+  0.04,
+  0.06,
+  0.08,
+  0.1,
+  0.12,
+  0.14,
+  0.16,
+  0.18,
+  0.2,
+  0.22
+ ],
+ "size": [
+  112,
+  96
+ ],
+ "res": 1.0,
+ "space": {
+  "context": "air",
+  "plane": "billboard",
+  "camera": "side 2D",
+  "width_m": 4.67,
+  "anchor": "target fighter center",
+  "background": "dark"
+ },
+ "pivot": [
+  0.5,
+  0.5
+ ],
+ "sheets": [
+  "T_sf_hit_earth_Body_4x3.png"
+ ],
+ "options": {
+  "seed": 51,
+  "puffs": 8,
+  "rocks": 7
+ }
+}

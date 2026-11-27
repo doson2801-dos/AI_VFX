@@ -4,6 +4,21 @@
 >
 > **Bản 4.1:** người dùng trả lời Q6 là "Thêm quay nhanh". Thêm cơ chế C11, làm sau C10, xem mục 4.11. Đây là luật đề xuất do Producer chọn mặc định.
 >
+> **Bản 5 (hiện hành, chưa làm): bộ icon theo hệ.** Người dùng chốt sau khi đọc phương án C trong `reports/Tỉ lệ icon game slot chiến đấu.md`.
+> - Hệ của chiêu nguyên tố sau này sẽ đến từ trang bị. Các hệ dự kiến: Băng, Sét, Lửa, Nước, Đất.
+> - Bản demo chỉ dùng **một hệ là Sét**. Lưới chỉ có 5 loại icon: Sét, Kiếm, Hồi máu, Khiên, May mắn. Đối thủ dùng cùng bộ icon này.
+> - Phần việc mới: C13 (bộ icon theo hệ) và C14 (tune lại, thay C10). Danh sách thay đổi ở mục "Thay đổi bản 5" cuối mục 6.
+> - Luật chuỗi, lượt, máu, khiên, layout, cast, quay nhanh và VFX giữ nguyên.
+>
+> **Bản 4.2, VFX (chưa làm):** theo yêu cầu người dùng, thêm cơ chế C12 VFX gồm đạn cast theo loại, va chạm trên nhân vật, hiệu ứng chặn, và lóe sáng chuỗi thắng. Mọi VFX là flipbook sinh bằng code qua skill `phaser-vfx`. VFX chỉ là hình ảnh, không đổi lịch thời gian, logic hay RNG. Đặc tả ở mục 4.12, tiêu chí ở C12.
+>
+> **Trạng thái nghiệm thu bản 4.1 (theo kết luận QA):**
+> - C1 đến C7 bản 4 đạt. C8 đạt 9/9. C9 đạt 6/6. C10 đạt 8/8, C10.9 đã ghi số. C11 đạt 11/11, C11.12 đã ghi số.
+> - Còn chờ người dùng duyệt ảnh C8.10 (C6.8 đã được thay bằng tiêu chí này).
+> - `npm run verify` đạt, 542/542 test.
+> - Giá trị sau tune và số đo ở mục 5.5. Điểm còn tồn ở cuối mục 6.
+> - Mục 9 và Q1, Q3, Q4, Q5 vẫn để người dùng trả lời.
+>
 > **Lịch sử:**
 > - Bản 1: slot credit/RTP, đã bỏ.
 > - Bản 2: slot đối kháng trên lưới 5x4, màn ngang. QA đã nghiệm thu C1 đến C6.7.
@@ -64,11 +79,24 @@ Trò chơi theo lượt. Người chơi chỉ điều khiển lượt của mìn
 | 7 | `lucky` | May mắn | `none` | Ngôi sao trắng |
 
 - **Không khắc hệ.** Bốn hệ và Kiếm đều chỉ gây sát thương thẳng, khác nhau ở trọng số và sát thương gốc. Xem Q1.
-- **May mắn chưa có hiệu ứng.** Icon vẫn tạo chuỗi, được highlight và ghi vào `lastChains` với `kind: 'none'`, `value: 0`. Không bắn viên cast. Buff chỉ số đặc biệt làm sau.
+- **May mắn chưa có hiệu ứng.** Icon vẫn tạo chuỗi, được highlight và ghi vào `lastChains` với `kind: 'none'`, `value: 0`. Không bắn viên cast. Buff chỉ số đặc biệt làm sau. Bản 5 giữ nguyên vai trò này và **không** biến May mắn thành wild (phương án A2 của báo cáo).
+
+#### 4.1.1. Bộ icon theo hệ (bản 5)
+- **Ô nguyên tố.** Bốn icon 0 đến 3 (Lửa, Sét, Băng, Đất) là các hệ có thể chiếm "ô nguyên tố" trên lưới. Mỗi trận chỉ có **một** hệ được dùng, chọn bằng khóa `sfElement`: 0 là Lửa, 1 là Sét, 2 là Băng, 3 là Đất. Bản demo dùng `sfElement = 1` (Sét). Icon 1 có khóa `volt`, tên hiển thị đổi từ "Điện" thành "Sét".
+- **Bộ icon đang dùng** là `activeIcons = [sfElement, 4, 5, 6, 7]`, xếp theo chỉ số tăng dần. Với bản demo, bộ này là `[1, 4, 5, 6, 7]`. Ba hệ còn lại **không bao giờ** được RNG sinh ra.
+- **Giữ nguyên cho các hệ chưa dùng:** chỉ số icon, code hiệu ứng, sheet VFX (`sf_proj_*`, `sf_hit_*`) và giá trị gốc `sfB<Tên>`. Đổi hệ chỉ cần đổi `sfElement`, không phải sửa code.
+- **Trọng số ô nguyên tố** là một khóa chung `sfWElement`, áp cho hệ đang dùng. Bốn khóa `sfWFire`, `sfWVolt`, `sfWFrost`, `sfWEarth` bị bỏ. Nhờ vậy, đổi hệ không làm đổi phân bố lưới, chỉ đổi giá trị đòn.
+- **Đối thủ** dùng cùng `activeIcons` và cùng hệ với người chơi, vì hai bên dùng chung luồng RNG và chung bảng rút.
+- **Nước** là hệ tương lai. Bản 5 chỉ ghi lại, chưa có chỉ số icon, khóa hay sheet. Khi làm Nước, cần thêm icon mới vào bảng 4.1 bằng một brief sau.
+- `evaluate` vẫn nhận đủ 8 icon 0 đến 7, nên fixture có Lửa, Băng, Đất vẫn dùng được để kiểm logic. `forceNextGrid` và `BattleSetup.grids` (chỉ có ở bản dev) cũng vẫn nhận đủ 8 icon.
+- Hệ thống trang bị, việc chọn đồ, và việc gán hệ theo nhân vật hay kẻ địch để sau, xem mục 6 "Không làm".
 
 ### 4.2. Sinh lưới
 - Mỗi ô được rút **độc lập** theo trọng số `sfW<Tên>` (số nguyên). Không dùng dải cuộn.
 - Rút **16 ô theo cột trước** (bản 2 và 3 là 20 ô): `x` từ 0 đến 3, trong mỗi cột `y` từ 0 đến 3. Với mỗi ô, lấy `r = rng.int(tổng trọng số)`, rồi duyệt icon từ 0 đến 7 và chọn icon đầu tiên có tổng trọng số cộng dồn lớn hơn `r`.
+  - **Bản 5:** bảng rút chỉ gồm `activeIcons`, theo thứ tự chỉ số tăng dần, với trọng số `[sfWElement, sfWBlade, sfWHeal, sfWShield, sfWLucky]`. Tổng trọng số là tổng 5 giá trị này. Hệ không dùng bị loại khỏi bảng rút, không chỉ là trọng số 0.
+  - Ô nguyên tố luôn đứng đầu bảng vì chỉ số hệ (0 đến 3) nhỏ hơn 4. Vì vậy, với cùng seed, đổi `sfElement` chỉ đổi icon tại đúng những ô nguyên tố, các ô khác giữ nguyên.
+  - `sfElement` được chụp lại khi bắt đầu trận, cùng với `TUNING`.
 - PRNG là `mulberry32`, trạng thái `uint32`. `next()` trả về số trong `[0, 1)`, và `int(n) = floor(next() * n)`.
 - Có hai luồng: `init = 0` cho lưới hiển thị lúc vào trận, `spin = 1` cho mọi lượt quay. Hạt của luồng `k` là `(seed + Math.imul(k + 1, 0x9E3779B9)) >>> 0`.
 - **Người chơi và đối thủ dùng chung luồng `spin`.** Lượt quay thứ `n` của trận lấy lưới thứ `n` của luồng. `spinIndex = n` đếm từ 0, gộp cả hai bên. `n` chẵn là lượt người chơi, `n` lẻ là lượt đối thủ.
@@ -156,6 +184,27 @@ Kết quả tính tay với giá trị đầu ở mục 5.1, **chưa mô phỏng
   - Bốn hệ trở thành đòn hiếm, mỗi hệ có chuỗi ở khoảng 0,5% đến 1,2% số lượt.
   - Đây là điểm Balance Tuner được phép chỉnh, và cũng là điểm người chơi cần đánh giá ở mục 9.
 
+#### 4.6.1. Kỳ vọng bản 5 (demo một hệ Sét)
+Dùng cùng công thức, với `p` tính trên tổng trọng số của 5 icon đang dùng (100). Ba hệ không dùng có `p = 0`. Kết quả tính tay theo `BRIEF_TUNING` bản 5 (mục 5.6), **chưa mô phỏng trận**:
+
+| Icon | `p` | `E3 + E4` (chuỗi/lượt) | Kỳ vọng value/lượt |
+|---|---:|---:|---:|
+| Sét (`sfWElement` 22, `sfBVolt` 15) | 0,22 | 0,2321 | 3,833 sát thương |
+| Kiếm (36, 5) | 0,36 | 0,9518 | 5,599 sát thương |
+| Hồi máu (15, 20) | 0,15 | 0,0759 | 1,620 hồi máu |
+| Khiên (15, 20) | 0,15 | 0,0759 | 1,620 khiên |
+| May mắn (12) | 0,12 | 0,0394 | 0 |
+
+- Tổng mỗi lượt: `damage ≈ 9,43`, `heal ≈ 1,62`, `shield ≈ 1,62`.
+- Producer mô phỏng 200.000 lưới và có các số sau:
+  - lượt có chuỗi Sét: 19,4%;
+  - lượt có chuỗi Kiếm: 51%;
+  - lượt có sát thương: 63,7%;
+  - lượt trắng: 27,5%.
+- Hai phương án đã so và không chọn:
+  - Sét 25, Kiếm 30: Sét ra ở 26% số lượt, nhưng lượt có sát thương chỉ 55%, dưới mục tiêu 0,60.
+  - Sét 20, Kiếm 34: Sét 16%, lượt có sát thương 57%.
+
 ### 4.7. Phase, đối thủ và diễn hoạt
 - Các `phase`:
   - `idle`: chờ người chơi bấm quay.
@@ -210,7 +259,7 @@ Logic không đổi. Cast là lớp hình ảnh phát lại `lastChains` và `la
 
 - Mỗi chuỗi có `kind !== 'none'` bắn đúng một viên. Chuỗi May mắn không bắn.
 - Viên `damage` bay tới nhân vật bên **không** quay. Viên `heal` và `shield` bay tới bên vừa quay.
-- Viên là hình học vẽ bằng Phaser Graphics, màu theo icon. VFX đẹp làm sau.
+- Bản 3 và 4 vẽ viên bằng Phaser Graphics, màu theo icon. Từ bản 4.2, viên dùng flipbook theo loại như mục 4.12. Đường bay, điểm đầu, điểm cuối và lịch bắn không đổi.
 - Viên xuất phát ở trung bình tâm các ô của chuỗi và đích là tâm hộp `*Fighter` của bên nhận. Viên bay thẳng với tốc độ đều.
 - Thứ tự bắn: hồi máu, rồi khiên, rồi sát thương. Trong cùng loại, giữ thứ tự của `lastChains`. `k` là thứ tự bắn tính từ 0, `n` là số viên.
 - Viên `k` được bắn lúc `launchMs = sfCastDelayMs + k * sfCastStaggerMs`, tính từ lúc vào `resolving`, và trúng lúc `impactMs = launchMs + sfCastFlightMs`.
@@ -252,10 +301,59 @@ n >= 1:                 max(sfResolveMs, sfCastDelayMs + (n - 1) * sfCastStagger
 - **Thời lượng ước tính khi bật Nhanh:** dùng cùng công thức `estMatchMs` ở mục 5.3 với các khóa đã co. Thời gian bấm giả định 600 ms không co. Mục tiêu 5 đến 7 phút ở C10 vẫn đo ở tốc độ thường. Số đo khi bật Nhanh chỉ để ghi lại.
 - Với `sfFastFactor = 0,35` và khoảng 140 lượt, ước tính mỗi lượt khoảng 1,1 s, tức một trận khoảng 2,5 phút. Con số này chưa mô phỏng.
 
+### 4.12. VFX (bản 4.2, đề xuất của Producer)
+**Nguyên tắc:**
+- VFX chỉ là lớp hình ảnh, không đổi state đã có, lịch thời gian, logic hay RNG.
+- Mọi mốc thời gian lấy từ lịch của mục 4.10, sau khi đã co theo `lastTimeScale`. Tốc độ phát flipbook nhân với `1 / lastTimeScale`, nên ở chế độ Nhanh hiệu ứng ngắn lại theo đúng hệ số.
+- Flipbook sinh bằng code theo skill `phaser-vfx`. Sheet đặt ở `public/vfx/<thư mục>/` (gồm `T_*.png` và `.json`), cạnh dài mỗi sheet ≤ 1024 px.
+
+**Danh sách key**, tên key trùng tên file `.json`. Thư mục dùng dấu gạch ngang, ví dụ `sf_proj_fire` nằm ở `public/vfx/sf-proj-fire/`.
+
+| Key | Loại | Lặp | Khi phát | Kích thước hiển thị (px game) | Gợi ý hình |
+|---|---|---|---|---|---|
+| `sf_proj_fire` | đạn | có | từ `launchMs` tới `impactMs` của viên Lửa | 64x64, tối thiểu 56 | Cầu lửa có đuôi |
+| `sf_proj_volt` | đạn | có | như trên, viên Điện | 64x64 | Quả cầu điện, tia nhỏ chớp quanh |
+| `sf_proj_frost` | đạn | có | như trên, viên Băng | 64x64 | Mảnh băng nhọn, xoay theo hướng bay |
+| `sf_proj_earth` | đạn | có | như trên, viên Đất | 64x64 | Khối đá xoay chậm |
+| `sf_proj_blade` | đạn | có | như trên, viên Kiếm | 64x64 | Lưỡi chém hình cung xoay |
+| `sf_proj_heal` | đạn | có | như trên, viên Hồi máu | 64x64 | Đốm sáng xanh lá có quầng |
+| `sf_proj_shield` | đạn | có | như trên, viên Khiên | 64x64 | Vòng sáng xanh dương |
+| `sf_hit_fire` | va chạm | không | tại `impactMs`, tâm `*Fighter` của đích | tối đa 120x104, tối thiểu 72 | Nổ lửa |
+| `sf_hit_volt` | va chạm | không | như trên | như trên | Giật điện |
+| `sf_hit_frost` | va chạm | không | như trên | như trên | Vỡ băng |
+| `sf_hit_earth` | va chạm | không | như trên | như trên | Bụi đá |
+| `sf_hit_blade` | va chạm | không | như trên | như trên | Vệt chém |
+| `sf_hit_heal` | va chạm | không | như trên, ở bên quay | như trên | Hạt hồi máu bay lên |
+| `sf_hit_shield` | va chạm | không | như trên, ở bên quay | như trên | Bong bóng khiên bật lên |
+| `sf_block` | chặn | không | tại `impactMs` của viên sát thương có phần bị khiên hấp thụ lớn hơn 0, đè lên `sf_hit_*` | 96x96 | Mặt khiên lóe, có vết nứt |
+| `sf_chain_flash` | lóe chuỗi | không | lúc vào `resolving`, mỗi ô khác nhau thuộc `lastChains` một lần, tô màu theo icon của ô | 96x96, trùng ô | Lóe sáng quét qua ô |
+
+Tổng cộng 16 key.
+
+**Luật phát:**
+- Mỗi viên cast có đúng **một** đạn và đúng **một** va chạm `sf_hit_<icon>`. Đạn thay hoàn toàn chấm tròn cũ. Đạn bị hủy đúng lúc va chạm bắt đầu.
+- `sf_block` là hiệu ứng phụ, không phải va chạm thứ hai. Nó phát khi phần sát thương của viên đó bị khiên hiển thị hấp thụ lớn hơn 0, tính theo cách áp lần lượt ở mục 4.10.
+- Chuỗi May mắn vẫn có lóe chuỗi nhưng không có đạn hay va chạm.
+- Va chạm `sf_hit_*` và `sf_block` kéo dài tối đa `eff(sfCastTailMs)`, tức 250 ms ở tốc độ thường. Lóe chuỗi kéo dài tối đa `eff(sfCastDelayMs + sfCastFlightMs)`, tức 500 ms. Mọi VFX của một lượt kết thúc trước khi `resolving` kết thúc.
+- Hộp hiển thị của va chạm, tâm ở tâm `*Fighter` (y = 680), cao tối đa 104 px, nên không chạm `*Hud` (y ≥ 732). Bất kỳ VFX nào giao hộp `*Hud` thì phần giao chỉ được kéo dài tối đa 150 ms. Không VFX nào giao `turnBanner` hoặc `panel`.
+- **Không gian cho VFX Artist:** nhân vật cao 88 px game. Theo quy ước của skill là 48 px ứng với 2 m, nhân vật khoảng 3,7 m. Kích thước hiển thị ở bảng trên được tính theo pixel game.
+
+**Dung lượng và nhúng:**
+- Tổng dung lượng các file `T_sf_*.png` và `sf_*.json` ≤ 1,5 MB (1.572.864 byte). Mã hóa base64 để nhúng vào HTML đơn sẽ tăng khoảng 33%.
+- Mọi sheet được nạp qua **một manifest duy nhất** (key → đường dẫn sheet và json). Công cụ đóng gói HTML đơn có thể thay đường dẫn bằng data URI mà không phải sửa chỗ khác. Không tải asset từ origin khác.
+- Bản HTML đơn để chơi thử được tạo bằng `npm run pack:single` (`tools/pack-single.mjs`), ra file `artifacts/slot-five-play.html`. Bản này mở được qua `file://` khi không có mạng. Tiêu chí ở C12.14.
+
 ## 5. Thông số cần tune
 Toàn bộ nằm trong `TUNING` và `TUNING_RANGES` ở `src/config.ts`, tiền tố `sf`. Các số là ước tính tay theo mục 4.6. Balance Tuner chỉnh ở C10.
 
 **Ghi chú cho test:** hằng `BRIEF_TUNING` trong test ghim bảng giá trị đầu của brief để tính fixture. Ở bản 4, `BRIEF_TUNING` **phải cập nhật theo các bảng 5.1 và 5.2 dưới đây**, đồng thời bỏ `sfLen5Mult`. Các số trong bảng fixture ở mục 8 đều tính theo `BRIEF_TUNING` bản 4.
+
+**Bản 5:** `BRIEF_TUNING` phải cập nhật thêm theo mục 5.6:
+- thêm `sfElement` và `sfWElement`;
+- bỏ `sfWFire`, `sfWVolt`, `sfWFrost`, `sfWEarth`;
+- đổi trọng số Kiếm, Hồi máu, Khiên, May mắn.
+
+Giá trị gốc `sfB*`, `sfLen4Mult` và máu trong `BRIEF_TUNING` giữ như bản 4. Vì vậy mọi số của fixture F0 đến F13 không đổi.
 
 ### 5.1. Trọng số và giá trị gốc (bản 4)
 | Chỉ số | Icon | `sfW<Tên>` | `sfB<Tên>` | Bản 3 (W / B) |
@@ -330,6 +428,55 @@ tổng theo mỗi lượt của: lastSpinMs + lastResolveMs
 - **Bản 2 (lưới 5x4):** đổi `sfBBlade` từ 20 xuống 15 và `sfWBlade` từ 18 lên 24. Số đo trên tập 9001 đến 11000: thắng 0,544, trung vị 11 lượt, P90 20, lật ngược 0,3445 (người chơi 0,308, đối thủ 0,388), `estMatchMs` trung vị 28620, khi đối thủ đi trước người chơi thắng 0,456, `analyticEffects().damage` 15,11.
 - Các số này **không còn áp dụng ở bản 4.** Giá trị đang chạy trong `TUNING` phải đặt về bảng bản 4 trước khi Balance Tuner bắt đầu C10.
 
+### 5.5. Giá trị sau tune (bản 4, hiện hành)
+Các bảng 5.1 đến 5.3, mục 4.6 và dải ở C2.5 **giữ nguyên giá trị đầu bản 4**, vì test ghim chúng làm `BRIEF_TUNING`. Giá trị mặc định đang chạy trong `TUNING` sau C10:
+
+| Tên | Giá trị đầu (brief) | Sau tune | Lý do |
+|---|---:|---:|---|
+| `sfBHeal` | 20 | 50 | Đây là nút chỉnh tạo lật ngược: bên đang thua hồi được nhiều máu, nên máu dao động mạnh hơn và trận khó bị quyết định sớm. Đo trên tập tune 1–2000, `comebackRate` lần lượt là 0,103 (20), 0,20 (40), 0,24 (50) và 0,31 (60). Mức 60 có P90 thời lượng 529 s, quá sát trần 540 s, nên chọn 50. Hồi máu cũng kéo trận dài thêm khoảng 40 s, đưa trung vị từ khoảng 306 s ra xa sàn 300 s. Ba hướng khác đã thử nhưng không dùng: `sfBShield` 40 (`comebackRate` 0,102, gần như không đổi); tăng sát thương bốn hệ (chỉ được 0,12 và trận ngắn dưới 300 s); `sfLen4Mult` 4–6 (được 0,17–0,24 nhưng trận chỉ còn 170–220 s) |
+| `sfFoeMaxHp` | 450 | 440 | Khi hai bên bằng máu, trận dài làm lợi thế đi trước gần như mất và người chơi chỉ thắng khoảng 0,50. Người dùng đã chấp nhận để đối thủ ít hơn 10 máu |
+
+Các khóa khác giữ giá trị đầu bản 4. `sfFastFactor` giữ 0,35.
+
+Số đo trên tập nghiệm thu 9001 đến 11000 (2000 trận), với giá trị sau tune:
+
+| Chỉ số | Giá trị | Mục tiêu |
+|---|---:|---|
+| `estMatchMsMedian` / `estMatchMsP90` | 349 s / 471 s | `[300, 420]` s / `<= 540` s |
+| `turnsMedian` / `turnsP90` | 136 / 185 | `[110, 160]` / `<= 225` |
+| `attackTurnRate` | 0,653 | `>= 0.60` |
+| `playerWinRate` (người chơi đi trước) | 0,5385 | `[0.50, 0.60]` |
+| `comebackRate` | 0,236 | `[0.15, 0.40]` |
+| Thời gian chạy `simulateMatches` | 0,6 s | `< 15` s |
+| `playerWinRate` khi đối thủ đi trước | 0,5065 | ghi số |
+| `estMatchMsMedianFast` / `estMatchMsP90Fast` (`sfFastFactor` 0,35) | 149 s / 202 s | ghi số |
+
+### 5.6. Bộ icon và trọng số bản 5 (giá trị đầu, `BRIEF_TUNING` bản 5)
+| Khóa | Giá trị đầu | Khoảng thử | Bước | Ghi chú |
+|---|---:|---:|---:|---|
+| `sfElement` | 1 (Sét) | 0 đến 3 | 1 | Mới. 0 Lửa, 1 Sét, 2 Băng, 3 Đất. Nước chưa có chỉ số |
+| `sfWElement` | 22 | 1 đến 60 | 1 | Mới. Trọng số ô nguyên tố, thay cho `sfWFire`, `sfWVolt`, `sfWFrost`, `sfWEarth` (bị bỏ) |
+| `sfWBlade` | 36 | 1 đến 60 | 1 | Bản 4 là 40 |
+| `sfWHeal` | 15 | 1 đến 60 | 1 | Bản 4 là 13 |
+| `sfWShield` | 15 | 1 đến 60 | 1 | Bản 4 là 13 |
+| `sfWLucky` | 12 | 1 đến 60 | 1 | Bản 4 là 6 |
+| `sfBFire`, `sfBVolt`, `sfBFrost`, `sfBEarth` | 10, 15, 15, 10 | 1 đến 120 | 1 | Giữ cả bốn khóa. Chỉ khóa của hệ đang dùng có tác dụng |
+| Các khóa `sfB*` khác, `sfLen4Mult`, máu | như bản 4 | như bản 4 | | |
+
+Tổng trọng số của bộ demo là 100.
+
+**Điểm xuất phát của C14.** Giá trị đang chạy trong `TUNING` khi bắt đầu C14 gồm:
+- trọng số bản 5 ở bảng trên;
+- giá trị sau tune của bản 4 ở mục 5.5: `sfBHeal` 50, `sfFoeMaxHp` 440 (người dùng đã chấp nhận đối thủ ít hơn 10 máu);
+- các khóa còn lại theo bản 4.
+
+**Giá trị gốc của Sét.** Producer ghi "giá trị gốc của Sét giữ 45". Brief đặt **`sfBVolt` = 15** vì:
+- 15 là giá trị đầu bản 4, nên đây mới là "giữ nguyên". 45 là giá trị của bản 2 và bản 3.
+- Giữ 15 thì không phải đổi số trong các fixture F11, C8.8 và C12.5.
+- Tính tay với Sét = 45, sát thương kỳ vọng lên khoảng 17,1 mỗi lượt, gần gấp đôi, nên trận sẽ ngắn còn khoảng 3 phút.
+
+Balance Tuner được chỉnh `sfBVolt` trong khoảng 1 đến 120 ở C14.
+
 ## 6. Phạm vi
 - Có làm:
   - Slot Five chạy ở `/?game=slot-five`, đồ họa placeholder, màn dọc 540x960 có letterbox.
@@ -339,15 +486,23 @@ tổng theo mỗi lượt của: lastSpinMs + lastResolveMs
   - Cột dừng lần lượt, highlight chuỗi, cast chiêu đơn giản, số nổi trong vùng riêng, thanh máu chạy.
   - Panel dưới gồm nút quay, nút trận mới, nút "?" và, từ bản 4.1, công tắc Nhanh. Bảng chú giải chỉ mở bằng "?".
   - Bản 4.1: quay nhanh bằng cách co mọi thời gian diễn hoạt theo `sfFastFactor` (mục 4.11).
+  - Bản 4.2: VFX flipbook gồm 7 loại đạn cast, 7 loại va chạm, hiệu ứng chặn và lóe chuỗi thắng (mục 4.12).
+  - Bản 5: bộ icon theo hệ. Một hệ mỗi trận, chọn bằng `sfElement`. Demo dùng Sét, lưới có 5 loại icon, và bảng chú giải chỉ liệt kê icon đang dùng (mục 4.1.1).
   - Lõi logic thuần, công thức kỳ vọng và mô phỏng nhiều trận.
 - Không làm:
-  - Buff của icon May mắn. Khắc hệ và kháng hệ. Hiệu ứng theo hệ.
+  - Buff của icon May mắn. May mắn thành wild (phương án A2). Khắc hệ và kháng hệ. Hiệu ứng theo hệ.
+  - Bản 5:
+    - Hệ thống trang bị và màn chọn đồ.
+    - Gán hệ theo nhân vật hoặc theo kẻ địch.
+    - Nhiều hệ cùng lúc trên một lưới.
+    - Hệ Nước: chưa có icon, khóa, sheet hay giá trị.
+    - Giao diện cho người chơi tự đổi hệ. Hệ chỉ đổi qua `TUNING`.
   - Lựa chọn của người chơi trong lượt, AI đối thủ có chiến thuật, chỉ số nhân vật riêng ngoài máu tối đa.
   - Autoplay, tự quay lượt của người chơi, bỏ qua toàn bộ diễn hoạt, và lưu trạng thái Nhanh sang lần tải trang sau.
   - Credit, cược, RTP, tiền thật, cửa hàng.
   - Wild, scatter, free spin, jackpot, near-miss.
   - Nhiều đối thủ, tiến trình, lưu tiến trình, âm thanh, menu.
-  - VFX flipbook hay VFX đẹp cho cast. Layout riêng cho màn ngang.
+  - VFX ngoài danh sách 16 key ở mục 4.12: rung màn, hạt nền, VFX cho icon May mắn, VFX khi thắng hoặc thua trận, VFX khi cột dừng. Layout riêng cho màn ngang.
   - Điều chỉnh kết quả theo máu hay chuỗi thua.
 - Coin Hop vẫn là game mặc định. Các route khác giữ nguyên.
 
@@ -464,6 +619,11 @@ Khi C9 xong, chạy lại toàn bộ C8 với số bản 4.
 - Không giới hạn số lượt mỗi trận. Mô phỏng cắt ở 2000 lượt chỉ để phát hiện lỗi.
 - Bản 4: thời lượng 5 đến 7 phút đo bằng `estMatchMs`, gồm cả diễn hoạt và thời gian bấm giả định. Thời lượng đạt được bằng cách hạ sát thương và tăng máu, không làm chậm diễn hoạt.
 - Bản 4: trọng số dồn vào Kiếm để tăng tỉ lệ ra đòn. Bốn hệ thành đòn hiếm.
+- Bản 5 (Producer đề xuất):
+  - Hệ không dùng bị loại khỏi bảng rút.
+  - Một khóa trọng số chung `sfWElement` cho ô nguyên tố.
+  - Chọn hệ bằng một khóa số `sfElement`, không dùng danh sách icon tự do. Như vậy luôn đúng 5 icon và `TUNING_RANGES` đơn giản.
+  - Giữ `sfBVolt` = 15 theo mục 5.6.
 - Cast bay thẳng, tốc độ đều, theo thứ tự hồi máu, khiên, sát thương.
 - Bảng chú giải tự đóng khi một lượt quay bắt đầu.
 
@@ -481,6 +641,33 @@ Khi C9 xong, chạy lại toàn bộ C8 với số bản 4.
   - trạng thái giữ trong phiên;
   - hệ số `sfFastFactor`;
   - áp dụng từ lượt sau.
+- **Bản 5 (người dùng chốt):**
+  - Hệ của chiêu nguyên tố sau này đến từ trang bị. Các hệ dự kiến là Băng, Sét, Lửa, Nước, Đất.
+  - Demo chỉ dùng hệ Sét. Đối thủ dùng cùng bộ icon và cùng hệ.
+  - May mắn giữ vai trò cũ, không thành wild.
+  - Trọng số đầu do Producer đề xuất: Sét 22, Kiếm 36, Hồi máu 15, Khiên 15, May mắn 12.
+  - Mục tiêu mới: tỉ lệ lượt có chuỗi Sét ≥ 0,15.
+
+### Thay đổi bản 5
+**A. Đặc tả**
+1. Thêm mục 4.1.1 về bộ icon theo hệ, với `sfElement` và `activeIcons`. Icon 1 đổi tên hiển thị thành "Sét".
+2. Bảng rút ở mục 4.2 chỉ gồm `activeIcons`.
+3. Trọng số: bỏ bốn khóa `sfW` của các hệ, thêm `sfWElement`, và đổi trọng số Kiếm, Hồi máu, Khiên, May mắn (mục 5.6).
+4. Thêm mục 4.6.1 với số kỳ vọng bản 5.
+5. Thêm các trường `getState()`: `element`, `activeIcons`, `legendIcons`.
+6. Bảng chú giải chỉ liệt kê icon đang dùng.
+7. Cập nhật `BRIEF_TUNING` theo mục 5.6. Fixture F0 đến F13 không đổi.
+
+**B. Tiêu chí cũ bị thay hoặc mở lại**
+
+| Tiêu chí | Xử lý ở bản 5 |
+|---|---|
+| C1.6 | Mở lại: tần suất tính trên `activeIcons` và `sfWElement`. Hệ không dùng có tần suất 0 |
+| C2.5 | Mở lại với số bản 5 |
+| C7.11 | Mở lại: bảng chú giải liệt kê đúng 5 icon đang dùng thay vì 8 |
+| C10.1 đến C10.9 | Thay bằng C14. Giữ làm lịch sử bản 4 |
+| C11.12 | Đo lại trong C14.10 |
+| C1.1 đến C1.5, C1.7, C1.8, C2.1 đến C2.4, C3, C5, C6, C7 (trừ C7.11), C8, C9, C11.1 đến C11.11, C12 | Nội dung không đổi, nhưng phải chạy lại sau C13. C12.4 vẫn dùng lưới ép có Lửa, Băng, Đất để kiểm VFX |
 
 ### Quyết định tạm đã dùng khi làm
 QA đã nghiệm thu các điểm sau:
@@ -496,6 +683,14 @@ QA đã nghiệm thu các điểm sau:
 - Số nổi đè lên lưới: xử lý bằng vùng `*Float`, kiểm ở C7.3.
 - Chữ nhỏ trên màn dọc: kiểm ở C7.5.
 - Tương phản thấp: kiểm ở C7.6.
+
+### Điểm còn tồn sau nghiệm thu bản 4.1
+Các điểm này không làm trượt tiêu chí nào ở mục 8. Người dùng xem kèm ảnh C8.10.
+
+- Viên cast nhỏ và mờ. Bản 4.2 xử lý bằng C12, với kích thước đạn tối thiểu 56 px game.
+- Trên điện thoại xoay ngang, nút nhỏ hơn 44 px CSS do letterbox. Xem Q5.
+- Chữ "Nhanh" nằm sát mép nút `#sf-fast`.
+- Bốn hệ rất hiếm: mỗi hệ chỉ ra chuỗi ở khoảng 0,5% đến 1,2% số lượt. Xem Q1 và mục 9.
 
 ## 7. Nền tảng đích
 Web chung, nhắm điện thoại dọc. Khung thiết kế 540x960, kiểm ở viewport 390x844. Desktop và màn ngang dùng letterbox, xem Q5. Không có giới hạn dung lượng và không tải asset ngoài.
@@ -525,6 +720,9 @@ Web chung, nhắm điện thoại dọc. Khung thiết kế 540x960, kiểm ở 
 | `highlightedChainCount`, `highlightedCells` | `number` | |
 | `viewCounts` | `{ icons; fighters }` | Bản 4: `icons === 16` |
 | `legendOpen` | `boolean` | |
+| `element` | `number` | Bản 5. Hệ của trận, bằng `sfElement` đã chụp lại khi bắt đầu trận |
+| `activeIcons` | `number[]` | Bản 5. Bộ icon đang dùng, tăng dần. Demo là `[1, 4, 5, 6, 7]` |
+| `legendIcons` | `number[]` | Bản 5. Icon đang được liệt kê trong bảng chú giải, theo thứ tự hiển thị. Rỗng khi bảng đóng |
 | `fastMode` | `boolean` | Bản 4.1. Trạng thái công tắc Nhanh |
 | `lastTimeScale` | `number` | Bản 4.1. Hệ số đã chụp cho lượt gần nhất, là `1` hoặc `sfFastFactor` |
 | `lastFoeDelayMs` | `number` | Bản 4.1. Thời lượng `foeWait` dự kiến của lượt đối thủ gần nhất, bằng `eff(sfFoeDelayMs)` |
@@ -560,23 +758,24 @@ Mỗi fixture là một lưới nền với một số ô ghi đè, dạng `(x, 
 | F10 | C | `(0,0) (1,0) (2,0) = 0` | 1 chuỗi Lửa dài 3, `damage` (10) |
 | F11 | C | `(0,0) (1,0) (2,0) = 1`; `(0,3)` đến `(3,3) = 3` | Điện dài 3 rồi Đất dài 4, `damage = 15 + 20` (35) |
 | F12 | B | `(0,0) (1,0) (2,0) = 4`; `(1,3) (2,3) (3,3) = 5`; `(3,0) (3,1) (3,2) = 6` | `damage` (5), `heal` (20), `shield` (20) |
+| F13 | C | `(0,0) (1,0) (2,0) = 2` | Bản 4.2. 1 chuỗi Băng dài 3, `damage` (15). Dùng cho C12 |
 
 ### Danh sách cơ chế theo thứ tự phụ thuộc
 C1 đến C8 được giữ, ghi chú theo bảng "Thay đổi bản 4". Sau C8 là C9 rồi C10. Tiêu chí đánh `[ ]` kèm chữ "Bản 4" là tiêu chí phải làm lại.
 
 #### C1. Lõi lưới có seed
 - [x] C1.1. Khi mở `/`, `/?game=khac`, `/?game=arc-relay`, `/?game=gatefall`, thì `getState()` của từng game giống hệt trước khi có Slot Five.
-- [ ] C1.2. **Bản 4.** Khi mở `/?game=slot-five`, thì `gameId === 'slot-five'`, `cols === 4`, `rows === 4`, `iconCount === 8`, `luckyIcon === 7`, `spinIndex === 0`, và `grid` có 4 hàng x 4 cột với mọi giá trị trong `[0, 8)`.
+- [x] C1.2. **Bản 4.** Khi mở `/?game=slot-five`, thì `gameId === 'slot-five'`, `cols === 4`, `rows === 4`, `iconCount === 8`, `luckyIcon === 7`, `spinIndex === 0`, và `grid` có 4 hàng x 4 cột với mọi giá trị trong `[0, 8)`.
 - [x] C1.3. Hai sim cùng seed quay 1000 lượt thì `grid` giống nhau ở từng lượt, trên seed 1 đến 50.
 - [x] C1.4. Lưới thứ `n` chỉ phụ thuộc `seed` và `spinIndex`. Chèn các thao tác không phải quay vào giữa không làm đổi lưới.
 - [x] C1.5. Hai sim seed 1 và 2 khác `grid` ở ít nhất 990 trong 1000 lượt đầu.
-- [x] C1.6. Trên 100.000 lượt `createSim` (seed 9001 đến 9010), tỉ lệ từng icon lệch `sfW<Tên> / tổng` không quá 0,003.
+- [ ] C1.6. **Mở lại ở bản 5.** Trên 100.000 lượt `createSim` (seed 9001 đến 9010), tỉ lệ của từng icon trong `activeIcons` lệch trọng số của nó chia tổng (ô nguyên tố dùng `sfWElement`) không quá 0,003. Mọi icon ngoài `activeIcons` có tỉ lệ đúng bằng 0. Bản 4 đã đạt với 8 icon.
 - [x] C1.7. Khi tạm đặt `sfWShield = 0`, thì 10.000 lượt không có icon 6. Test khôi phục giá trị sau đó.
 - [x] C1.8. Khi `forceNextGrid(F1)` rồi quay, thì `grid` là F1, và lượt kế tiếp giống sim không bị ép.
 
 #### C2. Chuỗi và hiệu ứng
-- [ ] C2.1. **Bản 4.** Khi `evaluate` từng fixture F0 đến F12 bản 4, thì số chuỗi, `icon`, `dir`, `length`, `cells`, `kind`, `value` và `effects` khớp bảng fixture.
-- [ ] C2.2. **Bản 4.** Khi `evaluate` lưới toàn icon 4, thì có 14 chuỗi theo thứ tự mục 4.3:
+- [x] C2.1. **Bản 4.** Khi `evaluate` từng fixture F0 đến F12 bản 4, thì số chuỗi, `icon`, `dir`, `length`, `cells`, `kind`, `value` và `effects` khớp bảng fixture.
+- [x] C2.2. **Bản 4.** Khi `evaluate` lưới toàn icon 4, thì có 14 chuỗi theo thứ tự mục 4.3:
   - 4 chuỗi `h` dài 4;
   - 4 chuỗi `v` dài 4;
   - 3 chuỗi `dr` dài lần lượt 4, 3, 3 (ô đầu `(0,0)`, `(1,0)`, `(0,1)`);
@@ -584,22 +783,22 @@ C1 đến C8 được giữ, ghi chú theo bảng "Thay đổi bản 4". Sau C8 
 
   `damage = sfBBlade * (10 * sfLen4Mult + 4)`, ra 120 với `BRIEF_TUNING` bản 4.
 - [x] C2.3. `evaluate` 10.000 lưới từ sim seed 1 khớp bộ kiểm tra vét cạn, và `effects` bằng tổng `value` theo `kind`.
-- [ ] C2.4. **Bản 4.** Với mọi lưới ở C2.3, mọi giá trị đều là số nguyên không âm, mọi chuỗi có `length` thuộc `{3, 4}`, và chuỗi icon 7 có `kind === 'none'`, `value === 0`.
-- [ ] C2.5. **Bản 4.** Với `BRIEF_TUNING` bản 4, `analyticEffects()` cho `damage` trong `[8.03, 8.13]`, `heal` trong `[1.00, 1.10]`, `shield` trong `[1.00, 1.10]`.
+- [x] C2.4. **Bản 4.** Với mọi lưới ở C2.3, mọi giá trị đều là số nguyên không âm, mọi chuỗi có `length` thuộc `{3, 4}`, và chuỗi icon 7 có `kind === 'none'`, `value === 0`.
+- [ ] C2.5. **Mở lại ở bản 5.** Với `BRIEF_TUNING` bản 5, `analyticEffects()` cho `damage` trong `[9.38, 9.48]`, `heal` trong `[1.57, 1.67]`, `shield` trong `[1.57, 1.67]`. Bản 4 đã đạt với `damage` trong `[8.03, 8.13]` và `heal`, `shield` trong `[1.00, 1.10]`.
 
 #### C3. Trận đấu luân phiên, máu và khiên
 Số dưới đây tính theo `BRIEF_TUNING` bản 4, test phải tính lại từ bảng đó.
 
 - [x] C3.1. Khi vào trận, `status === 'playing'`, `turn === 'player'`, máu đầy, khiên bằng 0.
 - [x] C3.2. `spinIndex` chẵn là người chơi, lẻ là đối thủ, và lưới lượt `n` khớp `createSim(seed)`.
-- [ ] C3.3. **Bản 4.** Khi `foe.shield = 3` và người chơi quay F1, thì `absorbed === 3`, `hpLoss === 2`, `foe.shield === 0`.
-- [ ] C3.4. **Bản 4.** Khi `foe.shield = 50` và người chơi quay F1, thì `foe.hp` không đổi và `foe.shield === 45`. Đối thủ quay F0 tiếp theo thì `foe.shield === 0`.
-- [ ] C3.5. **Bản 4.** Khi `player.hp = sfPlayerMaxHp - 10`, `player.shield = 25` và người chơi quay F12, thì `player.hp === sfPlayerMaxHp`, `healed === 10`, `player.shield === 20` (không phải 45), và `foe.hp` giảm 5.
-- [ ] C3.6. **Bản 4.** Khi người chơi quay F3 (khiên 20), rồi đối thủ quay F5 (sát thương 10), thì `absorbed === 10`, `player.hp` không đổi, `player.shield === 10`.
-- [ ] C3.7. **Bản 4.** Khi `foe.hp = 5` và người chơi quay F1, thì `status === 'won'`, `foe.hp === 0`. Lệnh quay sau đó bị từ chối và không rút RNG.
-- [ ] C3.8. **Bản 4.** Khi `foe.hp = 3`, `player.hp = 100` và người chơi quay F12, thì `status === 'won'`, `player.hp === 120`, `player.shield === 20`.
-- [ ] C3.9. **Bản 4.** Khi `player.hp = 4`, `player.shield = 0`, `turn = 'foe'` và đối thủ quay F1, thì `status === 'lost'`, `player.hp === 0`.
-- [ ] C3.10. **Bản 4.** Với 2000 trận sim (seed 1 đến 2000) dùng giá trị đầu bản 4, mọi trận kết thúc trước 2000 lượt. Luôn có `0 <= hp <= maxHp` và `shield >= 0`. Khi trận kết thúc, đúng một bên có `hp === 0`.
+- [x] C3.3. **Bản 4.** Khi `foe.shield = 3` và người chơi quay F1, thì `absorbed === 3`, `hpLoss === 2`, `foe.shield === 0`.
+- [x] C3.4. **Bản 4.** Khi `foe.shield = 50` và người chơi quay F1, thì `foe.hp` không đổi và `foe.shield === 45`. Đối thủ quay F0 tiếp theo thì `foe.shield === 0`.
+- [x] C3.5. **Bản 4.** Khi `player.hp = sfPlayerMaxHp - 10`, `player.shield = 25` và người chơi quay F12, thì `player.hp === sfPlayerMaxHp`, `healed === 10`, `player.shield === 20` (không phải 45), và `foe.hp` giảm 5.
+- [x] C3.6. **Bản 4.** Khi người chơi quay F3 (khiên 20), rồi đối thủ quay F5 (sát thương 10), thì `absorbed === 10`, `player.hp` không đổi, `player.shield === 10`.
+- [x] C3.7. **Bản 4.** Khi `foe.hp = 5` và người chơi quay F1, thì `status === 'won'`, `foe.hp === 0`. Lệnh quay sau đó bị từ chối và không rút RNG.
+- [x] C3.8. **Bản 4.** Khi `foe.hp = 3`, `player.hp = 100` và người chơi quay F12, thì `status === 'won'`, `player.hp === 120`, `player.shield === 20`.
+- [x] C3.9. **Bản 4.** Khi `player.hp = 4`, `player.shield = 0`, `turn = 'foe'` và đối thủ quay F1, thì `status === 'lost'`, `player.hp === 0`.
+- [x] C3.10. **Bản 4.** Với 2000 trận sim (seed 1 đến 2000) dùng giá trị đầu bản 4, mọi trận kết thúc trước 2000 lượt. Luôn có `0 <= hp <= maxHp` và `shield >= 0`. Khi trận kết thúc, đúng một bên có `hp === 0`.
 - [x] C3.11. Chạy cùng seed và cùng `BattleSetup` hai lần cho kết quả giống hệt nhau.
 
 #### C4. Mô phỏng cân bằng (bản 2, lưới 5x4, đã thay bằng C10)
@@ -621,43 +820,43 @@ Nội dung không đổi. Chạy lại sau C9.
 
 #### C6. Diễn hoạt và HUD máu
 - [x] C6.1. Ngay khi lượt quay bắt đầu, `phase === 'spinning'`, `reelsStopped === 0`, và kết quả logic đã có sẵn.
-- [ ] C6.2. **Bản 4.** `lastReelStopMs` có 4 phần tử tăng dần. Phần tử đầu trong `[sfSpinBaseMs - 30, sfSpinBaseMs + 60]`, các khoảng cách nằm trong `sfReelStopGapMs ± 40`.
+- [x] C6.2. **Bản 4.** `lastReelStopMs` có 4 phần tử tăng dần. Phần tử đầu trong `[sfSpinBaseMs - 30, sfSpinBaseMs + 60]`, các khoảng cách nằm trong `sfReelStopGapMs ± 40`.
 - [x] C6.3. Lệnh quay trong `spinning` hoặc `resolving` bị từ chối với `busy` hoặc `notYourTurn`.
 - [x] C6.4. Với F7, khi cột cuối dừng thì `highlightedChainCount === 2`, `highlightedCells === 5`. Với F0 thì `highlightedCells === 0`. F7 bản 4 vẫn có 5 ô.
-- [ ] C6.5. **Mở lại ở bản 3.** Trong `spinning`, `displayHp` bằng máu trước lượt. Không quá `lastResolveMs + 150` ms sau khi vào `resolving`, `displayHp` bằng giá trị logic.
+- [x] C6.5. **Mở lại ở bản 3.** Trong `spinning`, `displayHp` bằng máu trước lượt. Không quá `lastResolveMs + 150` ms sau khi vào `resolving`, `displayHp` bằng giá trị logic.
 - [x] C6.6. Từ lúc lượt người chơi kết thúc `resolving` tới lúc đối thủ quay mất `sfFoeDelayMs ± 60` ms.
-- [ ] C6.7. **Bản 4.** Sau mỗi lượt của một trận đầy đủ, `viewCounts.icons === 16`, `viewCounts.fighters === 2`, và không có lỗi console.
-- [ ] C6.8. Thay bằng C8.10.
+- [x] C6.7. **Bản 4.** Sau mỗi lượt của một trận đầy đủ, `viewCounts.icons === 16`, `viewCounts.fighters === 2`, và không có lỗi console.
+- [ ] C6.8. Thay bằng C8.10, không nghiệm thu riêng.
 
 #### C7. Layout dọc, panel dưới và nút "?"
 Hộp so theo tọa độ game, sai số ±1 px. Tiêu chí ghi "bản 4" dùng bảng mục 4.9 bản 4.
 
-- [ ] C7.1. **Bản 4.** `layout.width === 540`, `layout.height === 960`. Mọi khóa của bảng mục 4.9 (trừ `legend` khi đóng) có mặt và khớp hộp bản 4. Riêng `fastBtn` và vị trí mới của `helpBtn` thuộc bản 4.1 và được kiểm ở C11.11. Trước khi làm C11, `helpBtn` có thể vẫn ở `60, 832, 64, 64`. Các game khác vẫn 960x540.
-- [ ] C7.2. Không cặp hộp nào chồng nhau, trừ `legend` với `reelFrame` và các nút nằm trong `panel`. Mọi hộp nằm trong màn.
-- [ ] C7.3. Trong một trận có `loadMatch` ép F12 rồi F11 ở hai lượt đầu, mọi `floatTexts` tại mỗi lần lấy mẫu 50 ms nằm trọn trong `*Float` của bên tương ứng và không giao `reelFrame`.
-- [ ] C7.4. **Bản 4.** `castGap.top === 490`, `castGap.bottom === 636`, và `castGap.bottom - castGap.top >= 0.15 * layout.height`. Ngoài các hộp `*Float`, không hộp nào giao dải y này.
-- [ ] C7.5. Ở viewport 390x844, mọi chữ trong `layout.texts` có `fontPx * scale >= 12`. Số máu và chỉ báo lượt có `fontPx >= 22`.
-- [ ] C7.6. Mọi chữ trong `layout.texts` có tương phản WCAG ít nhất 4,5.
-- [ ] C7.7. Ở viewport 390x844, `#sf-spin`, `#sf-new`, `#sf-help`, `#sf-help-close` (khi mở) có kích thước ít nhất 44x44 px CSS, và khớp hộp ±2 px. Nút `#sf-fast` được kiểm ở C11.11.
-- [ ] C7.8. Ở 1280x720 và 844x390, canvas nằm giữa, tỉ lệ 540:960, không tràn ra ngoài viewport, và nút khớp hộp.
-- [ ] C7.9. Phím H, `?` và Esc mở và đóng bảng chú giải đúng như mục 3.
-- [ ] C7.10. Chạm `#sf-help` và `#sf-help-close` mở và đóng bảng chú giải đúng như mục 3.
-- [ ] C7.11. Khi bảng đang mở mà bấm Space, lượt quay được nhận và `legendOpen === false` ngay khi `phase === 'spinning'`. Bảng có đủ 8 icon kèm loại hiệu ứng và giá trị gốc.
-- [ ] C7.12. Nút `#sf-help` và `#sf-help-close` không hiện ở các game khác.
+- [x] C7.1. **Bản 4.** `layout.width === 540`, `layout.height === 960`. Mọi khóa của bảng mục 4.9 (trừ `legend` khi đóng) có mặt và khớp hộp bản 4. Riêng `fastBtn` và vị trí mới của `helpBtn` thuộc bản 4.1 và được kiểm ở C11.11. Trước khi làm C11, `helpBtn` có thể vẫn ở `60, 832, 64, 64`. Các game khác vẫn 960x540.
+- [x] C7.2. Không cặp hộp nào chồng nhau, trừ `legend` với `reelFrame` và các nút nằm trong `panel`. Mọi hộp nằm trong màn.
+- [x] C7.3. Trong một trận có `loadMatch` ép F12 rồi F11 ở hai lượt đầu, mọi `floatTexts` tại mỗi lần lấy mẫu 50 ms nằm trọn trong `*Float` của bên tương ứng và không giao `reelFrame`.
+- [x] C7.4. **Bản 4.** `castGap.top === 490`, `castGap.bottom === 636`, và `castGap.bottom - castGap.top >= 0.15 * layout.height`. Ngoài các hộp `*Float`, không hộp nào giao dải y này.
+- [x] C7.5. Ở viewport 390x844, mọi chữ trong `layout.texts` có `fontPx * scale >= 12`. Số máu và chỉ báo lượt có `fontPx >= 22`.
+- [x] C7.6. Mọi chữ trong `layout.texts` có tương phản WCAG ít nhất 4,5.
+- [x] C7.7. Ở viewport 390x844, `#sf-spin`, `#sf-new`, `#sf-help`, `#sf-help-close` (khi mở) có kích thước ít nhất 44x44 px CSS, và khớp hộp ±2 px. Nút `#sf-fast` được kiểm ở C11.11.
+- [x] C7.8. Ở 1280x720 và 844x390, canvas nằm giữa, tỉ lệ 540:960, không tràn ra ngoài viewport, và nút khớp hộp.
+- [x] C7.9. Phím H, `?` và Esc mở và đóng bảng chú giải đúng như mục 3.
+- [x] C7.10. Chạm `#sf-help` và `#sf-help-close` mở và đóng bảng chú giải đúng như mục 3.
+- [ ] C7.11. **Mở lại ở bản 5.** Khi bảng đang mở mà bấm Space, lượt quay được nhận và `legendOpen === false` ngay khi `phase === 'spinning'`. Bảng liệt kê đúng các icon trong `activeIcons`, với demo là 5 icon, mỗi icon kèm loại hiệu ứng và giá trị gốc. Bản 4 đã đạt với 8 icon.
+- [x] C7.12. Nút `#sf-help` và `#sf-help-close` không hiện ở các game khác.
 
 #### C8. Cast chiêu
 Đang làm trên lưới 5x4. Sau C9, chạy lại toàn bộ C8 với số bản 4. Tâm ô lấy từ layout, không viết cứng.
 
-- [ ] C8.1. Với F12 ở lượt người chơi, `lastCasts.length === 3` theo thứ tự `heal`, `shield`, `damage`, và mỗi `chainIndex` trỏ đúng chuỗi.
-- [ ] C8.2. Viên `heal` và `shield` có `target` là bên quay, viên `damage` có `target` là bên kia. Kiểm ở lượt của cả hai bên.
-- [ ] C8.3. Với F4: có 1 chuỗi, 0 viên, `lastResolveMs === sfResolveMs`. Với F0: 0 viên, `lastResolveMs === sfBlankResolveMs`.
-- [ ] C8.4. **Bản 4.** Với F7 có 2 viên `shield`. `from` của mỗi viên bằng trung bình tâm ô của chuỗi, sai số ±1 px, với tâm ô `(x, y)` là `(117 + 102x, 124 + 102y)`. Ở lưới 5x4 của bản 3, công thức là `(82 + 94x, 128 + 94y)`.
-- [ ] C8.5. `to` bằng tâm hộp `*Fighter` của `target`, sai số ±1 px.
-- [ ] C8.6. `launchMs` và `impactMs` khớp công thức. Thời điểm đo lệch không quá 40 ms. Thời gian `resolving` thật nằm trong `lastResolveMs ± 60` ms.
-- [ ] C8.7. Với F12 và `player.hp = 80`, `foe.shield = 0`, giá trị hiển thị chỉ đổi khi từng viên trúng, mỗi lần đúng phần của viên đó, và sau viên cuối khớp logic.
-- [ ] C8.8. **Bản 4.** Với `foe.shield = 20`, người chơi quay F11 (Điện 15, rồi Đất 20). Sau viên 1: `displayShield.foe === 5`, `displayHp.foe` không đổi. Sau viên 2: `displayShield.foe === 0`, `displayHp.foe` giảm 15. Kết quả cuối khớp `foe.hp` logic. Bản 3 dùng `foe.shield = 30` với Điện 45 và Đất 60.
-- [ ] C8.9. **Bản 4.** Trong một trận đầy đủ chơi bằng Space, `castsInFlight` về 0 trước khi rời `resolving`. Số viên bằng số chuỗi có `kind !== 'none'`. Kết quả trận hiện sau viên cuối. Không có lỗi console. Phần kiểm thời lượng trận chuyển sang C10.2.
-- [ ] C8.10. Ảnh cho người dùng duyệt, chụp ở 390x844: giữa lúc quay, F12 đang cast, số nổi, bảng chú giải, màn kết thúc, letterbox ở 1280x720. Bản 4 chụp trên lưới 4x4.
+- [x] C8.1. Với F12 ở lượt người chơi, `lastCasts.length === 3` theo thứ tự `heal`, `shield`, `damage`, và mỗi `chainIndex` trỏ đúng chuỗi.
+- [x] C8.2. Viên `heal` và `shield` có `target` là bên quay, viên `damage` có `target` là bên kia. Kiểm ở lượt của cả hai bên.
+- [x] C8.3. Với F4: có 1 chuỗi, 0 viên, `lastResolveMs === sfResolveMs`. Với F0: 0 viên, `lastResolveMs === sfBlankResolveMs`.
+- [x] C8.4. **Bản 4.** Với F7 có 2 viên `shield`. `from` của mỗi viên bằng trung bình tâm ô của chuỗi, sai số ±1 px, với tâm ô `(x, y)` là `(117 + 102x, 124 + 102y)`. Ở lưới 5x4 của bản 3, công thức là `(82 + 94x, 128 + 94y)`.
+- [x] C8.5. `to` bằng tâm hộp `*Fighter` của `target`, sai số ±1 px.
+- [x] C8.6. `launchMs` và `impactMs` khớp công thức. Thời điểm đo lệch không quá 40 ms. Thời gian `resolving` thật nằm trong `lastResolveMs ± 60` ms.
+- [x] C8.7. Với F12 và `player.hp = 80`, `foe.shield = 0`, giá trị hiển thị chỉ đổi khi từng viên trúng, mỗi lần đúng phần của viên đó, và sau viên cuối khớp logic.
+- [x] C8.8. **Bản 4.** Với `foe.shield = 20`, người chơi quay F11 (Điện 15, rồi Đất 20). Sau viên 1: `displayShield.foe === 5`, `displayHp.foe` không đổi. Sau viên 2: `displayShield.foe === 0`, `displayHp.foe` giảm 15. Kết quả cuối khớp `foe.hp` logic. Bản 3 dùng `foe.shield = 30` với Điện 45 và Đất 60.
+- [x] C8.9. **Bản 4.** Trong một trận đầy đủ chơi bằng Space, `castsInFlight` về 0 trước khi rời `resolving`. Số viên bằng số chuỗi có `kind !== 'none'`. Kết quả trận hiện sau viên cuối. Không có lỗi console. Phần kiểm thời lượng trận chuyển sang C10.2.
+- [ ] C8.10. **Chờ người dùng duyệt ảnh.** Ảnh cho người dùng duyệt, chụp ở 390x844: giữa lúc quay, F12 đang cast, số nổi, bảng chú giải, màn kết thúc, letterbox ở 1280x720. Bản 4 chụp trên lưới 4x4.
 
 #### C9. Chuyển sang lưới 4x4 (bản 4)
 Phụ thuộc: C8 (hoặc làm song song nếu C8 chưa xong, xem "Thay đổi bản 4", mục C).
@@ -671,14 +870,15 @@ Gồm:
 
 Nghiệm thu C9 là đạt các tiêu chí sau, cộng các tiêu chí ghi "Bản 4" ở C1, C2, C3, C6, C7, C8, và chạy lại xanh mọi tiêu chí còn lại của C1 đến C8.
 
-- [ ] C9.1. `cols === 4` là hằng số logic. Mỗi lượt `createSim` rút đúng 16 số: sau một lượt, trạng thái RNG của luồng `spin` bằng trạng thái sau 16 lần gọi `next()` từ cùng hạt.
-- [ ] C9.2. `sfLen5Mult` không còn trong `TUNING` và `TUNING_RANGES`. Mọi khóa `sfW*`, `sfB*` và máu có giá trị đầu và khoảng thử đúng như mục 5.1 và 5.2.
-- [ ] C9.3. `BRIEF_TUNING` trong test bằng bảng 5.1 và 5.2 bản 4. Không test nào còn dùng số của bản 2 hay bản 3, ngoại trừ test lịch sử có ghi rõ.
-- [ ] C9.4. `forceNextGrid` và `BattleSetup.grids` ném lỗi khi lưới không phải 4x4.
-- [ ] C9.5. Trên 10.000 lưới từ sim seed 1, số chuỗi tối đa mỗi lượt không vượt 14, và không có chuỗi nào có ô ngoài `[0, 3] x [0, 3]`.
-- [ ] C9.6. Với các lượt ép F0 đến F12 qua scene, `highlightedCells` bằng số ô khác nhau trong `lastChains`, và mọi icon trên lưới hiển thị nằm trọn trong `reelFrame`.
+- [x] C9.1. `cols === 4` là hằng số logic. Mỗi lượt `createSim` rút đúng 16 số: sau một lượt, trạng thái RNG của luồng `spin` bằng trạng thái sau 16 lần gọi `next()` từ cùng hạt.
+- [x] C9.2. `sfLen5Mult` không còn trong `TUNING` và `TUNING_RANGES`. Mọi khóa `sfW*`, `sfB*` và máu có giá trị đầu và khoảng thử đúng như mục 5.1 và 5.2.
+- [x] C9.3. `BRIEF_TUNING` trong test bằng bảng 5.1 và 5.2 bản 4. Không test nào còn dùng số của bản 2 hay bản 3, ngoại trừ test lịch sử có ghi rõ.
+- [x] C9.4. `forceNextGrid` và `BattleSetup.grids` ném lỗi khi lưới không phải 4x4.
+- [x] C9.5. Trên 10.000 lưới từ sim seed 1, số chuỗi tối đa mỗi lượt không vượt 14, và không có chuỗi nào có ô ngoài `[0, 3] x [0, 3]`.
+- [x] C9.6. Với các lượt ép F0 đến F12 qua scene, `highlightedCells` bằng số ô khác nhau trong `lastChains`, và mọi icon trên lưới hiển thị nằm trọn trong `reelFrame`.
 
-#### C10. Tune thời lượng trận và tỉ lệ ra đòn (bản 4)
+#### C10. Tune thời lượng trận và tỉ lệ ra đòn (bản 4, đã thay bằng C14 ở bản 5)
+QA đã nghiệm thu C10 trên bộ 8 icon của bản 4, số đo ở mục 5.5. Bản 5 đổi bộ icon và trọng số nên phải đo lại ở C14. Định nghĩa lật ngược và phân vị dưới đây vẫn dùng cho C14.
 Phụ thuộc: C9. Thay thế C4. Balance Tuner chỉ đổi giá trị trong `TUNING`, trong `TUNING_RANGES`.
 
 - **Tập seed nghiệm thu:** 9001 đến 11000, gồm 2000 trận. **Tập seed để tune:** 1 đến 2000. Không tune trên tập nghiệm thu.
@@ -691,15 +891,15 @@ Phụ thuộc: C9. Thay thế C4. Balance Tuner chỉ đổi giá trị trong `T
 - **Tỉ lệ ra đòn:** `attackTurnRate` là tỉ lệ lượt có `damage > 0`, tính trên mọi lượt của mọi trận, gộp cả hai bên.
 - Mọi ngưỡng dưới đây là **giá trị đề xuất** và có thể đổi.
 
-- [ ] C10.1. Trên tập nghiệm thu, `|meanDamage - analyticEffects().damage| <= 3 * meanDamageStdErr`.
-- [ ] C10.2. **Thời lượng, phép thử chính.** Trên tập nghiệm thu, `estMatchMsMedian` nằm trong `[300000, 420000]` và `estMatchMsP90 <= 540000`.
-- [ ] C10.3. **Số lượt**, suy ra từ C10.2 theo mục 5.3. Trên tập nghiệm thu, `turnsMedian` nằm trong `[110, 160]` và `turnsP90 <= 225`. Nếu C10.2 đạt nhưng C10.3 trượt vì `meanTurnMs` lệch 2,7 s quá 15%, Producer tính lại khoảng theo mục 5.3 thay vì tune thêm.
-- [ ] C10.4. **Tỉ lệ ra đòn.** Trên tập nghiệm thu, `attackTurnRate >= 0.60`.
-- [ ] C10.5. **Tỉ lệ thắng.** Trên tập nghiệm thu, khi người chơi đi trước và hai bên cùng chỉ số, `playerWinRate` nằm trong `[0.50, 0.60]`.
-- [ ] C10.6. **Kịch tính.** Trên tập nghiệm thu, `comebackRate` nằm trong `[0.15, 0.40]`.
-- [ ] C10.7. Trên tập nghiệm thu, `unfinished === 0` với trần 2000 lượt. Chạy `simulateMatches` hai lần cho hai `MatchReport` giống hệt nhau.
-- [ ] C10.8. `simulateMatches` trên 2000 trận chạy xong dưới 15 giây trong trình duyệt test. Bản 2 là 5 giây; nới ra vì trận dài hơn khoảng 12 lần.
-- [ ] C10.9. Ghi số, không xét đạt:
+- [x] C10.1. Trên tập nghiệm thu, `|meanDamage - analyticEffects().damage| <= 3 * meanDamageStdErr`.
+- [x] C10.2. **Thời lượng, phép thử chính.** Trên tập nghiệm thu, `estMatchMsMedian` nằm trong `[300000, 420000]` và `estMatchMsP90 <= 540000`.
+- [x] C10.3. **Số lượt**, suy ra từ C10.2 theo mục 5.3. Trên tập nghiệm thu, `turnsMedian` nằm trong `[110, 160]` và `turnsP90 <= 225`. Nếu C10.2 đạt nhưng C10.3 trượt vì `meanTurnMs` lệch 2,7 s quá 15%, Producer tính lại khoảng theo mục 5.3 thay vì tune thêm.
+- [x] C10.4. **Tỉ lệ ra đòn.** Trên tập nghiệm thu, `attackTurnRate >= 0.60`.
+- [x] C10.5. **Tỉ lệ thắng.** Trên tập nghiệm thu, khi người chơi đi trước và hai bên cùng chỉ số, `playerWinRate` nằm trong `[0.50, 0.60]`. **Ghi chú nghiệm thu:** đạt 0,5385 với `sfFoeMaxHp` 440 và `sfPlayerMaxHp` 450, tức đối thủ ít hơn 10 máu, không còn đúng nghĩa "cùng chỉ số". Lý do: khi hai bên bằng máu, trận dài làm mất lợi thế đi trước và người chơi chỉ thắng khoảng 0,50. Người dùng đã chấp nhận chênh lệch này. Xem mục 5.5.
+- [x] C10.6. **Kịch tính.** Trên tập nghiệm thu, `comebackRate` nằm trong `[0.15, 0.40]`.
+- [x] C10.7. Trên tập nghiệm thu, `unfinished === 0` với trần 2000 lượt. Chạy `simulateMatches` hai lần cho hai `MatchReport` giống hệt nhau.
+- [x] C10.8. `simulateMatches` trên 2000 trận chạy xong dưới 15 giây trong trình duyệt test. Bản 2 là 5 giây; nới ra vì trận dài hơn khoảng 12 lần.
+- [x] C10.9. **Đã ghi số, xem mục 5.5.** Ghi số, không xét đạt:
   - `blankTurnRate`, `chainTurnRateByIcon`, `meanHeal`, `meanShield`, `meanAbsorbed`, `meanTurnMs`;
   - `turnsP10`, `turnsMax`, `comebackRateByWinner`;
   - `playerWinRate` khi `setup: { turn: 'foe' }`;
@@ -714,34 +914,184 @@ Phụ thuộc: C9. Thay thế C4. Balance Tuner chỉ đổi giá trị trong `T
 #### C11. Quay nhanh (bản 4.1)
 Phụ thuộc: C10. Luật theo mục 4.11, layout theo mục 4.9 bản 4.1. Thời gian đo bằng đồng hồ scene. Sai số giống C6 và C8.
 
-- [ ] C11.1. **Phím.** Khi vào trận, `fastMode === false`. Bấm F thì `fastMode === true`, bấm F lần nữa thì `false`. Giữ F 800 ms thì `fastMode` chỉ đổi một lần. Mỗi lần bấm F, `rejectedSpins` không đổi.
-- [ ] C11.2. **Chạm.** Ở viewport cảm ứng 390x844, chạm `#sf-fast` thì `fastMode` đảo trạng thái, và `aria-pressed` của nút bằng `String(fastMode)`. Chạm hai lần thì về trạng thái ban đầu.
-- [ ] C11.3. **Giữ trong phiên.** Khi `fastMode === true`, mở trận mới bằng R, bằng Enter sau khi trận kết thúc, bằng chạm `#sf-new` và bằng `loadMatch`, thì `fastMode` vẫn là `true`. Tải lại trang thì `fastMode === false`.
-- [ ] C11.4. **Quay và dừng cột.** Bật Nhanh trước lượt người chơi rồi quay. Khi đó:
+- [x] C11.1. **Phím.** Khi vào trận, `fastMode === false`. Bấm F thì `fastMode === true`, bấm F lần nữa thì `false`. Giữ F 800 ms thì `fastMode` chỉ đổi một lần. Mỗi lần bấm F, `rejectedSpins` không đổi.
+- [x] C11.2. **Chạm.** Ở viewport cảm ứng 390x844, chạm `#sf-fast` thì `fastMode` đảo trạng thái, và `aria-pressed` của nút bằng `String(fastMode)`. Chạm hai lần thì về trạng thái ban đầu.
+- [x] C11.3. **Giữ trong phiên.** Khi `fastMode === true`, mở trận mới bằng R, bằng Enter sau khi trận kết thúc, bằng chạm `#sf-new` và bằng `loadMatch`, thì `fastMode` vẫn là `true`. Tải lại trang thì `fastMode === false`.
+- [x] C11.4. **Quay và dừng cột.** Bật Nhanh trước lượt người chơi rồi quay. Khi đó:
   - `lastTimeScale === sfFastFactor`;
   - `lastSpinMs === eff(sfSpinBaseMs) + 3 * eff(sfReelStopGapMs)`;
   - `lastReelStopMs` có 4 phần tử tăng dần, phần tử đầu nằm trong `[eff(sfSpinBaseMs) - 30, eff(sfSpinBaseMs) + 60]`, mỗi khoảng cách nằm trong `eff(sfReelStopGapMs) ± 40`.
-- [ ] C11.5. **Resolving và cast.** Bật Nhanh, ép F12 ở lượt người chơi. Khi đó:
+- [x] C11.5. **Resolving và cast.** Bật Nhanh, ép F12 ở lượt người chơi. Khi đó:
   - `lastResolveMs` khớp công thức ở mục 4.10 với các khóa `eff(...)`, và thời gian `resolving` thật nằm trong `lastResolveMs ± 60` ms;
   - có 3 viên, theo thứ tự `heal`, `shield`, `damage`;
   - `launchMs` và `impactMs` khớp lịch đã co, thời điểm đo lệch không quá 40 ms;
   - giá trị hiển thị chỉ đổi khi từng viên trúng, như C8.7.
 
   Ép F0 thì `lastResolveMs === eff(sfBlankResolveMs)`.
-- [ ] C11.6. **Chờ đối thủ.** Bật Nhanh trước khi lượt người chơi kết thúc. Khi đó `lastFoeDelayMs === eff(sfFoeDelayMs)`, và khoảng từ cuối `resolving` của người chơi tới lúc đối thủ bắt đầu quay nằm trong `eff(sfFoeDelayMs) ± 60` ms.
-- [ ] C11.7. **Kết quả không đổi.** Chơi hết một trận chỉ bằng Space với `fastMode === false`, rồi `loadMatch` cùng seed và chơi lại với `fastMode === true`. Sau mỗi lượt, `grid`, `lastChains`, `lastEffects`, `player`, `foe` giống nhau, và `status`, `spinIndex` cuối giống nhau. Kiểm trên seed `sfSeed` và hai seed khác.
-- [ ] C11.8. **Đổi giữa lượt áp từ lượt sau.**
+- [x] C11.6. **Chờ đối thủ.** Bật Nhanh trước khi lượt người chơi kết thúc. Khi đó `lastFoeDelayMs === eff(sfFoeDelayMs)`, và khoảng từ cuối `resolving` của người chơi tới lúc đối thủ bắt đầu quay nằm trong `eff(sfFoeDelayMs) ± 60` ms.
+- [x] C11.7. **Kết quả không đổi.** Chơi hết một trận chỉ bằng Space với `fastMode === false`, rồi `loadMatch` cùng seed và chơi lại với `fastMode === true`. Sau mỗi lượt, `grid`, `lastChains`, `lastEffects`, `player`, `foe` giống nhau, và `status`, `spinIndex` cuối giống nhau. Kiểm trên seed `sfSeed` và hai seed khác.
+- [x] C11.8. **Đổi giữa lượt áp từ lượt sau.**
   - Đang ở tốc độ thường, bấm F trong `spinning` của lượt người chơi: `fastMode === true`, nhưng lượt đó vẫn có `lastTimeScale === 1` và `lastReelStopMs` theo lịch thường. Lượt đối thủ kế tiếp, tính từ `foeWait`, có `lastTimeScale === sfFastFactor`.
   - Bấm F lần nữa trong `foeWait`: lượt đối thủ đó vẫn chạy nhanh hết lượt, và lượt người chơi kế tiếp có `lastTimeScale === 1`.
-- [ ] C11.9. **Luật nhập liệu không đổi.** Khi bật Nhanh, quay trong `spinning` hoặc `resolving` vẫn bị từ chối với `busy` hoặc `notYourTurn` như C6.3. Bấm F khi `phase === 'ended'` vẫn đổi `fastMode`. Không có lượt nào của người chơi tự chạy nếu không bấm quay: chờ 5 giây ở `idle` thì `spinIndex` không đổi.
-- [ ] C11.10. **Hệ số 1.** Khi `sfFastFactor = 1`, bật Nhanh thì `lastSpinMs`, `lastResolveMs` và `lastFoeDelayMs` bằng đúng giá trị ở tốc độ thường. Test khôi phục `TUNING` sau khi chạy.
-- [ ] C11.11. **Layout.**
+- [x] C11.9. **Luật nhập liệu không đổi.** Khi bật Nhanh, quay trong `spinning` hoặc `resolving` vẫn bị từ chối với `busy` hoặc `notYourTurn` như C6.3. Bấm F khi `phase === 'ended'` vẫn đổi `fastMode`. Không có lượt nào của người chơi tự chạy nếu không bấm quay: chờ 5 giây ở `idle` thì `spinIndex` không đổi.
+- [x] C11.10. **Hệ số 1.** Khi `sfFastFactor = 1`, bật Nhanh thì `lastSpinMs`, `lastResolveMs` và `lastFoeDelayMs` bằng đúng giá trị ở tốc độ thường. Test khôi phục `TUNING` sau khi chạy.
+- [x] C11.11. **Layout.**
   - `layout.boxes.fastBtn` bằng `96, 832, 64, 64`; `helpBtn` bằng `20, 832, 64, 64`.
   - C7.2 vẫn đạt với `fastBtn`: không chồng hộp nào khác ngoài `panel`.
   - Ở 390x844, `#sf-fast` có kích thước ít nhất 44x44 px CSS và khớp hộp ±2 px.
   - Chữ "Nhanh" đạt C7.5 và C7.6 ở cả trạng thái bật và tắt.
   - Ở `/`, `/?game=arc-relay`, `/?game=gatefall`, nút `#sf-fast` không hiện.
-- [ ] C11.12. **Ghi số, không xét đạt.** Trên tập nghiệm thu C10, ghi `estMatchMsMedianFast` và `estMatchMsP90Fast` cạnh `estMatchMsMedian` và `estMatchMsP90`, kèm giá trị `sfFastFactor` đang dùng.
+- [x] C11.12. **Đã ghi số: trung vị 149 s, P90 202 s ở `sfFastFactor` 0,35, xem mục 5.5.** Ghi số, không xét đạt. Trên tập nghiệm thu C10, ghi `estMatchMsMedianFast` và `estMatchMsP90Fast` cạnh `estMatchMsMedian` và `estMatchMsP90`, kèm giá trị `sfFastFactor` đang dùng.
+
+#### C12. VFX (bản 4.2)
+Phụ thuộc: C11. VFX Artist làm sheet. Gameplay Programmer nạp sheet và phát theo mục 4.12. Thời gian đo theo đồng hồ scene, tính từ lúc vào `resolving`, sai số giống C8.
+
+Trường `getState()` thêm ở bản 4.2:
+
+| Trường | Kiểu | Ý nghĩa |
+|---|---|---|
+| `vfxLoaded` | `string[]` | Các key VFX đã nạp xong, sắp theo bảng chữ cái |
+| `vfxPlaying` | `number` | Số sprite VFX đang hiện |
+| `vfxLog` | `{ key; kind: 'proj' \| 'hit' \| 'block' \| 'flash'; castIndex: number \| null; cell: [x, y] \| null; pos: [x, y]; box: [x, y, w, h]; startedAtMs; endedAtMs: number \| null; timeScale }[]` | Mọi VFX của lượt gần nhất. Xóa khi lượt quay mới bắt đầu. `castIndex` trỏ vào `lastCasts`. `box` là hộp hiển thị lớn nhất trong suốt thời gian phát, theo tọa độ game |
+
+Các tiêu chí:
+
+- [ ] C12.1. **Nạp và dung lượng.**
+  - Sau khi mở `/?game=slot-five`, `vfxLoaded` đúng bằng 16 key ở mục 4.12.
+  - Mỗi file `public/vfx/sf-*/T_*.png` có cạnh dài ≤ 1024 px.
+  - Tổng dung lượng các file `T_sf_*.png` và `sf_*.json` ≤ 1.572.864 byte.
+  - Chỉ có một manifest VFX. Không có request nào ra ngoài origin.
+- [ ] C12.2. **Đạn.** Với F12 ở lượt người chơi:
+  - `vfxLog` có đúng 3 mục `kind === 'proj'`, theo thứ tự `sf_proj_heal`, `sf_proj_shield`, `sf_proj_blade`.
+  - Mỗi `castIndex` xuất hiện đúng một lần.
+  - `startedAtMs` lệch `launchMs` không quá 40 ms; `endedAtMs` lệch `impactMs` không quá 40 ms.
+  - Không còn chấm tròn Graphics cũ.
+- [ ] C12.3. **Đúng một va chạm mỗi viên.** Với mọi lượt của một trận đầy đủ chơi bằng Space:
+  - Mỗi viên trong `lastCasts` có đúng một mục `kind === 'hit'` với key `sf_hit_<khóa icon>`.
+  - Mục đó có `startedAtMs` lệch `impactMs` không quá 40 ms, và `pos` lệch `to` của viên không quá 2 px.
+  - Số mục `hit` bằng `lastCasts.length`.
+- [ ] C12.4. **Đúng key theo loại.** Với các lượt ép F10, F11, F13, F5, F2 và F3, key đạn và va chạm lần lượt là:
+  - F10: `fire`;
+  - F11: `volt` rồi `earth`;
+  - F13: `frost`;
+  - F5: `blade`;
+  - F2: `heal`;
+  - F3: `shield`.
+
+  Va chạm của `heal` và `shield` nằm ở nhân vật bên quay; va chạm của sát thương nằm ở bên kia.
+- [ ] C12.5. **Chặn.**
+  - Với `foe.shield = 20`, người chơi quay F11: có 2 mục `block`, một cho viên Điện (bị chặn toàn bộ), một cho viên Đất (bị chặn 5). Mỗi mục bắt đầu cùng lúc với `hit` của viên đó, lệch không quá 40 ms.
+  - Với `foe.shield = 0` và F1: không có mục `block`.
+  - Viên `heal` và `shield` không bao giờ có `block`.
+- [ ] C12.6. **Lóe chuỗi.** Mục `flash` bắt đầu trong 40 ms đầu của `resolving`, mỗi mục ứng với một `cell` khác nhau.
+  - F7: 5 mục, đúng các ô của hai chuỗi.
+  - F4: 4 mục và 0 mục `proj`.
+  - F0: 0 mục.
+  - Số mục `flash` luôn bằng `highlightedCells`.
+- [ ] C12.7. **Kích thước.**
+  - `proj`: `box` rộng và cao ít nhất 56.
+  - `hit`: `box` từ 72 đến 120 chiều rộng, từ 72 đến 104 chiều cao.
+  - `block`: `box` trong khoảng 80 đến 112 mỗi chiều.
+  - `flash`: `box` lệch hộp ô (96x96, tâm ô theo mục 4.9) không quá 4 px.
+- [ ] C12.8. **Không kéo dài lượt.**
+  - Mọi mục `hit` và `block` có `endedAtMs - startedAtMs <= eff(sfCastTailMs) + 40`.
+  - Mọi mục `flash` có thời lượng ≤ `eff(sfCastDelayMs + sfCastFlightMs) + 40`.
+  - Mọi mục có `endedAtMs <= lastResolveMs + 40`.
+  - `vfxPlaying === 0` trong vòng 50 ms sau khi rời `resolving`.
+  - `lastResolveMs`, `lastSpinMs`, `lastFoeDelayMs` và lịch `lastCasts` không đổi so với công thức ở mục 4.10 và 4.11.
+- [ ] C12.9. **Không che HUD.** Với mọi mục của `vfxLog` trong một trận đầy đủ, nếu `box` giao `playerHud` hoặc `foeHud` thì thời lượng mục đó ≤ 150 ms. Không mục nào giao `turnBanner` hoặc `panel`.
+- [ ] C12.10. **Chế độ Nhanh.**
+  - Khi bật Nhanh, mọi mục có `timeScale === sfFastFactor`.
+  - C12.2, C12.3, C12.6 và C12.8 vẫn đạt khi dùng giá trị `eff(...)`.
+  - Thời lượng mỗi mục `hit` ở chế độ Nhanh bằng thời lượng ở tốc độ thường nhân `sfFastFactor`, sai số 40 ms.
+- [ ] C12.11. **Logic và state không đổi.**
+  - Toàn bộ test từ C1 đến C11 vẫn xanh.
+  - Trận đầy đủ chơi bằng Space với seed `sfSeed` có `grid`, `lastChains`, `lastEffects`, `player`, `foe` sau mỗi lượt khớp `createBattle(sfSeed)`.
+  - Các trường `getState()` có trước bản 4.2 vẫn còn đủ, cùng kiểu.
+  - Module logic thuần không import gì từ VFX.
+- [ ] C12.12. **Không lỗi.** Trong một trận đầy đủ ở tốc độ thường và một trận ở chế độ Nhanh, không có lỗi console, không có cảnh báo thiếu texture hay animation, và `vfxPlaying` không bao giờ vượt 40.
+- [ ] C12.13. **Ảnh cho người dùng duyệt**, không phải tiêu chí tự động. Chụp ở 390x844, lưu vào `artifacts/`:
+  - một ảnh cho mỗi loại đạn khi đang bay qua khoảng trống cast (7 ảnh);
+  - một ảnh cho mỗi loại va chạm ở khung giữa (7 ảnh);
+  - một ảnh `sf_block`;
+  - một ảnh lóe chuỗi trên F7;
+  - một ảnh F12 có 3 đạn cùng lúc trên màn;
+  - một ảnh ở chế độ Nhanh.
+- [ ] C12.14. **Bản HTML đơn để chơi thử.**
+
+  **Lệnh.** Gameplay Programmer đưa script đóng gói hiện có của Producer vào repo thành `tools/pack-single.mjs`, chạy bằng `npm run pack:single`. Script làm ba việc:
+  - đọc `dist/index.html` và nhúng bundle JS vào trong file;
+  - nhúng mọi sheet PNG/JSON có trong manifest VFX dưới dạng data URI;
+  - đặt route mặc định là Slot Five khi URL không có `?game=`.
+
+  Kết quả ghi ra `artifacts/slot-five-play.html`. Lệnh `npm run build` thường không đổi: route mặc định vẫn là Coin Hop.
+
+  **Cờ DOM chỉ đọc.** Bản build không có `window.__game`, nên test kiểm qua các thuộc tính chỉ đọc trên phần tử `#game`. Các cờ này có cả ở bản dev lẫn bản build, chỉ phản chiếu state, không cho điều khiển gì và không phải debug API:
+  - `data-sf-ready="true"` khi scene Slot Five đã vào trận;
+  - `data-vfx-loaded="true"` khi đủ 16 key ở mục 4.12 đã nạp, ngược lại là `"false"`;
+  - `data-sf-spin-index`, bằng `spinIndex`;
+  - `data-sf-phase`, bằng `phase`;
+  - `data-sf-last-casts`, bằng `lastCasts.length` của lượt gần nhất;
+  - `data-sf-vfx-hits`, bằng tổng số mục `hit` đã phát trong trận.
+
+  Ở bản dev, test so các cờ này với `getState()` để chắc chúng phản chiếu đúng.
+
+  Tiêu chí:
+  1. Chạy `npm run build` rồi `npm run pack:single` đều thoát với mã 0. Lệnh thứ hai tạo hoặc ghi đè đúng một file `artifacts/slot-five-play.html`, không kèm file JS, PNG hay JSON rời nào khác. Ghi lại dung lượng file.
+  2. Mở file bằng Playwright qua URL `file://` không có `?game=`. Không chạy server nào. Context đặt `offline: true`. Trong 10 giây, `#game` có `data-sf-ready="true"` và `data-vfx-loaded="true"`.
+  3. Bấm Space hoặc chạm `#sf-spin` khi tới lượt người chơi, chờ `data-sf-phase` về `idle` hoặc `ended` sau mỗi lần. Lặp tối đa 10 lượt người chơi cho tới khi gặp một lượt có `data-sf-last-casts` lớn hơn 0. Khi đó `data-sf-vfx-hits` tăng đúng bằng số viên của lượt đó và `data-sf-spin-index` tăng. Seed mặc định không đổi nên kết quả tái lập được.
+  4. Trong suốt lần chạy ở bước 2 và 3, không có lỗi console và không có `pageerror`.
+  5. Trong suốt lần chạy, mọi request Playwright ghi nhận chỉ có scheme `file:` trỏ đúng vào file HTML đó, hoặc scheme `data:` / `blob:`. Không có request `http:`, `https:` hay `ws:`, và không request nào thất bại.
+  6. Nội dung file không chứa các chuỗi `__game`, `lil-gui` và `Tune gameplay`. So khớp phân biệt hoa thường.
+  7. Lưu một ảnh 390x844 của file HTML đơn sau lượt có cast vào `artifacts/`, để người dùng duyệt.
+
+#### C13. Bộ icon theo hệ (bản 5)
+Phụ thuộc: C12. Gồm:
+- logic bảng rút theo `activeIcons`;
+- các khóa `sfElement`, `sfWElement` và cập nhật `TUNING_RANGES`;
+- các trường `element`, `activeIcons`, `legendIcons`;
+- bảng chú giải;
+- cập nhật `BRIEF_TUNING`.
+
+Nghiệm thu C13 gồm các tiêu chí dưới đây, cộng C1.6, C2.5, C7.11 bản 5, và chạy lại xanh mọi tiêu chí còn lại từ C1 đến C12.
+
+- [ ] C13.1. **Khóa cấu hình.** `TUNING` và `TUNING_RANGES` có `sfElement` (giá trị đầu 1, khoảng 0 đến 3, bước 1) và `sfWElement` (22, khoảng 1 đến 60, bước 1). Không còn `sfWFire`, `sfWVolt`, `sfWFrost`, `sfWEarth`. Vẫn có đủ `sfBFire`, `sfBVolt`, `sfBFrost`, `sfBEarth` cùng khoảng thử. Mọi khóa trong `TUNING` có trong `TUNING_RANGES` và ngược lại.
+- [ ] C13.2. **Chỉ 5 icon trên lưới.** Với cấu hình demo:
+  - Mọi lưới do RNG sinh ra chỉ chứa icon thuộc `[1, 4, 5, 6, 7]`, kiểm trên 100.000 lượt `createSim` (seed 9001 đến 9010) và trên mọi lượt của 2000 trận `createBattle` (seed 1 đến 2000).
+  - Lưới ban đầu từ luồng `init` cũng tuân theo điều này.
+  - Không chuỗi nào trong các lượt đó có icon 0, 2 hoặc 3.
+- [ ] C13.3. **Đổi hệ chỉ đổi ô nguyên tố.** Tạm đặt `sfElement` lần lượt là 0, 2, 3 rồi tạo sim cùng seed với cấu hình demo, so 1000 lượt.
+  - Ở mỗi lượt, ô nào cấu hình demo ra icon 1 thì cấu hình mới ra đúng icon `sfElement`. Mọi ô còn lại giống hệt nhau.
+  - `activeIcons` bằng `[sfElement, 4, 5, 6, 7]`.
+  - Test khôi phục `TUNING` sau khi chạy.
+- [ ] C13.4. **Trạng thái.** Ở `/?game=slot-five` với cấu hình demo, `element === 1` và `activeIcons` bằng `[1, 4, 5, 6, 7]`. Đổi `sfElement` giữa trận không đổi `element` của trận đang chạy. Mở trận mới thì `element` nhận giá trị mới.
+- [ ] C13.5. **Đối thủ cùng bộ icon.** Trong 2000 trận ở C13.2, các lượt của đối thủ (`spinIndex` lẻ) cũng chỉ có icon thuộc `activeIcons`. Sát thương nguyên tố của cả hai bên đều lấy từ `sfBVolt`.
+- [ ] C13.6. **`evaluate` vẫn nhận 8 icon.** C2.1 với F0 đến F13 vẫn đạt, kể cả F10, F11 và F13 có Lửa, Đất và Băng. `forceNextGrid` với F10 và F13 trong bản dev vẫn bắn đúng đạn và va chạm như C12.4.
+- [ ] C13.7. **Bảng chú giải.** Khi mở bảng, `legendIcons` bằng `[1, 4, 5, 6, 7]`. Icon 1 hiện tên "Sét", loại `damage` và giá trị gốc lấy từ `sfBVolt`. Bảng không có dòng nào cho Lửa, Băng, Đất. Chữ trong bảng vẫn đạt C7.5 và C7.6. Khi tạm đặt `sfElement = 0` rồi mở trận mới, `legendIcons` bằng `[0, 4, 5, 6, 7]`.
+- [ ] C13.8. **`analyticEffects` theo hệ.** Với cấu hình demo, `analyticEffects()` chỉ tính trên `activeIcons`, khớp C2.5 bản 5. Khi tạm đặt `sfElement = 0`, phần sát thương nguyên tố tính bằng `sfBFire` thay cho `sfBVolt`, với cùng `p`.
+- [ ] C13.9. **Bản HTML đơn.** `artifacts/slot-five-play.html` dùng cấu hình demo. C12.14 vẫn đạt. Ảnh 390x844 của bảng chú giải được lưu vào `artifacts/` để người dùng duyệt.
+
+#### C14. Tune lại cho bộ icon demo (bản 5)
+Phụ thuộc: C13. Thay C10. Balance Tuner chỉ đổi giá trị trong `TUNING`, trong `TUNING_RANGES`, bắt đầu từ điểm xuất phát ở mục 5.6. Giữ cấu hình demo (`sfElement = 1`). Tập seed, định nghĩa lật ngược, phân vị và `attackTurnRate` giống C10. Mọi ngưỡng là đề xuất.
+
+- [ ] C14.1. Trên tập nghiệm thu, `|meanDamage - analyticEffects().damage| <= 3 * meanDamageStdErr`.
+- [ ] C14.2. **Thời lượng.** `estMatchMsMedian` nằm trong `[300000, 420000]`, `estMatchMsP90 <= 540000`.
+- [ ] C14.3. **Số lượt.** `turnsMedian` nằm trong `[110, 160]`, `turnsP90 <= 225`. Nếu C14.2 đạt mà C14.3 trượt vì `meanTurnMs` lệch 2,7 s quá 15%, xử lý như C10.3.
+- [ ] C14.4. **Tỉ lệ ra đòn.** `attackTurnRate >= 0.60`.
+- [ ] C14.5. **Tỉ lệ ra Sét, mục tiêu mới.** `chainTurnRateByIcon[1] >= 0.15`, tức ít nhất 15% số lượt có một chuỗi Sét. Với mọi icon ngoài `activeIcons`, `chainTurnRateByIcon` bằng 0.
+- [ ] C14.6. **Tỉ lệ thắng.** `playerWinRate` nằm trong `[0.50, 0.60]`. Máu đối thủ được phép thấp hơn máu người chơi, như ghi chú ở C10.5: hiện là 440 so với 450, người dùng đã chấp nhận. Nếu cần chênh lớn hơn 10 máu thì phải hỏi người dùng.
+- [ ] C14.7. **Kịch tính.** `comebackRate` nằm trong `[0.15, 0.40]`.
+- [ ] C14.8. `unfinished === 0` với trần 2000 lượt. Chạy hai lần cho `MatchReport` giống hệt nhau.
+- [ ] C14.9. `simulateMatches` 2000 trận chạy dưới 15 giây.
+- [ ] C14.10. **Ghi số, không xét đạt:**
+  - `blankTurnRate` và `chainTurnRateByIcon` cho Kiếm, Hồi máu, Khiên, May mắn;
+  - `meanHeal`, `meanShield`, `meanAbsorbed`, `meanTurnMs`, `turnsP10`, `turnsMax`;
+  - `comebackRateByWinner`;
+  - `playerWinRate` khi đối thủ đi trước;
+  - `estMatchMsMedianFast` và `estMatchMsP90Fast` (đo lại thay C11.12);
+  - giá trị `TUNING` sau tune và lý do của từng khóa đã đổi.
+
+**Luật dừng:** nếu C14.2, C14.4, C14.5, C14.6 và C14.7 không cùng đạt sau khi tune trên tập seed để tune, Producer dừng lại và báo người dùng. Không nới ngưỡng để qua test. Theo báo cáo, chỉ một hệ mà không có wild có thể khó đạt cả C14.4 lẫn C14.5. Nếu xảy ra, báo người dùng kèm số đo, không tự thêm wild.
 
 ## 9. Người chơi cần tự đánh giá
 Test tự động không kết luận được game có vui hay không. Mô phỏng chỉ đo độ dài trận, tỉ lệ ra đòn, tỉ lệ thắng và tần suất lật ngược. Người chơi thật cần đánh giá:
@@ -754,6 +1104,11 @@ Test tự động không kết luận được game có vui hay không. Mô ph�
 - Nhịp một lượt khoảng 2,7 s ở tốc độ thường có vừa không?
 - Bản 4.1: ở chế độ Nhanh (hệ số 0,35, khoảng 1,1 s mỗi lượt), có còn đọc kịp chuỗi và cast không? Người chơi bật Nhanh ngay từ đầu hay chỉ bật khi thấy chán? Có còn muốn autoplay không?
 - Bản 4.1: nút Nhanh nằm cạnh nút "?" có dễ bấm nhầm không? Trạng thái bật và tắt có dễ phân biệt không?
+- Bản 4.2: nhìn đạn có nhận ra ngay loại đòn không, nhất là Lửa với Đất và Điện với Băng? Đạn có đủ to và rõ khi bay qua lưới không?
+- Bản 4.2: va chạm có "đã tay" không? Hiệu ứng chặn có cho thấy rõ khiên vừa đỡ đòn không?
+- Bản 4.2: lóe chuỗi có giúp thấy chuỗi nhanh hơn không, hay làm rối khi có nhiều chuỗi chồng nhau?
+- Bản 4.2: ở chế độ Nhanh, VFX có còn đọc được không, hay thành chớp nháy khó chịu?
+- Bản 4.2: phong cách VFX có hợp với icon và nhân vật placeholder không, và có gợi bản sắc riêng không?
 - Có nhận ra ngay chuỗi nào gây ra hiệu ứng gì, và cho ai không, nhất là chuỗi chéo và các chuỗi chồng nhau?
 - Cast có giúp dễ hiểu không? Nhịp cast có làm chậm lượt không?
 - Khung quay 4x4 gần vuông có khớp với bản vẽ hơn không? Hai nhân vật nhỏ sát mép có đủ "có mặt" không?
@@ -761,12 +1116,17 @@ Test tự động không kết luận được game có vui hay không. Mô ph�
 - Khi thua có thấy công bằng không?
 - Icon May mắn chưa có tác dụng có gây hiểu nhầm không?
 - 8 icon placeholder có dễ phân biệt không?
+- Bản 5: lưới chỉ có 5 loại icon. Lưới có dễ đọc hơn không, hay trông đơn điệu?
+- Bản 5: Sét ra khoảng 1 lần mỗi 5 lượt. Như vậy có đủ để cảm thấy "nhân vật mình dùng hệ Sét" không?
+- Bản 5: May mắn chiếm 12% lưới mà chưa có tác dụng. Có gây cảm giác lưới bị "lãng phí" không?
+- Bản 5: chỉ một hệ suốt trận 5 đến 7 phút. Có thấy thiếu đa dạng không? Có mong được đổi hệ hoặc có trang bị ngay không?
 - Chủ đề và hình ảnh có gợi được bản sắc riêng không?
 
 ## Câu hỏi mở
-- **Q1. Khắc hệ.** Hiện không khắc hệ. Ở bản 4, các hệ còn hiếm, nên nếu muốn hệ có vai trò rõ hơn thì cần quyết định: khắc hệ, tăng tần suất hệ để giảm Kiếm, hay giữ nguyên. Lựa chọn này đổi công thức sát thương hoặc bảng trọng số.
+- **Q1. Khắc hệ.** Hiện không khắc hệ. Bản 5 chỉ có một hệ mỗi trận, nên khắc hệ chỉ có nghĩa khi kẻ địch có hệ riêng (liên quan Q4) hoặc khi có trang bị. Câu hỏi để mở cho bản có trang bị, không chặn bản 5.
 - **Q2. Đã chốt:** người chơi chỉ bấm quay.
 - **Q3. Giới hạn lượt và hòa.** Hiện trận không có trần lượt. Trận 5 đến 7 phút làm câu hỏi này đáng cân nhắc hơn. Có nên có trần thời gian hay trần lượt, ai còn nhiều máu theo tỉ lệ thì thắng không? Lựa chọn này đổi điều kiện thắng thua.
-- **Q4. Đối thủ.** Có cần đối thủ có trọng số hay chỉ số riêng không?
+- **Q4. Đối thủ.** Có cần đối thủ có trọng số, chỉ số hoặc hệ riêng không? Bản 5 cho đối thủ dùng cùng bộ icon và cùng hệ Sét. Q4 vẫn mở.
+- **Q7. Trang bị nhiều hệ (bản 5, cho tương lai).** Khi có trang bị, một nhân vật chỉ mang một hệ hay có thể mang nhiều hệ cùng lúc trên lưới? Nếu nhiều hệ cùng lúc thì mỗi hệ sẽ hiếm lại như bản 4. Báo cáo cho thấy khi đó cần thêm wild hoặc cơ chế khác. Câu này không chặn bản 5.
 - **Q5. Màn ngang.** Hiện chỉ nhắm điện thoại dọc, màn ngang dùng letterbox. Có cần layout ngang riêng không?
 - **Q6. Đã chốt:** người dùng chọn "Thêm quay nhanh". Không có autoplay. Xem mục 4.11 và C11.

@@ -5,7 +5,7 @@ import type { SlotFiveState } from '../src/scenes/SlotFiveScene';
  * Free play for Slot Five (skill playwright-interactive): about 60 s of real input at 960x540, not following the
  * expected path. Keys and clicks are picked by a fixed-seed generator so a failure can be replayed.
  * Checks every frame: phase is valid, 0 <= hp <= maxHp, 0 <= displayHp <= maxHp, shield >= 0; whenever nothing is
- * animating, 20 icon sprites and 2 fighters; no console or page errors.
+ * animating, 16 icon sprites (brief v4, 4x4 grid) and 2 fighters; no console or page errors.
  */
 
 interface Problem { t: number; msg: string }
@@ -40,7 +40,7 @@ test('Chơi tự do 60 giây bằng phím và chuột thật', async ({ page }) 
           const d = s.displayHp[side];
           if (d < 0 || d > f.maxHp) bad(`displayHp ${side} ${d}`);
         }
-        if ((s.phase === 'idle' || s.phase === 'foeWait' || s.phase === 'ended') && (s.viewCounts.icons !== 20 || s.viewCounts.fighters !== 2)) {
+        if ((s.phase === 'idle' || s.phase === 'foeWait' || s.phase === 'ended') && (s.viewCounts.icons !== 16 || s.viewCounts.fighters !== 2)) {
           bad(`${s.phase}: viewCounts ${JSON.stringify(s.viewCounts)}`);
         }
         if (s.phase === 'ended' && s.status === 'playing') bad('ended mà status playing');

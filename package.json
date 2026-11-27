@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
     "verify": "node tools/verify.mjs",
-    "board": "node tools/agent-board/server.mjs"
+    "board": "node tools/agent-board/server.mjs",
+    "pack:single": "node tools/pack-single.mjs dist artifacts/slot-five-play.html"
   },
   "dependencies": {
     "lil-gui": "^0.21.0",

@@ -1,9 +1,9 @@
 # Bảng tiến độ: Slot Five
 
 - Brief: `docs/briefs/slot-five.md`
-- Giai đoạn: TẠM DỪNG (2026-11-26). Tiếp tục từ: QA cập nhật test bản 4 + nghiệm thu C8, C9 → C10 tune → C11 quay nhanh
-- Giai đoạn trước: Cơ chế
-- Việc tiếp theo: gameplay-programmer làm C1
+- Giai đoạn: CHUYỂN SANG UNITY (2026-11-27). Bản Phaser giữ làm tham chiếu, dừng phát triển (C13 dở, C14 chưa làm). Bàn giao ở nhánh `unity-slot-five`, `Docs/SlotFive/HANDOFF.md`; làm trên máy Linux có dự án Unity đầy đủ.
+- Giai đoạn trước: Kiểm tra cuối xong (2026-11-27), chờ người dùng chơi thử
+- Việc tiếp theo: game-designer chốt brief theo kết luận QA; người dùng đánh giá mục 9
 
 ## Cơ chế
 | # | Cơ chế | Programmer | QA | Vòng sửa | Ghi chú |
@@ -15,10 +15,15 @@
 | C5 | Điều khiển và lượt đối thủ | Xong | Đạt 10/10 | 0 | Màn dọc 390x844: chữ HUD và nút nhỏ (ngoài brief) |
 | C6 | Diễn hoạt và HUD máu | Xong | Đạt 7/7; C6.5 mở lại (lastResolveMs), C6.8 thay bằng C8.10 | 0 | |
 | C7 | Layout dọc 540x960, panel dưới, nút "?" | Xong | Đạt 12/12; C1–C6 đạt lại | 0 | Điện thoại xoay ngang: nút nhỏ (Q5) |
-| C8 | Cast chiêu từ chuỗi xuống nhân vật | Xong | Chờ kiểm sau lưới 4x4 | 0 | |
-| C9 | Chuyển lưới 4x4 | Xong | Đang kiểm | 0 | Kèm nghiệm thu lại C1–C8 bản 4 |
-| C10 | Tune thời lượng 5–7 phút, tỉ lệ ra đòn ≥ 0,60 | Chưa làm | Chưa kiểm | 0 | Thay C4 |
-| C11 | Quay nhanh (công tắc, phím F) | Chưa làm | Chưa kiểm | 0 | Người dùng chốt Q6 2026-11-26 |
+| C8 | Cast chiêu từ chuỗi xuống nhân vật | Xong | Đạt 9/9 + ảnh C8.10 chờ duyệt | 0 | |
+| C9 | Chuyển lưới 4x4 | Xong | Đạt 6/6; C1–C7 bản 4 đạt; spec 119/119 | 0 | |
+| C10 | Tune thời lượng 5–7 phút, tỉ lệ ra đòn ≥ 0,60 | Đã ghi sfBHeal 50, sfFoeMaxHp 440 | Đạt 8/8 (349 s, thắng 0,5385, lật ngược 0,236) | 1 | Người dùng chấp nhận đối thủ 440 máu (2026-11-27) |
+| C11 | Quay nhanh (công tắc, phím F) | Xong; trận nhanh ~2,5 phút | Đạt 11/11 + C11.12 ghi số | 0 | |
+| C13 | Bộ icon theo hệ trang bị, demo chỉ Sét | Brief bản 5 xong; Programmer đang làm | Chưa kiểm | 0 | sfBVolt giữ 15 (designer đúng, 45 là số bản 2–3) |
+| C14 | Tune lại cho 5 icon | Chưa làm | Chưa kiểm | 0 | Mục tiêu thêm: lượt có chuỗi Sét ≥ 0,15 |
+| C12 | VFX: đạn cast 7 loại, va chạm, chặn khiên, lóe chuỗi | 16 sheet, đã gắn, pack:single 2,02 MB | Đạt C12.1–C12.12, C12.14; ảnh C12.13 chờ duyệt; verify 559/559 (2026-11-27) | 0 | Người dùng yêu cầu 2026-11-27. Thêm C12.14 bản HTML đơn (tools/pack-single.mjs, cờ DOM data-sf-* chỉ đọc, chấp nhận có trong bản phát hành) |
+
+Kiểm tra cuối 2026-11-27: `npm run verify` ĐẠT, 542/542 test. Bản HTML đơn `artifacts/slot-five-play.html` (1,4 MB) đã gửi người dùng.
 
 ## Câu hỏi mở cho người dùng
 - Q1 khắc hệ? Q3 trần lượt/hòa? Q4 đối thủ có trọng số riêng? Không chặn C1–C4. Tạm dùng mặc định của brief.
@@ -28,6 +33,11 @@
 - Slot đối kháng: 2 nhân vật dưới lưới, luân phiên quay, hết máu thì thua. Bỏ credit/cược và RTP.
 - Icon: Lửa, Điện, Băng, Đất (sát thương), Kiếm (đánh thường), Hồi máu, Khiên, May mắn (làm sau).
 - Chuỗi càng dài thì hiệu ứng càng mạnh.
+
+## Hệ theo trang bị (2026-11-27)
+- Chiêu nguyên tố phụ thuộc trang bị (làm sau). Hệ tương lai: Băng, Sét, Lửa, Nước, Đất.
+- Demo chỉ hệ Sét: lưới 5 icon (Sét, Kiếm, Hồi máu, Khiên, May mắn). May mắn giữ vai trò cũ, không làm wild.
+- Nguồn: báo cáo `reports/Tỉ lệ icon game slot chiến đấu.md` (phương án C).
 
 ## Đổi lưới và thời lượng (2026-11-26)
 - Lưới 4 cột x 4 hàng (5 cột khó chơi, ít ra tấn công).

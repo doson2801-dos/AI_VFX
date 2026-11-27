@@ -1,9 +1,11 @@
 import Phaser from 'phaser';
 import { SLOT_FIVE_VIEW, TUNING } from '../config';
 import {
-  castOrder, createSlotFiveBattle, readCastTiming, readEffectConfig, resolveMsFor, SF_COLS, SF_ICON_COUNT, SF_ICON_KINDS, SF_ICON_NAMES, SF_LUCKY_ICON, SF_ROWS,
-  type BattleSetup, type BattleSpin, type CastTiming, type Kind, type BattleStatus, type Chain, type Fighter, type Grid, type Side, type SlotFiveBattle,
+  castOrder, createSlotFiveBattle, readEffectConfig, readTurnTiming, resolveMsFor, scaleTurnTiming, SF_COLS, SF_ICON_KEYS, SF_ICON_COUNT, SF_ICON_KINDS, SF_ICON_NAMES, SF_LUCKY_ICON, SF_ROWS,
+  type BattleSetup, type BattleSpin, type Kind, type TurnTiming, type BattleStatus, type Chain, type Fighter, type Grid, type Side, type SlotFiveBattle,
+  spinMsFor,
 } from '../game/slotFiveLogic';
+import { getSlotFiveVfx, loadedSlotFiveVfxKeys, loadSlotFiveVfx, SF_VFX_KEYS, type SfVfxKey } from '../game/slotFiveVfx';
 
 export type SlotFivePhase = 'idle' | 'spinning' | 'resolving' | 'foeWait' | 'ended';
 export type SlotFiveReject = 'notYourTurn' | 'busy' | 'ended';
@@ -23,6 +25,20 @@ export interface SlotFiveLayout {
   texts: LayoutText[];
 }
 export interface FloatTextState { side: Side; text: string; box: Box }
+export type VfxKind = 'proj' | 'hit' | 'block' | 'flash';
+/** One VFX of the latest turn (brief C12). Times are ms from entering resolving on the scene clock. */
+export interface VfxLogEntry {
+  key: SfVfxKey;
+  kind: VfxKind;
+  castIndex: number | null;
+  cell: [number, number] | null;
+  pos: [number, number];
+  /** Largest display box seen while it played, in game pixels. */
+  box: Box;
+  startedAtMs: number;
+  endedAtMs: number | null;
+  timeScale: number;
+}
 
 export interface SlotFiveState {
   gameId: 'slot-five';
@@ -58,6 +74,23 @@ export interface SlotFiveState {
   lastResolveMs: number;
   lastCasts: CastState[];
   castsInFlight: number;
+  /** Fast-mode switch (brief 4.11). Kept across matches in the session, false after a page reload. */
+  fastMode: boolean;
+  /** Time scale captured for the latest turn: 1 or sfFastFactor. */
+  lastTimeScale: number;
+  /** Planned foeWait of the latest foe turn, eff(sfFoeDelayMs). */
+  lastFoeDelayMs: number;
+  /** VFX keys loaded so far, sorted alphabetically. */
+  vfxLoaded: string[];
+  /** VFX sprites currently shown. */
+  vfxPlaying: number;
+  vfxLog: VfxLogEntry[];
+  /** Element of the running match (sfElement snapshot), 0..3. */
+  element: number;
+  /** Icons the RNG can draw in this match: [element, 4, 5, 6, 7]. */
+  activeIcons: number[];
+  /** Icons listed by the legend, in row order. */
+  legendIcons: number[];
 }
 
 const zeroEffects = (): SlotFiveLastEffects => ({ damage: 0, heal: 0, shield: 0, absorbed: 0, hpLoss: 0, healed: 0 });
@@ -79,7 +112,8 @@ const BOXES = {
   playerHud: [16, 732, 200, 28],
   foeHud: [324, 732, 200, 28],
   panel: [0, 768, 540, 192],
-  helpBtn: [60, 832, 64, 64],
+  helpBtn: [20, 832, 64, 64],
+  fastBtn: [96, 832, 64, 64],
   spinBtn: [170, 820, 200, 88],
   newBtn: [400, 832, 96, 64],
 } as const satisfies Record<string, Box>;
@@ -146,7 +180,9 @@ const FLOAT_RISE_PX = 8;
 const FLOAT_MS = 650;
 
 /** DOM buttons. */
-const BUTTON_FONT_PX = { spin: 34, new: 20, help: 36, close: 30 };
+const BUTTON_FONT_PX = { spin: 34, new: 20, help: 36, close: 30, fast: 18 };
+/** #sf-fast colours, mirrored from index.html so layout.texts can report them; on and off differ in background. */
+const FAST_BUTTON_COLORS = { off: { color: '#ffffff', bg: '#2e3560' }, on: { color: '#14162b', bg: '#ffe14d' } };
 const BUTTON_MIN_FONT_PX = 12;
 /** A pointer release is followed by a click within this window; that click must not fire the button again. */
 const BUTTON_GHOST_CLICK_MS = 700;
@@ -191,12 +227,11 @@ function iconShape(icon: number): Pt[] {
 }
 
 /** Animation timing, copied from TUNING when a match starts so mid-match slider changes wait for the next match. */
-interface MatchTiming extends CastTiming {
-  spinBaseMs: number;
-  reelStopGapMs: number;
-  stopBounceMs: number;
+interface MatchTiming {
+  /** Normal-speed timings; each turn uses a copy scaled by its captured time scale. */
+  base: TurnTiming;
   reelSpeed: number;
-  foeDelayMs: number;
+  fastFactor: number;
 }
 
 /** One shot of the last turn, as reported in getState().lastCasts. Times are ms from entering resolving. */
@@ -239,6 +274,14 @@ interface FighterView {
   shieldText: Phaser.GameObjects.Text;
 }
 
+/** A VFX being played: its log entry, its sprites (two for a sheet with a light pass) and its planned end. */
+interface ActiveVfx { entry: VfxLogEntry; sprites: Phaser.GameObjects.Sprite[]; endsAt: number; cast: CastState | null }
+
+/** Depths: chain flashes sit on the reels; shots, hits and blocks fly above the fighters, under the floats. */
+const VFX_DEPTH: Record<VfxKind, number> = { flash: 3.5, proj: 7, hit: 7.1, block: 7.2 };
+/** Shots whose art points along the flight: fire and frost turn to atan2(dy, dx); the others keep their own spin. */
+const ROTATING_PROJ = new Set<SfVfxKey>(['sf_proj_fire', 'sf_proj_frost']);
+
 interface FloatView { side: Side; lane: 0 | 1; label: Phaser.GameObjects.Text }
 
 /** A canvas text that layout.texts reports, with the colour of what is behind it. */
@@ -267,6 +310,19 @@ export class SlotFiveScene extends Phaser.Scene {
   private displayShield: Record<Side, number> = { player: 0, foe: 0 };
   private legendOpen = false;
   private lastResolveMs = 0;
+  /** Not reset by create(): it lasts for the page session, across matches and restarts. */
+  private fastMode = false;
+  private lastTimeScale = 1;
+  private lastFoeDelayMs = 0;
+  /** Timings of the current or latest turn, already scaled by lastTimeScale. */
+  private turnTiming!: TurnTiming;
+  private fastButton: HTMLElement | null = null;
+  private vfxLog: VfxLogEntry[] = [];
+  private activeVfx: ActiveVfx[] = [];
+  /** Hit VFX played in this match, mirrored to data-sf-vfx-hits. */
+  private matchVfxHits = 0;
+  /** Last values written to the #game data flags, so the DOM is touched only on change. */
+  private domFlags: Record<string, string> = {};
   private lastCasts: CastState[] = [];
   private castGraphics!: Phaser.GameObjects.Graphics;
   /** Next lane per side for floats, so back-to-back impacts on one side alternate lanes. */
@@ -282,6 +338,8 @@ export class SlotFiveScene extends Phaser.Scene {
   private legend!: Phaser.GameObjects.Container;
   private legendHeader!: Phaser.GameObjects.Text;
   private legendTexts: Phaser.GameObjects.Text[] = [];
+  private legendImages: Phaser.GameObjects.Image[] = [];
+  private legendIcons: number[] = [];
 
   /** One AbortController owns every DOM listener, so a restart can never leave a second copy bound. */
   private inputBindings: AbortController | null = null;
@@ -303,6 +361,7 @@ export class SlotFiveScene extends Phaser.Scene {
     this.floats = new Set();
     this.hudTexts = [];
     this.legendTexts = [];
+    this.legendImages = [];
     this.playback = null;
     this.legendOpen = false;
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.releaseInput());
@@ -323,9 +382,14 @@ export class SlotFiveScene extends Phaser.Scene {
 
     // Match k of the session uses seed sfSeed + k. TUNING is snapshotted when the match starts.
     this.matchIndex = 0;
+    this.activeVfx = [];
+    this.domFlags = {};
     this.startMatch(TUNING.sfSeed + this.matchIndex);
     this.bindInput();
     this.syncButtons();
+    // Loads in the background, once per page; the match never waits for it.
+    void loadSlotFiveVfx(this.game);
+    this.syncDomFlags();
   }
 
   update(_time: number, delta: number): void {
@@ -334,6 +398,7 @@ export class SlotFiveScene extends Phaser.Scene {
     this.advancePlayback(now, delta);
     this.drawHud();
     this.syncButtons();
+    this.syncDomFlags();
   }
 
   getState(): SlotFiveState {
@@ -357,7 +422,7 @@ export class SlotFiveScene extends Phaser.Scene {
       rejectedSpins: this.rejectedSpins,
       lastReject: this.lastReject,
       reelsStopped: this.reelsStopped,
-      lastSpinMs: this.timing.spinBaseMs + (SF_COLS - 1) * this.timing.reelStopGapMs,
+      lastSpinMs: spinMsFor(this.turnTiming),
       lastReelStopMs: [...this.lastReelStopMs],
       highlightedChainCount: this.highlighted.length,
       highlightedCells: new Set(this.highlighted.flatMap((c) => c.cells.map(([x, y]) => y * SF_COLS + x))).size,
@@ -371,6 +436,17 @@ export class SlotFiveScene extends Phaser.Scene {
       lastResolveMs: this.lastResolveMs,
       lastCasts: this.lastCasts.map((c) => ({ ...c, from: [...c.from] as [number, number], to: [...c.to] as [number, number] })),
       castsInFlight: this.lastCasts.filter((c) => c.launchedAtMs !== null && c.impactedAtMs === null).length,
+      fastMode: this.fastMode,
+      lastTimeScale: this.lastTimeScale,
+      lastFoeDelayMs: this.lastFoeDelayMs,
+      vfxLoaded: loadedSlotFiveVfxKeys(),
+      vfxPlaying: this.countVfxSprites(),
+      element: this.battle.element,
+      activeIcons: [...this.battle.activeIcons],
+      legendIcons: [...this.legendIcons],
+      vfxLog: this.vfxLog.map((e) => ({
+        ...e, cell: e.cell ? [...e.cell] as [number, number] : null, pos: [...e.pos] as [number, number], box: [...e.box] as Box,
+      })),
     };
   }
 
@@ -410,6 +486,16 @@ export class SlotFiveScene extends Phaser.Scene {
     this.startMatch(seed, setup);
   }
 
+  /**
+   * Fast mode switch (F or #sf-fast). Allowed in any phase and never counts as a spin. A change applies from the
+   * next turn: each turn captures its time scale when it starts (brief 4.11).
+   */
+  setFastMode(on: boolean): void {
+    this.fastMode = on;
+    this.fastButton?.classList.toggle('on', on);
+    this.fastButton?.setAttribute('aria-pressed', String(on));
+  }
+
   /** The legend blocks nothing; it only covers the reels while open. */
   setLegendOpen(open: boolean): void {
     this.legendOpen = open;
@@ -435,14 +521,11 @@ export class SlotFiveScene extends Phaser.Scene {
     const battle = createSlotFiveBattle(seed, TUNING, setup);
     this.battle = battle;
     this.seed = seed;
-    this.timing = {
-      ...readCastTiming(TUNING),
-      spinBaseMs: TUNING.sfSpinBaseMs,
-      reelStopGapMs: TUNING.sfReelStopGapMs,
-      stopBounceMs: TUNING.sfStopBounceMs,
-      reelSpeed: TUNING.sfReelSpeed,
-      foeDelayMs: TUNING.sfFoeDelayMs,
-    };
+    this.timing = { base: readTurnTiming(TUNING), reelSpeed: TUNING.sfReelSpeed, fastFactor: TUNING.sfFastFactor };
+    // Until the first turn starts, the reported timings are the normal ones.
+    this.lastTimeScale = 1;
+    this.turnTiming = this.timing.base;
+    this.lastFoeDelayMs = 0;
     this.lastResolveMs = 0;
     this.lastCasts = [];
     this.castGraphics.clear();
@@ -457,6 +540,9 @@ export class SlotFiveScene extends Phaser.Scene {
     this.lastReelStopMs = [];
     this.highlighted = [];
     this.clearFloats();
+    this.clearVfx(null);
+    this.vfxLog = [];
+    this.matchVfxHits = 0;
     const { player, foe } = battle.getState();
     this.displayHp = { player: player.hp, foe: foe.hp };
     this.displayShield = { player: player.shield, foe: foe.shield };
@@ -481,10 +567,13 @@ export class SlotFiveScene extends Phaser.Scene {
     this.lastEffects = { ...result.effects, absorbed: result.absorbed, hpLoss: result.hpLoss, healed: result.healed };
     // The spinner's old shield expires as its turn starts (brief 4.5 step 2).
     this.displayShield[result.side] = 0;
+    if (result.side === 'player') this.captureTurnScale();
     this.playback = { side: result.side, result, startedAt: now, resolveStartAt: Infinity };
-    this.lastResolveMs = resolveMsFor(result.chains, this.timing);
+    this.lastResolveMs = resolveMsFor(result.chains, this.turnTiming);
     this.lastCasts = this.planCasts(result.side, result.chains);
     this.castGraphics.clear();
+    this.clearVfx(null);
+    this.vfxLog = [];
     this.phase = 'spinning';
     this.reelsStopped = 0;
     this.lastReelStopMs = [];
@@ -507,7 +596,7 @@ export class SlotFiveScene extends Phaser.Scene {
       for (let x = 0; x < SF_COLS; x++) {
         const reel = this.reels[x];
         if (reel.stopped) continue;
-        if (elapsed >= this.timing.spinBaseMs + x * this.timing.reelStopGapMs) {
+        if (elapsed >= this.turnTiming.spinBaseMs + x * this.turnTiming.reelStopGapMs) {
           this.settleReel(x);
           reel.stoppedAt = now;
           this.reelsStopped += 1;
@@ -521,6 +610,7 @@ export class SlotFiveScene extends Phaser.Scene {
         pb.resolveStartAt = now;
         this.highlighted = pb.result.chains;
         this.drawHighlights();
+        this.spawnChainFlashes();
       }
     }
     this.bounceReels(now);
@@ -534,16 +624,28 @@ export class SlotFiveScene extends Phaser.Scene {
   private advanceResolve(pb: TurnPlayback, now: number): void {
     const elapsed = now - pb.resolveStartAt;
     this.castGraphics.clear();
-    for (const cast of this.lastCasts) {
-      if (cast.launchedAtMs === null && elapsed >= cast.launchMs) cast.launchedAtMs = elapsed;
+    this.lastCasts.forEach((cast, castIndex) => {
+      if (cast.launchedAtMs === null && elapsed >= cast.launchMs) {
+        cast.launchedAtMs = elapsed;
+        this.spawnProjectile(cast, castIndex, elapsed);
+      }
       if (cast.launchedAtMs !== null && cast.impactedAtMs === null && elapsed >= cast.impactMs) {
         cast.impactedAtMs = elapsed;
-        this.applyCast(cast);
+        // The shot is removed exactly when its impact starts.
+        for (const vfx of this.activeVfx.filter((v) => v.entry.kind === 'proj' && v.entry.castIndex === castIndex)) {
+          this.endVfx(vfx, elapsed);
+        }
+        const absorbed = this.applyCast(cast);
+        this.spawnImpact(cast, castIndex, absorbed, elapsed);
       }
-      if (cast.launchedAtMs !== null && cast.impactedAtMs === null) this.drawCast(cast, elapsed);
-    }
+      // Fallback dot only when the shot flipbook could not be loaded.
+      const hasProj = this.activeVfx.some((v) => v.entry.kind === 'proj' && v.entry.castIndex === castIndex);
+      if (cast.launchedAtMs !== null && cast.impactedAtMs === null && !hasProj) this.drawCast(cast, elapsed);
+    });
+    this.updateVfx(elapsed);
     if (elapsed >= this.lastResolveMs) {
       this.castGraphics.clear();
+      this.clearVfx(elapsed);
       // Safety net only: with every shot applied the display already equals the logic.
       const final = this.battle.getState();
       for (const s of SIDES) {
@@ -555,8 +657,8 @@ export class SlotFiveScene extends Phaser.Scene {
     }
   }
 
-  /** One shot lands: only its target's fields change, by this chain's share (brief 4.10). */
-  private applyCast(cast: CastState): void {
+  /** One shot lands: only its target's fields change, by this chain's share (brief 4.10). Returns the shield absorbed. */
+  private applyCast(cast: CastState): number {
     const t = cast.target;
     if (cast.kind === 'heal') {
       const maxHp = this.battle.getState()[t].maxHp;
@@ -573,6 +675,135 @@ export class SlotFiveScene extends Phaser.Scene {
       this.displayHp[t] -= hpLoss;
       this.floatText(t, `-${hpLoss}`, COLORS.red);
       if (absorbed > 0) this.floatText(t, `chặn ${absorbed}`, COLORS.blue);
+      return absorbed;
+    }
+    return 0;
+  }
+
+  // --- VFX (brief 4.12): display only, never touches timing, logic or state --------------------
+
+  /**
+   * Starts a flipbook at (x, y). Its frame rate is fps / lastTimeScale, so in fast mode it is shorter by the same
+   * factor. A key that is not loaded is skipped and leaves no log entry.
+   */
+  private spawnVfx(key: SfVfxKey, kind: VfxKind, x: number, y: number, elapsed: number,
+    extra: { castIndex?: number; cell?: [number, number]; tint?: number; rotation?: number; cast?: CastState } = {}): ActiveVfx | null {
+    const vfx = getSlotFiveVfx(key);
+    if (!vfx) return null;
+    const { meta } = vfx;
+    const scale = this.lastTimeScale;
+    const sprites = vfx.layers.map((layer) => {
+      const sprite = this.add.sprite(x, y, layer.texture, 0)
+        .setOrigin(meta.pivot[0], meta.pivot[1])
+        .setBlendMode(layer.blend)
+        .setDepth(VFX_DEPTH[kind])
+        .setRotation(extra.rotation ?? 0);
+      if (extra.tint !== undefined) sprite.setTint(extra.tint);
+      sprite.play({ key: layer.anim, frameRate: meta.fps / scale, repeat: meta.loop ? -1 : 0 });
+      return sprite;
+    });
+    const entry: VfxLogEntry = {
+      key, kind, castIndex: extra.castIndex ?? null, cell: extra.cell ?? null, pos: [x, y],
+      box: this.boxOf(sprites[0]), startedAtMs: elapsed, endedAtMs: null, timeScale: scale,
+    };
+    this.vfxLog.push(entry);
+    const active: ActiveVfx = {
+      entry, sprites, cast: extra.cast ?? null,
+      // A loop runs until its impact; a one-shot ends after its own frames.
+      endsAt: meta.loop ? Infinity : elapsed + (meta.frames / meta.fps) * 1000 * scale,
+    };
+    this.activeVfx.push(active);
+    return active;
+  }
+
+  /** Every distinct cell of the turn's chains flashes once, tinted by its icon, lucky chains included. */
+  private spawnChainFlashes(): void {
+    const seen = new Set<number>();
+    for (const chain of this.highlighted) {
+      for (const [x, y] of chain.cells) {
+        if (seen.has(y * SF_COLS + x)) continue;
+        seen.add(y * SF_COLS + x);
+        const [cx, cy] = this.cellCenter(x, y);
+        this.spawnVfx('sf_chain_flash', 'flash', cx, cy, 0, { cell: [x, y], tint: ICON_COLORS[this.grid[y][x]] });
+      }
+    }
+  }
+
+  private spawnProjectile(cast: CastState, castIndex: number, elapsed: number): void {
+    const iconKey = SF_ICON_KEYS[this.lastChains[cast.chainIndex].icon];
+    const key = `sf_proj_${iconKey}` as SfVfxKey;
+    const rotation = ROTATING_PROJ.has(key) ? Math.atan2(cast.to[1] - cast.from[1], cast.to[0] - cast.from[0]) : 0;
+    this.spawnVfx(key, 'proj', cast.from[0], cast.from[1], elapsed, { castIndex, rotation, cast });
+  }
+
+  /** Exactly one hit per shot at the target fighter; a block on top when the shown shield absorbed some damage. */
+  private spawnImpact(cast: CastState, castIndex: number, absorbed: number, elapsed: number): void {
+    const iconKey = SF_ICON_KEYS[this.lastChains[cast.chainIndex].icon];
+    const [x, y] = cast.to;
+    if (this.spawnVfx(`sf_hit_${iconKey}` as SfVfxKey, 'hit', x, y, elapsed, { castIndex })) this.matchVfxHits += 1;
+    if (cast.kind === 'damage' && absorbed > 0) this.spawnVfx('sf_block', 'block', x, y, elapsed, { castIndex });
+  }
+
+  /** Moves shots along their straight path, grows the logged boxes and ends one-shots on their planned time. */
+  private updateVfx(elapsed: number): void {
+    for (const vfx of [...this.activeVfx]) {
+      const cast = vfx.cast;
+      if (vfx.entry.kind === 'proj' && cast) {
+        const span = cast.impactMs - cast.launchMs;
+        const t = span > 0 ? Math.max(0, Math.min(1, (elapsed - cast.launchMs) / span)) : 1;
+        const x = cast.from[0] + (cast.to[0] - cast.from[0]) * t;
+        const y = cast.from[1] + (cast.to[1] - cast.from[1]) * t;
+        for (const sprite of vfx.sprites) sprite.setPosition(x, y);
+      }
+      const box = this.boxOf(vfx.sprites[0]);
+      if (box[2] * box[3] > vfx.entry.box[2] * vfx.entry.box[3]) vfx.entry.box = box;
+      if (elapsed >= vfx.endsAt) this.endVfx(vfx, elapsed);
+    }
+  }
+
+  private endVfx(vfx: ActiveVfx, elapsed: number | null): void {
+    for (const sprite of vfx.sprites) sprite.destroy();
+    if (vfx.entry.endedAtMs === null && elapsed !== null) vfx.entry.endedAtMs = elapsed;
+    this.activeVfx = this.activeVfx.filter((v) => v !== vfx);
+  }
+
+  /** Ends everything still playing; with a time it is recorded as their end, without one (new turn or match) it is not. */
+  private clearVfx(elapsed: number | null): void {
+    for (const vfx of [...this.activeVfx]) this.endVfx(vfx, elapsed);
+  }
+
+  private countVfxSprites(): number {
+    return this.activeVfx.reduce((n, vfx) => n + vfx.sprites.filter((s) => s.active && s.visible).length, 0);
+  }
+
+  private boxOf(sprite: Phaser.GameObjects.Sprite): Box {
+    const b = sprite.getBounds();
+    return [Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, Math.round(b.width * 10) / 10, Math.round(b.height * 10) / 10];
+  }
+
+  private cellCenter(x: number, y: number): [number, number] {
+    return [GRID_X + x * CELL_PITCH + CELL_PX / 2, GRID_Y + y * CELL_PITCH + CELL_PX / 2];
+  }
+
+  /**
+   * Read-only data flags on #game (brief C12.14) for tests of the release build, which has no window.__game.
+   * They only mirror state and control nothing.
+   */
+  private syncDomFlags(): void {
+    const el = document.getElementById('game');
+    if (!el) return;
+    const flags: Record<string, string> = {
+      'data-sf-ready': 'true',
+      'data-vfx-loaded': String(SF_VFX_KEYS.every((key) => getSlotFiveVfx(key) !== undefined)),
+      'data-sf-spin-index': String(this.battle.getState().spinIndex),
+      'data-sf-phase': this.phase,
+      'data-sf-last-casts': String(this.lastCasts.length),
+      'data-sf-vfx-hits': String(this.matchVfxHits),
+    };
+    for (const [name, value] of Object.entries(flags)) {
+      if (this.domFlags[name] === value) continue;
+      this.domFlags[name] = value;
+      el.setAttribute(name, value);
     }
   }
 
@@ -599,12 +830,18 @@ export class SlotFiveScene extends Phaser.Scene {
         centres.reduce((s, c) => s + c[0], 0) / centres.length,
         centres.reduce((s, c) => s + c[1], 0) / centres.length,
       ];
-      const launchMs = this.timing.castDelayMs + k * this.timing.castStaggerMs;
+      const launchMs = this.turnTiming.castDelayMs + k * this.turnTiming.castStaggerMs;
       return {
         chainIndex, kind: chain.kind, target, from, to: [fx + fw / 2, fy + fh / 2], value: chain.value,
-        launchMs, impactMs: launchMs + this.timing.castFlightMs, launchedAtMs: null, impactedAtMs: null,
+        launchMs, impactMs: launchMs + this.turnTiming.castFlightMs, launchedAtMs: null, impactedAtMs: null,
       };
     });
+  }
+
+  /** Freezes the time scale of the turn that starts now (brief 4.11). */
+  private captureTurnScale(): void {
+    this.lastTimeScale = this.fastMode ? this.timing.fastFactor : 1;
+    this.turnTiming = scaleTurnTiming(this.timing.base, this.lastTimeScale);
   }
 
   /** Phase that follows from the battle state: ended, waiting for the foe, or waiting for the player. */
@@ -613,7 +850,10 @@ export class SlotFiveScene extends Phaser.Scene {
     if (status !== 'playing') this.phase = 'ended';
     else if (turn === 'foe') {
       this.phase = 'foeWait';
-      this.foeSpinAt = this.time.now + this.timing.foeDelayMs;
+      // The foe's turn starts here: its scale covers foeWait, spinning and resolving.
+      this.captureTurnScale();
+      this.lastFoeDelayMs = this.turnTiming.foeDelayMs;
+      this.foeSpinAt = this.time.now + this.lastFoeDelayMs;
     } else this.phase = 'idle';
   }
 
@@ -628,6 +868,10 @@ export class SlotFiveScene extends Phaser.Scene {
     const texts = this.hudTexts
       .filter(({ text }) => text.active && text.visible && text.text !== '' && this.isShown(text))
       .map(({ id, text, bg }) => ({ id, fontPx: Number.parseFloat(String(text.style.fontSize)), color: String(text.style.color), bg: bg() }));
+    if (this.fastButton) {
+      const c = this.fastMode ? FAST_BUTTON_COLORS.on : FAST_BUTTON_COLORS.off;
+      texts.push({ id: 'fastBtn', fontPx: BUTTON_FONT_PX.fast, color: c.color, bg: c.bg });
+    }
     for (const { side, label } of this.floats) {
       texts.push({ id: `float-${side}`, fontPx: FLOAT_FONT_PX, color: String(label.style.color), bg: COLORS.page });
     }
@@ -668,7 +912,7 @@ export class SlotFiveScene extends Phaser.Scene {
 
   /** Decorative strip only: it uses Math.random, never the logic RNG. */
   private scrollReel(reel: ReelView, delta: number): void {
-    reel.offset += this.timing.reelSpeed * delta;
+    reel.offset += (this.timing.reelSpeed / this.lastTimeScale) * delta;
     while (reel.offset >= CELL_PITCH) {
       reel.offset -= CELL_PITCH;
       reel.icons.pop();
@@ -696,7 +940,7 @@ export class SlotFiveScene extends Phaser.Scene {
 
   /** A small drop and settle right after a column stops; it never delays the next stop. */
   private bounceReels(now: number): void {
-    const ms = this.timing.stopBounceMs;
+    const ms = this.turnTiming.stopBounceMs;
     for (const reel of this.reels) {
       if (!reel.stopped) continue;
       const t = ms > 0 ? (now - reel.stoppedAt) / ms : 1;
@@ -881,7 +1125,7 @@ export class SlotFiveScene extends Phaser.Scene {
       y: laneTop,
       alpha: { from: 1, to: 0 },
       ease: 'Cubic.easeIn',
-      duration: FLOAT_MS,
+      duration: Math.round(FLOAT_MS * this.lastTimeScale),
       onComplete: () => this.removeFloat(view),
     });
   }
@@ -912,17 +1156,20 @@ export class SlotFiveScene extends Phaser.Scene {
       fontFamily: FONT, fontSize: `${LEGEND_HEADER_PX}px`, color: COLORS.muted, resolution: 2,
     });
     const children: Phaser.GameObjects.GameObject[] = [bg, title, this.legendHeader];
+    // Row slots; updateLegend fills one per icon in use (brief v5: only the match's active icons).
+    this.legendImages = [];
     const rowTop = ly + 90;
     const rowH = (lh - 90 - 12) / SF_ICON_COUNT;
-    for (let icon = 0; icon < SF_ICON_COUNT; icon++) {
-      const cy = rowTop + icon * rowH + rowH / 2;
-      children.push(this.add.image(lx + 40, cy, `${ICON_TEXTURE_PREFIX}${icon}`).setDisplaySize(32, 32));
+    for (let slot = 0; slot < SF_ICON_COUNT; slot++) {
+      const cy = rowTop + slot * rowH + rowH / 2;
+      const image = this.add.image(lx + 40, cy, `${ICON_TEXTURE_PREFIX}0`).setDisplaySize(32, 32);
       const text = this.add.text(lx + 68, cy, '', {
         fontFamily: FONT, fontSize: `${LEGEND_ROW_PX}px`, color: COLORS.white, resolution: 2,
       }).setOrigin(0, 0.5);
+      this.legendImages.push(image);
       this.legendTexts.push(text);
-      children.push(text);
-      this.registerText(`legend-${icon}`, text, () => COLORS.legend);
+      children.push(image, text);
+      this.registerText(`legend-${slot}`, text, () => COLORS.legend);
     }
     this.registerText('legendTitle', title, () => COLORS.legend);
     this.registerText('legendHeader', this.legendHeader, () => COLORS.legend);
@@ -933,11 +1180,20 @@ export class SlotFiveScene extends Phaser.Scene {
   private updateLegend(): void {
     const config = readEffectConfig(TUNING);
     this.legendHeader.setText(`Giá trị cho chuỗi 3 ô. Chuỗi dài 4 ×${config.len4Mult}`);
-    this.legendTexts.forEach((text, icon) => {
+    this.legendIcons = [...this.battle.activeIcons];
+    this.legendTexts.forEach((text, slot) => {
+      const icon = this.legendIcons[slot];
+      const image = this.legendImages[slot];
+      if (icon === undefined) {
+        text.setText('').setVisible(false);
+        image.setVisible(false);
+        return;
+      }
       const name = SF_ICON_NAMES[icon];
       const value = config.base[icon];
       const kind = SF_ICON_KINDS[icon];
-      text.setText(
+      image.setTexture(`${ICON_TEXTURE_PREFIX}${icon}`).setDisplaySize(32, 32).setVisible(true);
+      text.setVisible(true).setText(
         kind === 'damage' ? `${name}: sát thương ${value}`
           : kind === 'heal' ? `${name}: hồi ${value} máu`
             : kind === 'shield' ? `${name}: khiên chặn ${value}`
@@ -970,10 +1226,13 @@ export class SlotFiveScene extends Phaser.Scene {
     this.newButton = document.getElementById('sf-new');
     this.helpButton = document.getElementById('sf-help');
     this.helpCloseButton = document.getElementById('sf-help-close');
+    this.fastButton = document.getElementById('sf-fast');
     if (this.spinButton) this.bindButton(this.spinButton, () => this.spin(), signal);
     if (this.newButton) this.bindButton(this.newButton, () => this.newMatch(), signal);
     if (this.helpButton) this.bindButton(this.helpButton, () => this.setLegendOpen(!this.legendOpen), signal);
     if (this.helpCloseButton) this.bindButton(this.helpCloseButton, () => this.setLegendOpen(false), signal);
+    if (this.fastButton) this.bindButton(this.fastButton, () => this.setFastMode(!this.fastMode), signal);
+    this.setFastMode(this.fastMode);
     this.setLegendOpen(this.legendOpen);
     this.buttonRect = { left: NaN, top: NaN, width: NaN };
   }
@@ -994,12 +1253,14 @@ export class SlotFiveScene extends Phaser.Scene {
     const isR = event.key.toLowerCase() === 'r';
     const isHelp = event.key.toLowerCase() === 'h' || event.key === '?';
     const isEscape = event.key === 'Escape';
-    if (!isSpace && !isEnter && !isR && !isHelp && !isEscape) return;
+    const isFast = event.key.toLowerCase() === 'f';
+    if (!isSpace && !isEnter && !isR && !isHelp && !isEscape && !isFast) return;
     // Stops page scroll on Space and stops Enter or Space from also clicking a focused DOM button.
     event.preventDefault();
     // Holding a key never repeats a command: OS auto-repeat is dropped.
     if (event.repeat) return;
-    if (isHelp) this.setLegendOpen(!this.legendOpen);
+    if (isFast) this.setFastMode(!this.fastMode);
+    else if (isHelp) this.setLegendOpen(!this.legendOpen);
     else if (isEscape) this.setLegendOpen(false);
     else if (isR) this.newMatch();
     // Enter starts a new match only once the end of the match is on screen.
@@ -1076,6 +1337,7 @@ export class SlotFiveScene extends Phaser.Scene {
     place(this.spinButton, BOXES.spinBtn, BUTTON_FONT_PX.spin);
     place(this.newButton, BOXES.newBtn, BUTTON_FONT_PX.new);
     place(this.helpButton, BOXES.helpBtn, BUTTON_FONT_PX.help);
+    place(this.fastButton, BOXES.fastBtn, BUTTON_FONT_PX.fast);
     place(this.helpCloseButton, HELP_CLOSE_BOX, BUTTON_FONT_PX.close);
   }
 

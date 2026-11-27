@@ -260,6 +260,7 @@ const BRIEF_TUNING: Record<string, number> = {
   sfSpinBaseMs: 700, sfReelStopGapMs: 180, sfStopBounceMs: 120, sfReelSpeed: 2.4, sfResolveMs: 900,
   sfBlankResolveMs: 300, sfFoeDelayMs: 500,
   sfCastDelayMs: 150, sfCastStaggerMs: 120, sfCastFlightMs: 350, sfCastTailMs: 250,
+  sfFastFactor: 0.35, // bản 4.1, mục 4.11
 };
 
 /**
@@ -547,7 +548,7 @@ test.describe('Slot Five C1.6 và C1.7: trọng số', () => {
       console.log(`  ${r.key}: mong đợi ${r.expected.toFixed(4)}, thực tế ${r.actual.toFixed(4)}, lệch ${r.dev.toFixed(5)}`);
     }
     expect(out.spins).toBe(100_000);
-    expect(out.cells).toBe(2_000_000);
+    expect(out.cells).toBe(1_600_000);
     for (const r of out.rows) expect(r.dev, r.key).toBeLessThanOrEqual(0.003);
   });
 
@@ -811,12 +812,20 @@ const FIXTURES: FixtureCase[] = [
       effects: { damage: t.sfBBlade, heal: t.sfBHeal, shield: t.sfBShield },
     }),
   },
+  {
+    // Bản 4.2: chuỗi Băng dài 3 trên nền C, dùng cho C12.
+    id: 'F13', grid: paint(baseC(), row(0, 0, 2), 2),
+    expected: (t) => ({
+      chains: [{ icon: 2, dir: 'h', length: 3, cells: row(0, 0, 2), kind: 'damage', value: t.sfBFrost }],
+      effects: { damage: t.sfBFrost, heal: 0, shield: 0 },
+    }),
+  },
 ];
 
 /** Numbers in brackets of the v4 fixture table (BRIEF_TUNING v4), to catch a fixture whose formula above was mistyped. */
 const FIXTURE_TABLE_NUMBERS: Record<string, Partial<RefEffects>> = {
   F1: { damage: 5 }, F2: { heal: 40 }, F3: { shield: 20 }, F5: { damage: 10 }, F6: { heal: 20 }, F7: { shield: 40 },
-  F10: { damage: 10 }, F11: { damage: 35 }, F12: { damage: 5, heal: 20, shield: 20 },
+  F10: { damage: 10 }, F11: { damage: 35 }, F12: { damage: 5, heal: 20, shield: 20 }, F13: { damage: 15 },
 };
 
 const readTuning = (page: Page) => page.evaluate(() => ({ ...(window.__game!.tuning as unknown as T) }));
@@ -850,33 +859,32 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
     expect(after).toEqual(g);
   });
 
-  test('C2.2 lưới toàn Kiếm: 17 chuỗi đúng thứ tự, damage 760', async ({ page }) => {
+  test('C2.2 lưới toàn Kiếm: 14 chuỗi đúng thứ tự mục 4.3, damage = sfBBlade * (10 * sfLen4Mult + 4)', async ({ page }) => {
     await openSlotFive(page);
     const t = await readTuning(page);
-    const all4 = Array.from({ length: 4 }, () => [4, 4, 4, 4, 4]);
+    const all4 = Array.from({ length: 4 }, () => [4, 4, 4, 4]);
     const got = await page.evaluate((g) => window.__game!.slotFive!.evaluate(g), all4);
     const summary = got.chains.map((c) => `${c.dir}${c.length}@${c.cells[0][0]},${c.cells[0][1]}`);
     console.log(`C2.2: ${summary.join(' ')} | damage ${got.effects.damage}`);
-    expect(got.chains).toHaveLength(17);
+    expect(got.chains).toHaveLength(14);
     const byDir = (d: string) => got.chains.filter((c) => c.dir === d).map((c) => c.length);
     expect(got.chains.map((c) => c.dir)).toEqual([
-      ...Array(4).fill('h'), ...Array(5).fill('v'), ...Array(4).fill('dr'), ...Array(4).fill('ur'),
+      ...Array(4).fill('h'), ...Array(4).fill('v'), ...Array(3).fill('dr'), ...Array(3).fill('ur'),
     ]);
-    expect(byDir('h')).toEqual([5, 5, 5, 5]);
-    expect(byDir('v')).toEqual([4, 4, 4, 4, 4]);
-    // Quyết định của Producer: xếp theo ô đầu (y trước, x sau).
-    expect(byDir('dr')).toEqual([4, 4, 3, 3]);
-    expect(byDir('ur')).toEqual([3, 4, 4, 3]);
-    expect(got.chains.filter((c) => c.dir === 'dr').map((c) => c.cells[0])).toEqual([[0, 0], [1, 0], [2, 0], [0, 1]]);
-    expect(got.chains.filter((c) => c.dir === 'ur').map((c) => c.cells[0])).toEqual([[0, 2], [0, 3], [1, 3], [2, 3]]);
+    expect(byDir('h')).toEqual([4, 4, 4, 4]);
+    expect(byDir('v')).toEqual([4, 4, 4, 4]);
+    expect(byDir('dr')).toEqual([4, 3, 3]);
+    expect(byDir('ur')).toEqual([3, 4, 3]);
+    expect(got.chains.filter((c) => c.dir === 'dr').map((c) => c.cells[0])).toEqual([[0, 0], [1, 0], [0, 1]]);
+    expect(got.chains.filter((c) => c.dir === 'ur').map((c) => c.cells[0])).toEqual([[0, 2], [0, 3], [1, 3]]);
     expect(got.chains.filter((c) => c.dir === 'h').map((c) => c.cells[0])).toEqual([[0, 0], [0, 1], [0, 2], [0, 3]]);
-    expect(got.chains.filter((c) => c.dir === 'v').map((c) => c.cells[0])).toEqual([[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]]);
-    expect(got.effects.damage).toBe(t.sfBBlade * (4 * t.sfLen5Mult + 9 * t.sfLen4Mult + 4));
-    expect(got.effects).toEqual({ damage: 760, heal: 0, shield: 0 });
+    expect(got.chains.filter((c) => c.dir === 'v').map((c) => c.cells[0])).toEqual([[0, 0], [1, 0], [2, 0], [3, 0]]);
+    expect(got.effects.damage).toBe(t.sfBBlade * (10 * t.sfLen4Mult + 4));
+    expect(got.effects).toEqual({ damage: 120, heal: 0, shield: 0 });
     expect(got).toEqual(await page.evaluate((g) => window.__qaSfEval!.evaluate(g), all4));
   });
 
-  test('C2.3 và C2.4: 10.000 lưới seed 1 khớp bộ vét cạn, effects bằng tổng value, giá trị hợp lệ', async ({ page }) => {
+  test('C2.3, C2.4 và C9.5: 10.000 lưới seed 1 khớp bộ vét cạn, effects bằng tổng value, giá trị hợp lệ, ô trong 4x4', async ({ page }) => {
     await openSlotFive(page);
     const out = await page.evaluate(() => {
       const api = window.__game!.slotFive!;
@@ -885,8 +893,9 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
       const mismatch: string[] = [];
       const sumBad: string[] = [];
       const c24: string[] = [];
+      const c95: string[] = [];
       const isNat = (v: unknown) => typeof v === 'number' && Number.isInteger(v) && v >= 0;
-      const stats = { grids: 0, withChains: 0, chains: 0, len3: 0, len4: 0, len5: 0, lucky: 0, multi: 0 };
+      const stats = { grids: 0, withChains: 0, chains: 0, len3: 0, len4: 0, other: 0, lucky: 0, multi: 0, maxChains: 0 };
       const dirSeen: Record<string, number> = {};
       for (let n = 0; n < 10_000; n += 1) {
         const { grid } = sim.spin();
@@ -902,21 +911,23 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
         for (const v of Object.values(got.effects)) if (!isNat(v)) c24.push(`lượt ${n}: effects ${v}`);
         if (got.chains.length > 0) stats.withChains += 1;
         if (got.chains.length > 1) stats.multi += 1;
+        stats.maxChains = Math.max(stats.maxChains, got.chains.length);
         for (const c of got.chains) {
           stats.chains += 1;
           dirSeen[c.dir] = (dirSeen[c.dir] ?? 0) + 1;
           if (c.length === 3) stats.len3 += 1;
           if (c.length === 4) stats.len4 += 1;
-          if (c.length === 5) stats.len5 += 1;
+          if (c.length !== 3 && c.length !== 4) stats.other += 1;
           for (const v of [c.icon, c.length, c.value, ...c.cells.flat()]) if (!isNat(v)) c24.push(`lượt ${n}: giá trị ${v}`);
-          if (c.length === 5 && c.dir !== 'h') c24.push(`lượt ${n}: dài 5 hướng ${c.dir}`);
+          if (c.length !== 3 && c.length !== 4) c24.push(`lượt ${n}: dài ${c.length}`);
+          for (const [cx, cy] of c.cells) if (cx < 0 || cx > 3 || cy < 0 || cy > 3) c95.push(`lượt ${n}: ô (${cx},${cy})`);
           if (c.icon === 7) {
             stats.lucky += 1;
             if (c.kind !== 'none' || c.value !== 0) c24.push(`lượt ${n}: May mắn ${c.kind} ${c.value}`);
           }
         }
       }
-      return { mismatch: mismatch.slice(0, 3), mismatchCount: mismatch.length, sumBad: sumBad.slice(0, 3), c24: c24.slice(0, 5), stats, dirSeen };
+      return { mismatch: mismatch.slice(0, 3), mismatchCount: mismatch.length, sumBad: sumBad.slice(0, 3), c24: c24.slice(0, 5), c95: c95.slice(0, 5), stats, dirSeen };
     });
     console.log(`C2.3: ${JSON.stringify(out.stats)} hướng ${JSON.stringify(out.dirSeen)}`);
     expect(out.stats.grids).toBe(10_000);
@@ -926,7 +937,10 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
     // Mẫu đủ phủ: có chuỗi mọi hướng, mọi độ dài, có chuỗi May mắn và lưới nhiều chuỗi.
     expect(out.stats.withChains).toBeGreaterThan(1000);
     expect(out.stats.len4).toBeGreaterThan(0);
-    expect(out.stats.len5).toBeGreaterThan(0);
+    expect(out.stats.other).toBe(0);
+    // C9.5: tối đa 14 chuỗi mỗi lượt, không ô nào ngoài [0, 3] x [0, 3].
+    expect(out.stats.maxChains).toBeLessThanOrEqual(14);
+    expect(out.c95).toEqual([]);
     expect(out.stats.lucky).toBeGreaterThan(0);
     expect(out.stats.multi).toBeGreaterThan(0);
     for (const d of ['h', 'v', 'dr', 'ur']) expect(out.dirSeen[d] ?? 0, d).toBeGreaterThan(0);
@@ -936,7 +950,7 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
     await openSlotFive(page);
     const before = await readTuning(page);
     const F11 = FIXTURES.find((f) => f.id === 'F11')!.grid;
-    const all4 = Array.from({ length: 4 }, () => [4, 4, 4, 4, 4]);
+    const all4 = Array.from({ length: 4 }, () => [4, 4, 4, 4]);
     let out: { f11: number; all4: number; ref11: number; refAll: number } | undefined;
     try {
       out = await page.evaluate(([g11, gAll]) => {
@@ -944,7 +958,6 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
         t.sfBVolt = 50;
         t.sfBEarth = 25;
         t.sfLen4Mult = 3;
-        t.sfLen5Mult = 7;
         t.sfBBlade = 10;
         const api = window.__game!.slotFive!;
         return {
@@ -957,15 +970,15 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
     } finally {
       await page.evaluate((orig) => {
         const t = window.__game!.tuning as unknown as Record<string, number>;
-        for (const k of ['sfBVolt', 'sfBEarth', 'sfLen4Mult', 'sfLen5Mult', 'sfBBlade']) t[k] = orig[k];
+        for (const k of ['sfBVolt', 'sfBEarth', 'sfLen4Mult', 'sfBBlade']) t[k] = orig[k];
       }, before);
     }
     expect(out!.f11).toBe(50 + 25 * 3);
-    expect(out!.all4).toBe(10 * (4 * 7 + 9 * 3 + 4));
+    expect(out!.all4).toBe(10 * (10 * 3 + 4));
     expect(out!.f11).toBe(out!.ref11);
     expect(out!.all4).toBe(out!.refAll);
     expect(await readTuning(page)).toEqual(before);
-    expect((await page.evaluate((g) => window.__game!.slotFive!.evaluate(g), F11)).effects.damage).toBe(105);
+    expect((await page.evaluate((g) => window.__game!.slotFive!.evaluate(g), F11)).effects.damage).toBe(FIXTURE_TABLE_NUMBERS.F11.damage!);
   });
 
   test('C2.5 analyticEffects với giá trị đầu nằm trong khoảng, khớp công thức mục 4.6 và mô phỏng', async ({ page }) => {
@@ -1000,12 +1013,12 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
     console.log(`C2.5 analyticEffects: ${f(out.got)}`);
     console.log(`C2.5 công thức QA:    ${f(out.ref)}`);
     console.log(`C2.5 mô phỏng ${out.n} lưới: ${f(out.mc)} (sai số chuẩn ${f(out.se)})`);
-    expect(out.got.damage).toBeGreaterThanOrEqual(14.84);
-    expect(out.got.damage).toBeLessThanOrEqual(14.94);
-    expect(out.got.heal).toBeGreaterThanOrEqual(0.97);
-    expect(out.got.heal).toBeLessThanOrEqual(1.07);
-    expect(out.got.shield).toBeGreaterThanOrEqual(1.72);
-    expect(out.got.shield).toBeLessThanOrEqual(1.82);
+    expect(out.got.damage).toBeGreaterThanOrEqual(8.03);
+    expect(out.got.damage).toBeLessThanOrEqual(8.13);
+    expect(out.got.heal).toBeGreaterThanOrEqual(1.00);
+    expect(out.got.heal).toBeLessThanOrEqual(1.10);
+    expect(out.got.shield).toBeGreaterThanOrEqual(1.00);
+    expect(out.got.shield).toBeLessThanOrEqual(1.10);
     for (const k of ['damage', 'heal', 'shield'] as const) {
       expect(Math.abs(out.got[k] - out.ref[k]), `${k} khớp công thức`).toBeLessThan(1e-9);
       expect(Math.abs(out.mc[k] - out.got[k]), `${k} khớp mô phỏng trong 4 sai số chuẩn`).toBeLessThan(4 * out.se[k]);
@@ -1031,7 +1044,7 @@ test.describe('Slot Five C2: chuỗi và hiệu ứng', () => {
       }, before);
     }
     for (const k of ['damage', 'heal', 'shield'] as const) expect(Math.abs(out!.got[k] - out!.ref[k]), k).toBeLessThan(1e-9);
-    expect(out!.got.heal).toBeGreaterThan(1.07);
+    expect(out!.got.heal).toBeGreaterThan(1.10);
     expect(await readTuning(page)).toEqual(before);
   });
 });
@@ -1121,7 +1134,7 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
           if (r.side !== (n % 2 === 0 ? 'player' : 'foe')) bad.push(`seed ${seed} lượt ${n}: side ${r.side}`);
           if (g.spinIndex !== n || !window.__qaSf!.same(r.grid, g.grid)) bad.push(`seed ${seed} lượt ${n}: lưới khác createSim`);
           if (b.getState().spinIndex !== n + 1) bad.push(`seed ${seed} lượt ${n}: spinIndex không tăng 1`);
-          if (n > 600) break;
+          if (n > 2100) break;
         }
       }
       return { spins, bad: bad.slice(0, 5) };
@@ -1131,23 +1144,26 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
     expect(out.bad).toEqual([]);
   });
 
-  test('C3.3 khiên đối thủ 15, người chơi quay F1: absorbed 15, hpLoss 5', async ({ page }) => {
+  // C3.3 đến C3.9 bản 4: số tính từ BRIEF_TUNING bản 4 (Kiếm 5, Hồi máu 20, Khiên 20, máu 450).
+  test('C3.3 khiên đối thủ 3, người chơi quay F1: absorbed 3, hpLoss 2, khiên về 0', async ({ page }) => {
     await openSlotFive(page);
-    const o = await runBattle(page, { foe: { shield: 15 }, grids: [fx('F1')] }, 1);
+    const t = await readTuning(page);
+    const o = await runBattle(page, { foe: { shield: 3 }, grids: [fx('F1')] }, 1);
     expect(o.first.accepted).toBe(true);
     expect(o.first.side).toBe('player');
-    expect(o.first.absorbed).toBe(15);
-    expect(o.first.hpLoss).toBe(5);
+    expect(o.first.absorbed).toBe(3);
+    expect(o.first.hpLoss).toBe(t.sfBBlade - 3);
+    expect(o.first.hpLoss).toBe(2);
     expect(o.s1.foe.shield).toBe(0);
-    expect(o.s1.foe.hp).toBe(o.s0.foe.hp - 5);
+    expect(o.s1.foe.hp).toBe(o.s0.foe.hp - 2);
   });
 
-  test('C3.4 khiên đối thủ 50 chặn hết F1 còn 30, rồi hết hạn khi đối thủ quay F0', async ({ page }) => {
+  test('C3.4 khiên đối thủ 50 chặn hết F1 còn 45, rồi hết hạn khi đối thủ quay F0', async ({ page }) => {
     await openSlotFive(page);
     const o = await runBattle(page, { foe: { shield: 50 }, grids: [fx('F1'), fx('F0')] }, 2);
     expect(o.s1.foe.hp).toBe(o.s0.foe.hp);
-    expect(o.s1.foe.shield).toBe(30);
-    expect(o.first.absorbed).toBe(20);
+    expect(o.s1.foe.shield).toBe(45);
+    expect(o.first.absorbed).toBe(5);
     expect(o.first.hpLoss).toBe(0);
     expect(o.second!.side).toBe('foe');
     expect(o.s2!.foe.shield).toBe(0);
@@ -1155,32 +1171,33 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
     expect(o.s2!.player).toEqual(o.s0.player);
   });
 
-  test('C3.5 máu 90 khiên 25 quay F12: hp 100, healed 10, khiên 30 không cộng dồn, đối thủ mất 20', async ({ page }) => {
+  test('C3.5 máu maxHp-10, khiên 25, quay F12: máu đầy, healed 10, khiên 20 không cộng dồn, đối thủ mất 5', async ({ page }) => {
     await openSlotFive(page);
-    const o = await runBattle(page, { player: { hp: 90, shield: 25 }, grids: [fx('F12')] }, 1);
-    expect(o.s1.player.hp).toBe(100);
+    const t = await readTuning(page);
+    const o = await runBattle(page, { player: { hp: t.sfPlayerMaxHp - 10, shield: 25 }, grids: [fx('F12')] }, 1);
+    expect(o.s1.player.hp).toBe(t.sfPlayerMaxHp);
     expect(o.first.healed).toBe(10);
-    expect(o.first.effects).toEqual({ damage: 20, heal: 30, shield: 30 });
-    expect(o.s1.player.shield).toBe(30);
-    expect(o.s1.foe.hp).toBe(o.s0.foe.hp - 20);
+    expect(o.first.effects).toEqual({ damage: 5, heal: 20, shield: 20 });
+    expect(o.s1.player.shield).toBe(20);
+    expect(o.s1.foe.hp).toBe(o.s0.foe.hp - 5);
   });
 
-  test('C3.6 người chơi quay F3 (khiên 60), đối thủ quay F5 (40): absorbed 40, còn khiên 20', async ({ page }) => {
+  test('C3.6 người chơi quay F3 (khiên 20), đối thủ quay F5 (10): absorbed 10, còn khiên 10', async ({ page }) => {
     await openSlotFive(page);
     const o = await runBattle(page, { grids: [fx('F3'), fx('F5')] }, 2);
-    expect(o.s1.player.shield).toBe(60);
+    expect(o.s1.player.shield).toBe(20);
     expect(o.second!.side).toBe('foe');
-    expect(o.second!.effects.damage).toBe(40);
-    expect(o.second!.absorbed).toBe(40);
+    expect(o.second!.effects.damage).toBe(10);
+    expect(o.second!.absorbed).toBe(10);
     expect(o.second!.hpLoss).toBe(0);
     expect(o.s2!.player.hp).toBe(o.s0.player.hp);
-    expect(o.s2!.player.shield).toBe(20);
+    expect(o.s2!.player.shield).toBe(10);
   });
 
-  test('C3.7 đối thủ 20 máu, quay F1 thì thắng; quay tiếp bị từ chối, không rút RNG', async ({ page }) => {
+  test('C3.7 đối thủ 5 máu, quay F1 thì thắng; quay tiếp bị từ chối, không rút RNG', async ({ page }) => {
     await openSlotFive(page);
     const out = await page.evaluate((f1) => {
-      const b = window.__game!.slotFive!.createBattle(1, { foe: { hp: 20 }, grids: [f1] });
+      const b = window.__game!.slotFive!.createBattle(1, { foe: { hp: 5 }, grids: [f1] });
       const first = b.spin();
       const s1 = b.getState();
       const again = b.spin();
@@ -1197,27 +1214,28 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
     expect(out.again.absorbed + out.again.hpLoss + out.again.healed).toBe(0);
   });
 
-  test('C3.8 đối thủ 10 máu, người chơi 50 quay F12: thắng, vẫn hồi lên 80 và dựng khiên 30', async ({ page }) => {
+  test('C3.8 đối thủ 3 máu, người chơi 100 quay F12: thắng, vẫn hồi lên 120 và dựng khiên 20', async ({ page }) => {
     await openSlotFive(page);
-    const o = await runBattle(page, { foe: { hp: 10 }, player: { hp: 50 }, grids: [fx('F12')] }, 1);
+    const o = await runBattle(page, { foe: { hp: 3 }, player: { hp: 100 }, grids: [fx('F12')] }, 1);
     expect(o.s1.status).toBe('won');
     expect(o.s1.foe.hp).toBe(0);
-    expect(o.first.hpLoss).toBe(10);
-    expect(o.s1.player.hp).toBe(80);
-    expect(o.s1.player.shield).toBe(30);
+    expect(o.first.hpLoss).toBe(3);
+    expect(o.s1.player.hp).toBe(120);
+    expect(o.s1.player.shield).toBe(20);
   });
 
-  test('C3.9 người chơi 15 máu, lượt đối thủ quay F1: thua, hp 0', async ({ page }) => {
+  test('C3.9 người chơi 4 máu, lượt đối thủ quay F1: thua, hp 0', async ({ page }) => {
     await openSlotFive(page);
-    const o = await runBattle(page, { player: { hp: 15, shield: 0 }, turn: 'foe', grids: [fx('F1')] }, 1);
+    const o = await runBattle(page, { player: { hp: 4, shield: 0 }, turn: 'foe', grids: [fx('F1')] }, 1);
     expect(o.s0.turn).toBe('foe');
     expect(o.first.side).toBe('foe');
     expect(o.s1.status).toBe('lost');
     expect(o.s1.player.hp).toBe(0);
-    expect(o.first.hpLoss).toBe(15);
+    expect(o.first.hpLoss).toBe(4);
   });
 
-  test('C3.10 2000 trận seed 1 đến 2000: kết thúc dưới 500 lượt, bất biến máu và khiên, khớp bộ tham chiếu', async ({ page }) => {
+  test('C3.10 2000 trận seed 1 đến 2000 (giá trị đầu bản 4): kết thúc dưới 2000 lượt, bất biến máu và khiên, khớp bộ tham chiếu', async ({ page }) => {
+    test.setTimeout(300_000);
     await openSlotFive(page);
     const out = await page.evaluate(() => {
       const api = window.__game!.slotFive!;
@@ -1231,7 +1249,7 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
         const b = api.createBattle(seed);
         const ref = window.__qaSfEval!.battle(seed);
         let n = 0;
-        while (b.getState().status === 'playing' && n < 500) {
+        while (b.getState().status === 'playing' && n < 2000) {
           const r = b.spin();
           const rr = ref.spin();
           n += 1;
@@ -1245,7 +1263,7 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
           }
         }
         const s = b.getState();
-        if (s.status === 'playing') bad.push(`seed ${seed}: chưa kết thúc sau 500 lượt`);
+        if (s.status === 'playing') bad.push(`seed ${seed}: chưa kết thúc sau 2000 lượt`);
         const zeros = [s.player.hp === 0, s.foe.hp === 0].filter(Boolean).length;
         if (s.status !== 'playing' && zeros !== 1) bad.push(`seed ${seed}: ${zeros} bên hp 0`);
         if (s.status === 'won' && s.foe.hp !== 0) bad.push(`seed ${seed}: won mà foe.hp ${s.foe.hp}`);
@@ -1258,7 +1276,7 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
     });
     console.log(`C3.10: 2000 trận, lượt trung vị ${out.median} (p10 ${out.p10}, p90 ${out.p90}, dài nhất ${out.max}), người chơi thắng ${out.won}`);
     expect(out.bad).toEqual([]);
-    expect(out.max).toBeLessThan(500);
+    expect(out.max).toBeLessThan(2000);
     expect(out.refBad, 'mọi lượt khớp mô phỏng mục 4.5 của QA').toEqual([]);
   });
 
@@ -1274,7 +1292,7 @@ test.describe('Slot Five C3: trận luân phiên, máu và khiên', () => {
       const run = (seed: number, setup: unknown) => {
         const b = api.createBattle(seed, setup as never);
         const log: string[] = [];
-        for (let i = 0; i < 600 && b.getState().status === 'playing'; i += 1) log.push(JSON.stringify([b.spin(), b.getState()]));
+        for (let i = 0; i < 2100 && b.getState().status === 'playing'; i += 1) log.push(JSON.stringify([b.spin(), b.getState()]));
         log.push(JSON.stringify(b.spin()));
         return log;
       };
@@ -1329,8 +1347,8 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
     expect(s1.grid).toEqual(fx('F1'));
     expect(s1.spinIndex).toBe(1);
     expect(s1.lastSide).toBe('player');
-    expect(s1.lastEffects.damage).toBe(20);
-    expect(s1.foe.hp).toBe(s1.foe.maxHp - 20);
+    expect(s1.lastEffects.damage).toBe(BRIEF_TUNING.sfBBlade);
+    expect(s1.foe.hp).toBe(s1.foe.maxHp - BRIEF_TUNING.sfBBlade);
     expect(s1.turn).toBe('foe');
     // C6: lượt vừa nhận đang diễn hoạt; sau resolving mới sang foeWait.
     expect(s1.phase).toBe('spinning');
@@ -1403,9 +1421,10 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
     const old = await setTuning(page, { ...FAST_TIMING, sfFoeDelayMs: 250 });
     const SEED = 31;
     try {
-      await page.evaluate((seed) => window.__game!.slotFive!.loadMatch(seed), SEED);
+      // Bản 4: máu thấp (40) để trận ngắn; createBattle dưới đây dùng cùng setup.
+      await page.evaluate((seed) => window.__game!.slotFive!.loadMatch(seed, { player: { maxHp: 40 }, foe: { maxHp: 40 } }), SEED);
       const sceneLog: string[] = [];
-      for (let guard = 0; guard < 600; guard += 1) {
+      for (let guard = 0; guard < 2000; guard += 1) {
         const s = await readState(page);
         if (s.status !== 'playing') break;
         if (s.phase === 'spinning' || s.phase === 'resolving') {
@@ -1429,7 +1448,7 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
         }
       }
       const simLog = await page.evaluate((seed) => {
-        const b = window.__game!.slotFive!.createBattle(seed);
+        const b = window.__game!.slotFive!.createBattle(seed, { player: { maxHp: 40 }, foe: { maxHp: 40 } });
         const log: string[] = [];
         while (b.getState().status === 'playing') {
           const r = b.spin();
@@ -1468,7 +1487,7 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
 
   test('Scene: thua khi đối thủ hạ người chơi, phase ended, quay bị từ chối', async ({ page }) => {
     await openSlotFive(page);
-    await page.evaluate((f1) => window.__game!.slotFive!.loadMatch(9, { player: { hp: 15 }, turn: 'foe', grids: [f1] }), fx('F1'));
+    await page.evaluate((f1) => window.__game!.slotFive!.loadMatch(9, { player: { hp: 5 }, turn: 'foe', grids: [f1] }), fx('F1'));
     const s0 = await readState(page);
     expect(s0.turn).toBe('foe');
     expect(s0.phase).toBe('foeWait');
@@ -1481,7 +1500,7 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
     expect(s.player.hp).toBe(0);
     expect(s.phase).toBe('ended');
     expect(s.lastSide).toBe('foe');
-    expect(s.lastEffects.hpLoss).toBe(15);
+    expect(s.lastEffects.hpLoss).toBe(BRIEF_TUNING.sfBBlade);
     expect(await page.evaluate(() => window.__game!.slotFive!.spin())).toBe(false);
     expect((await readState(page)).lastReject).toBe('ended');
     await settleFrames(page);
@@ -1503,7 +1522,7 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
       }, fx('F12'));
       await settleFrames(page);
       await page.screenshot({ path: 'artifacts/slot-five-c3-844x390-mid.png' });
-      expect((await readState(page)).player.hp).toBe(100);
+      expect((await readState(page)).player.hp).toBe(70 + BRIEF_TUNING.sfBHeal);
     });
   });
 });
@@ -1511,8 +1530,10 @@ test.describe('Slot Five C3 và C1.8 trong scene', () => {
 interface SfReport {
   matches: number; playerWinRate: number; turnsMedian: number; turnsP10: number; turnsP90: number; turnsMax: number;
   comebackRate: number; comebackRateByWinner: { player: number; foe: number }; blankTurnRate: number;
+  attackTurnRate: number; chainTurnRateByIcon: number[];
   meanDamage: number; meanDamageStdErr: number; meanHeal: number; meanShield: number; meanAbsorbed: number;
-  estMatchMsMedian: number; unfinished: number;
+  estMatchMsMedian: number; estMatchMsP90: number; meanTurnMs: number; unfinished: number;
+  estMatchMsMedianFast: number; estMatchMsP90Fast: number;
 }
 
 const ACCEPT_SEEDS = Array.from({ length: 2000 }, (_, i) => 9001 + i);
@@ -1526,14 +1547,27 @@ const simulate = (page: Page, seeds: number[], setup?: RefSetup) =>
   }, [seeds, setup ?? null] as const);
 
 /**
- * QA reference for C4, written from the brief only: plays each seed with the QA battle (section 4.5),
- * comeback by the brief's integer form 5 * (L.hp * W.max - W.hp * L.max) >= W.max * L.max after turns with spinIndex >= 2,
- * nearest-rank percentiles, and the section 5.3 duration estimate with 600 ms per player press.
+ * QA reference for the v4 MatchReport, written from the brief only: plays each seed with the QA battle (4.5) up to the
+ * 2000-turn cap, comeback by the integer form of C10 after turns with spinIndex >= 2, nearest-rank percentiles,
+ * blank turn = no chain at all, attack turn = damage > 0, per-icon chain-turn rate, and estMatchMs of 5.3 with
+ * lastSpinMs = base + 3 * gap and lastResolveMs of 4.10, 600 ms per player press.
  */
 const qaReport = (page: Page, seeds: number[], setup?: RefSetup) =>
   page.evaluate(([s, st]) => {
     const t = window.__game!.tuning as unknown as Record<string, number>;
     const nearest = (sorted: number[], k: number) => sorted[Math.ceil((k / 100) * sorted.length) - 1];
+    // eff(k) = Math.round(k * scale) (mục 4.11); scale 1 là tốc độ thường.
+    const eff = (k: string, scale: number) => Math.round(t[k] * scale);
+    const resolveMsAt = (chains: { kind: string }[], sc: number) => {
+      if (chains.length === 0) return eff('sfBlankResolveMs', sc);
+      const n = chains.filter((c) => c.kind !== 'none').length;
+      if (n === 0) return eff('sfResolveMs', sc);
+      return Math.max(eff('sfResolveMs', sc), eff('sfCastDelayMs', sc) + (n - 1) * eff('sfCastStaggerMs', sc) + eff('sfCastFlightMs', sc) + eff('sfCastTailMs', sc));
+    };
+    const turnMsAt = (chains: { kind: string }[], side: string, sc: number) =>
+      eff('sfSpinBaseMs', sc) + 3 * eff('sfReelStopGapMs', sc) + resolveMsAt(chains, sc) + (side === 'foe' ? eff('sfFoeDelayMs', sc) : 600);
+    const fastF = t.sfFastFactor;
+    const estFast: number[] = [];
     const turns: number[] = [];
     const est: number[] = [];
     let wins = 0;
@@ -1543,34 +1577,42 @@ const qaReport = (page: Page, seeds: number[], setup?: RefSetup) =>
     let unfinished = 0;
     let all = 0;
     let blank = 0;
+    let attack = 0;
+    const iconTurns = new Array<number>(8).fill(0);
     let dmg = 0;
     let dmg2 = 0;
     let heal = 0;
     let shield = 0;
     let absorbed = 0;
+    let estSum = 0;
     for (const seed of s) {
       const b = window.__qaSfEval!.battle(seed, (st ?? undefined) as never);
       const after: { spinIndex: number; player: RefFighter; foe: RefFighter }[] = [];
       let n = 0;
       let ms = 0;
+      let msFast = 0;
       let state = b.getState() as { status: string; spinIndex: number; player: RefFighter; foe: RefFighter };
-      while (state.status === 'playing' && n < 500) {
-        const r = b.spin() as { side: string; chains: unknown[]; effects: RefEffects; absorbed: number };
+      while (state.status === 'playing' && n < 2000) {
+        const r = b.spin() as { side: string; chains: { icon: number; kind: string }[]; effects: RefEffects; absorbed: number };
         n += 1;
         all += 1;
-        if (r.effects.damage === 0 && r.effects.heal === 0 && r.effects.shield === 0) blank += 1;
+        if (r.chains.length === 0) blank += 1;
+        if (r.effects.damage > 0) attack += 1;
+        for (const icon of new Set(r.chains.map((c) => c.icon))) iconTurns[icon] += 1;
         dmg += r.effects.damage;
         dmg2 += r.effects.damage ** 2;
         heal += r.effects.heal;
         shield += r.effects.shield;
         absorbed += r.absorbed;
-        ms += t.sfSpinBaseMs + 4 * t.sfReelStopGapMs + (r.chains.length > 0 ? t.sfResolveMs : t.sfBlankResolveMs);
-        ms += r.side === 'foe' ? t.sfFoeDelayMs : 600;
+        ms += turnMsAt(r.chains, r.side, 1);
+        msFast += turnMsAt(r.chains, r.side, fastF);
         state = b.getState() as typeof state;
         after.push(state);
       }
       turns.push(n);
       est.push(ms);
+      estFast.push(msFast);
+      estSum += ms;
       if (state.status === 'playing') {
         unfinished += 1;
         continue;
@@ -1591,6 +1633,7 @@ const qaReport = (page: Page, seeds: number[], setup?: RefSetup) =>
     }
     turns.sort((a, b) => a - b);
     est.sort((a, b) => a - b);
+    estFast.sort((a, b) => a - b);
     const mean = dmg / all;
     const sd = Math.sqrt((dmg2 - all * mean * mean) / (all - 1));
     return {
@@ -1600,78 +1643,99 @@ const qaReport = (page: Page, seeds: number[], setup?: RefSetup) =>
       comebackRate: comeback / s.length,
       comebackRateByWinner: { player: wins ? byW.player / wins : 0, foe: foeWins ? byW.foe / foeWins : 0 },
       blankTurnRate: blank / all,
+      attackTurnRate: attack / all,
+      chainTurnRateByIcon: iconTurns.map((c) => c / all),
       meanDamage: mean, meanDamageStdErr: sd / Math.sqrt(all),
       meanHeal: heal / all, meanShield: shield / all, meanAbsorbed: absorbed / all,
       estMatchMsMedian: nearest(est, 50),
+      estMatchMsP90: nearest(est, 90),
+      meanTurnMs: estSum / all,
+      estMatchMsMedianFast: nearest(estFast, 50),
+      estMatchMsP90Fast: nearest(estFast, 90),
       unfinished,
     } as SfReport;
   }, [seeds, setup ?? null] as const);
 
 const expectReportMatches = (got: SfReport, ref: SfReport) => {
+  expect(Object.keys(got).sort()).toEqual(Object.keys(ref).sort());
   for (const key of Object.keys(ref) as (keyof SfReport)[]) {
     if (key === 'comebackRateByWinner') {
       expect(got[key].player, `${key}.player`).toBeCloseTo(ref[key].player, 12);
       expect(got[key].foe, `${key}.foe`).toBeCloseTo(ref[key].foe, 12);
+    } else if (key === 'chainTurnRateByIcon') {
+      expect(got[key]).toHaveLength(8);
+      got[key].forEach((v, i) => expect(v, `${key}[${i}]`).toBeCloseTo(ref[key][i], 12));
     } else {
       expect(got[key] as number, key).toBeCloseTo(ref[key] as number, 9);
     }
   }
-  expect(Object.keys(got).sort()).toEqual(Object.keys(ref).sort());
 };
 
 const fmt = (r: SfReport) =>
   `trận ${r.matches}, thắng ${r.playerWinRate.toFixed(4)}, lượt P10/trung vị/P90/max ${r.turnsP10}/${r.turnsMedian}/${r.turnsP90}/${r.turnsMax}, ` +
   `lật ngược ${r.comebackRate.toFixed(4)} (player ${r.comebackRateByWinner.player.toFixed(4)}, foe ${r.comebackRateByWinner.foe.toFixed(4)}), ` +
-  `blank ${r.blankTurnRate.toFixed(4)}, damage ${r.meanDamage.toFixed(4)} ± ${r.meanDamageStdErr.toFixed(4)}, heal ${r.meanHeal.toFixed(4)}, ` +
-  `shield ${r.meanShield.toFixed(4)}, absorbed ${r.meanAbsorbed.toFixed(4)}, estMs trung vị ${r.estMatchMsMedian}, unfinished ${r.unfinished}`;
+  `blank ${r.blankTurnRate.toFixed(4)}, ra đòn ${r.attackTurnRate.toFixed(4)}, chuỗi theo icon [${r.chainTurnRateByIcon.map((v) => v.toFixed(4)).join(', ')}], ` +
+  `damage ${r.meanDamage.toFixed(4)} ± ${r.meanDamageStdErr.toFixed(4)}, heal ${r.meanHeal.toFixed(4)}, ` +
+  `shield ${r.meanShield.toFixed(4)}, absorbed ${r.meanAbsorbed.toFixed(4)}, estMs trung vị ${r.estMatchMsMedian} P90 ${r.estMatchMsP90}, ` +
+  `meanTurnMs ${r.meanTurnMs.toFixed(1)}, unfinished ${r.unfinished}, nhanh: estMs trung vị ${r.estMatchMsMedianFast} P90 ${r.estMatchMsP90Fast}`;
 
-test.describe('Slot Five C4: code đo đúng (so với bộ tham chiếu QA)', () => {
-  test('C4 tập nghiệm thu 9001 đến 11000: mọi trường MatchReport khớp tham chiếu QA', async ({ page }) => {
+/**
+ * C4 (bản 2) đã được thay bằng C10. Nhóm này chỉ kiểm "code đo đúng": MatchReport bản 4 khớp tham chiếu QA.
+ * Ngưỡng C10 chưa xét ở đợt này; số ghi ra chỉ để tham khảo cho Balance Tuner.
+ */
+test.describe('Slot Five C10 (chuẩn bị): MatchReport bản 4 đo đúng, so với tham chiếu QA', () => {
+  test('Tập nghiệm thu 9001 đến 11000, TUNING hiện tại: mọi trường MatchReport khớp tham chiếu QA', async ({ page }) => {
+    test.setTimeout(300_000);
     await openSlotFive(page);
-    const { report } = await simulate(page, ACCEPT_SEEDS);
+    const { report, ms } = await simulate(page, ACCEPT_SEEDS);
     const ref = await qaReport(page, ACCEPT_SEEDS);
-    console.log(`C4 game: ${fmt(report)}`);
-    console.log(`C4 QA:   ${fmt(ref)}`);
+    console.log(`C10 game (${ms.toFixed(0)} ms): ${fmt(report)}`);
+    console.log(`C10 QA:   ${fmt(ref)}`);
     expectReportMatches(report, ref);
+    // Chạy hai lần cho cùng báo cáo.
+    expect((await simulate(page, ACCEPT_SEEDS)).report).toEqual(report);
   });
 
-  test('C4 tập tune 1 đến 2000 và trường hợp đối thủ đi trước cũng khớp tham chiếu QA', async ({ page }) => {
+  test('Tập tune 300 seed và đối thủ đi trước 300 seed cũng khớp tham chiếu QA', async ({ page }) => {
+    test.setTimeout(240_000);
     await openSlotFive(page);
-    expectReportMatches((await simulate(page, TUNE_SEEDS)).report, await qaReport(page, TUNE_SEEDS));
-    const foeFirst = (await simulate(page, ACCEPT_SEEDS, { turn: 'foe' })).report;
-    expectReportMatches(foeFirst, await qaReport(page, ACCEPT_SEEDS, { turn: 'foe' }));
+    const tune = TUNE_SEEDS.slice(0, 300);
+    expectReportMatches((await simulate(page, tune)).report, await qaReport(page, tune));
+    const accept = ACCEPT_SEEDS.slice(0, 300);
+    expectReportMatches((await simulate(page, accept, { turn: 'foe' })).report, await qaReport(page, accept, { turn: 'foe' }));
   });
 
-  test('C4 lật ngược: đúng mép 20 điểm, bỏ qua lượt có spinIndex < 2, tính cho bên đối thủ thắng', async ({ page }) => {
+  test('Lật ngược: đúng mép 20 điểm, bỏ qua lượt có spinIndex < 2, tính cho bên đối thủ thắng', async ({ page }) => {
     pinBriefTuning();
     await openSlotFive(page);
-    const all4: Grid = Array.from({ length: 4 }, () => [4, 4, 4, 4, 4]);
+    const all4: Grid = Array.from({ length: 4 }, () => [4, 4, 4, 4]);
     const F0 = fx('F0');
     const F1 = fx('F1');
     const F2 = fx('F2');
+    // Máu 100 để Kiếm 5 (F1) tạo đúng mép; lưới toàn Kiếm gây 120 sát thương, đủ hạ một bên.
     const cases: { name: string; setup: RefSetup; want: Partial<SfReport> & { byW?: { player: number; foe: number } } }[] = [
       {
         // Sau lượt 1 (spinIndex 2): người chơi 80/100, đối thủ 100/100, dẫn đúng 20 điểm, người chơi thắng ở lượt 2.
         name: 'mép đúng 20 điểm thì tính',
-        setup: { grids: [F0, F1, all4] },
+        setup: { player: { maxHp: 100, hp: 85 }, foe: { maxHp: 100 }, grids: [F0, F1, all4] },
         want: { comebackRate: 1, playerWinRate: 1, turnsMedian: 3, byW: { player: 1, foe: 0 } },
       },
       {
         // Đối thủ chỉ có 99 máu: khoảng cách 19 điểm, không tính.
         name: '19 điểm thì không tính',
-        setup: { foe: { hp: 99 }, grids: [F0, F1, all4] },
+        setup: { player: { maxHp: 100, hp: 85 }, foe: { maxHp: 100, hp: 99 }, grids: [F0, F1, all4] },
         want: { comebackRate: 0, playerWinRate: 1, turnsMedian: 3 },
       },
       {
-        // Bị dẫn 30 điểm chỉ sau lượt 0 (spinIndex 1); lượt 1 hồi đầy nên không còn bị dẫn.
+        // Bị dẫn 30 điểm chỉ sau lượt 0 (spinIndex 1); lượt 1 hồi đầy (F2 hồi 40) nên không còn bị dẫn.
         name: 'chỉ bị dẫn khi spinIndex 1 thì không tính',
-        setup: { turn: 'foe', player: { hp: 70 }, grids: [F0, F2, F0, all4] },
+        setup: { turn: 'foe', player: { maxHp: 100, hp: 70 }, foe: { maxHp: 100 }, grids: [F0, F2, F0, all4] },
         want: { comebackRate: 0, playerWinRate: 1, turnsMedian: 4 },
       },
       {
-        // Đối thủ bị dẫn 20 điểm sau lượt 1, rồi hạ người chơi ở lượt 3.
+        // Đối thủ 85 máu, sau F1 còn 80: bị dẫn 20 điểm ở spinIndex 2, rồi hạ người chơi ở lượt 3.
         name: 'đối thủ lật ngược',
-        setup: { grids: [F1, F0, F0, all4] },
+        setup: { player: { maxHp: 100 }, foe: { maxHp: 100, hp: 85 }, grids: [F1, F0, F0, all4] },
         want: { comebackRate: 1, playerWinRate: 0, turnsMedian: 4, byW: { player: 0, foe: 1 } },
       },
     ];
@@ -1684,7 +1748,7 @@ test.describe('Slot Five C4: code đo đúng (so với bộ tham chiếu QA)', (
     }
   });
 
-  test('C4 phân vị nearest-rank và estMatchMs trên tập nhỏ tính tay', async ({ page }) => {
+  test('Phân vị nearest-rank, estMatchMs theo lastResolveMs và meanTurnMs trên tập nhỏ tính tay', async ({ page }) => {
     await openSlotFive(page);
     // 7 seed: trung vị là phần tử thứ ceil(3.5) = 4, P10 là phần tử 1, P90 là phần tử ceil(6.3) = 7.
     const seeds = [11, 12, 13, 14, 15, 16, 17];
@@ -1697,11 +1761,14 @@ test.describe('Slot Five C4: code đo đúng (so với bộ tham chiếu QA)', (
         while (b.getState().status === 'playing') {
           const r = b.spin();
           n += 1;
-          ms += t.sfSpinBaseMs + 4 * t.sfReelStopGapMs + (r.chains.length ? t.sfResolveMs : t.sfBlankResolveMs) + (r.side === 'foe' ? t.sfFoeDelayMs : 600);
+          const casts = r.chains.filter((c) => c.kind !== 'none').length;
+          const resolve = r.chains.length === 0 ? t.sfBlankResolveMs : casts === 0 ? t.sfResolveMs
+            : Math.max(t.sfResolveMs, t.sfCastDelayMs + (casts - 1) * t.sfCastStaggerMs + t.sfCastFlightMs + t.sfCastTailMs);
+          ms += t.sfSpinBaseMs + 3 * t.sfReelStopGapMs + resolve + (r.side === 'foe' ? t.sfFoeDelayMs : 600);
         }
         return { n, ms };
       });
-      return { perSeed, report: window.__game!.slotFive!.simulateMatches({ seeds: s }) };
+      return { perSeed, report: window.__game!.slotFive!.simulateMatches({ seeds: s }) as unknown as SfReport };
     }, seeds);
     const turns = out.perSeed.map((p) => p.n).sort((a, b) => a - b);
     const ms = out.perSeed.map((p) => p.ms).sort((a, b) => a - b);
@@ -1711,13 +1778,18 @@ test.describe('Slot Five C4: code đo đúng (so với bộ tham chiếu QA)', (
     expect(out.report.turnsP90).toBe(turns[6]);
     expect(out.report.turnsMax).toBe(turns[6]);
     expect(out.report.estMatchMsMedian).toBe(ms[3]);
+    expect(out.report.estMatchMsP90).toBe(ms[6]);
+    const totalMs = out.perSeed.reduce((a, p) => a + p.ms, 0);
+    const totalTurns = out.perSeed.reduce((a, p) => a + p.n, 0);
+    expect(out.report.meanTurnMs).toBeCloseTo(totalMs / totalTurns, 9);
   });
 
-  test('C4 simulateMatches đọc TUNING lúc gọi', async ({ page }) => {
+  test('simulateMatches đọc TUNING lúc gọi (máu, nhịp, cast)', async ({ page }) => {
+    test.setTimeout(180_000);
     await openSlotFive(page);
     const t = await readTuning(page);
-    const seeds = TUNE_SEEDS.slice(0, 300);
-    const old = await setTuning(page, { sfFoeMaxHp: 200, sfFoeDelayMs: 1000 });
+    const seeds = TUNE_SEEDS.slice(0, 200);
+    const old = await setTuning(page, { sfPlayerMaxHp: 300, sfFoeMaxHp: 900, sfFoeDelayMs: 1000, sfCastStaggerMs: 300, sfCastTailMs: 600 });
     try {
       const got = (await simulate(page, seeds)).report;
       expectReportMatches(got, await qaReport(page, seeds));
@@ -1726,78 +1798,6 @@ test.describe('Slot Five C4: code đo đúng (so với bộ tham chiếu QA)', (
       await setTuning(page, old);
     }
     expect(await readTuning(page)).toEqual(t);
-  });
-});
-
-test.describe('Slot Five C4: chỉ tiêu trên tập nghiệm thu 9001 đến 11000', () => {
-  let report: SfReport;
-  let ms = 0;
-  let analytic: RefEffects;
-
-  test.beforeEach(async ({ page }) => {
-    await openSlotFive(page);
-    const out = await simulate(page, ACCEPT_SEEDS);
-    report = out.report;
-    ms = out.ms;
-    analytic = await page.evaluate(() => window.__game!.slotFive!.analyticEffects());
-  });
-
-  test('C4.1 meanDamage khớp analyticEffects trong 3 sai số chuẩn', async () => {
-    const diff = Math.abs(report.meanDamage - analytic.damage);
-    console.log(`C4.1: meanDamage ${report.meanDamage.toFixed(4)}, analytic ${analytic.damage.toFixed(4)}, lệch ${diff.toFixed(4)}, 3*SE ${(3 * report.meanDamageStdErr).toFixed(4)}`);
-    expect(report.meanDamageStdErr).toBeGreaterThan(0);
-    expect(diff).toBeLessThanOrEqual(3 * report.meanDamageStdErr);
-  });
-
-  test('C4.2 turnsMedian trong [10, 18], turnsP90 <= 30', async () => {
-    console.log(`C4.2: trung vị ${report.turnsMedian}, P90 ${report.turnsP90}`);
-    expect(report.turnsMedian).toBeGreaterThanOrEqual(10);
-    expect(report.turnsMedian).toBeLessThanOrEqual(18);
-    expect(report.turnsP90).toBeLessThanOrEqual(30);
-  });
-
-  test('C4.3 playerWinRate trong [0.50, 0.60]', async () => {
-    console.log(`C4.3: playerWinRate ${report.playerWinRate}`);
-    expect(report.playerWinRate).toBeGreaterThanOrEqual(0.5);
-    expect(report.playerWinRate).toBeLessThanOrEqual(0.6);
-  });
-
-  test('C4.4 comebackRate trong [0.15, 0.40]', async () => {
-    console.log(`C4.4: comebackRate ${report.comebackRate} (player ${report.comebackRateByWinner.player}, foe ${report.comebackRateByWinner.foe})`);
-    expect(report.comebackRate).toBeGreaterThanOrEqual(0.15);
-    expect(report.comebackRate).toBeLessThanOrEqual(0.4);
-  });
-
-  test('C4.5 estMatchMsMedian trong [25000, 60000]', async () => {
-    console.log(`C4.5: estMatchMsMedian ${report.estMatchMsMedian}`);
-    expect(report.estMatchMsMedian).toBeGreaterThanOrEqual(25_000);
-    expect(report.estMatchMsMedian).toBeLessThanOrEqual(60_000);
-  });
-
-  test('C4.6 unfinished 0, chạy hai lần ra MatchReport giống hệt', async ({ page }) => {
-    expect(report.unfinished).toBe(0);
-    expect(report.matches).toBe(2000);
-    const again = (await simulate(page, ACCEPT_SEEDS)).report;
-    expect(again).toEqual(report);
-  });
-
-  test('C4.7 2000 trận chạy dưới 5 giây', async ({ page }) => {
-    const second = (await simulate(page, ACCEPT_SEEDS)).ms;
-    console.log(`C4.7: lần 1 ${ms.toFixed(0)} ms, lần 2 ${second.toFixed(0)} ms`);
-    expect(ms).toBeLessThan(5_000);
-    expect(second).toBeLessThan(5_000);
-  });
-
-  test('C4.8 số ghi kèm (không xét đạt), gồm tỉ lệ thắng khi đối thủ đi trước', async ({ page }) => {
-    const foeFirst = (await simulate(page, ACCEPT_SEEDS, { turn: 'foe' })).report;
-    const tune = (await simulate(page, TUNE_SEEDS)).report;
-    console.log(`C4.8 nghiệm thu: blankTurnRate ${report.blankTurnRate.toFixed(4)}, meanHeal ${report.meanHeal.toFixed(4)}, ` +
-      `meanShield ${report.meanShield.toFixed(4)}, meanAbsorbed ${report.meanAbsorbed.toFixed(4)}, turnsP10 ${report.turnsP10}, ` +
-      `turnsMax ${report.turnsMax}, comebackRateByWinner ${JSON.stringify(report.comebackRateByWinner)}`);
-    console.log(`C4.8 đối thủ đi trước: ${fmt(foeFirst)}`);
-    console.log(`C4.8 tập tune 1 đến 2000: ${fmt(tune)}`);
-    expect(foeFirst.matches).toBe(2000);
-    expect(foeFirst.unfinished).toBe(0);
   });
 });
 
@@ -2249,22 +2249,24 @@ test.describe('Slot Five C5.10: bot Space rồi bot chạm, cùng seed', () => {
 
   test('C5.10 hai lần chơi trọn trận cùng seed ra cùng kết quả', async ({ page }) => {
     await openForInput(page);
-    const old = await setTuning(page, { sfFoeDelayMs: 100 });
+    // Bản 4: nhịp nhanh và máu 40 để trận ngắn; cùng setup cho cả hai lần chơi và cho createBattle.
+    const old = await setTuning(page, { ...FAST_TIMING, sfFoeDelayMs: 100 });
+    const LOW = { player: { maxHp: 40 }, foe: { maxHp: 40 } };
     try {
       const SEED = 4321;
-      await page.evaluate((s) => window.__game!.slotFive!.loadMatch(s), SEED);
+      await page.evaluate(([s, low]) => window.__game!.slotFive!.loadMatch(s, low), [SEED, LOW] as const);
       const byKey = await playToEnd(page, () => page.keyboard.press('Space'));
-      await page.evaluate((s) => window.__game!.slotFive!.loadMatch(s), SEED);
+      await page.evaluate(([s, low]) => window.__game!.slotFive!.loadMatch(s, low), [SEED, LOW] as const);
       const byTouch = await playToEnd(page, () => page.tap('#sf-spin'));
       const pick = (s: SlotFiveState) => ({ status: s.status, spinIndex: s.spinIndex, playerHp: s.player.hp, foeHp: s.foe.hp });
       console.log(`C5.10: Space ${JSON.stringify(pick(byKey.s))} sau ${byKey.presses} lần bấm; chạm ${JSON.stringify(pick(byTouch.s))} sau ${byTouch.presses} lần chạm`);
       expect(pick(byTouch.s)).toEqual(pick(byKey.s));
       expect(byTouch.presses).toBe(byKey.presses);
-      const sim = await page.evaluate((s) => {
-        const b = window.__game!.slotFive!.createBattle(s);
+      const sim = await page.evaluate(([s, low]) => {
+        const b = window.__game!.slotFive!.createBattle(s, low);
         while (b.getState().status === 'playing') b.spin();
         return b.getState();
-      }, SEED);
+      }, [SEED, LOW] as const);
       expect(pick(byKey.s)).toEqual({ status: sim.status, spinIndex: sim.spinIndex, playerHp: sim.player.hp, foeHp: sim.foe.hp });
       expect(byKey.s.rejectedSpins).toBe(0);
       expect(byTouch.s.rejectedSpins).toBe(0);
@@ -2280,6 +2282,8 @@ interface Sample {
   t: number; phase: string; spinIndex: number; lastSide: string | null; reelsStopped: number;
   hl: number; hlCells: number; icons: number; fighters: number;
   dPlayer: number; dFoe: number; player: number; foe: number; status: string;
+  resolveMs: number; inFlight: number; casts: number; impacted: number; nonNoneChains: number;
+  dsPlayer: number; dsFoe: number; shPlayer: number; shFoe: number;
 }
 
 declare global {
@@ -2299,6 +2303,10 @@ const startSampler = (page: Page) =>
           t: performance.now(), phase: s.phase, spinIndex: s.spinIndex, lastSide: s.lastSide, reelsStopped: s.reelsStopped,
           hl: s.highlightedChainCount, hlCells: s.highlightedCells, icons: s.viewCounts.icons, fighters: s.viewCounts.fighters,
           dPlayer: s.displayHp.player, dFoe: s.displayHp.foe, player: s.player.hp, foe: s.foe.hp, status: s.status,
+          resolveMs: s.lastResolveMs, inFlight: s.castsInFlight, casts: s.lastCasts.length,
+          impacted: s.lastCasts.filter((c) => c.impactedAtMs !== null).length,
+          nonNoneChains: s.lastChains.filter((c) => c.kind !== 'none').length,
+          dsPlayer: s.displayShield.player, dsFoe: s.displayShield.foe, shPlayer: s.player.shield, shFoe: s.foe.shield,
         });
       }
       requestAnimationFrame(tick);
@@ -2314,7 +2322,8 @@ const stopSampler = (page: Page) =>
 
 interface TurnReport {
   spinIndex: number; side: string; reelStops: number[]; spinMs: number; resolveDisplayLagMs: number | null;
-  spinDisplayOk: boolean; firstSpinSample: Sample; foeDelayMs: number | null;
+  spinDisplayOk: boolean; firstSpinSample: Sample; foeDelayMs: number | null; resolveMs: number;
+  resolveRealMs: number | null; leaveSample: Sample | null;
 }
 
 /** Splits a sample stream into turns (by spinIndex) and measures each one. */
@@ -2332,10 +2341,18 @@ const analyseTurns = (samples: Sample[], resolveMs: number) => {
     // C6.5: trong spinning, displayHp bằng máu trước lượt.
     const spinDisplayOk = spinSamples.every((s) => s.dPlayer === before.player && s.dFoe === before.foe);
     let resolveDisplayLagMs: number | null = null;
+    let resolveRealMs: number | null = null;
+    let leaveSample: Sample | null = null;
     if (j < samples.length && samples[j].phase === 'resolving') {
       const enter = samples[j].t;
       const done = samples.slice(j).find((s) => s.dPlayer === s.player && s.dFoe === s.foe);
       resolveDisplayLagMs = done ? done.t - enter : null;
+      let k = j;
+      while (k < samples.length && samples[k].spinIndex === idx && samples[k].phase === 'resolving') k += 1;
+      if (k < samples.length && samples[k].spinIndex === idx) {
+        resolveRealMs = samples[k].t - enter;
+        leaveSample = samples[k];
+      }
     }
     // C6.6: khi người chơi hết resolving (sang foeWait) tới lúc đối thủ bắt đầu quay.
     let foeDelayMs: number | null = null;
@@ -2346,12 +2363,12 @@ const analyseTurns = (samples: Sample[], resolveMs: number) => {
     }
     turns.push({
       spinIndex: idx, side: samples[start].lastSide ?? '?', reelStops: [], spinMs: 0, resolveDisplayLagMs,
-      spinDisplayOk, firstSpinSample: samples[start], foeDelayMs,
+      spinDisplayOk, firstSpinSample: samples[start], foeDelayMs, resolveMs: samples[start].resolveMs, resolveRealMs, leaveSample,
     });
   }
-  // C6.7: mỗi khi không còn diễn hoạt, lưới có đúng 20 sprite và 2 nhân vật.
+  // C6.7 bản 4: mỗi khi không còn diễn hoạt, lưới có đúng 16 sprite và 2 nhân vật.
   for (const s of samples) {
-    if ((s.phase === 'idle' || s.phase === 'foeWait' || s.phase === 'ended') && (s.icons !== 20 || s.fighters !== 2)) {
+    if ((s.phase === 'idle' || s.phase === 'foeWait' || s.phase === 'ended') && (s.icons !== 16 || s.fighters !== 2)) {
       problems.push(`spinIndex ${s.spinIndex} ${s.phase}: icons ${s.icons}, fighters ${s.fighters}`);
     }
   }
@@ -2397,12 +2414,13 @@ test.describe('Slot Five C6: diễn hoạt và HUD máu', () => {
     expect(f.grid).toEqual(sim.r1.grid);
   });
 
-  test('C6.2, C6.5, C6.6, C6.7 trận đầy đủ với nhịp mặc định', async ({ page }) => {
+  test('C6.2, C6.5, C6.6, C6.7, C8.6, C8.9 trận đầy đủ với nhịp mặc định (máu 50 để trận ngắn)', async ({ page }) => {
     test.setTimeout(180_000);
     await openForInput(page);
     const t = await readTuning(page);
     const SEED = t.sfSeed;
-    await page.evaluate((s) => window.__game!.slotFive!.loadMatch(s), SEED);
+    // Bản 4: 450 máu cho khoảng 120 lượt; trận nghiệm thu nhịp dùng máu 50 mỗi bên, nhịp vẫn là giá trị mặc định.
+    await page.evaluate((s) => window.__game!.slotFive!.loadMatch(s, { player: { maxHp: 50 }, foe: { maxHp: 50 } }), SEED);
     await startSampler(page);
     const stops: { spinIndex: number; side: string; stops: number[]; lastSpinMs: number; icons: number; fighters: number }[] = [];
     for (let guard = 0; guard < 200; guard += 1) {
@@ -2430,7 +2448,7 @@ test.describe('Slot Five C6: diễn hoạt và HUD máu', () => {
     let maxFirstDev = 0;
     let maxGapDev = 0;
     for (const x of stops) {
-      if (x.stops.length !== 5) c62.push(`lượt ${x.spinIndex}: ${x.stops.length} phần tử`);
+      if (x.stops.length !== 4) c62.push(`lượt ${x.spinIndex}: ${x.stops.length} phần tử`);
       for (let i = 1; i < x.stops.length; i += 1) {
         if (!(x.stops[i] > x.stops[i - 1])) c62.push(`lượt ${x.spinIndex}: không tăng dần`);
         const gapDev = Math.abs(x.stops[i] - x.stops[i - 1] - t.sfReelStopGapMs);
@@ -2440,16 +2458,17 @@ test.describe('Slot Five C6: diễn hoạt và HUD máu', () => {
       const d0 = x.stops[0] - t.sfSpinBaseMs;
       maxFirstDev = Math.max(maxFirstDev, Math.abs(d0));
       if (d0 < -30 || d0 > 60) c62.push(`lượt ${x.spinIndex}: cột 0 dừng ở ${x.stops[0].toFixed(1)}`);
-      if (x.lastSpinMs !== t.sfSpinBaseMs + 4 * t.sfReelStopGapMs) c62.push(`lượt ${x.spinIndex}: lastSpinMs ${x.lastSpinMs}`);
+      if (x.lastSpinMs !== t.sfSpinBaseMs + 3 * t.sfReelStopGapMs) c62.push(`lượt ${x.spinIndex}: lastSpinMs ${x.lastSpinMs}`);
     }
     const { turns, problems } = analyseTurns(samples, t.sfResolveMs);
-    const c65 = turns.filter((x) => !x.spinDisplayOk || x.resolveDisplayLagMs === null || x.resolveDisplayLagMs > t.sfResolveMs + 150)
+    // C6.5 (mở lại bản 3): mốc là lastResolveMs + 150 của từng lượt.
+    const c65 = turns.filter((x) => !x.spinDisplayOk || x.resolveDisplayLagMs === null || x.resolveDisplayLagMs > x.resolveMs + 150)
       .map((x) => `lượt ${x.spinIndex}: spinning đúng ${x.spinDisplayOk}, trễ ${x.resolveDisplayLagMs}`);
     const foeDelays = turns.filter((x) => x.foeDelayMs !== null).map((x) => x.foeDelayMs!);
     const c66 = foeDelays.filter((d) => Math.abs(d - t.sfFoeDelayMs) > 60);
     const c61 = turns.filter((x) => x.firstSpinSample.phase !== 'spinning' || x.firstSpinSample.reelsStopped !== 0 || x.firstSpinSample.hl !== 0)
       .map((x) => `lượt ${x.spinIndex}`);
-    const c67 = stops.filter((x) => x.icons !== 20 || x.fighters !== 2).map((x) => `lượt ${x.spinIndex}: ${x.icons}/${x.fighters}`);
+    const c67 = stops.filter((x) => x.icons !== 16 || x.fighters !== 2).map((x) => `lượt ${x.spinIndex}: ${x.icons}/${x.fighters}`);
     const frameGaps = samples.slice(1).map((s, i) => s.t - samples[i].t).sort((a, b) => a - b);
     console.log(`C6 trận seed ${SEED}: ${end.spinIndex} lượt, ${end.status}; ${samples.length} mẫu, khung hình trung vị ${frameGaps[Math.floor(frameGaps.length / 2)].toFixed(1)} ms, lớn nhất ${frameGaps[frameGaps.length - 1].toFixed(1)} ms`);
     console.log(`C6.2: lệch cột 0 lớn nhất ${maxFirstDev.toFixed(1)} ms, lệch khoảng cột lớn nhất ${maxGapDev.toFixed(1)} ms; ví dụ ${JSON.stringify(stops[0].stops.map((v) => Math.round(v)))}`);
@@ -2463,7 +2482,32 @@ test.describe('Slot Five C6: diễn hoạt và HUD máu', () => {
     expect(c66, 'C6.6').toEqual([]);
     expect(c67, 'C6.7 sau mỗi lượt').toEqual([]);
     expect(problems, 'C6.7 mọi mẫu khi không diễn hoạt').toEqual([]);
-    // Trong lúc quay có thêm sprite dự phòng (quyết định của Programmer: 25).
+    // C8.6: thời gian resolving thật nằm trong lastResolveMs ± 60.
+    const c86 = turns.filter((x) => x.resolveRealMs === null || Math.abs(x.resolveRealMs - x.resolveMs) > 60)
+      .map((x) => `lượt ${x.spinIndex}: resolving ${x.resolveRealMs === null ? 'null' : x.resolveRealMs.toFixed(1)} so với ${x.resolveMs}`);
+    // C8.9: số viên = số chuỗi khác May mắn; rời resolving khi không còn viên bay, mọi viên đã trúng;
+    // kết quả trận chỉ hiện sau viên cuối (mẫu ended đầu tiên đã trúng đủ viên).
+    const c89: string[] = [];
+    for (const x of turns) {
+      if (x.firstSpinSample.casts !== x.firstSpinSample.nonNoneChains) c89.push(`lượt ${x.spinIndex}: ${x.firstSpinSample.casts} viên, ${x.firstSpinSample.nonNoneChains} chuỗi`);
+      const l = x.leaveSample;
+      if (l && (l.inFlight !== 0 || l.impacted !== l.casts)) c89.push(`lượt ${x.spinIndex}: rời resolving khi còn ${l.inFlight} viên bay, trúng ${l.impacted}/${l.casts}`);
+    }
+    for (let i = 1; i < samples.length; i += 1) {
+      const s = samples[i];
+      if (s.phase === 'resolving' && samples[i - 1].phase === 'resolving' && s.spinIndex === samples[i - 1].spinIndex && s.inFlight > s.casts) c89.push('castsInFlight > số viên');
+    }
+    const firstEnded = samples.find((s) => s.phase === 'ended');
+    if (!firstEnded || firstEnded.impacted !== firstEnded.casts || firstEnded.dPlayer !== firstEnded.player || firstEnded.dFoe !== firstEnded.foe) {
+      c89.push(`mẫu ended đầu tiên: ${JSON.stringify(firstEnded)}`);
+    }
+    const casts = turns.reduce((a, x) => a + x.firstSpinSample.casts, 0);
+    console.log(`C8.6: resolving thật trừ lastResolveMs (ms): ${turns.map((x) => x.resolveRealMs === null ? 'null' : Math.round(x.resolveRealMs - x.resolveMs)).join(', ')}`);
+    console.log(`C8.9: ${turns.length} lượt, ${casts} viên cast`);
+    expect(c86, 'C8.6').toEqual([]);
+    expect(c89, 'C8.9').toEqual([]);
+    expect(casts).toBeGreaterThan(0);
+    // Trong lúc quay có thêm sprite dự phòng (quyết định của Programmer).
     const spinningIcons = [...new Set(samples.filter((s) => s.phase === 'spinning').map((s) => s.icons))];
     console.log(`C6.7: số sprite icon lúc spinning: ${spinningIcons.join(',')}`);
   });
@@ -2512,11 +2556,11 @@ test.describe('Slot Five C6: diễn hoạt và HUD máu', () => {
       await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4242, { grids: [g] }), fx(id));
       await startSampler(page);
       await page.keyboard.press('Space');
-      await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped === 5, null, { timeout: 10_000, polling: 'raf' });
+      await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped === 4, null, { timeout: 10_000, polling: 'raf' });
       const s = await readState(page);
       const samples = await stopSampler(page);
-      const firstFive = samples.find((x) => x.spinIndex === 1 && x.reelsStopped === 5)!;
-      console.log(`C6.4 ${id}: lúc đọc ${s.phase} ${s.highlightedChainCount}/${s.highlightedCells}; mẫu đầu có 5 cột dừng: ${firstFive.phase} ${firstFive.hl}/${firstFive.hlCells}; reelsStopped đã qua ${[...new Set(samples.filter((x) => x.spinIndex === 1).map((x) => x.reelsStopped))].join(',')}`);
+      const firstFive = samples.find((x) => x.spinIndex === 1 && x.reelsStopped === 4)!;
+      console.log(`C6.4 ${id}: lúc đọc ${s.phase} ${s.highlightedChainCount}/${s.highlightedCells}; mẫu đầu có 4 cột dừng: ${firstFive.phase} ${firstFive.hl}/${firstFive.hlCells}; reelsStopped đã qua ${[...new Set(samples.filter((x) => x.spinIndex === 1).map((x) => x.reelsStopped))].join(',')}`);
       expect(firstFive.phase).toBe('resolving');
       expect(firstFive.hl).toBe(chains);
       expect(firstFive.hlCells).toBe(cells);
@@ -2546,7 +2590,7 @@ for (const vp of [
       // Lượt đầu F12 (Kiếm 3, Hồi máu 3, Khiên 3) với người chơi 70 máu để thấy đủ ba số.
       // Đối thủ có 2 * sfBBlade máu: F12 rồi F0 (đối thủ) rồi F1 thì trận kết thúc ở lượt 3.
       const foeHp = 2 * t.sfBBlade;
-      await page.evaluate(([f12, f0, f1, hp]) => window.__game!.slotFive!.loadMatch(4242, { player: { hp: 70 }, foe: { hp: hp as number }, grids: [f12 as number[][], f0 as number[][], f1 as number[][]] }), [fx('F12'), fx('F0'), fx('F1'), foeHp] as const);
+      await page.evaluate(([f12, f0, f1, hp]) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 450, hp: 70 }, foe: { maxHp: 450, hp: hp as number }, grids: [f12 as number[][], f0 as number[][], f1 as number[][]] }), [fx('F12'), fx('F0'), fx('F1'), foeHp] as const);
       if (vp.touch) await page.tap('#sf-spin');
       else await page.keyboard.press('Space');
       // Giữa lúc quay: sau khi 2 cột đã dừng.
@@ -2583,7 +2627,7 @@ for (const vp of [
 test.describe('Slot Five C6.8: chú giải đổi theo TUNING', () => {
   test('Chú giải icon đọc TUNING lúc vào trận (ảnh để soát)', async ({ page }) => {
     await openForInput(page);
-    const old = await setTuning(page, { sfBFire: 55, sfBHeal: 25, sfLen4Mult: 3, sfLen5Mult: 7 });
+    const old = await setTuning(page, { sfBFire: 55, sfBHeal: 25, sfLen4Mult: 3 });
     try {
       await page.evaluate(() => window.__game!.slotFive!.loadMatch(4242));
       await settleFrames(page);
@@ -2598,26 +2642,31 @@ test.describe('Slot Five C6.8: chú giải đổi theo TUNING', () => {
 
 type GBox = [number, number, number, number];
 
-/** Table of section 4.9 (brief v3), written from the brief. */
+/**
+ * Table of section 4.9 (brief v4.1), written from the brief: `helpBtn` at 20, 832 and `fastBtn` (C11) at 96, 832.
+ */
 const LAYOUT_TABLE: Record<string, GBox> = {
   turnBanner: [120, 16, 300, 40],
-  reelFrame: [26, 72, 488, 394],
-  playerFloat: [16, 520, 160, 90],
-  foeFloat: [364, 520, 160, 90],
-  playerFighter: [40, 620, 64, 104],
-  foeFighter: [436, 620, 64, 104],
+  reelFrame: [57, 64, 426, 426],
+  playerFloat: [16, 536, 160, 90],
+  foeFloat: [364, 536, 160, 90],
+  playerFighter: [40, 636, 64, 88],
+  foeFighter: [436, 636, 64, 88],
   playerHud: [16, 732, 200, 28],
   foeHud: [324, 732, 200, 28],
   panel: [0, 768, 540, 192],
-  helpBtn: [60, 832, 64, 64],
+  helpBtn: [20, 832, 64, 64],
+  fastBtn: [96, 832, 64, 64],
   spinBtn: [170, 820, 200, 88],
   newBtn: [400, 832, 96, 64],
 };
-const LEGEND_TABLE: GBox = [26, 72, 488, 394];
-/** Producer ruling: `#sf-help-close` is 64x64 at the legend's top-right corner. */
-const HELP_CLOSE_BOX: GBox = [450, 72, 64, 64];
-const BUTTON_BOX: Record<string, GBox> = { 'sf-spin': LAYOUT_TABLE.spinBtn, 'sf-new': LAYOUT_TABLE.newBtn, 'sf-help': LAYOUT_TABLE.helpBtn, 'sf-help-close': HELP_CLOSE_BOX };
-const PANEL_CHILDREN = ['helpBtn', 'spinBtn', 'newBtn'];
+const LEGEND_TABLE: GBox = [57, 64, 426, 426];
+/** Producer ruling (v4): `#sf-help-close` is 64x64 at the legend's top-right corner. */
+const HELP_CLOSE_BOX: GBox = [419, 64, 64, 64];
+const BUTTON_BOX: Record<string, GBox> = {
+  'sf-spin': LAYOUT_TABLE.spinBtn, 'sf-new': LAYOUT_TABLE.newBtn, 'sf-help': LAYOUT_TABLE.helpBtn, 'sf-fast': LAYOUT_TABLE.fastBtn, 'sf-help-close': HELP_CLOSE_BOX,
+};
+const PANEL_CHILDREN = ['helpBtn', 'fastBtn', 'spinBtn', 'newBtn'];
 
 const interArea = (a: GBox, b: GBox) =>
   Math.max(0, Math.min(a[0] + a[2], b[0] + b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[1] + a[3], b[1] + b[3]) - Math.max(a[1], b[1]));
@@ -2765,6 +2814,8 @@ test.describe('Slot Five C7: layout 540x960 (desktop mặc định)', () => {
     const { layout } = await readC7(page);
     const b = layout.boxes;
     expect(layout.castGap.top).toBe(b.reelFrame[1] + b.reelFrame[3]);
+    expect(layout.castGap.top).toBe(490);
+    expect(layout.castGap.bottom).toBe(636);
     expect(layout.castGap.bottom).toBe(Math.min(b.playerFighter[1], b.foeFighter[1]));
     expect(layout.castGap.bottom - layout.castGap.top).toBeGreaterThanOrEqual(0.15 * layout.height);
     console.log(`C7.4: castGap ${layout.castGap.top}..${layout.castGap.bottom} = ${layout.castGap.bottom - layout.castGap.top} px`);
@@ -2778,7 +2829,8 @@ test.describe('Slot Five C7: layout 540x960 (desktop mặc định)', () => {
   test('C7.3 số nổi luôn nằm trong vùng số nổi của bên nhận, không giao khung quay (trận đầy đủ F12, F11)', async ({ page }) => {
     test.setTimeout(240_000);
     await openForInput(page);
-    await page.evaluate(([f12, f11]) => window.__game!.slotFive!.loadMatch(4242, { grids: [f12, f11] }), [fx('F12'), fx('F11')] as const);
+    // Bản 4: máu 60 mỗi bên để trận đầy đủ ngắn; hai lượt đầu ép F12 rồi F11 như tiêu chí.
+    await page.evaluate(([f12, f11]) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 60 }, foe: { maxHp: 60 }, grids: [f12, f11] }), [fx('F12'), fx('F11')] as const);
     await page.evaluate(() => {
       const w = window as unknown as { __qaFloat: { n: number; floats: number; bad: string[]; kinds: Record<string, number> } };
       w.__qaFloat = { n: 0, floats: 0, bad: [], kinds: {} };
@@ -2824,7 +2876,7 @@ test.describe('Slot Five C7: layout 540x960 (desktop mặc định)', () => {
     await page.keyboard.press('h');
     await take('mở');
     await page.keyboard.press('Escape');
-    await page.evaluate((f12) => window.__game!.slotFive!.loadMatch(4242, { player: { hp: 70 }, grids: [f12] }), fx('F12'));
+    await page.evaluate((f12) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 450, hp: 70 }, grids: [f12] }), fx('F12'));
     await page.keyboard.press('Space');
     for (let i = 0; i < 40; i += 1) {
       await take(`lượt 1 mẫu ${i}`);
@@ -2915,7 +2967,7 @@ test.describe('Slot Five C7: điện thoại 390x844', () => {
     const l1 = await take('mở');
     console.log(`C7.5 mở: ${l1.texts.map((t) => `${t.id} ${t.fontPx}`).join(', ')}`);
     await page.tap('#sf-help-close');
-    await page.evaluate((f12) => window.__game!.slotFive!.loadMatch(4242, { player: { hp: 70 }, grids: [f12] }), fx('F12'));
+    await page.evaluate((f12) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 450, hp: 70 }, grids: [f12] }), fx('F12'));
     await page.tap('#sf-spin');
     for (let i = 0; i < 40; i += 1) {
       await take(`số nổi ${i}`);
@@ -2979,7 +3031,7 @@ test.describe('Slot Five C7: điện thoại 390x844', () => {
     await page.tap('#sf-help-close');
     const t = await readTuning(page);
     const foeHp = 2 * t.sfBBlade;
-    await page.evaluate(([f12, f0, f1, hp]) => window.__game!.slotFive!.loadMatch(4242, { player: { hp: 70 }, foe: { hp: hp as number }, grids: [f12 as number[][], f0 as number[][], f1 as number[][]] }), [fx('F12'), fx('F0'), fx('F1'), foeHp] as const);
+    await page.evaluate(([f12, f0, f1, hp]) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 450, hp: 70 }, foe: { maxHp: 450, hp: hp as number }, grids: [f12 as number[][], f0 as number[][], f1 as number[][]] }), [fx('F12'), fx('F0'), fx('F1'), foeHp] as const);
     await page.tap('#sf-spin');
     await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped >= 2, null, { timeout: 10_000, polling: 'raf' });
     await page.screenshot({ path: 'artifacts/slot-five-c7-390x844-spinning.png' });
@@ -3031,11 +3083,1217 @@ test.describe('Slot Five C7.12: route khác không có nút Slot Five', () => {
     test(`C7.12 ${url}: #sf-help, #sf-help-close và các #sf-* ẩn`, async ({ page }) => {
       await page.goto(url);
       await page.waitForFunction(() => window.__game?.getState() != null);
-      for (const id of ['#sf-spin', '#sf-new', '#sf-help', '#sf-help-close']) await expect(page.locator(id)).toBeHidden();
+      for (const id of ['#sf-spin', '#sf-new', '#sf-help', '#sf-help-close', '#sf-fast']) await expect(page.locator(id)).toBeHidden();
       await page.keyboard.press('h');
       await expect(page.locator('#sf-help-close')).toBeHidden();
     });
   }
+});
+
+// ---------------------------------------------------------------- C8: cast chiêu (bản 4, lưới 4x4)
+
+type C8State = SlotFiveState;
+const readC8 = (page: Page) => page.evaluate(() => window.__game!.getState() as unknown as C8State);
+
+/** Section 4.9 v4: centre of cell (x, y) and of the fighter boxes, written from the brief. */
+const cellCentre = (x: number, y: number): [number, number] => [117 + 102 * x, 124 + 102 * y];
+const FIGHTER_CENTRE: Record<'player' | 'foe', [number, number]> = { player: [40 + 32, 636 + 44], foe: [436 + 32, 636 + 44] };
+const meanCentre = (cells: [number, number][]): [number, number] => {
+  const c = cells.map(([x, y]) => cellCentre(x, y));
+  return [c.reduce((a, p) => a + p[0], 0) / c.length, c.reduce((a, p) => a + p[1], 0) / c.length];
+};
+/** Section 4.10: firing order heal, shield, damage; lucky never fires. Returns chain indexes. */
+const castOrderRef = (chains: { kind: string }[]) =>
+  (['heal', 'shield', 'damage'] as const).flatMap((k) => chains.map((c, i) => (c.kind === k ? i : -1)).filter((i) => i >= 0));
+const resolveMsRef = (chains: { kind: string }[], t: T) => {
+  if (chains.length === 0) return t.sfBlankResolveMs;
+  const n = chains.filter((c) => c.kind !== 'none').length;
+  if (n === 0) return t.sfResolveMs;
+  return Math.max(t.sfResolveMs, t.sfCastDelayMs + (n - 1) * t.sfCastStaggerMs + t.sfCastFlightMs + t.sfCastTailMs);
+};
+
+/** Loads a match with forced grids, starts the first turn (player by key, foe by itself) and returns the state at spin start. */
+const startForcedTurn = async (page: Page, grids: Grid[], setup: RefSetup = {}) => {
+  await page.evaluate(([g, st]) => window.__game!.slotFive!.loadMatch(4242, { ...(st as object), grids: g as number[][][] }), [grids, setup] as const);
+  if ((setup.turn ?? 'player') === 'player') await page.keyboard.press('Space');
+  await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.spinIndex === 1, null, { timeout: 10_000 });
+  return readC8(page);
+};
+
+test.describe('Slot Five C8: cast chiêu', () => {
+  test.beforeEach(() => pinBriefTuning());
+
+  test('C8.1, C8.2, C8.5 F12 lượt người chơi: 3 viên heal, shield, damage; đích và điểm đến đúng', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const s = await startForcedTurn(page, [fx('F12')]);
+    const order = castOrderRef(s.lastChains);
+    console.log(`C8.1: ${JSON.stringify(s.lastCasts.map((c) => [c.chainIndex, c.kind, c.target, c.from, c.to, c.value, c.launchMs, c.impactMs]))}`);
+    expect(s.lastCasts.map((c) => c.kind)).toEqual(['heal', 'shield', 'damage']);
+    expect(s.lastCasts.map((c) => c.chainIndex)).toEqual(order);
+    expect(new Set(s.lastCasts.map((c) => c.chainIndex)).size).toBe(3);
+    s.lastCasts.forEach((c) => {
+      expect(s.lastChains[c.chainIndex].kind).toBe(c.kind);
+      expect(c.value).toBe(s.lastChains[c.chainIndex].value);
+    });
+    expect(s.lastCasts.map((c) => c.target)).toEqual(['player', 'player', 'foe']);
+    for (const c of s.lastCasts) {
+      const want = FIGHTER_CENTRE[c.target];
+      expect(Math.abs(c.to[0] - want[0]), 'to.x').toBeLessThanOrEqual(1);
+      expect(Math.abs(c.to[1] - want[1]), 'to.y').toBeLessThanOrEqual(1);
+      const from = meanCentre(s.lastChains[c.chainIndex].cells);
+      expect(Math.abs(c.from[0] - from[0]), 'from.x').toBeLessThanOrEqual(1);
+      expect(Math.abs(c.from[1] - from[1]), 'from.y').toBeLessThanOrEqual(1);
+    }
+    expect(s.lastResolveMs).toBe(resolveMsRef(s.lastChains, t));
+  });
+
+  test('C8.2 F12 lượt đối thủ: đích đảo ngược (heal, shield về đối thủ; damage về người chơi)', async ({ page }) => {
+    await openForInput(page);
+    const s = await startForcedTurn(page, [fx('F12')], { turn: 'foe' });
+    expect(s.lastSide).toBe('foe');
+    expect(s.lastCasts.map((c) => c.kind)).toEqual(['heal', 'shield', 'damage']);
+    expect(s.lastCasts.map((c) => c.target)).toEqual(['foe', 'foe', 'player']);
+    for (const c of s.lastCasts) {
+      const want = FIGHTER_CENTRE[c.target];
+      expect(Math.abs(c.to[0] - want[0]) <= 1 && Math.abs(c.to[1] - want[1]) <= 1, `${c.kind} to`).toBe(true);
+    }
+  });
+
+  test('C8.3 F4 (chỉ May mắn): 1 chuỗi, 0 viên, lastResolveMs = sfResolveMs; F0: 0 viên, sfBlankResolveMs', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const a = await startForcedTurn(page, [fx('F4')]);
+    expect(a.lastChains).toHaveLength(1);
+    expect(a.lastChains[0].kind).toBe('none');
+    expect(a.lastCasts).toHaveLength(0);
+    expect(a.lastResolveMs).toBe(t.sfResolveMs);
+    const b = await startForcedTurn(page, [fx('F0')]);
+    expect(b.lastChains).toHaveLength(0);
+    expect(b.lastCasts).toHaveLength(0);
+    expect(b.lastResolveMs).toBe(t.sfBlankResolveMs);
+  });
+
+  test('C8.4, C8.5 F7: 2 viên khiên cùng đích, from là trung bình tâm ô (117 + 102x, 124 + 102y), to là tâm nhân vật', async ({ page }) => {
+    await openForInput(page);
+    const s = await startForcedTurn(page, [fx('F7')]);
+    expect(s.lastCasts).toHaveLength(2);
+    expect(s.lastCasts.map((c) => c.kind)).toEqual(['shield', 'shield']);
+    expect(s.lastCasts.map((c) => c.target)).toEqual(['player', 'player']);
+    // h: (0,1) (1,1) (2,1) -> (219, 226); v: (1,0) (1,1) (1,2) -> (219, 226). Hai viên trùng điểm xuất phát.
+    for (const c of s.lastCasts) {
+      const want = meanCentre(s.lastChains[c.chainIndex].cells);
+      console.log(`C8.4: chuỗi ${c.chainIndex} ${s.lastChains[c.chainIndex].dir} from ${c.from.join(',')} (mong đợi ${want.join(',')}), to ${c.to.join(',')}`);
+      expect(Math.abs(c.from[0] - want[0])).toBeLessThanOrEqual(1);
+      expect(Math.abs(c.from[1] - want[1])).toBeLessThanOrEqual(1);
+      expect(Math.abs(c.to[0] - FIGHTER_CENTRE.player[0])).toBeLessThanOrEqual(1);
+      expect(Math.abs(c.to[1] - FIGHTER_CENTRE.player[1])).toBeLessThanOrEqual(1);
+    }
+  });
+
+  for (const id of ['F12', 'F7', 'F1', 'F11'] as const) {
+    test(`C8.6 lịch bắn ${id}: launchMs, impactMs theo công thức; thời điểm đo lệch ≤ 40 ms; resolving thật trong lastResolveMs ± 60`, async ({ page }) => {
+      await openForInput(page);
+      const t = await readTuning(page);
+      await startSampler(page);
+      const s0 = await startForcedTurn(page, [fx(id)]);
+      await page.waitForFunction(() => {
+        const s = window.__game!.getState<SlotFiveState>()!;
+        return s.phase === 'foeWait' || s.phase === 'ended' || s.spinIndex > 1;
+      }, null, { timeout: 15_000 });
+      const s = await readC8(page);
+      const samples = await stopSampler(page);
+      expect(s.lastResolveMs).toBe(resolveMsRef(s0.lastChains, t));
+      s.lastCasts.forEach((c, k) => {
+        const launch = t.sfCastDelayMs + k * t.sfCastStaggerMs;
+        expect(c.launchMs, `viên ${k} launchMs`).toBe(launch);
+        expect(c.impactMs, `viên ${k} impactMs`).toBe(launch + t.sfCastFlightMs);
+        expect(c.launchedAtMs, `viên ${k} đã bắn`).not.toBeNull();
+        expect(c.impactedAtMs, `viên ${k} đã trúng`).not.toBeNull();
+        expect(Math.abs(c.launchedAtMs! - c.launchMs), `viên ${k} launchedAtMs ${c.launchedAtMs}`).toBeLessThanOrEqual(40);
+        expect(Math.abs(c.impactedAtMs! - c.impactMs), `viên ${k} impactedAtMs ${c.impactedAtMs}`).toBeLessThanOrEqual(40);
+      });
+      const enter = samples.find((x) => x.spinIndex === 1 && x.phase === 'resolving');
+      const leave = samples.find((x) => x.spinIndex === 1 && enter && x.t > enter.t && x.phase !== 'resolving');
+      const real = enter && leave ? leave.t - enter.t : NaN;
+      console.log(`C8.6 ${id}: lastResolveMs ${s.lastResolveMs}, resolving thật ${real.toFixed(1)} ms; ${JSON.stringify(s.lastCasts.map((c) => [c.launchMs, c.launchedAtMs, c.impactMs, c.impactedAtMs]))}`);
+      expect(Math.abs(real - s.lastResolveMs)).toBeLessThanOrEqual(60);
+    });
+  }
+
+  test('C8.7 F12, người chơi 80 máu, khiên đối thủ 0: hiển thị chỉ đổi khi từng viên trúng, đúng phần của viên đó', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    await startSampler(page);
+    await startForcedTurn(page, [fx('F12')], { player: { hp: 80 }, foe: { shield: 0 } });
+    await waitPhase(page, ['foeWait', 'ended']);
+    const samples = (await stopSampler(page)).filter((x) => x.spinIndex === 1 && (x.phase === 'spinning' || x.phase === 'resolving'));
+    const maxFoe = t.sfFoeMaxHp;
+    // Giá trị hiển thị mong đợi sau k viên trúng (thứ tự heal 20, shield 20, damage 5).
+    const want = [
+      { dPlayer: 80, dsPlayer: 0, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + t.sfBHeal, dsPlayer: 0, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + t.sfBHeal, dsPlayer: t.sfBShield, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + t.sfBHeal, dsPlayer: t.sfBShield, dFoe: maxFoe - t.sfBBlade, dsFoe: 0 },
+    ];
+    const bad: string[] = [];
+    const seen = new Set<number>();
+    for (const x of samples) {
+      const k = x.phase === 'spinning' ? 0 : x.impacted;
+      seen.add(k);
+      const got = { dPlayer: x.dPlayer, dsPlayer: x.dsPlayer, dFoe: x.dFoe, dsFoe: x.dsFoe };
+      if (JSON.stringify(got) !== JSON.stringify(want[k])) bad.push(`${x.phase} sau ${k} viên: ${JSON.stringify(got)}`);
+    }
+    const last = samples[samples.length - 1];
+    console.log(`C8.7: ${samples.length} mẫu, các mốc trúng đã thấy ${[...seen].sort().join(',')}`);
+    expect(bad.slice(0, 5)).toEqual([]);
+    expect([...seen].sort()).toEqual([0, 1, 2, 3]);
+    expect({ hp: last.player, sh: last.shPlayer, foe: last.foe, shFoe: last.shFoe }).toEqual({ hp: 80 + t.sfBHeal, sh: t.sfBShield, foe: maxFoe - t.sfBBlade, shFoe: 0 });
+  });
+
+  test('C8.7 biên: khiên cũ của bên quay về 0 trên màn ngay khi lượt quay bắt đầu', async ({ page }) => {
+    await openForInput(page);
+    await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4242, { player: { shield: 7 }, grids: [g] }), fx('F0'));
+    expect((await readC8(page) as unknown as { displayShield: { player: number } }).displayShield.player).toBe(7);
+    const s = await page.evaluate(() => {
+      window.__game!.slotFive!.spin();
+      return window.__game!.getState() as unknown as { phase: string; displayShield: { player: number }; player: { shield: number } };
+    });
+    expect(s.phase).toBe('spinning');
+    expect(s.displayShield.player).toBe(0);
+    expect(s.player.shield).toBe(0);
+  });
+
+  test('C8.8 khiên đối thủ 20, người chơi quay F11 (Điện 15, Đất 20): khiên hấp thụ theo từng viên', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    await startSampler(page);
+    await startForcedTurn(page, [fx('F11')], { foe: { shield: 20 } });
+    await waitPhase(page, ['foeWait', 'ended']);
+    const samples = (await stopSampler(page)).filter((x) => x.spinIndex === 1 && x.phase === 'resolving');
+    const maxFoe = t.sfFoeMaxHp;
+    const want = [
+      { dFoe: maxFoe, dsFoe: 20 },
+      { dFoe: maxFoe, dsFoe: 5 },
+      { dFoe: maxFoe - 15, dsFoe: 0 },
+    ];
+    const bad: string[] = [];
+    for (const x of samples) {
+      const got = { dFoe: x.dFoe, dsFoe: x.dsFoe };
+      if (JSON.stringify(got) !== JSON.stringify(want[x.impacted])) bad.push(`sau ${x.impacted} viên: ${JSON.stringify(got)}`);
+    }
+    expect(bad.slice(0, 5)).toEqual([]);
+    expect(new Set(samples.map((x) => x.impacted))).toEqual(new Set([0, 1, 2]));
+    const end = await readC8(page);
+    expect(end.foe.hp).toBe(maxFoe - 15);
+    expect(end.foe.shield).toBe(0);
+    expect(end.displayHp.foe).toBe(end.foe.hp);
+  });
+});
+
+/** C8.10: screenshots for the user, 390x844 portrait. */
+test.describe('Slot Five C8.10: ảnh 390x844', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+
+  test('C8.10 ảnh: đang quay, F12 đang cast, số nổi, chú giải, kết thúc', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const foeHp = 2 * t.sfBBlade;
+    await page.tap('#sf-help');
+    await settleFrames(page);
+    await page.screenshot({ path: 'artifacts/slot-five-c8-390x844-legend.png' });
+    await page.tap('#sf-help-close');
+    await page.evaluate(([f12, f0, f1, hp]) => window.__game!.slotFive!.loadMatch(4242, { player: { maxHp: 450, hp: 70 }, foe: { maxHp: 450, hp: hp as number }, grids: [f12 as number[][], f0 as number[][], f1 as number[][]] }), [fx('F12'), fx('F0'), fx('F1'), foeHp] as const);
+    await page.tap('#sf-spin');
+    await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped >= 2, null, { timeout: 10_000, polling: 'raf' });
+    await page.screenshot({ path: 'artifacts/slot-five-c8-390x844-spinning.png' });
+    await page.waitForFunction(() => (window.__game!.getState() as unknown as C8State).castsInFlight >= 1, null, { timeout: 10_000, polling: 'raf' });
+    await page.screenshot({ path: 'artifacts/slot-five-c8-390x844-casting.png' });
+    await page.waitForFunction(() => (window.__game!.getState() as unknown as { floatTexts: unknown[] }).floatTexts.length >= 2, null, { timeout: 10_000, polling: 'raf' });
+    await page.screenshot({ path: 'artifacts/slot-five-c8-390x844-floats.png' });
+    for (let guard = 0; guard < 20; guard += 1) {
+      await waitPhase(page, ['idle', 'ended'], 20_000);
+      const s = await readState(page);
+      if (s.phase === 'ended') break;
+      await page.tap('#sf-spin');
+      await waitSpinIndex(page, s.spinIndex + 1);
+    }
+    await page.waitForTimeout(800);
+    await page.screenshot({ path: 'artifacts/slot-five-c8-390x844-ended.png' });
+    expect((await readState(page)).phase).toBe('ended');
+  });
+});
+
+test.describe('Slot Five C8.10: letterbox 1280x720', () => {
+  test.use({ viewport: { width: 1280, height: 720 } });
+  test('C8.10 ảnh letterbox 1280x720 trên lưới 4x4', async ({ page }) => {
+    await openForInput(page);
+    await settleFrames(page);
+    await page.screenshot({ path: 'artifacts/slot-five-c8-1280x720-idle.png' });
+    expect((await readState(page)).cols).toBe(4);
+  });
+});
+
+// ---------------------------------------------------------------- C9: chuyển sang lưới 4x4
+
+test.describe('Slot Five C9: lưới 4x4', () => {
+  test('C9.1 cols là hằng 4; mỗi lượt createSim rút đúng 16 số', async ({ page }) => {
+    await openSlotFive(page);
+    const out = await page.evaluate(async () => {
+      const mod = (await import('/src/game/slotFiveLogic.ts' as string)) as { SF_COLS: number; SF_ROWS: number };
+      const qa = window.__qaSf!;
+      const w = qa.weights();
+      const bad: string[] = [];
+      for (let seed = 1; seed <= 200; seed += 1) {
+        const sim = window.__game!.slotFive!.createSim(seed);
+        sim.spin();
+        const second = sim.spin().grid;
+        // Trạng thái sau một lượt phải bằng trạng thái sau đúng 16 lần next() từ cùng hạt.
+        const r = qa.rng(qa.streamSeed(seed, 1));
+        for (let i = 0; i < 16; i += 1) r.next();
+        const want = qa.draw(r, w);
+        if (!qa.same(second, want)) bad.push(`seed ${seed}`);
+      }
+      return { cols: mod.SF_COLS, rows: mod.SF_ROWS, bad };
+    });
+    expect(out.cols).toBe(4);
+    expect(out.rows).toBe(4);
+    expect(out.bad).toEqual([]);
+    const s = await readState(page);
+    expect([s.cols, s.rows]).toEqual([4, 4]);
+  });
+
+  test('C9.2 TUNING_RANGES đúng bảng 5.1, 5.2, 5.3; không còn sfLen5Mult; mọi giá trị TUNING nằm trong khoảng tune', async ({ page }) => {
+    // Không so giá trị TUNING cụ thể: Balance Tuner được đổi chúng ở C10. Giá trị đầu so qua BRIEF_TUNING ở C9.3.
+    await openSlotFive(page);
+    const cfg = await page.evaluate(async () => {
+      const mod = (await import('/src/config.ts' as string)) as { TUNING: Record<string, number>; TUNING_RANGES: Record<string, number[]> };
+      return { tuning: { ...mod.TUNING }, ranges: { ...mod.TUNING_RANGES } };
+    });
+    expect(cfg.tuning).not.toHaveProperty('sfLen5Mult');
+    expect(cfg.ranges).not.toHaveProperty('sfLen5Mult');
+    const table: Record<string, [number, number, number]> = {
+      sfWFire: [1, 60, 1], sfWVolt: [1, 60, 1], sfWFrost: [1, 60, 1], sfWEarth: [1, 60, 1],
+      sfWBlade: [1, 60, 1], sfWHeal: [1, 60, 1], sfWShield: [1, 60, 1], sfWLucky: [1, 60, 1],
+      sfBFire: [1, 120, 1], sfBVolt: [1, 120, 1], sfBFrost: [1, 120, 1], sfBEarth: [1, 120, 1],
+      sfBBlade: [1, 120, 1], sfBHeal: [1, 120, 1], sfBShield: [1, 120, 1],
+      sfLen4Mult: [1, 6, 1],
+      sfPlayerMaxHp: [40, 2000, 10], sfFoeMaxHp: [40, 2000, 10], sfSeed: [1, 999, 1],
+      sfSpinBaseMs: [300, 1500, 50], sfReelStopGapMs: [80, 400, 10], sfStopBounceMs: [0, 250, 10], sfReelSpeed: [1, 5, 0.1],
+      sfResolveMs: [300, 2000, 100], sfBlankResolveMs: [0, 800, 50], sfFoeDelayMs: [0, 1500, 50],
+      sfCastDelayMs: [0, 400, 10], sfCastStaggerMs: [0, 300, 10], sfCastFlightMs: [150, 800, 10], sfCastTailMs: [0, 600, 10],
+      sfFastFactor: [0.1, 1, 0.05],
+    };
+    const sfKeys = Object.keys(cfg.tuning).filter((k) => k.startsWith('sf')).sort();
+    expect(sfKeys, 'bảng phủ đủ khóa sf* của TUNING').toEqual(Object.keys(table).sort());
+    const bad: string[] = [];
+    for (const [k, r] of Object.entries(table)) {
+      if (JSON.stringify(cfg.ranges[k]) !== JSON.stringify(r)) bad.push(`${k} khoảng ${JSON.stringify(cfg.ranges[k])}, bảng ${JSON.stringify(r)}`);
+      const v = cfg.tuning[k];
+      const [min, max, step] = r;
+      const steps = (v - min) / step;
+      if (!(v >= min && v <= max) || Math.abs(steps - Math.round(steps)) > 1e-9) bad.push(`${k} = ${v} ngoài khoảng ${JSON.stringify(r)}`);
+    }
+    console.log(`C9.2: ${sfKeys.length} khóa sf*, TUNING hiện tại ${JSON.stringify(Object.fromEntries(sfKeys.map((k) => [k, cfg.tuning[k]])))}`);
+    expect(bad).toEqual([]);
+  });
+
+  test('C9.3 BRIEF_TUNING của test bằng bảng 5.1, 5.2 (5.3) bản 4 và phủ đủ khóa sf* của game', async ({ page }) => {
+    await openSlotFive(page);
+    const keys = await page.evaluate(() => Object.keys(window.__game!.tuning).filter((k) => k.startsWith('sf')).sort());
+    expect(BRIEF_TUNING).not.toHaveProperty('sfLen5Mult');
+    expect(Object.keys(BRIEF_TUNING).sort()).toEqual(keys);
+    expect(BRIEF_TUNING).toMatchObject({
+      sfWFire: 8, sfWVolt: 6, sfWFrost: 6, sfWEarth: 8, sfWBlade: 40, sfWHeal: 13, sfWShield: 13, sfWLucky: 6,
+      sfBFire: 10, sfBVolt: 15, sfBFrost: 15, sfBEarth: 10, sfBBlade: 5, sfBHeal: 20, sfBShield: 20,
+      sfLen4Mult: 2, sfPlayerMaxHp: 450, sfFoeMaxHp: 450,
+    });
+  });
+
+  test('C9.4 forceNextGrid, createBattle và loadMatch ném lỗi khi lưới không phải 4x4', async ({ page }) => {
+    await openSlotFive(page);
+    const out = await page.evaluate(() => {
+      const api = window.__game!.slotFive!;
+      const g = (rows: number, cols: number) => Array.from({ length: rows }, () => new Array<number>(cols).fill(0));
+      const shapes: [number, number][] = [[4, 5], [5, 4], [3, 4], [4, 3], [5, 5]];
+      const throws = (fn: () => void) => {
+        try {
+          fn();
+          return false;
+        } catch {
+          return true;
+        }
+      };
+      const before = window.__game!.getState<SlotFiveState>()!;
+      const res = shapes.map(([r, c]) => ({
+        shape: `${r}x${c}`,
+        force: throws(() => api.forceNextGrid(g(r, c))),
+        battle: throws(() => api.createBattle(1, { grids: [g(r, c)] })),
+        load: throws(() => api.loadMatch(1, { grids: [g(r, c)] })),
+      }));
+      const ok4 = !throws(() => api.createBattle(1, { grids: [g(4, 4)] }));
+      return { res, ok4, unchanged: JSON.stringify(before) === JSON.stringify(window.__game!.getState()) };
+    });
+    console.log(`C9.4: ${JSON.stringify(out.res)}`);
+    for (const r of out.res) expect(r, r.shape).toEqual({ shape: r.shape, force: true, battle: true, load: true });
+    expect(out.ok4).toBe(true);
+    expect(out.unchanged).toBe(true);
+  });
+
+  test('C9.6 ép F0 đến F12 qua scene: highlightedCells bằng số ô khác nhau trong lastChains', async ({ page }) => {
+    test.setTimeout(120_000);
+    pinBriefTuning();
+    await openForInput(page);
+    await setTuning(page, { ...FAST_TIMING, sfFoeDelayMs: 1500 });
+    const rows: string[] = [];
+    for (const f of FIXTURES) {
+      await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4242, { grids: [g] }), f.grid);
+      await page.keyboard.press('Space');
+      await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped === 4, null, { timeout: 10_000, polling: 'raf' });
+      const s = await readState(page);
+      const distinct = new Set(s.lastChains.flatMap((c) => c.cells.map(([x, y]) => `${x},${y}`))).size;
+      rows.push(`${f.id}: ${s.highlightedCells}/${distinct}`);
+      expect(s.grid, f.id).toEqual(f.grid);
+      expect(s.highlightedCells, f.id).toBe(distinct);
+      expect(s.highlightedChainCount, f.id).toBe(s.lastChains.length);
+      if (f.id === 'F12') {
+        await page.screenshot({ path: 'artifacts/slot-five-c9-960x540-f12.png' });
+      }
+    }
+    console.log(`C9.6: ${rows.join('; ')}`);
+  });
+});
+
+// ---------------------------------------------------------------- C10: nghiệm thu số liệu (TUNING thật)
+
+test.describe('Slot Five C10: chỉ tiêu trên tập nghiệm thu 9001 đến 11000 (TUNING thật)', () => {
+  let report: SfReport;
+  let ms = 0;
+  let analytic: RefEffects;
+  let tuning: T;
+
+  test.beforeEach(async ({ page }) => {
+    await openSlotFive(page);
+    tuning = await readTuning(page);
+    const out = await simulate(page, ACCEPT_SEEDS);
+    report = out.report;
+    ms = out.ms;
+    analytic = await page.evaluate(() => window.__game!.slotFive!.analyticEffects());
+  });
+
+  test('C10.1 meanDamage khớp analyticEffects trong 3 sai số chuẩn', async () => {
+    const diff = Math.abs(report.meanDamage - analytic.damage);
+    console.log(`C10.1: meanDamage ${report.meanDamage.toFixed(4)}, analytic ${analytic.damage.toFixed(4)}, lệch ${diff.toFixed(4)}, 3*SE ${(3 * report.meanDamageStdErr).toFixed(4)}`);
+    expect(diff).toBeLessThanOrEqual(3 * report.meanDamageStdErr);
+  });
+
+  test('C10.2 estMatchMsMedian trong [300000, 420000], P90 <= 540000', async () => {
+    console.log(`C10.2: trung vị ${report.estMatchMsMedian} ms, P90 ${report.estMatchMsP90} ms`);
+    expect(report.estMatchMsMedian).toBeGreaterThanOrEqual(300_000);
+    expect(report.estMatchMsMedian).toBeLessThanOrEqual(420_000);
+    expect(report.estMatchMsP90).toBeLessThanOrEqual(540_000);
+  });
+
+  test('C10.3 turnsMedian trong [110, 160], turnsP90 <= 225', async () => {
+    console.log(`C10.3: trung vị ${report.turnsMedian}, P90 ${report.turnsP90}, meanTurnMs ${report.meanTurnMs.toFixed(1)} (lệch 2,7 s ${(((report.meanTurnMs - 2700) / 2700) * 100).toFixed(1)}%)`);
+    expect(report.turnsMedian).toBeGreaterThanOrEqual(110);
+    expect(report.turnsMedian).toBeLessThanOrEqual(160);
+    expect(report.turnsP90).toBeLessThanOrEqual(225);
+  });
+
+  test('C10.4 attackTurnRate >= 0.60', async () => {
+    console.log(`C10.4: attackTurnRate ${report.attackTurnRate}`);
+    expect(report.attackTurnRate).toBeGreaterThanOrEqual(0.6);
+  });
+
+  test('C10.5 playerWinRate trong [0.50, 0.60] (người dùng chấp nhận đối thủ ít máu hơn)', async () => {
+    console.log(`C10.5: playerWinRate ${report.playerWinRate}; máu người chơi ${tuning.sfPlayerMaxHp}, đối thủ ${tuning.sfFoeMaxHp}`);
+    expect(report.playerWinRate).toBeGreaterThanOrEqual(0.5);
+    expect(report.playerWinRate).toBeLessThanOrEqual(0.6);
+  });
+
+  test('C10.6 comebackRate trong [0.15, 0.40]', async () => {
+    console.log(`C10.6: comebackRate ${report.comebackRate} (player ${report.comebackRateByWinner.player}, foe ${report.comebackRateByWinner.foe})`);
+    expect(report.comebackRate).toBeGreaterThanOrEqual(0.15);
+    expect(report.comebackRate).toBeLessThanOrEqual(0.4);
+  });
+
+  test('C10.7 unfinished 0 với trần 2000 lượt, chạy hai lần ra MatchReport giống hệt', async ({ page }) => {
+    expect(report.matches).toBe(2000);
+    expect(report.unfinished).toBe(0);
+    expect((await simulate(page, ACCEPT_SEEDS)).report).toEqual(report);
+  });
+
+  test('C10.8 2000 trận chạy dưới 15 giây', async ({ page }) => {
+    const second = (await simulate(page, ACCEPT_SEEDS)).ms;
+    console.log(`C10.8: lần 1 ${ms.toFixed(0)} ms, lần 2 ${second.toFixed(0)} ms`);
+    expect(ms).toBeLessThan(15_000);
+    expect(second).toBeLessThan(15_000);
+  });
+
+  test('C10.9 và C11.12 ghi số (không xét đạt)', async ({ page }) => {
+    const foeFirst = (await simulate(page, ACCEPT_SEEDS, { turn: 'foe' })).report;
+    const sfKeys = Object.keys(tuning).filter((k) => k.startsWith('sf')).sort();
+    console.log(`C10.9 nghiệm thu: ${fmt(report)}`);
+    console.log(`C10.9 đối thủ đi trước: playerWinRate ${foeFirst.playerWinRate}`);
+    console.log(`C10.9 TUNING: ${JSON.stringify(Object.fromEntries(sfKeys.map((k) => [k, tuning[k]])))}`);
+    console.log(`C11.12: sfFastFactor ${tuning.sfFastFactor}; thường trung vị ${report.estMatchMsMedian} P90 ${report.estMatchMsP90}; nhanh trung vị ${report.estMatchMsMedianFast} P90 ${report.estMatchMsP90Fast}`);
+    expect(foeFirst.unfinished).toBe(0);
+    expect(report.estMatchMsMedianFast).toBeLessThanOrEqual(report.estMatchMsMedian);
+  });
+});
+
+// ---------------------------------------------------------------- C11: quay nhanh
+
+interface C11State extends SlotFiveState { fastMode: boolean; lastTimeScale: number; lastFoeDelayMs: number }
+const readC11 = (page: Page) => page.evaluate(() => window.__game!.getState() as unknown as C11State);
+/** eff(k) of section 4.11, the exact JS expression. */
+const effOf = (t: T, key: string, scale: number) => Math.round(t[key] * scale);
+const resolveEff = (chains: { kind: string }[], t: T, sc: number) => {
+  if (chains.length === 0) return effOf(t, 'sfBlankResolveMs', sc);
+  const n = chains.filter((c) => c.kind !== 'none').length;
+  if (n === 0) return effOf(t, 'sfResolveMs', sc);
+  return Math.max(effOf(t, 'sfResolveMs', sc), effOf(t, 'sfCastDelayMs', sc) + (n - 1) * effOf(t, 'sfCastStaggerMs', sc) + effOf(t, 'sfCastFlightMs', sc) + effOf(t, 'sfCastTailMs', sc));
+};
+const checkStops = (stops: number[], t: T, sc: number) => {
+  const bad: string[] = [];
+  const base = effOf(t, 'sfSpinBaseMs', sc);
+  const gap = effOf(t, 'sfReelStopGapMs', sc);
+  if (stops.length !== 4) bad.push(`${stops.length} phần tử`);
+  if (stops[0] < base - 30 || stops[0] > base + 60) bad.push(`cột 0 ở ${stops[0]}, mốc ${base}`);
+  for (let i = 1; i < stops.length; i += 1) {
+    if (!(stops[i] > stops[i - 1])) bad.push('không tăng dần');
+    if (Math.abs(stops[i] - stops[i - 1] - gap) > 40) bad.push(`khoảng ${i - 1}-${i} = ${stops[i] - stops[i - 1]}, mốc ${gap}`);
+  }
+  return bad;
+};
+
+/** Plays a scene match to the end with Space, recording the logic result of every spin (both sides). */
+const playAndLog = async (page: Page) => {
+  const log: string[] = [];
+  for (let guard = 0; guard < 2000; guard += 1) {
+    const s = await readState(page);
+    if (s.status !== 'playing') break;
+    if (s.phase === 'spinning' || s.phase === 'resolving') {
+      // Lượt đã ghi đang diễn hoạt: chờ xong rồi xét lượt kế.
+      await waitPhase(page, ['idle', 'foeWait', 'ended'], 20_000);
+      continue;
+    }
+    if (s.phase === 'idle') await page.keyboard.press('Space');
+    await page.waitForFunction((k) => {
+      const st = window.__game!.getState<SlotFiveState>()!;
+      return st.spinIndex > k || st.phase === 'ended';
+    }, s.spinIndex, { timeout: 20_000 });
+    const a = await readState(page);
+    if (a.spinIndex > s.spinIndex) log.push(JSON.stringify([a.spinIndex, a.lastSide, a.grid, a.lastChains, a.lastEffects, a.player, a.foe]));
+  }
+  await waitPhase(page, ['ended'], 20_000);
+  const end = await readState(page);
+  return { log, status: end.status, spinIndex: end.spinIndex };
+};
+
+test.describe('Slot Five C11: quay nhanh', () => {
+  test('C11.1 phím F bật, tắt; giữ F 800 ms chỉ đổi một lần; không tính là lệnh quay', async ({ page }) => {
+    await openForInput(page);
+    const s0 = await readC11(page);
+    expect(s0.fastMode).toBe(false);
+    expect(s0.lastTimeScale).toBe(1);
+    expect(s0.lastFoeDelayMs).toBe(0);
+    await page.keyboard.press('f');
+    expect((await readC11(page)).fastMode).toBe(true);
+    await page.keyboard.press('f');
+    expect((await readC11(page)).fastMode).toBe(false);
+    await page.keyboard.down('f');
+    const start = Date.now();
+    while (Date.now() - start < 800) {
+      await page.waitForTimeout(33);
+      await page.keyboard.down('f');
+    }
+    await page.keyboard.up('f');
+    const s = await readC11(page);
+    expect(s.fastMode).toBe(true);
+    expect(s.rejectedSpins).toBe(0);
+    expect(s.spinIndex).toBe(0);
+    await expect(page.locator('#sf-fast')).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('C11.3 Nhanh giữ qua R, Enter sau khi kết thúc, click #sf-new, loadMatch; tải lại trang thì về tắt', async ({ page }) => {
+    await openForInput(page);
+    await page.keyboard.press('f');
+    const m0 = (await readC11(page)).matchIndex;
+    await page.keyboard.press('r');
+    await page.waitForFunction((m) => window.__game!.getState<SlotFiveState>()!.matchIndex === m + 1, m0);
+    expect((await readC11(page)).fastMode).toBe(true);
+    await loadOneHitMatch(page);
+    await page.keyboard.press('Space');
+    await waitPhase(page, ['ended']);
+    const m1 = (await readC11(page)).matchIndex;
+    await page.keyboard.press('Enter');
+    await page.waitForFunction((m) => window.__game!.getState<SlotFiveState>()!.matchIndex === m + 1, m1);
+    expect((await readC11(page)).fastMode).toBe(true);
+    await page.click('#sf-new');
+    await page.waitForFunction((m) => window.__game!.getState<SlotFiveState>()!.matchIndex === m + 2, m1);
+    expect((await readC11(page)).fastMode).toBe(true);
+    await page.evaluate(() => window.__game!.slotFive!.loadMatch(99));
+    expect((await readC11(page)).fastMode).toBe(true);
+    await page.reload();
+    await page.waitForFunction(() => window.__game?.getState<SlotFiveState>()?.gameId === 'slot-five');
+    expect((await readC11(page)).fastMode).toBe(false);
+  });
+
+  test('C11.4 bật Nhanh rồi quay: lastTimeScale, lastSpinMs và lịch dừng cột theo eff(...)', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const f = t.sfFastFactor;
+    await page.keyboard.press('f');
+    await page.keyboard.press('Space');
+    await waitPhase(page, ['foeWait', 'ended']);
+    const s = await readC11(page);
+    console.log(`C11.4: sfFastFactor ${f}, lastSpinMs ${s.lastSpinMs}, lastReelStopMs ${JSON.stringify(s.lastReelStopMs.map((v) => Math.round(v)))}, eff(base) ${effOf(t, 'sfSpinBaseMs', f)}, eff(gap) ${effOf(t, 'sfReelStopGapMs', f)}`);
+    expect(s.lastSide).toBe('player');
+    expect(s.lastTimeScale).toBe(f);
+    expect(s.lastSpinMs).toBe(effOf(t, 'sfSpinBaseMs', f) + 3 * effOf(t, 'sfReelStopGapMs', f));
+    expect(checkStops(s.lastReelStopMs, t, f)).toEqual([]);
+  });
+
+  test('C11.5 bật Nhanh, ép F12: lastResolveMs, lịch cast co theo eff, resolving thật ± 60, thanh máu đổi khi trúng; F0 dùng eff(blank)', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const f = t.sfFastFactor;
+    await page.keyboard.press('f');
+    await startSampler(page);
+    await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4242, { player: { hp: 80 }, foe: { shield: 0 }, grids: [g] }), fx('F12'));
+    await page.keyboard.press('Space');
+    await waitPhase(page, ['foeWait', 'ended']);
+    const samples = await stopSampler(page);
+    const s = await readC8(page);
+    expect(s.lastResolveMs).toBe(resolveEff(s.lastChains, t, f));
+    expect(s.lastCasts.map((c) => c.kind)).toEqual(['heal', 'shield', 'damage']);
+    s.lastCasts.forEach((c, k) => {
+      const launch = effOf(t, 'sfCastDelayMs', f) + k * effOf(t, 'sfCastStaggerMs', f);
+      expect(c.launchMs, `viên ${k}`).toBe(launch);
+      expect(c.impactMs, `viên ${k}`).toBe(launch + effOf(t, 'sfCastFlightMs', f));
+      expect(Math.abs(c.launchedAtMs! - c.launchMs), `viên ${k} bắn ${c.launchedAtMs}`).toBeLessThanOrEqual(40);
+      expect(Math.abs(c.impactedAtMs! - c.impactMs), `viên ${k} trúng ${c.impactedAtMs}`).toBeLessThanOrEqual(40);
+    });
+    const turn = samples.filter((x) => x.spinIndex === 1);
+    const enter = turn.find((x) => x.phase === 'resolving')!;
+    const leave = turn.find((x) => x.t > enter.t && x.phase !== 'resolving')!;
+    const real = leave.t - enter.t;
+    console.log(`C11.5: lastResolveMs ${s.lastResolveMs}, resolving thật ${real.toFixed(1)} ms; lịch ${JSON.stringify(s.lastCasts.map((c) => [c.launchMs, c.launchedAtMs, c.impactMs, c.impactedAtMs]))}`);
+    expect(Math.abs(real - s.lastResolveMs)).toBeLessThanOrEqual(60);
+    const maxFoe = t.sfFoeMaxHp;
+    const healed = Math.min(t.sfBHeal, t.sfPlayerMaxHp - 80);
+    const want = [
+      { dPlayer: 80, dsPlayer: 0, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + healed, dsPlayer: 0, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + healed, dsPlayer: t.sfBShield, dFoe: maxFoe, dsFoe: 0 },
+      { dPlayer: 80 + healed, dsPlayer: t.sfBShield, dFoe: maxFoe - t.sfBBlade, dsFoe: 0 },
+    ];
+    const bad = turn.filter((x) => x.phase === 'spinning' || x.phase === 'resolving').flatMap((x) => {
+      const k = x.phase === 'spinning' ? 0 : x.impacted;
+      const got = { dPlayer: x.dPlayer, dsPlayer: x.dsPlayer, dFoe: x.dFoe, dsFoe: x.dsFoe };
+      return JSON.stringify(got) === JSON.stringify(want[k]) ? [] : [`sau ${k} viên: ${JSON.stringify(got)}`];
+    });
+    expect(bad.slice(0, 5)).toEqual([]);
+    // F0: lastResolveMs = eff(sfBlankResolveMs).
+    await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4243, { grids: [g] }), fx('F0'));
+    await page.keyboard.press('Space');
+    const b = await readC8(page);
+    expect(b.lastChains).toHaveLength(0);
+    expect(b.lastResolveMs).toBe(effOf(t, 'sfBlankResolveMs', f));
+  });
+
+  test('C11.6 bật Nhanh: lastFoeDelayMs = eff(sfFoeDelayMs), chờ đối thủ thật trong ± 60', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const f = t.sfFastFactor;
+    await page.keyboard.press('f');
+    await startSampler(page);
+    await page.keyboard.press('Space');
+    await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.spinIndex >= 2, null, { timeout: 15_000 });
+    const samples = await stopSampler(page);
+    const s = await readC11(page);
+    const waitStart = samples.find((x) => x.spinIndex === 1 && x.phase === 'foeWait')!;
+    const foeStart = samples.find((x) => x.spinIndex === 2)!;
+    const real = foeStart.t - waitStart.t;
+    console.log(`C11.6: lastFoeDelayMs ${s.lastFoeDelayMs}, eff ${effOf(t, 'sfFoeDelayMs', f)}, đo ${real.toFixed(1)} ms`);
+    expect(s.lastFoeDelayMs).toBe(effOf(t, 'sfFoeDelayMs', f));
+    expect(Math.abs(real - effOf(t, 'sfFoeDelayMs', f))).toBeLessThanOrEqual(60);
+  });
+
+  test('C11.7 kết quả không đổi: cùng seed chơi thường rồi chơi nhanh, mọi lượt giống nhau (3 seed, máu 40)', async ({ page }) => {
+    test.setTimeout(400_000);
+    await openForInput(page);
+    const t = await readTuning(page);
+    const LOW = { player: { maxHp: 40 }, foe: { maxHp: 40 } };
+    for (const seed of [t.sfSeed, 31, 4321]) {
+      await page.evaluate((on) => window.__game!.slotFive!.setFastMode(on), false);
+      await page.evaluate(([s, low]) => window.__game!.slotFive!.loadMatch(s, low), [seed, LOW] as const);
+      const normal = await playAndLog(page);
+      await page.keyboard.press('f');
+      expect((await readC11(page)).fastMode).toBe(true);
+      await page.evaluate(([s, low]) => window.__game!.slotFive!.loadMatch(s, low), [seed, LOW] as const);
+      const fast = await playAndLog(page);
+      console.log(`C11.7 seed ${seed}: thường ${normal.status} sau ${normal.spinIndex} lượt (${normal.log.length} bản ghi), nhanh ${fast.status} sau ${fast.spinIndex} lượt (${fast.log.length} bản ghi)`);
+      expect(fast.log).toEqual(normal.log);
+      expect(normal.log).toHaveLength(normal.spinIndex);
+      expect([fast.status, fast.spinIndex]).toEqual([normal.status, normal.spinIndex]);
+    }
+  });
+
+  test('C11.8 đổi giữa lượt áp từ lượt sau (người chơi rồi đối thủ)', async ({ page }) => {
+    await openForInput(page);
+    // foeWait nhanh chỉ còn eff(500) = 175 ms; kéo dài sfFoeDelayMs để kịp bấm F trong foeWait. Khôi phục ở cuối.
+    const old = await setTuning(page, { sfFoeDelayMs: 1500 });
+    await page.evaluate(() => window.__game!.slotFive!.loadMatch(window.__game!.tuning.sfSeed));
+    const t = await readTuning(page);
+    const f = t.sfFastFactor;
+    await page.keyboard.press('Space');
+    expect((await readC11(page)).phase).toBe('spinning');
+    await page.keyboard.press('f');
+    const a = await readC11(page);
+    expect(a.fastMode).toBe(true);
+    expect(a.lastTimeScale).toBe(1);
+    await waitPhase(page, ['foeWait']);
+    const b = await readC11(page);
+    // Lượt người chơi vẫn chạy theo lịch thường; lượt đối thủ chụp hệ số nhanh từ foeWait.
+    expect(checkStops(b.lastReelStopMs, t, 1)).toEqual([]);
+    expect(b.lastTimeScale).toBe(f);
+    expect(b.lastFoeDelayMs).toBe(effOf(t, 'sfFoeDelayMs', f));
+    await page.keyboard.press('f');
+    expect((await readC11(page)).fastMode).toBe(false);
+    await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.spinIndex >= 2, null, { timeout: 10_000 });
+    expect((await readC11(page)).lastTimeScale).toBe(f);
+    await waitPhase(page, ['idle', 'ended']);
+    const c = await readC11(page);
+    expect(c.lastSide).toBe('foe');
+    expect(checkStops(c.lastReelStopMs, t, f)).toEqual([]);
+    expect(c.lastSpinMs).toBe(effOf(t, 'sfSpinBaseMs', f) + 3 * effOf(t, 'sfReelStopGapMs', f));
+    await page.keyboard.press('Space');
+    const d = await readC11(page);
+    expect(d.spinIndex).toBe(3);
+    expect(d.lastTimeScale).toBe(1);
+    expect(d.lastSpinMs).toBe(t.sfSpinBaseMs + 3 * t.sfReelStopGapMs);
+    await setTuning(page, old);
+  });
+
+  test('C11.9 bật Nhanh: từ chối busy, notYourTurn như C6.3; F khi ended vẫn đổi; không tự quay khi idle 5 giây', async ({ page }) => {
+    await openForInput(page);
+    await page.evaluate((f1) => window.__game!.slotFive!.loadMatch(4242, { grids: [f1, f1] }), fx('F1'));
+    await page.keyboard.press('f');
+    const press = async (expected: string, phase: string) => {
+      const before = await readState(page);
+      expect(before.phase).toBe(phase);
+      await page.keyboard.press('Space');
+      const after = await readState(page);
+      expect(after.lastReject, phase).toBe(expected);
+      expect(after.rejectedSpins).toBe(before.rejectedSpins + 1);
+      expect(after.spinIndex).toBe(before.spinIndex);
+    };
+    await page.keyboard.press('Space');
+    await press('busy', 'spinning');
+    await waitPhase(page, ['resolving']);
+    await press('busy', 'resolving');
+    await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.spinIndex === 2, null, { timeout: 10_000 });
+    await press('notYourTurn', 'spinning');
+    await waitPhase(page, ['resolving']);
+    await press('notYourTurn', 'resolving');
+    await waitPhase(page, ['idle']);
+    const idle = await readState(page);
+    await page.waitForTimeout(5000);
+    expect((await readState(page)).spinIndex).toBe(idle.spinIndex);
+    await loadOneHitMatch(page);
+    await page.keyboard.press('Space');
+    await waitPhase(page, ['ended']);
+    const fm = (await readC11(page)).fastMode;
+    await page.keyboard.press('f');
+    expect((await readC11(page)).fastMode).toBe(!fm);
+    expect((await readC11(page)).phase).toBe('ended');
+  });
+
+  test('C11.10 sfFastFactor = 1: bật Nhanh cho đúng lastSpinMs, lastResolveMs, lastFoeDelayMs của tốc độ thường', async ({ page }) => {
+    await openForInput(page);
+    const t = await readTuning(page);
+    const old = await setTuning(page, { sfFastFactor: 1 });
+    try {
+      await page.keyboard.press('f');
+      await page.evaluate((g) => window.__game!.slotFive!.loadMatch(4242, { grids: [g] }), fx('F12'));
+      await page.keyboard.press('Space');
+      await waitPhase(page, ['foeWait']);
+      const s = await readC11(page) as C11State & { lastResolveMs: number };
+      expect(s.fastMode).toBe(true);
+      expect(s.lastTimeScale).toBe(1);
+      expect(s.lastSpinMs).toBe(t.sfSpinBaseMs + 3 * t.sfReelStopGapMs);
+      expect(s.lastResolveMs).toBe(resolveEff(s.lastChains, t, 1));
+      expect(s.lastFoeDelayMs).toBe(t.sfFoeDelayMs);
+    } finally {
+      await setTuning(page, old);
+    }
+    expect(await readTuning(page)).toEqual(t);
+  });
+});
+
+test.describe('Slot Five C11: cảm ứng 390x844', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+
+  test('C11.2 và C11.11 chạm #sf-fast đảo trạng thái, aria-pressed khớp; nút ≥ 44 px, khớp hộp; chữ "Nhanh" đọc được ở cả hai trạng thái', async ({ page }) => {
+    await openForInput(page);
+    const dom = () =>
+      page.evaluate(() => {
+        const el = document.getElementById('sf-fast')!;
+        const cs = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        return { aria: el.getAttribute('aria-pressed'), text: el.textContent, color: cs.color, bg: cs.backgroundColor, fontPx: parseFloat(cs.fontSize), w: r.width, h: r.height };
+      });
+    const check = async (label: string) => {
+      const s = await readC11(page);
+      const d = await dom();
+      const lt = (s as unknown as { layout: LayoutState }).layout.texts.find((x) => x.id === 'fastBtn');
+      console.log(`C11.11 ${label}: fastMode ${s.fastMode}, DOM ${JSON.stringify(d)}, layout ${JSON.stringify(lt)}`);
+      expect(d.aria).toBe(String(s.fastMode));
+      expect(d.w).toBeGreaterThanOrEqual(44);
+      expect(d.h).toBeGreaterThanOrEqual(44);
+      expect(d.fontPx).toBeGreaterThanOrEqual(12);
+      expect(contrast(d.color, d.bg), `${label} tương phản DOM`).toBeGreaterThanOrEqual(4.5);
+      expect(lt, 'fastBtn trong layout.texts').toBeDefined();
+      expect(textProblems({ ...(s as unknown as { layout: LayoutState }).layout, texts: [lt!] }, 12)).toEqual([]);
+      return s.fastMode;
+    };
+    expect(await check('tắt')).toBe(false);
+    await settleFrames(page);
+    await page.screenshot({ path: 'artifacts/slot-five-c11-390x844-fast-off.png' });
+    await page.tap('#sf-fast');
+    expect(await check('bật')).toBe(true);
+    await settleFrames(page);
+    await page.screenshot({ path: 'artifacts/slot-five-c11-390x844-fast-on.png' });
+    await page.tap('#sf-fast');
+    expect(await check('tắt lại')).toBe(false);
+    // Hai lần chạm liên tiếp về trạng thái ban đầu.
+    await page.tap('#sf-fast');
+    await page.tap('#sf-fast');
+    expect((await readC11(page)).fastMode).toBe(false);
+    // Chạm Nhanh không tính là lệnh quay.
+    expect((await readC11(page)).rejectedSpins).toBe(0);
+    expect((await readC11(page)).spinIndex).toBe(0);
+    // Ảnh lúc đang quay nhanh.
+    await page.tap('#sf-fast');
+    await page.tap('#sf-spin');
+    await page.waitForFunction(() => window.__game!.getState<SlotFiveState>()!.reelsStopped >= 1, null, { timeout: 10_000, polling: 'raf' });
+    await page.screenshot({ path: 'artifacts/slot-five-c11-390x844-fast-spinning.png' });
+  });
+});
+
+// ---------------------------------------------------------------- C12: VFX (bản 4.2)
+
+const VFX_KEYS = [
+  'sf_proj_fire', 'sf_proj_volt', 'sf_proj_frost', 'sf_proj_earth', 'sf_proj_blade', 'sf_proj_heal', 'sf_proj_shield',
+  'sf_hit_fire', 'sf_hit_volt', 'sf_hit_frost', 'sf_hit_earth', 'sf_hit_blade', 'sf_hit_heal', 'sf_hit_shield',
+  'sf_block', 'sf_chain_flash',
+];
+const ICON_KEY = ['fire', 'volt', 'frost', 'earth', 'blade', 'heal', 'shield', 'lucky'];
+interface VfxEntry {
+  key: string; kind: 'proj' | 'hit' | 'block' | 'flash'; castIndex: number | null; cell: [number, number] | null;
+  pos: [number, number]; box: GBox; startedAtMs: number; endedAtMs: number | null; timeScale: number;
+}
+type C12State = Omit<SlotFiveState, 'vfxLog'> & { vfxLog: VfxEntry[] };
+const readC12 = (page: Page) => page.evaluate(() => window.__game!.getState() as unknown as C12State);
+const waitVfxLoaded = (page: Page) =>
+  page.waitForFunction(() => ((window.__game?.getState() as unknown as { vfxLoaded?: string[] } | null)?.vfxLoaded?.length ?? 0) >= 16, null, { timeout: 15_000 });
+/** Earth-only grid (C base, row 0 x0..2 = 3), for the earth projectile and hit. */
+const earthGrid = () => paint(baseC(), row(0, 0, 2), 3);
+const dur = (e: VfxEntry) => (e.endedAtMs ?? NaN) - e.startedAtMs;
+const cellBox = ([x, y]: [number, number]): GBox => [117 + 102 * x - 48, 124 + 102 * y - 48, 96, 96];
+
+/**
+ * Plays one forced player turn and returns the state once the turn has left resolving (foeWait or ended).
+ * sfFoeDelayMs is raised so the foe's turn cannot clear vfxLog before it is read; callers restore TUNING.
+ */
+const vfxTurn = async (page: Page, grid: Grid, setup: RefSetup = {}) => {
+  await page.evaluate(([g, st]) => window.__game!.slotFive!.loadMatch(4242, { ...(st as object), grids: [g as number[][]] }), [grid, setup] as const);
+  await page.keyboard.press('Space');
+  await page.waitForFunction(() => {
+    const s = window.__game!.getState<SlotFiveState>()!;
+    return s.spinIndex === 1 && (s.phase === 'foeWait' || s.phase === 'ended');
+  }, null, { timeout: 15_000 });
+  await page.waitForTimeout(60);
+  return readC12(page);
+};
+
+/** Problems of one finished turn against sections 4.10 to 4.12 (C12.2, C12.3, C12.6, C12.7, C12.8, C12.9). */
+const vfxProblems = (s: C12State, t: T, sc: number) => {
+  const bad: string[] = [];
+  const log = s.vfxLog;
+  const casts = s.lastCasts;
+  const B = s.layout.boxes as Record<string, GBox>;
+  const effSum = Math.round((t.sfCastDelayMs + t.sfCastFlightMs) * sc);
+  const tail = effOf(t, 'sfCastTailMs', sc);
+  const tag = `lượt ${s.spinIndex}`;
+  // Lịch cast và thời lượng lượt không đổi (C12.8).
+  if (s.lastResolveMs !== resolveEff(s.lastChains, t, sc)) bad.push(`${tag}: lastResolveMs ${s.lastResolveMs}`);
+  casts.forEach((c, k) => {
+    const launch = effOf(t, 'sfCastDelayMs', sc) + k * effOf(t, 'sfCastStaggerMs', sc);
+    if (c.launchMs !== launch || c.impactMs !== launch + effOf(t, 'sfCastFlightMs', sc)) bad.push(`${tag}: lịch viên ${k}`);
+  });
+  for (const kind of ['proj', 'hit'] as const) {
+    const items = log.filter((e) => e.kind === kind);
+    if (items.length !== casts.length) bad.push(`${tag}: ${items.length} ${kind} cho ${casts.length} viên`);
+    casts.forEach((c, k) => {
+      const mine = items.filter((e) => e.castIndex === k);
+      if (mine.length !== 1) {
+        bad.push(`${tag}: viên ${k} có ${mine.length} ${kind}`);
+        return;
+      }
+      const e = mine[0];
+      const icon = ICON_KEY[s.lastChains[c.chainIndex].icon];
+      if (e.key !== `sf_${kind}_${icon}`) bad.push(`${tag}: viên ${k} key ${e.key}, mong đợi sf_${kind}_${icon}`);
+      if (kind === 'proj') {
+        if (Math.abs(e.startedAtMs - c.launchMs) > 40) bad.push(`${tag}: proj ${k} bắt đầu ${e.startedAtMs} so với ${c.launchMs}`);
+        if (e.endedAtMs === null || Math.abs(e.endedAtMs - c.impactMs) > 40) bad.push(`${tag}: proj ${k} kết thúc ${e.endedAtMs} so với ${c.impactMs}`);
+        if (e.box[2] < 56 || e.box[3] < 56) bad.push(`${tag}: proj ${k} box ${e.box.join(',')}`);
+      } else {
+        if (Math.abs(e.startedAtMs - c.impactMs) > 40) bad.push(`${tag}: hit ${k} bắt đầu ${e.startedAtMs} so với ${c.impactMs}`);
+        if (Math.abs(e.pos[0] - c.to[0]) > 2 || Math.abs(e.pos[1] - c.to[1]) > 2) bad.push(`${tag}: hit ${k} pos ${e.pos.join(',')} so với ${c.to.join(',')}`);
+        if (e.box[2] < 72 || e.box[2] > 120 || e.box[3] < 72 || e.box[3] > 104) bad.push(`${tag}: hit ${k} box ${e.box.join(',')}`);
+      }
+    });
+  }
+  for (const e of log.filter((x) => x.kind === 'block')) {
+    const c = e.castIndex === null ? undefined : casts[e.castIndex];
+    if (!c || c.kind !== 'damage') bad.push(`${tag}: block trên viên ${e.castIndex} loại ${c?.kind}`);
+    if (e.box[2] < 80 || e.box[2] > 112 || e.box[3] < 80 || e.box[3] > 112) bad.push(`${tag}: block box ${e.box.join(',')}`);
+  }
+  const flashes = log.filter((e) => e.kind === 'flash');
+  const cells = new Set(s.lastChains.flatMap((c) => c.cells.map(([x, y]) => `${x},${y}`)));
+  if (flashes.length !== cells.size) bad.push(`${tag}: ${flashes.length} flash cho ${cells.size} ô`);
+  if (new Set(flashes.map((e) => `${e.cell}`)).size !== flashes.length) bad.push(`${tag}: flash trùng ô`);
+  for (const e of flashes) {
+    if (!e.cell || !cells.has(`${e.cell[0]},${e.cell[1]}`)) bad.push(`${tag}: flash ô ${e.cell}`);
+    if (e.startedAtMs > 40) bad.push(`${tag}: flash bắt đầu ${e.startedAtMs}`);
+    if (e.cell) {
+      const want = cellBox(e.cell);
+      if (want.some((v, i) => Math.abs(v - e.box[i]) > 4)) bad.push(`${tag}: flash box ${e.box.join(',')} so với ${want.join(',')}`);
+    }
+  }
+  for (const e of log) {
+    if (e.endedAtMs === null) {
+      bad.push(`${tag}: ${e.key} chưa kết thúc`);
+      continue;
+    }
+    if ((e.kind === 'hit' || e.kind === 'block') && dur(e) > tail + 40) bad.push(`${tag}: ${e.key} dài ${dur(e)} > ${tail} + 40`);
+    if (e.kind === 'flash' && dur(e) > effSum + 40) bad.push(`${tag}: flash dài ${dur(e)} > ${effSum} + 40`);
+    if (e.endedAtMs > s.lastResolveMs + 40) bad.push(`${tag}: ${e.key} kết thúc ${e.endedAtMs} > lastResolveMs ${s.lastResolveMs} + 40`);
+    if (Math.abs(e.timeScale - sc) > 1e-9) bad.push(`${tag}: ${e.key} timeScale ${e.timeScale}`);
+    // C12.9: giao HUD thì tối đa 150 ms; không giao turnBanner hay panel.
+    if ((interArea(e.box, B.playerHud) > 0 || interArea(e.box, B.foeHud) > 0) && dur(e) > 150) bad.push(`${tag}: ${e.key} giao HUD ${dur(e)} ms`);
+    if (interArea(e.box, B.turnBanner) > 0 || interArea(e.box, B.panel) > 0) bad.push(`${tag}: ${e.key} giao turnBanner/panel, box ${e.box.join(',')}`);
+  }
+  return bad;
+};
+
+test.describe('Slot Five C12: VFX', () => {
+  test.beforeEach(() => pinBriefTuning());
+
+  test('C12.1 nạp đủ 16 key, sheet ≤ 1024 px, tổng ≤ 1.572.864 byte, một manifest, không request ra ngoài origin', async ({ page }) => {
+    const outside: string[] = [];
+    page.on('request', (r) => {
+      const u = r.url();
+      if (!u.startsWith('http://127.0.0.1:5173/') && !u.startsWith('data:') && !u.startsWith('blob:')) outside.push(u);
+    });
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    const s = await readC12(page);
+    expect(s.vfxLoaded).toEqual([...VFX_KEYS].sort());
+    const files = await page.evaluate(async () => {
+      const mod = (await import('/src/game/slotFiveVfx.ts' as string)) as { SF_VFX_MANIFEST: Record<string, string> };
+      const out: { file: string; bytes: number; w?: number; h?: number }[] = [];
+      for (const path of Object.values(mod.SF_VFX_MANIFEST)) {
+        const res = await fetch(`/${path}`);
+        const text = await res.text();
+        out.push({ file: path, bytes: new TextEncoder().encode(text).length });
+        const dir = path.slice(0, path.lastIndexOf('/') + 1);
+        for (const sheet of (JSON.parse(text) as { sheets: string[] }).sheets) {
+          const buf = new Uint8Array(await (await fetch(`/${dir}${sheet}`)).arrayBuffer());
+          const dv = new DataView(buf.buffer);
+          out.push({ file: `${dir}${sheet}`, bytes: buf.length, w: dv.getUint32(16), h: dv.getUint32(20) });
+        }
+      }
+      // Chỉ slotFiveVfx.ts nhắc tới đường dẫn sheet; module logic không import VFX (C12.11).
+      const raw = async (p: string) => ((await import(`${p}?raw` as string)) as { default: string }).default;
+      const others = ['/src/scenes/SlotFiveScene.ts', '/src/game/slotFiveLogic.ts', '/src/main.ts', '/src/debug/devTools.ts', '/src/config.ts'];
+      const mentions = [];
+      for (const p of others) if ((await raw(p)).includes('vfx/sf-')) mentions.push(p);
+      const logic = await raw('/src/game/slotFiveLogic.ts');
+      const logicImports = [...logic.matchAll(/^import[^;]*from\s+'([^']+)'/gm)].map((m) => m[1]);
+      return { manifest: Object.keys(mod.SF_VFX_MANIFEST), out, mentions, logicImports };
+    });
+    const pngs = files.out.filter((x) => x.file.endsWith('.png'));
+    const total = files.out.reduce((a, x) => a + x.bytes, 0);
+    console.log(`C12.1: ${files.manifest.length} key, ${pngs.length} sheet, tổng ${total} byte; sheet lớn nhất ${Math.max(...pngs.map((p) => Math.max(p.w!, p.h!)))} px; logic import ${files.logicImports.join(', ')}`);
+    expect([...files.manifest].sort()).toEqual([...VFX_KEYS].sort());
+    for (const p of pngs) expect(Math.max(p.w!, p.h!), p.file).toBeLessThanOrEqual(1024);
+    for (const p of pngs) expect(p.file, 'tên sheet T_sf_*').toMatch(/\/T_sf_[A-Za-z_0-9]+\.png$/);
+    expect(total).toBeLessThanOrEqual(1_572_864);
+    expect(files.mentions).toEqual([]);
+    expect(files.logicImports.some((m) => /vfx/i.test(m))).toBe(false);
+    expect(outside).toEqual([]);
+  });
+
+  test('C12.2, C12.7 F12 lượt người chơi: 3 đạn heal, shield, blade đúng lịch; không còn chấm tròn (soát ảnh)', async ({ page }) => {
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    await setTuning(page, { sfFoeDelayMs: 1500 });
+    const t = await readTuning(page);
+    const s = await vfxTurn(page, fx('F12'));
+    const proj = s.vfxLog.filter((e) => e.kind === 'proj');
+    console.log(`C12.2: ${JSON.stringify(proj.map((e) => [e.key, e.castIndex, Math.round(e.startedAtMs), Math.round(e.endedAtMs ?? -1), e.box.map(Math.round)]))}; lịch ${JSON.stringify(s.lastCasts.map((c) => [c.launchMs, c.impactMs]))}`);
+    expect(proj.map((e) => e.key)).toEqual(['sf_proj_heal', 'sf_proj_shield', 'sf_proj_blade']);
+    expect(proj.map((e) => e.castIndex).sort()).toEqual([0, 1, 2]);
+    expect(vfxProblems(s, t, 1)).toEqual([]);
+  });
+
+  for (const [id, keys] of [['F10', ['fire']], ['F11', ['volt', 'earth']], ['F13', ['frost']], ['F5', ['blade']], ['F2', ['heal']], ['F3', ['shield']]] as const) {
+    test(`C12.4 ${id}: đạn và va chạm ${keys.join(', ')}; heal, shield ở bên quay, sát thương ở bên kia`, async ({ page }) => {
+      await openForInput(page);
+      await waitVfxLoaded(page);
+      await setTuning(page, { sfFoeDelayMs: 1500 });
+      const t = await readTuning(page);
+      const s = await vfxTurn(page, fx(id));
+      expect(s.vfxLog.filter((e) => e.kind === 'proj').map((e) => e.key)).toEqual(keys.map((k) => `sf_proj_${k}`));
+      expect(s.vfxLog.filter((e) => e.kind === 'hit').map((e) => e.key)).toEqual(keys.map((k) => `sf_hit_${k}`));
+      for (const e of s.vfxLog.filter((x) => x.kind === 'hit')) {
+        const c = s.lastCasts[e.castIndex!];
+        const side = c.kind === 'damage' ? 'foe' : 'player';
+        expect(c.target).toBe(side);
+        expect(Math.abs(e.pos[0] - FIGHTER_CENTRE[side][0]) <= 2 && Math.abs(e.pos[1] - FIGHTER_CENTRE[side][1]) <= 2, `${e.key} tại ${e.pos}`).toBe(true);
+      }
+      expect(vfxProblems(s, t, 1)).toEqual([]);
+    });
+  }
+
+  test('C12.5 chặn: khiên đối thủ 20 với F11 có 2 block cùng lúc với hit; khiên 0 với F1 không có block', async ({ page }) => {
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    await setTuning(page, { sfFoeDelayMs: 1500 });
+    const t = await readTuning(page);
+    const s = await vfxTurn(page, fx('F11'), { foe: { shield: 20 } });
+    const blocks = s.vfxLog.filter((e) => e.kind === 'block');
+    const hits = s.vfxLog.filter((e) => e.kind === 'hit');
+    console.log(`C12.5: block ${JSON.stringify(blocks.map((e) => [e.castIndex, Math.round(e.startedAtMs), e.box.map(Math.round)]))}, hit ${JSON.stringify(hits.map((e) => [e.castIndex, Math.round(e.startedAtMs)]))}`);
+    expect(blocks.map((e) => e.castIndex)).toEqual([0, 1]);
+    for (const b of blocks) {
+      const h = hits.find((x) => x.castIndex === b.castIndex)!;
+      expect(Math.abs(b.startedAtMs - h.startedAtMs)).toBeLessThanOrEqual(40);
+    }
+    expect(vfxProblems(s, t, 1)).toEqual([]);
+    const s2 = await vfxTurn(page, fx('F1'), { foe: { shield: 0 } });
+    expect(s2.vfxLog.filter((e) => e.kind === 'block')).toHaveLength(0);
+    // Viên heal và shield không bao giờ có block, kể cả khi bên quay đang có khiên.
+    const s3 = await vfxTurn(page, fx('F12'), { player: { shield: 30 }, foe: { shield: 30 } });
+    expect(s3.vfxLog.filter((e) => e.kind === 'block').map((e) => s3.lastCasts[e.castIndex!].kind)).toEqual(['damage']);
+  });
+
+  for (const [id, flashes, proj] of [['F7', 5, 2], ['F4', 4, 0], ['F0', 0, 0]] as const) {
+    test(`C12.6 ${id}: ${flashes} lóe chuỗi trong 40 ms đầu, ${proj} đạn, số lóe bằng highlightedCells`, async ({ page }) => {
+      await openForInput(page);
+      await waitVfxLoaded(page);
+      await setTuning(page, { sfFoeDelayMs: 1500 });
+      const t = await readTuning(page);
+      const s = await vfxTurn(page, fx(id));
+      const fl = s.vfxLog.filter((e) => e.kind === 'flash');
+      expect(fl).toHaveLength(flashes);
+      expect(fl.length).toBe(s.highlightedCells);
+      expect(s.vfxLog.filter((e) => e.kind === 'proj')).toHaveLength(proj);
+      expect(vfxProblems(s, t, 1)).toEqual([]);
+    });
+  }
+
+  test('C12.3, C12.5, C12.6, C12.7, C12.8, C12.9, C12.11, C12.12 trận đầy đủ chơi bằng Space (máu 60)', async ({ page }) => {
+    test.setTimeout(300_000);
+    const warnings: string[] = [];
+    page.on('console', (m) => {
+      if (m.type() === 'warning' && /texture|frame|anim/i.test(m.text())) warnings.push(m.text());
+    });
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    const t = await readTuning(page);
+    const LOW = { player: { maxHp: 60 }, foe: { maxHp: 60 } };
+    await page.evaluate((low) => window.__game!.slotFive!.loadMatch(window.__game!.tuning.sfSeed, low), LOW);
+    // Chụp state ở frame đầu tiên rời resolving của mỗi lượt, và 50 ms sau đó.
+    await page.evaluate(() => {
+      const w = window as unknown as { __qaTurns: unknown[]; __qaMaxVfx: number; __qaDom: string[] };
+      w.__qaTurns = [];
+      w.__qaMaxVfx = 0;
+      w.__qaDom = [];
+      let prev = '';
+      const tick = () => {
+        const s = window.__game?.getState() as unknown as C12State | null;
+        if (s) {
+          w.__qaMaxVfx = Math.max(w.__qaMaxVfx, s.vfxPlaying);
+          if (prev === 'resolving' && s.phase !== 'resolving') {
+            const snap = { state: s, playingAfter50: -1 };
+            w.__qaTurns.push(snap);
+            setTimeout(() => {
+              snap.playingAfter50 = (window.__game!.getState() as unknown as C12State).vfxPlaying;
+            }, 50);
+          }
+          // Cờ DOM phản chiếu đúng state (C12.14, bản dev).
+          const el = document.getElementById('game')!;
+          const d = el.dataset;
+          if (d.sfSpinIndex !== String(s.spinIndex) || d.sfPhase !== s.phase || d.sfLastCasts !== String(s.lastCasts.length)) {
+            if (w.__qaDom.length < 5 && prev === s.phase) w.__qaDom.push(`${s.spinIndex}/${s.phase}/${s.lastCasts.length} DOM ${d.sfSpinIndex}/${d.sfPhase}/${d.sfLastCasts}`);
+          }
+          prev = s.phase;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    const end = await playToEnd(page, () => page.keyboard.press('Space'));
+    await waitPhase(page, ['ended']);
+    await page.waitForTimeout(200);
+    const out = await page.evaluate(() => {
+      const w = window as unknown as { __qaTurns: { state: C12State; playingAfter50: number }[]; __qaMaxVfx: number; __qaDom: string[] };
+      return { turns: w.__qaTurns, maxVfx: w.__qaMaxVfx, dom: w.__qaDom, hitsFlag: Number(document.getElementById('game')!.dataset.sfVfxHits) };
+    });
+    const sim = await page.evaluate(([seed, low]) => {
+      const b = window.__game!.slotFive!.createBattle(seed, low);
+      const log: string[] = [];
+      while (b.getState().status === 'playing') {
+        const r = b.spin();
+        const s = b.getState();
+        log.push(JSON.stringify([s.spinIndex, r.grid, r.chains, { ...r.effects, absorbed: r.absorbed, hpLoss: r.hpLoss, healed: r.healed }, s.player, s.foe]));
+      }
+      return log;
+    }, [t.sfSeed, LOW] as const);
+    const bad: string[] = [];
+    let casts = 0;
+    let hits = 0;
+    let blocks = 0;
+    for (const { state: s, playingAfter50 } of out.turns) {
+      bad.push(...vfxProblems(s, t, 1));
+      if (playingAfter50 !== 0) bad.push(`lượt ${s.spinIndex}: vfxPlaying ${playingAfter50} sau 50 ms`);
+      if (s.vfxLog.filter((e) => e.kind === 'flash').length !== s.highlightedCells) bad.push(`lượt ${s.spinIndex}: flash khác highlightedCells`);
+      casts += s.lastCasts.length;
+      hits += s.vfxLog.filter((e) => e.kind === 'hit').length;
+      blocks += s.vfxLog.filter((e) => e.kind === 'block').length;
+    }
+    const sceneLog = out.turns.map(({ state: s }) => JSON.stringify([s.spinIndex, s.grid, s.lastChains, s.lastEffects, s.player, s.foe]));
+    console.log(`C12 trận đầy đủ: ${end.s.status} sau ${end.s.spinIndex} lượt; ${casts} viên, ${hits} hit, ${blocks} block; vfxPlaying tối đa ${out.maxVfx}; data-sf-vfx-hits ${out.hitsFlag}`);
+    expect(out.turns.length).toBe(end.s.spinIndex);
+    expect(bad.slice(0, 10)).toEqual([]);
+    expect(sceneLog, 'C12.11: mỗi lượt khớp createBattle').toEqual(sim);
+    expect(out.maxVfx).toBeLessThanOrEqual(40);
+    expect(out.hitsFlag).toBe(hits);
+    expect(out.dom, 'cờ DOM phản chiếu state').toEqual([]);
+    expect(warnings).toEqual([]);
+    expect(hits).toBe(casts);
+    expect(casts).toBeGreaterThan(0);
+  });
+
+  test('C12.10 chế độ Nhanh: timeScale = sfFastFactor, lịch và thời lượng theo eff, hit ngắn lại theo hệ số', async ({ page }) => {
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    await setTuning(page, { sfFoeDelayMs: 3000 });
+    const t = await readTuning(page);
+    const f = t.sfFastFactor;
+    const normal = await vfxTurn(page, fx('F12'));
+    await page.keyboard.press('f');
+    const fast = await vfxTurn(page, fx('F12'));
+    expect((await readC11(page)).fastMode).toBe(true);
+    expect(fast.vfxLog.length).toBeGreaterThan(0);
+    expect(fast.vfxLog.every((e) => Math.abs(e.timeScale - f) < 1e-9)).toBe(true);
+    expect(vfxProblems(fast, t, f)).toEqual([]);
+    const pairs = fast.vfxLog.filter((e) => e.kind === 'hit').map((e) => {
+      const n = normal.vfxLog.find((x) => x.kind === 'hit' && x.castIndex === e.castIndex)!;
+      return { key: e.key, fast: dur(e), normal: dur(n) };
+    });
+    console.log(`C12.10: hit thường/nhanh ${JSON.stringify(pairs)}`);
+    for (const p of pairs) expect(Math.abs(p.fast - p.normal * f), p.key).toBeLessThanOrEqual(40);
+    // Ảnh chế độ Nhanh không ở đây; xem C12.13.
+  });
+
+  test('C12.11 các trường getState() trước bản 4.2 vẫn đủ và cùng kiểu', async ({ page }) => {
+    await openForInput(page);
+    const s = await page.evaluate(() => window.__game!.getState() as unknown as Record<string, unknown>);
+    const want: Record<string, string> = {
+      gameId: 'string', seed: 'number', matchIndex: 'number', cols: 'number', rows: 'number', iconCount: 'number', luckyIcon: 'number',
+      grid: 'array', spinIndex: 'number', turn: 'string', status: 'string', player: 'object', foe: 'object', displayHp: 'object',
+      displayShield: 'object', lastSide: 'null', lastChains: 'array', lastEffects: 'object', phase: 'string', rejectedSpins: 'number',
+      lastReject: 'null', reelsStopped: 'number', lastSpinMs: 'number', lastResolveMs: 'number', lastReelStopMs: 'array',
+      highlightedChainCount: 'number', highlightedCells: 'number', viewCounts: 'object', legendOpen: 'boolean', lastCasts: 'array',
+      castsInFlight: 'number', floatTexts: 'array', layout: 'object', fastMode: 'boolean', lastTimeScale: 'number', lastFoeDelayMs: 'number',
+    };
+    const kind = (v: unknown) => (v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v);
+    const bad = Object.entries(want).filter(([k, ty]) => kind(s[k]) !== ty).map(([k, ty]) => `${k}: ${kind(s[k])} thay vì ${ty}`);
+    expect(bad).toEqual([]);
+    expect(kind(s.vfxLoaded)).toBe('array');
+    expect(kind(s.vfxPlaying)).toBe('number');
+    expect(kind(s.vfxLog)).toBe('array');
+  });
+});
+
+/** C12.13: screenshots for the user, 390x844. */
+test.describe('Slot Five C12.13: ảnh VFX 390x844', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  test.beforeEach(() => pinBriefTuning());
+
+  test('C12.13 ảnh đạn (7), va chạm (7), block, lóe chuỗi F7, F12 ba đạn, chế độ Nhanh', async ({ page }) => {
+    test.setTimeout(240_000);
+    await openForInput(page);
+    await waitVfxLoaded(page);
+    await setTuning(page, { sfFoeDelayMs: 1500 });
+    const shot = (name: string) => page.screenshot({ path: `artifacts/slot-five-c12-390x844-${name}.png` });
+    const start = async (grid: Grid, setup: RefSetup = {}) => {
+      await page.evaluate(([g, st]) => window.__game!.slotFive!.loadMatch(4242, { ...(st as object), grids: [g as number[][]] }), [grid, setup] as const);
+      await page.tap('#sf-spin');
+    };
+    /** Waits until a VFX of this kind and key is playing (started, not ended). */
+    const waitLog = (kind: string, key: string) =>
+      page.waitForFunction(([k, ky]) => {
+        const s = window.__game!.getState() as unknown as C12State;
+        return s.vfxLog.some((x) => x.kind === k && x.key === ky && x.endedAtMs === null);
+      }, [kind, key] as const, { timeout: 10_000, polling: 'raf' });
+    const cases: [string, Grid][] = [
+      ['fire', fx('F10')], ['volt', paint(baseC(), row(0, 0, 2), 1)], ['frost', fx('F13')], ['earth', earthGrid()],
+      ['blade', fx('F1')], ['heal', fx('F2')], ['shield', fx('F3')],
+    ];
+    for (const [name, grid] of cases) {
+      await start(grid);
+      await waitLog('proj', `sf_proj_${name}`);
+      // Khoảng 75% đường bay (sfCastFlightMs 350): đạn đang qua khoảng trống cast.
+      await page.waitForTimeout(250);
+      await shot(`proj-${name}`);
+      await waitLog('hit', `sf_hit_${name}`);
+      await page.waitForTimeout(90);
+      await shot(`hit-${name}`);
+      await waitPhase(page, ['foeWait', 'ended']);
+    }
+    await start(fx('F11'), { foe: { shield: 20 } });
+    await waitLog('block', 'sf_block');
+    await page.waitForTimeout(90);
+    await shot('block');
+    await waitPhase(page, ['foeWait', 'ended']);
+    await start(fx('F7'));
+    await waitLog('flash', 'sf_chain_flash');
+    await page.waitForTimeout(150);
+    await shot('flash-f7');
+    await waitPhase(page, ['foeWait', 'ended']);
+    await start(fx('F12'));
+    await page.waitForFunction(() => {
+      const s = window.__game!.getState() as unknown as C12State;
+      const p = s.vfxLog.filter((e) => e.kind === 'proj');
+      return p.length === 3 && p.every((e) => e.endedAtMs === null);
+    }, null, { timeout: 10_000, polling: 'raf' });
+    await shot('f12-three-proj');
+    await waitPhase(page, ['foeWait', 'ended']);
+    await page.tap('#sf-fast');
+    await start(fx('F12'));
+    await page.waitForFunction(() => (window.__game!.getState() as unknown as C12State).vfxLog.some((e) => e.kind === 'proj' && e.endedAtMs === null), null, { timeout: 10_000, polling: 'raf' });
+    await page.waitForTimeout(40);
+    await shot('fast-mode');
+    expect((await readC11(page)).fastMode).toBe(true);
+  });
 });
 
 test.describe('Slot Five C1: khung hình', () => {

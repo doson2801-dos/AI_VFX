@@ -37,6 +37,9 @@ Skill `producer` điều phối các bước dưới đây qua đội agent.
 - Task Scheduler `Game_AI Knowledge Commit` chạy `tools/daily_commit.ps1` lúc 18:00 hàng ngày, log ở `tools/daily_commit.log`.
 - Chỉ commit kiến thức (`CLAUDE.md`, `docs/`, `.claude/agents`, `.claude/rules`, `.claude/skills`) và chỉ push nhánh `game-ai-prototype`.
 - Không push nhánh `main` từ dự án này. `main` có lịch commit riêng.
+- Không merge `game-ai-prototype` hay `phaser-vfx-setup` vào `main`. `main` là dự án Unity: `Docs/` viết hoa, `Assets/Library/`. Nhánh Phaser dùng `docs/` viết thường và `vfx/Library/`. Windows không phân biệt hoa thường nên hai cây sẽ trộn vào nhau.
+- Setup Phaser VFX (skill `phaser-vfx`, `docs/vfx/_Library/`, phần `.gitignore` cho `vfx/Library/`) chỉ sửa trên nhánh `phaser-vfx-setup`, rồi merge sang `game-ai-prototype`. Không sửa thẳng trên nhánh game để hai bản không lệch nhau.
+- `vfx/Library/` (khoảng 163 MB) không nằm trong Git. Máy mới giải nén `Library.tar.gz` trên Google Drive của người dùng vào `vfx/`.
 
 ## Luật
 - Mọi thông số gameplay nằm trong `src/config.ts` và có khoảng tune trong `TUNING_RANGES`.

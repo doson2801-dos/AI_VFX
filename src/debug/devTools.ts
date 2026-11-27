@@ -43,6 +43,8 @@ export interface SlotFiveDebug {
   loadMatch(seed: number, setup?: BattleSetup): void;
   /** Like pressing spin; false when rejected. */
   spin(): boolean;
+  /** Like pressing F until the switch reaches `on`. Applies from the next turn. */
+  setFastMode(on: boolean): void;
   /** One battle per seed, TUNING read at call time. Optional setup (e.g. { turn: 'foe' }) applies to every match. */
   simulateMatches(opts: SimulateMatchesOptions): MatchReport;
 }
@@ -116,6 +118,10 @@ export function installDevTools(game: Phaser.Game): void {
         (scene() as SlotFiveScene).loadMatch(seed, setup);
       },
       spin: () => (isReady() ? (scene() as SlotFiveScene).spin() : false),
+      setFastMode: (on) => {
+        if (!isReady()) throw new Error('Slot Five scene is not ready');
+        (scene() as SlotFiveScene).setFastMode(on);
+      },
       simulateMatches: (opts) => simulateMatches(opts, TUNING),
     };
   }

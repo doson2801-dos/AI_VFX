@@ -10,7 +10,7 @@ export type SlotFiveTuning = typeof TUNING;
 export const SF_COLS = 4;
 export const SF_ROWS = 4;
 export const SF_ICON_KEYS = ['fire', 'volt', 'frost', 'earth', 'blade', 'heal', 'shield', 'lucky'] as const;
-export const SF_ICON_NAMES = ['Lửa', 'Điện', 'Băng', 'Đất', 'Kiếm', 'Hồi máu', 'Khiên', 'May mắn'] as const;
+export const SF_ICON_NAMES = ['Lửa', 'Sét', 'Băng', 'Đất', 'Kiếm', 'Hồi máu', 'Khiên', 'May mắn'] as const;
 export const SF_ICON_COUNT = SF_ICON_KEYS.length;
 export const SF_LUCKY_ICON = 7;
 
@@ -21,10 +21,20 @@ export const SF_STREAM_SPIN = 1;
 /** Suffix of each icon's `sfW<Name>` tuning key, by icon index. */
 const TUNING_NAMES = ['Fire', 'Volt', 'Frost', 'Earth', 'Blade', 'Heal', 'Shield', 'Lucky'] as const;
 
+/** Icons 0..3 are the elements that can fill the element slot; one per match (brief v5, 4.1.1). */
+export const SF_ELEMENT_COUNT = 4;
+/** Icons always on the grid besides the element: blade, heal, shield, lucky. */
+const SF_COMMON_ICONS = [4, 5, 6, 7] as const;
+
 /** grid[y][x] is an icon index. */
 export type Grid = number[][];
 
 export interface SlotFiveGridConfig {
+  /** Element of the match, 0..3 (sfElement). */
+  element: number;
+  /** [element, 4, 5, 6, 7]: the only icons the RNG can draw, ascending. */
+  activeIcons: number[];
+  /** Weight per icon index; 0 for every icon outside activeIcons. */
   weights: number[];
   totalWeight: number;
 }
@@ -63,16 +73,27 @@ export function streamSeed(seed: number, stream: number): number {
 /** Snapshot of the weights one match or sim uses. Non-integers round down, negatives clamp to 0. */
 export function readGridConfig(tuning: SlotFiveTuning): SlotFiveGridConfig {
   const t = tuning as unknown as Record<string, number>;
-  const weights = TUNING_NAMES.map((name) => Math.max(0, Math.floor(t[`sfW${name}`])));
-  return { weights, totalWeight: weights.reduce((a, b) => a + b, 0) };
+  const element = tuning.sfElement;
+  if (!Number.isInteger(element) || element < 0 || element >= SF_ELEMENT_COUNT) {
+    throw new Error(`Slot Five: sfElement must be an integer in [0, ${SF_ELEMENT_COUNT - 1}]`);
+  }
+  // The element sorts first because its index (0..3) is below the common icons (4..7).
+  const activeIcons = [element, ...SF_COMMON_ICONS];
+  const weightOf = (icon: number) => Math.max(0, Math.floor(icon === element ? tuning.sfWElement : t[`sfW${TUNING_NAMES[icon]}`]));
+  const weights = TUNING_NAMES.map((_, icon) => (activeIcons.includes(icon) ? weightOf(icon) : 0));
+  return { element, activeIcons, weights, totalWeight: activeIcons.reduce((sum, icon) => sum + weights[icon], 0) };
 }
 
 /** Draws one icon: r = int(total), first icon whose running weight sum exceeds r. */
-function drawIcon(rng: Rng, weights: number[], totalWeight: number): number {
-  const r = rng.int(totalWeight);
+/**
+ * Draws one icon from the table of activeIcons only (inactive elements are not in it at all):
+ * r = int(total), first icon whose running weight sum exceeds r.
+ */
+function drawIcon(rng: Rng, config: SlotFiveGridConfig): number {
+  const r = rng.int(config.totalWeight);
   let sum = 0;
-  for (let icon = 0; icon < weights.length; icon++) {
-    sum += weights[icon];
+  for (const icon of config.activeIcons) {
+    sum += config.weights[icon];
     if (sum > r) return icon;
   }
   throw new Error('Slot Five: icon draw fell through the weight table');
@@ -83,7 +104,7 @@ export function drawGrid(rng: Rng, config: SlotFiveGridConfig): Grid {
   if (config.totalWeight <= 0) throw new Error('Slot Five: total icon weight must be positive');
   const grid: Grid = Array.from({ length: SF_ROWS }, () => new Array<number>(SF_COLS).fill(0));
   for (let x = 0; x < SF_COLS; x++) {
-    for (let y = 0; y < SF_ROWS; y++) grid[y][x] = drawIcon(rng, config.weights, config.totalWeight);
+    for (let y = 0; y < SF_ROWS; y++) grid[y][x] = drawIcon(rng, config);
   }
   return grid;
 }
@@ -242,7 +263,8 @@ export function analyticEffects(gridConfig: SlotFiveGridConfig, effectConfig: Sl
   const out: Effects = { damage: 0, heal: 0, shield: 0 };
   if (gridConfig.totalWeight <= 0) throw new Error('Slot Five: total icon weight must be positive');
   const lineLengths = DIR_ORDER.flatMap((dir) => SF_LINES[dir].map((line) => line.length));
-  for (let icon = 0; icon < SF_ICON_COUNT; icon++) {
+  // Only the icons the RNG can draw (brief v5 4.6.1); inactive elements have p = 0.
+  for (const icon of gridConfig.activeIcons) {
     const kind = SF_ICON_KINDS[icon];
     if (kind === 'none') continue;
     const p = gridConfig.weights[icon] / gridConfig.totalWeight;
@@ -277,6 +299,44 @@ export function readCastTiming(tuning: SlotFiveTuning): CastTiming {
     castTailMs: tuning.sfCastTailMs,
   };
 }
+
+/** Every timing a turn uses, as plain numbers so a whole set can be scaled at once. */
+export interface TurnTiming extends CastTiming {
+  spinBaseMs: number;
+  reelStopGapMs: number;
+  stopBounceMs: number;
+  foeDelayMs: number;
+}
+
+export function readTurnTiming(tuning: SlotFiveTuning): TurnTiming {
+  return {
+    ...readCastTiming(tuning),
+    spinBaseMs: tuning.sfSpinBaseMs,
+    reelStopGapMs: tuning.sfReelStopGapMs,
+    stopBounceMs: tuning.sfStopBounceMs,
+    foeDelayMs: tuning.sfFoeDelayMs,
+  };
+}
+
+/** eff(k) = Math.round(k * timeScale) for every timing key (brief 4.11). Scale 1 returns the same values. */
+export function scaleTurnTiming(timing: TurnTiming, timeScale: number): TurnTiming {
+  const eff = (k: number) => Math.round(k * timeScale);
+  return {
+    resolveMs: eff(timing.resolveMs),
+    blankResolveMs: eff(timing.blankResolveMs),
+    castDelayMs: eff(timing.castDelayMs),
+    castStaggerMs: eff(timing.castStaggerMs),
+    castFlightMs: eff(timing.castFlightMs),
+    castTailMs: eff(timing.castTailMs),
+    spinBaseMs: eff(timing.spinBaseMs),
+    reelStopGapMs: eff(timing.reelStopGapMs),
+    stopBounceMs: eff(timing.stopBounceMs),
+    foeDelayMs: eff(timing.foeDelayMs),
+  };
+}
+
+/** lastSpinMs: the first column stops at spinBaseMs, then one gap per further column (brief 4.7). */
+export const spinMsFor = (timing: TurnTiming): number => timing.spinBaseMs + (SF_COLS - 1) * timing.reelStopGapMs;
 
 const CAST_KIND_ORDER: readonly Kind[] = ['heal', 'shield', 'damage'];
 
@@ -356,6 +416,9 @@ function makeFighter(defaultMaxHp: number, over: Partial<Fighter> | undefined, l
  */
 export class SlotFiveBattle {
   private readonly stream: SlotFiveGridStream;
+  /** Element and drawable icons of this match, snapshotted with TUNING when the battle is created. */
+  readonly element: number;
+  readonly activeIcons: readonly number[];
   private readonly effectConfig: SlotFiveEffectConfig;
   private status: BattleStatus = 'playing';
   private turn: Side;
@@ -365,6 +428,8 @@ export class SlotFiveBattle {
 
   constructor(readonly seed: number, tuning: SlotFiveTuning, setup: BattleSetup = {}) {
     const gridConfig = readGridConfig(tuning);
+    this.element = gridConfig.element;
+    this.activeIcons = [...gridConfig.activeIcons];
     this.effectConfig = readEffectConfig(tuning);
     this.stream = new SlotFiveGridStream(seed, gridConfig);
     this.grid = initialGrid(seed, gridConfig);
@@ -474,6 +539,9 @@ export interface MatchReport {
   estMatchMsMedian: number;
   /** Nearest-rank P90 of estMatchMs (brief v4). */
   estMatchMsP90: number;
+  /** Same estimate with every timing key scaled by sfFastFactor (brief 4.11); the 600 ms press is not scaled. */
+  estMatchMsMedianFast: number;
+  estMatchMsP90Fast: number;
   /** Sum of estMatchMs over sum of turns, all matches (brief v4). */
   meanTurnMs: number;
   /** Matches still playing after SLOT_FIVE_SIM.maxTurns spins. */
@@ -498,11 +566,14 @@ function percentile(sorted: number[], k: number): number {
  * Turn means one spin of either side. Effects means are raw per-turn evaluate output, before any cap.
  */
 export function simulateMatches(opts: SimulateMatchesOptions, tuning: SlotFiveTuning): MatchReport {
-  // lastSpinMs: the first column stops at sfSpinBaseMs, then one gap per further column.
-  const spinMs = tuning.sfSpinBaseMs + (SF_COLS - 1) * tuning.sfReelStopGapMs;
-  const castTiming = readCastTiming(tuning);
+  const normal = readTurnTiming(tuning);
+  const fast = scaleTurnTiming(normal, tuning.sfFastFactor);
+  /** Brief 5.3: each turn costs lastSpinMs + lastResolveMs, plus foeWait (foe) or the assumed press (player). */
+  const turnMs = (timing: TurnTiming, chains: readonly Chain[], side: Side) =>
+    spinMsFor(timing) + resolveMsFor(chains, timing) + (side === 'foe' ? timing.foeDelayMs : SLOT_FIVE_SIM.playerPressMs);
   const turnsList: number[] = [];
   const estMsList: number[] = [];
+  const estMsFastList: number[] = [];
   let playerWins = 0;
   let foeWins = 0;
   let comebacks = 0;
@@ -525,6 +596,7 @@ export function simulateMatches(opts: SimulateMatchesOptions, tuning: SlotFiveTu
     const history: [number, number, number, number, number][] = [];
     let turns = 0;
     let estMs = 0;
+    let estMsFast = 0;
     while (battle.getState().status === 'playing' && turns < SLOT_FIVE_SIM.maxTurns) {
       const r = battle.spin();
       turns += 1;
@@ -537,15 +609,15 @@ export function simulateMatches(opts: SimulateMatchesOptions, tuning: SlotFiveTu
       sumHeal += heal;
       sumShield += shield;
       sumAbsorbed += r.absorbed;
-      // Brief 5.3: each turn costs lastSpinMs + lastResolveMs (4.10).
-      estMs += spinMs + resolveMsFor(r.chains, castTiming);
-      estMs += r.side === 'foe' ? tuning.sfFoeDelayMs : SLOT_FIVE_SIM.playerPressMs;
+      estMs += turnMs(normal, r.chains, r.side);
+      estMsFast += turnMs(fast, r.chains, r.side);
       const s = battle.getState();
       history.push([s.spinIndex, s.player.hp, s.player.maxHp, s.foe.hp, s.foe.maxHp]);
     }
     totalTurns += turns;
     turnsList.push(turns);
     estMsList.push(estMs);
+    estMsFastList.push(estMsFast);
     totalEstMs += estMs;
     const status = battle.getState().status;
     if (status === 'playing') {
@@ -572,6 +644,7 @@ export function simulateMatches(opts: SimulateMatchesOptions, tuning: SlotFiveTu
   const matches = opts.seeds.length;
   turnsList.sort((x, y) => x - y);
   estMsList.sort((x, y) => x - y);
+  estMsFastList.sort((x, y) => x - y);
   const meanDamage = totalTurns > 0 ? sumDamage / totalTurns : 0;
   // Sample standard deviation of per-turn damage, over every simulated turn.
   const variance = totalTurns > 1 ? Math.max(0, (sumDamageSq - totalTurns * meanDamage * meanDamage) / (totalTurns - 1)) : 0;
@@ -597,6 +670,8 @@ export function simulateMatches(opts: SimulateMatchesOptions, tuning: SlotFiveTu
     meanAbsorbed: totalTurns > 0 ? sumAbsorbed / totalTurns : 0,
     estMatchMsMedian: percentile(estMsList, 50),
     estMatchMsP90: percentile(estMsList, 90),
+    estMatchMsMedianFast: percentile(estMsFastList, 50),
+    estMatchMsP90Fast: percentile(estMsFastList, 90),
     meanTurnMs: totalTurns > 0 ? totalEstMs / totalTurns : 0,
     unfinished,
   };
