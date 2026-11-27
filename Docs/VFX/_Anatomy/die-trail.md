@@ -39,6 +39,10 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 ## Đoạn đầu trail (Hoàng 2026-11-26, v10 → v11)
 - Xúc xắc vừa thả rơi chậm mà xoay nhanh thì 4 đỉnh vẽ vòng nhỏ gấp → TrailRenderer ra mảnh / góc nhọn. **Xoay phải tăng theo tốc độ rơi** (`VfxDieSpin`), và dải bắt đầu phát sau ~0.15 s đầu. Trễ phát dải đã thử rồi bỏ (ra hai thanh phẳng đứng yên). Xoay ∝ tốc độ rơi làm tổng góc xoay giảm (270° → 135°) nên xoắn giữa đoạn rơi giảm. Trễ phát dải đã bỏ; spin tối đa = 450°/s (như v10 lúc chạm đất). Model Die trong game phải xoay theo cùng quy tắc (chậm lúc mới thả). Còn lại: vài vệt ngang mép dưới xúc xắc trong 0.3 s đầu.
 
+## Cánh ngang ở góc (Hoàng 2026-11-27, v15 → v16)
+- Hoàng: "trail tỏa ra từ các góc của xúc xắc khi rơi vẫn chưa đúng logic và tạo ra góc ngang". **Nguyên nhân:** TrailRenderer rộng cố định (1.9 m) bất kể độ dài; lúc mới thả dải dài < 1 m nên là thanh / cánh nằm ngang ở mép dưới xúc xắc; đường cong độ rộng đạt đỉnh ở 14% chiều dài thì dải xòe ~40° mỗi bên ngay sau góc.
+- **Quy tắc:** dải từ góc phải đi **ngược lên theo đường rơi** (vệt hẹp, xoắn nhẹ), chỉ rộng dần khi dài ra: độ rộng ≤ ~0.4 × chiều dài hiện tại (`VfxDieTrailShape`) và `widthCurve` xòe thoai thoải (đỉnh ở ~45%, nửa góc mở ≲ 20°). Dải ngắn mà rộng = thanh ngang. Xoay quá nhanh lúc rơi chậm vẫn là nguồn riêng của mảnh nhọn (xem mục "Đoạn đầu trail").
+
 ## Ghi chú TrailRenderer (v4, art lead 2026-11-25: Trails module vẫn "gãy", thử Trail Renderer)
 - Mỗi đỉnh một component TrailRenderer (con của Die): đường cong mượt hơn nhiều (không răng cưa, không móc). `widthCurve` / `colorGradient` của TrailRenderer: 0 = đầu MỚI (ở góc), 1 = đuôi (ngược với Ribbon của PS).
 - **`numCapVertices` phải 0**: cap tròn đâm ra TRƯỚC xúc xắc nửa bề rộng (thấy như gậy sáng thò xuống dưới khối).
@@ -47,6 +51,7 @@ Màu vàng (vàng chanh / vàng đồng), số dải, độ dài vệt, độ xo
 - Game: gắn `VFX_DieTrail` vào model Die, gọi `VfxDieTrailControl.End()` khi chạm đất.
 
 ## Biến thể đã làm
+- v16 (2026-11-27, Hoàng): bỏ cánh ngang ở góc: độ rộng dải theo chiều dài hiện tại (`VfxDieTrailShape`, ≤ 0.4 × dài) + `widthCurve` xòe thoai thoải (đỉnh 45%); không đổi gì khác.
 - v14 (2026-11-26, Hoàng): xoay w = min(2800·t, 570)°/s giảm về 450°/s ở cuối, tổng ~275° như v10; tỉ lệ tốc độ tiếp tuyến / tốc độ rơi 0.36–0.63 ở 0.2 s đầu. Cung chéo của v10 = vòng gấp đầu đoạn rơi = nguồn mảnh nhọn: xoắn giống v10 hơn thì nguy cơ mảnh nhọn hơn.
 - v12 (2026-11-26, Hoàng; = v10 + xoay ∝ tốc độ rơi `VfxDieSpin`, không đổi gì khác).
 - `Assets/VFX/LuckyDice_v10/Prefabs/VFX_DieTrail_v10.prefab` (2026-11-26, Hoàng; dựng riêng, không đè bản chỉnh tay của Sơn): bỏ Sparks, ảnh `trail_ribbon_019`, rộng 1.9, đuôi pha cam, không doãng đuôi.

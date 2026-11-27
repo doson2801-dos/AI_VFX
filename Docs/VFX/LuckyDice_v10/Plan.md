@@ -83,6 +83,17 @@ Từ v12, chỉ đổi 2 chỗ (không đụng trail, chớp, Motes, số hạt)
 **Lưu ý (reviewer):** hai đợt Dust cách nhau 0.06 s, cùng tốc độ, puff rộng ~1.2 m nên chồng lên nhau, nhìn thành **một** vòng puff ngoài + một cụm trong cả ở v14 lẫn v15; v15 chỉ thưa hơn (diện tích bụi −2% ở 0.1 s, −8% / −11% / −22% / −20% ở 0.3 / 0.4 / 0.6 / 0.75 s). Thay đổi này nhỏ nếu Hoàng đếm "vòng" theo hình nhìn thấy.
 Nếu Hoàng muốn nói viền gai (Ring + Ring2 = 2 viền gai đồng tâm) thì phương án khác: bỏ Ring2.
 
+## v16 (Hoàng sau tách lớp v15: "phần trail tỏa ra từ các góc của xúc xắc khi rơi xuống vẫn chưa đúng logic và tạo ra góc ngang")
+Chỉ sửa trail (từ v15, thư mục `LuckyDice_v10`; không đụng bản Sơn, không đụng nổ / bụi / xoay / vị trí / đời).
+**Nguyên nhân (đo trên khung v15 `frames_v15/f_002..f_012`):** dải TrailRenderer rộng 1.9 m dù dài bao nhiêu. Lúc mới thả, dải mới dài 0.2–1 m mà rộng 1.9 m nên thành **thanh / cánh nằm ngang** sát mép dưới xúc xắc; cả về sau, đường cong độ rộng đạt rộng tối đa ở 14% chiều dài nên dải **xòe ngang ~40° mỗi bên ngay sau góc** (cánh hai bên xúc xắc).
+| Điểm | v15 | v16 |
+|---|---|---|
+| Độ rộng theo chiều dài dải | cố định 1.9 m × (1 / 0.85 / 1.2 / 0.95) | script mới `Runtime/VfxDieTrailShape.cs`: rộng = min(rộng gốc, **0.4 × chiều dài hiện tại** của dải): dải luôn là vệt hẹp chỉ ngược lên theo đường rơi, rộng ra dần khi dài ra; sau khi chạm đất dải ngắn lại thì mảnh dần |
+| `widthCurve` (0 = đầu ở góc) | 0.05 → 1 ở 14% → 0.78 ở 50% → 0.5 | 0.03 → 0.45 ở 20% → **1 ở 45%** → 0.82 ở 75% → 0.5: xòe từ góc **thoai thoải (nửa góc mở ~20°)**, không còn cánh ngang |
+Giữ nguyên: màu, ảnh dải `trail_ribbon_019`, thời gian dải, số dải (4 đỉnh), xoay (`VfxDieSpin`), đường rơi, khói / aura / lấp lánh, mọi lớp nổ.
+**Đánh đổi nói thẳng:** nửa đầu đoạn rơi (≤ ~0.35 s) dải mảnh hơn v15 vì ngắn hơn (v15 rộng 1.9 m ngay từ đầu); full rộng khi dải dài ≥ 4.75 m (t ≈ 0.35 s). Muốn dày hơn: tăng `widthPerLength` (0.4 → 0.6) trong `VfxDieTrailShape` (trên prefab trail, chỉnh trực tiếp được).
+**Tích hợp game:** `VFX_DieTrail_v10` đã có `VfxDieTrailShape` (tự chạy); model Die thật chỉ cần gắn prefab như cũ.
+
 ## Chưa chắc (điểm yếu em biết)
 - **Còn vài vệt mảnh nằm ngang ở mép dưới xúc xắc trong ~0.3 s đầu**; trail chỉ thật mượt ở 60 fps (30 fps còn chút gấp khúc). v12–v15 đã được vfx-director review (không lỗi luật).
 - Ảnh dải `019` là bản mềm: đường viền hơi nhòe; đổi sang `020` / `017` nếu muốn sắc hơn.
