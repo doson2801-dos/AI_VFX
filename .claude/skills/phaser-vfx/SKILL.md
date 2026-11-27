@@ -5,16 +5,30 @@ description: Dùng thư viện vfx-code để tạo hiệu ứng flipbook cho ga
 
 # VFX cho Phaser bằng vfx-code
 
-`.claude/skills/vfx-code/` là bản sao nguyên vẹn của skill trên nhánh `main`. **Không sửa thư mục đó.** Đọc `.claude/skills/vfx-code/SKILL.md` trước, rồi áp dụng các thay đổi dưới đây.
+Các phần dưới đây là bản sao nguyên vẹn từ nhánh `main` (dự án Unity), chép ngày 2026-11-27. **Không sửa bản sao.** Khi `main` thay đổi, chép lại trên nhánh `phaser-vfx-setup`.
+- `.claude/skills/vfx-code/`
+- `.claude/skills/vfx-shader/`: chỉ dùng làm tài liệu tham khảo. Không gọi `/vfx-shader` để làm VFX cho Phaser.
+- `docs/vfx/rules/vfx-art-lead.md`: luật art lead. Trên `main` file này nằm ở `.claude/rules/`. Ở đây chuyển sang `docs/` để nó không tự nạp vào mọi phiên, vì luật đó viết cho Unity 3D.
+- `docs/vfx/_Anatomy/`: chép từ `Docs/VFX/_Anatomy/`.
+- `docs/vfx/_Library/`: chép từ `Docs/VFX/_Library/`.
+
+Thứ tự đọc khi làm VFX: `docs/vfx/rules/vfx-art-lead.md` → `.claude/skills/vfx-code/SKILL.md` → bảng dưới đây. Luật art lead thắng tài liệu. **Riêng các điểm trong bảng này thì skill này thắng**, vì game là Phaser 2D chứ không phải Unity.
 
 ## Dùng và bỏ gì
-| Phần trong vfx-code | Ở dự án này |
+| Phần | Ở dự án này |
 |---|---|
-| `lib/`, `examples/`, `references/techniques.md`, `references/particles.md` | Dùng |
-| Luật về không gian, nhịp hiệu ứng, sheet ≤ 1024 px, sửa ≥ 3 vòng, `--check` sạch | Giữ |
-| `--effect`, `--project`, `--review`, Review Lab | Không dùng, chỉ dùng `--out` |
-| Prefab, shader Unity, thư mục `assets/` | Không dùng |
-| `Assets/Library/` (texture có sẵn) | Dùng bản ở `vfx/Library/`, xem mục dưới |
+| vfx-code: `lib/`, `examples/`, `references/techniques.md`, `references/particles.md` | Dùng |
+| vfx-code: sheet ≤ 1024 px, Frame over Time tuyến tính, sửa ≥ 3 vòng, `--check` sạch | Giữ |
+| vfx-code: `--effect`, `--project`, `--review`, Review Lab | Không dùng, chỉ dùng `--out` |
+| **Anatomy**: `docs/vfx/_Anatomy/<loại>.md` và `materials.md`; chỉ mục loại effect ở `vfx-shader/references/effect-index.md` | Dùng. Trước mỗi effect, tìm loại gần nhất rồi chép phần "Bất biến" vào kế hoạch. Đối chiếu preview với "Bất biến" trước khi bàn giao. Chưa có loại hợp thì research rồi thêm file Anatomy (sửa trên nhánh `phaser-vfx-setup`) |
+| **Không gian**: luật art lead mục "Không gian", `vfx-shader/references/direction.md` | Dùng cách làm: chốt ngữ cảnh, quy mô, neo, timing trước khi code; thiếu thì hỏi. **Đổi** camera thành 2D nhìn ngang (xem mục "Không gian mặc định"). Bỏ luật Billboard và Render Alignment của Unity |
+| **Luật art lead**: đòn trúng/nổ ("một ngữ cảnh, một chớp Impact"), hình dáng, khác biệt giữa effect, giữ tạo hình cốt lõi, có hướng/không hướng | Dùng |
+| **Texture**: luật art lead mục "Texture", `LIBRARY.md`, `library_index.csv`, `library_props.csv`, `library_direction.csv` | Dùng, với `vfx/Library/` thay cho `Assets/Library/` (xem mục dưới) |
+| vfx-shader: `references/lightning.md`, `lightning-set.md`, `thunder-core.md`, `magic-circle.md`, `ground-spike.md`, `tornado.md`, `coloso.md`, `recipes.md`, `study-reference.md`, `web-research.md` | Tham khảo về tạo hình, nhịp và lớp. Bỏ phần shader, mesh, material |
+| Prefab, Particle System, Scaling Mode, `sortingOrder`, `VfxBuildKit`, showcase scene | Bỏ. Lớp và thứ tự vẽ do Gameplay Programmer làm trong Phaser |
+| Shader Unity (`*.shader`, `*.cginc`, Coloso, Erode Sphere), mesh `SM_VFX_*`, khói `fx_t_smoke_02` + shader mobile | Bỏ. Hình nào cần shader hay mesh thì vẽ thành flipbook bằng vfx-code |
+| Build script và công cụ: `tools/unity_build.py`, `check_texture_plan.py`, `library_props.py`, Review Lab, `vfx-shader/scripts/`, các file `*.cs` trong `assets/` | Bỏ. Các công cụ này không có trong Game_AI. Bước "contact sheet thư mục" thì tự ghép ảnh xem trong `vfx/<Effect>/out/` |
+| Quy trình bàn giao của art lead (agent khác review, art lead duyệt lần cuối) | Dùng như sau: QA kiểm trong game, người dùng duyệt hình |
 | Đường dẫn `D:/Game_prj/VFX_LIb` | Bỏ qua |
 
 ## Thư viện texture `vfx/Library/`
@@ -25,6 +39,7 @@ description: Dùng thư viện vfx-code để tạo hiệu ứng flipbook cho ga
 - Xem ảnh trước khi chọn. Ảnh trong `_review/` chưa được duyệt, không dùng.
 - Không chép ảnh thư viện vào `public/`. Chỉ sheet đã render mới vào `public/vfx/`.
 - Chọn ảnh theo `docs/vfx/_Library/LIBRARY.md`, là bảng thành phần → thư mục. Nguồn và tên cũ xem trong `docs/vfx/_Library/library_index.csv`. Hai file này chép từ `Docs/VFX/_Library/` trên nhánh `main` ngày 2026-11-27. Trong các file đó, đọc `Assets/Library/` thành `vfx/Library/`. Phần Unity như `LoadAssetAtPath` hay import setting thì bỏ qua.
+- Theo quy trình chọn 6 bước trong luật art lead: viết yêu cầu → tra bảng → xem cả thư mục → lọc theo `library_props.csv` → chốt 1 ảnh và 1–2 ảnh dự phòng → kiểm lại trên preview. Không chọn theo tên file.
 - Ghi đường dẫn ảnh đã dùng và lý do chọn vào báo cáo.
 - Nếu `LIBRARY.md` nhắc tới một thư mục mà `vfx/Library/` không có, ví dụ nhóm `shield/`, thì bản `Library.tar.gz` đang cũ hơn bảng. Báo Producer, không tự đoán.
 
